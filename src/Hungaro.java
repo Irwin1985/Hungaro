@@ -52,8 +52,20 @@ public class Hungaro {
     }
 
     public static void run(String source) {
-        Scanner scanner = new Scanner(source);
-        Parser parser = new Parser(scanner);
+        final Scanner scanner = new Scanner(source);
+        final List<Token> tokens = scanner.scanTokens();
+        final boolean printTokens = true;
+        // debug
+        if (printTokens) {
+            System.out.println("=============================");
+            for (Token token : tokens) {
+                System.out.println(token);
+            }
+            System.out.println("=============================");
+        }
+        // end debug
+
+        Parser parser = new Parser(tokens);
         List<Stmt> statements = parser.parse();            
         if (hadError) return;
         interpreter.interpret(statements);        
@@ -84,4 +96,12 @@ public class Hungaro {
     static String formatError(String errorStr, int line, int col, String where, String msg) {
         return String.format("[%s:%s] - %s error near of `%s`: %s", line, col, errorStr, where, msg);
     }
+
+    // check if a string is a constant (all uppercase)
+    public static boolean isConstant(String name) {
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("^[A-Z_]+$");
+        java.util.regex.Matcher matcher = pattern.matcher(name);
+        return matcher.find();
+    }
 }
+

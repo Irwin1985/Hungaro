@@ -54,8 +54,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
-    public Object visitLiteralExpr(Expr.Literal expr) {
-        System.out.println(stringify(expr.token.literal));
+    public Object visitLiteralExpr(Expr.Literal expr) {        
         return expr.token.literal;
     }
 
@@ -94,8 +93,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return lookup(expr.token);
     }
 
-    private Object lookup(Token token) {
-        // TODO: Check for identifier type first.
+    private Object lookup(Token token) {        
         return environment.lookup(token);
     }
 
@@ -128,6 +126,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitPrintStmt(Stmt.Print stmt) {
+        for (Expr expression : stmt.expressions) {
+            System.out.println(stringify(evaluate(expression)));
+        }
         return null;
     }
 
@@ -138,6 +139,17 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitVarStmt(Stmt.Var stmt) {
+        Object value = null;
+        if (stmt.initializer != null) {
+            value = evaluate(stmt.initializer);
+        }
+        if (stmt.name.lexeme.substring(0,1) == "g") {
+            // global variable
+            globals.define(stmt.name.lexeme, value);
+        } else {
+            // local variable
+            environment.define(stmt.name.lexeme, value);
+        }
         return null;
     }
 
@@ -160,5 +172,17 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
         // TODO: Add support for other types.
         return object.toString();
+    }
+
+    @Override
+    public Void visitConstantStmt(Stmt.Constant stmt) {
+        if (stmt.name.lexeme.substring(0,1) == "_") {
+            // global constant
+            globals.define(stmt.name.lexeme, evaluate(stmt.value));
+        } else {
+            // local constant
+            environment.define(stmt.name.lexeme, evaluate(stmt.value));
+        }
+        return null;
     }
 }

@@ -2,15 +2,13 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Parser {
-    private Scanner scanner;
     private int current = 0;
     private List<Token> tokens;
 
     private static class ParseError extends RuntimeException {}
 
-    public Parser(Scanner scanner) {
-        this.scanner = scanner;
-        this.tokens = scanner.scanTokens();        
+    public Parser(List<Token> tokens) {
+        this.tokens = tokens;
     }
 
     public List<Stmt> parse() {
@@ -23,6 +21,7 @@ public class Parser {
 
     private Stmt declaration() {
         try {
+            if (match(TokenType.DECLARE)) return genericDeclaration();
             return statement();
         } catch (ParseError error) {
             synchronize();
@@ -30,13 +29,97 @@ public class Parser {
         }
     }
 
+    private Stmt genericDeclaration() {
+        final Token keyword = previous();
+        final Token identifier = consume(TokenType.IDENTIFIER, "Expect identifier after `declare`.");
+        
+        // check for constant declaration
+        if (Hungaro.isConstant(identifier.lexeme)) {
+            return constantDeclaration(keyword, identifier);
+        }
+
+        // check for variable declaration
+        String singleType = identifier.lexeme.substring(0, 2);
+        switch (singleType) {
+            case "ls": // local string
+            case "gs": // global string
+            case "ps": // parameter string                
+            case "ln": // local number
+            case "gn": // global number
+            case "pn": // parameter number
+            case "lb": // local boolean
+            case "gb": // global boolean
+            case "pb": // parameter boolean
+            case "la": // local array
+            case "ga": // global array
+            case "pa": // parameter array
+            case "lo": // local object
+            case "go": // global object
+            case "po": // parameter object
+                return variableDeclaration(keyword, identifier);
+        }
+        // check for function, class, or procedure declaration
+        String type = identifier.lexeme.substring(0, 3);
+        switch (type) {
+            case "fnc":
+                return functionDeclaration(keyword, identifier);
+            case "cls":
+                return classDeclaration(keyword, identifier);
+            case "prc":
+                return procedureDeclaration(keyword, identifier);
+            default:
+                error(identifier, "Invalid declaration type.");
+                return null;
+        }
+    }
+
+    private Stmt variableDeclaration(Token keyword, Token identifier) {
+        Expr value = null;
+        if (match(TokenType.SIMPLE_ASSIGN)) {            
+            value = expression();
+        }
+        consume(TokenType.SEMICOLON, "Expect new line after variable declaration.");
+        return new Stmt.Var(keyword, identifier, value);
+    }
+
+    private Stmt constantDeclaration(Token keyword, Token identifier) {
+        consume(TokenType.SIMPLE_ASSIGN, "Expect `=` after constant declaration.");
+        final Expr value = expression();
+        consume(TokenType.SEMICOLON, "Expect new line after constant declaration.");
+        return new Stmt.Constant(keyword, identifier, value);
+    }
+
+    private Stmt functionDeclaration(Token keyword, Token identifier) {
+        return null;
+    }
+
+    private Stmt classDeclaration(Token keyword, Token identifier) {
+        return null;
+    }
+
+    private Stmt procedureDeclaration(Token keyword, Token identifier) {
+        return null;
+    }
+
     private Stmt statement() {
+        if (match(TokenType.PRINT)) return printStatement();
         return expressionStmt();
+    }
+
+    private Stmt printStatement() {
+        List<Expr> expressions = new ArrayList<Expr>();        
+
+        do {
+            expressions.add(expression());
+        } while (match(TokenType.COMMA));
+
+        consume(TokenType.SEMICOLON, "Expect new line after expression.");
+        return new Stmt.Print(expressions);
     }
 
     private Stmt expressionStmt() {
         Expr expr = expression();
-        consume(TokenType.SEMICOLON, "Expect new_line after expression.");
+        consume(TokenType.SEMICOLON, "Expect new line after expression.");
         return new Stmt.Expression(expr);
     }
 
@@ -153,16 +236,16 @@ public class Parser {
                 left = finishCall(left);
             } 
             else if (match(TokenType.DOT)) {
-                Token name = previous();
-                Token propIdent = consume(TokenType.IDENTIFIER, "Expect property name after '.'.");
+                Token keyword = previous();
+                Token propIdent = consume(TokenType.IDENTIFIER, "Expect property keyword after '.'.");
                 Expr property = new Expr.Variable(propIdent);
-                left = new Expr.Prop(name, left, property, false);                
+                left = new Expr.Prop(keyword, left, property, false);                
             }
             else if (match(TokenType.LBRACKET)) {
-                Token name = previous();
+                Token keyword = previous();
                 Expr indexOrkey = expression();
                 consume(TokenType.RBRACKET, "Expect ']' after expression.");
-                left = new Expr.Prop(name, left, indexOrkey, true);
+                left = new Expr.Prop(keyword, left, indexOrkey, true);
             }
             else {
                 break;
@@ -180,6 +263,14 @@ public class Parser {
     private Expr primary() {
         if (peek().category == Category.LITERAL) {
             return new Expr.Literal(advance());
+        }
+        else if (match(TokenType.IDENTIFIER)) {
+            return new Expr.Variable(previous());
+        }
+        else if (match(TokenType.LPAREN)) {
+            Expr expr = expression();
+            consume(TokenType.RPAREN, "Expect ')' after expression.");
+            return expr;
         }
 
         throw error(peek(), "Expect expression.");

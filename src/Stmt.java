@@ -1,8 +1,11 @@
 import java.util.List;
 
 public abstract class Stmt {
+    final Token token;
+
     interface Visitor<R> {
         R visitBlockStmt(Block stmt);
+        R visitConstantStmt(Constant stmt);
         R visitClassStmt(Class stmt);
         R visitExpressionStmt(Expression stmt);
         R visitFunctionStmt(Function stmt);
@@ -11,6 +14,10 @@ public abstract class Stmt {
         R visitReturnStmt(Return stmt);
         R visitVarStmt(Var stmt);
         R visitWhileStmt(While stmt);
+    }
+
+    public Stmt(Token token) {
+        this.token = token;
     }
 
     abstract <R> R accept(Visitor<R> visitor);
@@ -22,12 +29,32 @@ public abstract class Stmt {
         final List<Stmt> statements;
 
         public Block(List<Stmt> statements) {
+            super(null);                            
             this.statements = statements;
         }
 
         @Override
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitBlockStmt(this);
+        }
+    }
+
+    /*
+     * Constant statement: declare CONSTANT = 1 + 2;
+     */
+    public static class Constant extends Stmt {
+        final Token name;
+        final Expr value;
+
+        public Constant(Token keyword, Token name, Expr value) {
+            super(keyword);
+            this.name = name;            
+            this.value = value;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitConstantStmt(this);
         }
     }
 
@@ -40,6 +67,7 @@ public abstract class Stmt {
         final List<Stmt.Function> methods;
 
         public Class(Token name, Expr.Variable superclass, List<Stmt.Function> methods) {
+            super(name);
             this.name = name;
             this.superclass = superclass;
             this.methods = methods;
@@ -58,6 +86,7 @@ public abstract class Stmt {
         final Expr expression;
 
         public Expression(Expr expression) {
+            super(expression.token);
             this.expression = expression;
         }
 
@@ -76,6 +105,7 @@ public abstract class Stmt {
         final List<Stmt> body;
 
         public Function(Token name, List<Token> params, List<Stmt> body) {
+            super(name);
             this.name = name;
             this.params = params;
             this.body = body;
@@ -96,6 +126,7 @@ public abstract class Stmt {
         final Stmt elseBranch;
 
         public If(Expr condition, Stmt thenBranch, Stmt elseBranch) {
+            super(condition.token);
             this.condition = condition;
             this.thenBranch = thenBranch;
             this.elseBranch = elseBranch;
@@ -111,10 +142,11 @@ public abstract class Stmt {
      * Print statement: print 1 + 2;
      */
     public static class Print extends Stmt {
-        final Expr expression;
+        final List<Expr> expressions;
 
-        public Print(Expr expression) {
-            this.expression = expression;
+        public Print(List<Expr> expressions) {
+            super(null);
+            this.expressions = expressions;
         }
 
         @Override
@@ -131,6 +163,7 @@ public abstract class Stmt {
         final Expr value;
 
         public Return(Token keyword, Expr value) {
+            super(keyword);
             this.keyword = keyword;
             this.value = value;
         }
@@ -156,7 +189,8 @@ public abstract class Stmt {
         final Token name;
         final Expr initializer;
 
-        public Var(Token name, Expr initializer) {
+        public Var(Token keyword, Token name, Expr initializer) {
+            super(keyword);
             this.name = name;
             this.initializer = initializer;
         }
@@ -175,6 +209,7 @@ public abstract class Stmt {
         final Stmt body;
 
         public While(Expr condition, Stmt body) {
+            super(condition.token);
             this.condition = condition;
             this.body = body;
         }

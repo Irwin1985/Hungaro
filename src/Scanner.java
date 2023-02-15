@@ -74,7 +74,7 @@ public class Scanner {
 
         // Keywords        
         new Spec(Pattern.compile("^\\bas\\b"), TokenType.AS,Category.KEYWORD),
-        new Spec(Pattern.compile("^\\bdeclare\b"), TokenType.DECLARE,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\bdeclare\\b"), TokenType.DECLARE,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bif\\b"), TokenType.IF,Category.KEYWORD),
         new Spec(Pattern.compile("^\\belse\\b"), TokenType.ELSE,Category.KEYWORD),
         new Spec(Pattern.compile("^\\btrue\\b"), TokenType.TRUE,Category.LITERAL),
@@ -107,7 +107,7 @@ public class Scanner {
         new Spec(Pattern.compile("^[\\*/]"), TokenType.TERM, Category.UNARY),
 
         // Identifier
-        new Spec(Pattern.compile("^\\w+"), TokenType.IDENTIFIER, Category.LITERAL),
+        new Spec(Pattern.compile("^\\w+"), TokenType.IDENTIFIER, Category.IDENTIFIER),
 
         // Symbols and delimiters
         new Spec(Pattern.compile("^\\("), TokenType.LPAREN, Category.GENERIC),

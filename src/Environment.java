@@ -28,8 +28,7 @@ public class Environment {
 
     public Object lookup(Token name) {
         return resolve(name).record.get(name.lexeme);
-    }
-
+    }    
     
     private Environment resolve(Token name) {
         if (record.containsKey(name.lexeme)) {
