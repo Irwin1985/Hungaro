@@ -354,4 +354,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
         return arrayPrototype;
     }
+
+    @Override
+    public Void visitDeclareStmt(Stmt.Declare stmt) {
+        for (Stmt statement : stmt.statements) {
+            execute(statement);
+        }
+        return null;
+    }
 }

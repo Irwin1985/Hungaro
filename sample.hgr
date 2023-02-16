@@ -1,1 +1,13 @@
-declare lsNombre = "Juan", lnEdad = 37
+# comentario de una linea
+"""
+comentario de varias lineas
+"""
+
+declare lsNombre = "Juan", 
+        lnEdad = 37, 
+        lbCasado = false, 
+        laHobbies = ["Leer", "Cine", "Deporte"]
+
+? lsNombre, lnEdad, lbCasado, laHobbies
+
+

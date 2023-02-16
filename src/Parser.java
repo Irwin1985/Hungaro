@@ -31,6 +31,18 @@ public class Parser {
 
     private Stmt genericDeclaration() {
         final Token keyword = previous();
+        final List<Stmt> statements = new ArrayList<Stmt>();
+        do {
+            match(TokenType.SEMICOLON); // consume optional semicolon
+            statements.add(parseDeclareStatement(keyword));
+        } while (match(TokenType.COMMA) && !isAtEnd());
+        
+        consume(TokenType.SEMICOLON, "Expect new line after declaration.");
+
+        return new Stmt.Declare(keyword, statements);
+    }
+
+    private Stmt parseDeclareStatement(Token keyword) {
         final Token identifier = consume(TokenType.IDENTIFIER, "Expect identifier after `declare`.");
         
         // check for constant declaration
@@ -78,14 +90,14 @@ public class Parser {
         if (match(TokenType.SIMPLE_ASSIGN)) {            
             value = expression();
         }
-        consume(TokenType.SEMICOLON, "Expect new line after variable declaration.");
+        // consume(TokenType.SEMICOLON, "Expect new line after variable declaration.");
         return new Stmt.Var(keyword, identifier, value);
     }
 
     private Stmt constantDeclaration(Token keyword, Token identifier) {
         consume(TokenType.SIMPLE_ASSIGN, "Expect `=` after constant declaration.");
         final Expr value = expression();
-        consume(TokenType.SEMICOLON, "Expect new line after constant declaration.");
+        // consume(TokenType.SEMICOLON, "Expect new line after constant declaration.");
         return new Stmt.Constant(keyword, identifier, value);
     }
 

@@ -14,6 +14,7 @@ public abstract class Stmt {
         R visitReturnStmt(Return stmt);
         R visitVarStmt(Var stmt);
         R visitWhileStmt(While stmt);
+        R visitDeclareStmt(Declare stmt);
     }
 
     public Stmt(Token token) {
@@ -217,6 +218,22 @@ public abstract class Stmt {
         @Override
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitWhileStmt(this);
+        }
+    }
+
+    /*
+     * Declare statement: declare lsName = 1 + 2
+     */
+    public static class Declare extends Stmt {
+        final List<Stmt> statements;
+        public Declare(Token keyword, List<Stmt> statements) {
+            super(keyword);
+            this.statements = statements;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitDeclareStmt(this);
         }
     }
 }
