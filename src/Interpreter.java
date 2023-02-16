@@ -1,10 +1,16 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
-    final Environment globals = new Environment("global");
-    final Environment objectEnv = new Environment("object");
-    final Environment arrayEnv = new Environment(objectEnv, "array");
+    final Environment globals = new Environment("Global");
+    
+    // Objects inheritance chain
+    final Environment objectEnv = new Environment("Object");
+    final Environment arrayEnv = new Environment(objectEnv, "Array");
+    final Environment mapEnv = new Environment(objectEnv, "Map");
+
     private Environment environment = globals;
 
     public Interpreter() {
@@ -74,6 +80,244 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     return array.size();
                 }
                 return 0;
+            }
+        });
+
+        // array get builtin function
+        arrayEnv.define("get", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("array");
+                    try {
+                        Double index = (Double)arguments.get(1);
+                        int i = index.intValue();                
+                        return array.get(i);
+                    } catch(Exception e) {
+                        return null;
+                    }
+                }
+                return null;
+            }
+        });
+
+        // array set builtin function
+        arrayEnv.define("set", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("array");
+                    try {
+                        Double index = (Double)arguments.get(1);
+                        int i = index.intValue();                
+                        array.set(i, arguments.get(2));
+                    } catch(Exception e) {
+                        return null;
+                    }                    
+                }
+                return null;
+            }
+        });
+
+        // array slice builtin function
+        arrayEnv.define("slice", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("array");
+                    try {
+                        Double start = (Double)arguments.get(1);
+                        Double end = (Double)arguments.get(2);
+                        int s = start.intValue();
+                        int e = end.intValue();
+                        return makeArray(array.subList(s, e));
+                    } catch(Exception e) {
+                        return null;
+                    }
+                }
+                return null;
+            }
+        });
+
+        // array join builtin function
+        arrayEnv.define("join", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("array");
+                    String separator = (String)arguments.get(1);
+                    String result = String.join(separator, array.stream().map(Object::toString).toArray(String[]::new));
+                    return result;
+                }
+                return null;
+            }
+        });
+
+        // map get builtin function
+        mapEnv.define("get", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    return map.get(arguments.get(1));
+                }
+                return null;
+            }
+        });
+
+        // map set builtin function
+        mapEnv.define("set", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    map.put(arguments.get(1), arguments.get(2));
+                }
+                return null;
+            }
+        });
+
+        // map len builtin function
+        mapEnv.define("len", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    return map.size();
+                }
+                return 0;
+            }
+        });
+
+        // map keys builtin function
+        mapEnv.define("keys", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    return makeArray(new ArrayList<Object>(map.keySet()));                    
+                }
+                return null;
+            }
+        });
+
+        // map values builtin function
+        mapEnv.define("values", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    return makeArray(new ArrayList<Object>(map.values()));                    
+                }
+                return null;
+            }
+        });
+
+        // map contains builtin function
+        mapEnv.define("contains", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    return map.containsKey(arguments.get(1));
+                }
+                return false;
+            }
+        });
+
+        // map remove builtin function
+        mapEnv.define("remove", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    return map.remove(arguments.get(1));
+                }
+                return null;
+            }
+        });
+
+        // map clear builtin function
+        mapEnv.define("clear", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    map.clear();
+                }
+                return null;
             }
         });
 
@@ -275,6 +519,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     throw new RuntimeError(name, "Variable type mismatch. Expected Array.");
                 }
                 break;
+            case 'm':
+                if (!(value instanceof Environment)) {
+                    throw new RuntimeError(name, "Variable type mismatch. Expected Map.");
+                }
+                if (!((Environment)value).name.equals("Map")) {
+                    throw new RuntimeError(name, "Variable type mismatch. Expected Map.");
+                }
+                break;
             case 'o':
                 if (!(value instanceof Environment)) {
                     throw new RuntimeError(name, "Variable type mismatch. Expected Object.");
@@ -309,6 +561,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             switch (((Environment)object).name) {
                 case "Array":
                     return arrayToString((List<Object>)((Environment)object).lookup("array"));
+                case "Map":
+                    return mapToString((Map<String, Object>)((Environment)object).lookup("map"));
                 default:
                     return "Object";
             }
@@ -331,6 +585,20 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return result;
     }
 
+    private String mapToString(Map<String, Object> map) {
+        String result = "{";
+        int i = 0;
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            if (i > 0) {
+                result += ", ";
+            }
+            result += String.format("\"%s\": %s", entry.getKey(), stringify(entry.getValue()));
+            i++;
+        }
+        result += "}";
+        return result;
+    }
+
     @Override
     public Void visitConstantStmt(Stmt.Constant stmt) {
         if (stmt.name.lexeme.substring(0,1) == "_") {
@@ -345,13 +613,19 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitArrayExpr(Expr.Array expr) {        
-        Environment arrayPrototype = new Environment(arrayEnv, "Array");
+        // Environment arrayPrototype = new Environment(arrayEnv, "Array");
         List<Object> array = new ArrayList<Object>();
-        arrayPrototype.define("array", array);
+        // arrayPrototype.define("array", array);
         for (int i = 0; i < expr.elements.size(); i++) {
             array.add(evaluate(expr.elements.get(i)));
         }
+        return makeArray(array);
+        // return arrayPrototype;
+    }
 
+    private Environment makeArray(List<Object> array) {
+        Environment arrayPrototype = new Environment(arrayEnv, "Array");
+        arrayPrototype.define("array", array);
         return arrayPrototype;
     }
 
@@ -361,5 +635,18 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             execute(statement);
         }
         return null;
+    }
+
+    @Override
+    public Object visitMapExpr(Expr.Map expr) {
+        Environment objectPrototype = new Environment(mapEnv, "Map");
+        Map<String, Object> map = new HashMap<String, Object>();
+        // fill map
+        for (int i = 0; i < expr.keys.size(); i++) {
+            map.put(expr.keys.get(i).token.lexeme, evaluate(expr.values.get(i)));
+        }
+        objectPrototype.define("map", map);
+
+        return objectPrototype;
     }
 }

@@ -56,7 +56,7 @@ public class Parser {
             case "ls": // local string
             case "gs": // global string
             case "ps": // parameter string                
-            case "ln": // local number
+            case "ln": // local number            
             case "gn": // global number
             case "pn": // parameter number
             case "lb": // local boolean
@@ -68,6 +68,9 @@ public class Parser {
             case "lo": // local object
             case "go": // global object
             case "po": // parameter object
+            case "lm": // local map
+            case "gm": // global map
+            case "pm": // parameter map            
                 return variableDeclaration(keyword, identifier);
         }
         // check for function, class, or procedure declaration
@@ -310,6 +313,9 @@ public class Parser {
         else if (match(TokenType.LBRACKET)) {
             return array();
         }
+        else if (match(TokenType.LBRACE)) {
+            return map();
+        }
 
         throw error(peek(), "Expect expression.");
     }
@@ -317,15 +323,40 @@ public class Parser {
     private Expr array() {
         Token keyword = previous();
         List<Expr> elements = new ArrayList<Expr>();
+        match(TokenType.SEMICOLON); // optional semicolon
 
         if (!check(TokenType.RBRACKET)) {
             do {
+                match(TokenType.SEMICOLON); // optional semicolon (before element)
+                if (check(TokenType.RBRACKET)) break;
                 elements.add(expression());
+                match(TokenType.SEMICOLON); // optional semicolon
             } while (match(TokenType.COMMA));
         }
-
+        match(TokenType.SEMICOLON); // optional semicolon (after last element)        
         consume(TokenType.RBRACKET, "Expect ']' after array elements.");
         return new Expr.Array(keyword, elements);
+    }
+
+    private Expr map() {
+        Token keyword = previous();
+        List<Expr> keys = new ArrayList<Expr>();
+        List<Expr> values = new ArrayList<Expr>();
+        match(TokenType.SEMICOLON); // optional semicolon
+
+        if (!check(TokenType.RBRACE)) {
+            do {
+                match(TokenType.SEMICOLON); // optional semicolon (before key
+                if (check(TokenType.RBRACE)) break;
+                keys.add(expression());
+                consume(TokenType.COLON, "Expect ':' after map key.");
+                values.add(expression());
+                match(TokenType.SEMICOLON); // optional semicolon
+            } while (match(TokenType.COMMA));
+        }
+        match(TokenType.SEMICOLON); // optional semicolon (after last element
+        consume(TokenType.RBRACE, "Expect '}' after map elements.");
+        return new Expr.Map(keyword, keys, values);
     }
 
 

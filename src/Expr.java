@@ -14,6 +14,7 @@ public abstract class Expr {
         R visitCallExpr(Call expr);
         R visitLambdaExpr(Lambda expr);
         R visitLogicalExpr(Logical expr);
+        R visitMapExpr(Map expr);
         R visitNewExpr(New expr);
         R visitPropExpr(Prop expr);
         R visitSetExpr(Set expr);
@@ -135,6 +136,25 @@ public abstract class Expr {
         @Override
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitLogicalExpr(this);
+        }
+    }
+
+    /*
+     * Map expression: {a: 1, b: 2}
+     */
+    public static class Map extends Expr {
+        final List<Expr> keys;
+        final List<Expr> values;
+
+        public Map(Token token, List<Expr> keys, List<Expr> values) {
+            super(token);
+            this.keys = keys;
+            this.values = values;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitMapExpr(this);
         }
     }
 
