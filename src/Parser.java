@@ -68,7 +68,7 @@ public class Parser {
             case "prc":
                 return procedureDeclaration(keyword, identifier);
             default:
-                error(identifier, "Invalid declaration type.");
+                error(identifier, "Invalid name: please provide one of the following suffixes:\n`l` for locals\n`g` for globals\n`p` for parameters\nNOTE: you can omite the scoping suffix (first letter) if you are declaring a constant (all uppercase) or your are inside of a class body.");
                 return null;
         }
     }
@@ -131,10 +131,13 @@ public class Parser {
         Expr target = logicalOr();
 
         if (peek().category == Category.ASSIGNMENT) {
-            Token equals = previous();
+            Token equals = advance();            
             Expr value = assignment();
 
-            if (target instanceof Expr.Variable) {                
+            if (target instanceof Expr.Variable) {   
+                if (Hungaro.isConstant(((Expr.Variable) target).name.lexeme)) {
+                    error(equals, "Cannot assign to constant.");
+                }
                 return new Expr.Set(equals, target, value, false);
             } else if (target instanceof Expr.Prop) {
                 return new Expr.Set(equals, target, value, true);
@@ -255,9 +258,29 @@ public class Parser {
         return left;
     }
 
-    private Expr finishCall(Expr callee) {
-        // TODO(irwin): Implement arguments
-        return null;
+    private Expr finishCall(Expr callee) {        
+        final List<Expr> arguments = new ArrayList<Expr>();
+        
+        // add the implicit `this` argument
+        if (callee instanceof Expr.Prop) {
+            if (((Expr.Prop)callee).target instanceof Expr.Super) {
+                final Token token = new Token(TokenType.IDENTIFIER, Category.IDENTIFIER, "this", null, 0, 0);
+                arguments.add(new Expr.Variable(token));
+            } else {
+                arguments.add(((Expr.Prop)callee).target);
+            }
+        }
+        
+        // parse the arguments
+        if (!check(TokenType.RPAREN)) {
+            do {                
+                arguments.add(expression());
+            } while (match(TokenType.COMMA));
+        }
+
+        Token paren = consume(TokenType.RPAREN, "Expect ')' after arguments.");
+
+        return new Expr.Call(callee, paren, arguments);
     }
 
     private Expr primary() {
@@ -272,8 +295,25 @@ public class Parser {
             consume(TokenType.RPAREN, "Expect ')' after expression.");
             return expr;
         }
+        else if (match(TokenType.LBRACKET)) {
+            return array();
+        }
 
         throw error(peek(), "Expect expression.");
+    }
+
+    private Expr array() {
+        Token keyword = previous();
+        List<Expr> elements = new ArrayList<Expr>();
+
+        if (!check(TokenType.RBRACKET)) {
+            do {
+                elements.add(expression());
+            } while (match(TokenType.COMMA));
+        }
+
+        consume(TokenType.RBRACKET, "Expect ']' after array elements.");
+        return new Expr.Array(keyword, elements);
     }
 
 

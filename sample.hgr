@@ -1,8 +1,1 @@
-# Expressions
-declare lsName = "John"
-declare lnAge = 20
-declare lbIsAdult = (lnAge >= 18)
-declare gsVersion = "1.0.0"
-declare gsAuthor = "John Doe"
-
-? lsName, lnAge, lbIsAdult, gsVersion, gsAuthor
+declare lsNombre = "Juan", lnEdad = 37

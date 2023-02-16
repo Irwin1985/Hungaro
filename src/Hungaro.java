@@ -54,7 +54,7 @@ public class Hungaro {
     public static void run(String source) {
         final Scanner scanner = new Scanner(source);
         final List<Token> tokens = scanner.scanTokens();
-        final boolean printTokens = true;
+        final boolean printTokens = false;
         // debug
         if (printTokens) {
             System.out.println("=============================");

@@ -8,6 +8,7 @@ public abstract class Expr {
     }
 
     interface Visitor<R> {
+        R visitArrayExpr(Array expr);
         R visitLiteralExpr(Literal expr);
         R visitBinaryExpr(Binary expr);
         R visitCallExpr(Call expr);
@@ -22,6 +23,23 @@ public abstract class Expr {
     }
 
     abstract <R> R accept(Visitor<R> visitor);
+
+    /*
+     * Array expression: [1, 2, 3]
+     */
+    public static class Array extends Expr {
+        final List<Expr> elements;
+
+        public Array(Token token, List<Expr> elements) {
+            super(token);
+            this.elements = elements;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitArrayExpr(this);
+        }
+    }
 
     /*
      * Literal expression: 123, "hello", true, false, null 
