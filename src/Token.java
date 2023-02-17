@@ -6,9 +6,8 @@ public class Token {
     final int line;
     final int col;
     final Scope scope;
-    final boolean isConstant;
 
-    public Token(TokenType type, Category category, String lexeme, Object literal, int line, int col, Scope scope, boolean isConstant) {
+    public Token(TokenType type, Category category, String lexeme, Object literal, int line, int col, Scope scope) {
         this.type = type;
         this.lexeme = lexeme;
         this.category = category;
@@ -16,7 +15,6 @@ public class Token {
         this.line = line;
         this.col = col;
         this.scope = scope;
-        this.isConstant = isConstant;
     }
 
     public Token(TokenType type, String lexeme) {
@@ -27,7 +25,6 @@ public class Token {
         this.line = 0;
         this.col = 0;
         this.scope = Scope.NONE;
-        this.isConstant = false;
     }
 
     public Token(TokenType type) {
@@ -38,7 +35,6 @@ public class Token {
         this.line = 0;
         this.col = 0;
         this.scope = Scope.NONE;
-        this.isConstant = false;
     }
 
     @Override

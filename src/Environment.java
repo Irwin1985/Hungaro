@@ -48,9 +48,9 @@ public class Environment {
 
         if (parent != null) {
             return parent.resolve(name);
-        }
+        }        
 
-        throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
+        throw new RuntimeError(name, variableNotDefinedMessage(name.lexeme));
     }
 
     private Environment resolve(String name, Token token) {
@@ -61,11 +61,23 @@ public class Environment {
         if (parent != null) {
             return parent.resolve(name, token);
         }
+        
+        throw new RuntimeError(token, variableNotDefinedMessage(name));
+    }
 
-        throw new RuntimeError(token, "Undefined variable '" + name + "'.");
+    private String variableNotDefinedMessage(String name) {
+        String message = "Undefined variable `" + name + "`.";
+        if (Hungaro.isConstant(name)) {
+            message = "Undefined constant `" + name + "`.";
+        }
+        return message;
     }
 
     public Object lookup(String name) {
         return record.get(name);
+    }
+
+    public Map<String, Object> getRecord() {
+        return record;
     }
 }

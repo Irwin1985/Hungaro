@@ -34,7 +34,7 @@ public class Parser {
         final List<Stmt> statements = new ArrayList<Stmt>();
         do {
             match(TokenType.SEMICOLON); // consume optional semicolon
-            statements.add(parseDeclareStatement(keyword));
+            statements.add(parseDeclareStatement(keyword));            
         } while (match(TokenType.COMMA) && !isAtEnd());
         
         consume(TokenType.SEMICOLON, "Expect new line after declaration.");
@@ -44,48 +44,59 @@ public class Parser {
 
     private Stmt parseDeclareStatement(Token keyword) {
         final Token identifier = consume(TokenType.IDENTIFIER, "Expect identifier after `declare`.");
-        
-        // check for constant declaration
-        if (Hungaro.isConstant(identifier.lexeme)) {
-            return constantDeclaration(keyword, identifier);
-        }
-
-        // check for variable declaration
-        String singleType = identifier.lexeme.substring(0, 2);
-        switch (singleType) {
-            case "ls": // local string
-            case "gs": // global string
-            case "ps": // parameter string                
-            case "ln": // local number            
-            case "gn": // global number
-            case "pn": // parameter number
-            case "lb": // local boolean
-            case "gb": // global boolean
-            case "pb": // parameter boolean
-            case "la": // local array
-            case "ga": // global array
-            case "pa": // parameter array
-            case "lo": // local object
-            case "go": // global object
-            case "po": // parameter object
-            case "lm": // local map
-            case "gm": // global map
-            case "pm": // parameter map            
+        switch (identifier.category) {
+            case GLOBAL_CONSTANT:
+            case LOCAL_CONSTANT:
+                return constantDeclaration(keyword, identifier);
+            case GLOBAL_VARIABLE:
+            case LOCAL_VARIABLE:
                 return variableDeclaration(keyword, identifier);
-        }
-        // check for function, class, or procedure declaration
-        String type = identifier.lexeme.substring(0, 3);
-        switch (type) {
-            case "fnc":
-                return functionDeclaration(keyword, identifier);
-            case "cls":
-                return classDeclaration(keyword, identifier);
-            case "prc":
-                return procedureDeclaration(keyword, identifier);
             default:
                 error(identifier, "Invalid name: please provide one of the following suffixes:\n`l` for locals\n`g` for globals\n`p` for parameters\nNOTE: you can omite the scoping suffix (first letter) if you are declaring a constant (all uppercase) or your are inside of a class body.");
-                return null;
         }
+        return null;
+        
+        // check for constant declaration
+        // if (Hungaro.isConstant(identifier.lexeme)) {
+        //     return constantDeclaration(keyword, identifier);
+        // }
+
+        // check for variable declaration
+        // String singleType = identifier.lexeme.substring(0, 2);
+        // switch (singleType) {            
+        //     case "ls": // local string
+        //     case "gs": // global string
+        //     case "ps": // parameter string                
+        //     case "ln": // local number            
+        //     case "gn": // global number
+        //     case "pn": // parameter number
+        //     case "lb": // local boolean
+        //     case "gb": // global boolean
+        //     case "pb": // parameter boolean
+        //     case "la": // local array
+        //     case "ga": // global array
+        //     case "pa": // parameter array
+        //     case "lo": // local object
+        //     case "go": // global object
+        //     case "po": // parameter object
+        //     case "lm": // local map
+        //     case "gm": // global map
+        //     case "pm": // parameter map            
+        //         return variableDeclaration(keyword, identifier);
+        // }
+        // check for function, class, or procedure declaration
+        // String type = identifier.lexeme.substring(0, 3);
+        // switch (type) {
+        //     case "fnc":
+        //         return functionDeclaration(keyword, identifier);
+        //     case "cls":
+        //         return classDeclaration(keyword, identifier);
+        //     case "prc":
+        //         return procedureDeclaration(keyword, identifier);
+        //     default:
+        //         error(identifier, "Invalid name: please provide one of the following suffixes:\n`l` for locals\n`g` for globals\n`p` for parameters\nNOTE: you can omite the scoping suffix (first letter) if you are declaring a constant (all uppercase) or your are inside of a class body.");
+        //         return null;
+        // }
     }
 
     private Stmt variableDeclaration(Token keyword, Token identifier) {

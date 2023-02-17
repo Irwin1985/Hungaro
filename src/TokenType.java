@@ -8,7 +8,7 @@ public enum TokenType {
     COMMA,
     SEMICOLON,
     DOT,
-    COLON,
+    COLON,    
 
     // keywords
     AS,

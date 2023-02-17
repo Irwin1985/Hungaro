@@ -19,4 +19,8 @@ public enum Category {
     MUL,
     DIV,
     MOD,    
+    GLOBAL_CONSTANT,
+    LOCAL_CONSTANT,
+    GLOBAL_VARIABLE,
+    LOCAL_VARIABLE,        
 }

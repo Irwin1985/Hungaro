@@ -52,7 +52,7 @@ public class Scanner {
         new Spec(Pattern.compile("^\\n+"), TokenType.SEMICOLON, Category.GENERIC),
 
         // Numbers
-        new Spec(Pattern.compile("^\\d+[_\\.\\d]*"), TokenType.NUMBER, Category.LITERAL),
+        new Spec(Pattern.compile("^\\d+(\\.\\d+)?"), TokenType.NUMBER, Category.LITERAL),
 
         // Double quoted string
         new Spec(Pattern.compile("^\"(?:[^\"\\\\^'\\\\]|\\\\.)*\""), TokenType.STRING, Category.LITERAL),
@@ -105,6 +105,16 @@ public class Scanner {
         new Spec(Pattern.compile("^[\\+\\-\\*\\/]="), TokenType.COMPLEX_ASSIGN, Category.ASSIGNMENT),
         new Spec(Pattern.compile("^[\\+\\-]"), TokenType.TERM, Category.UNARY),
         new Spec(Pattern.compile("^[\\*//%]"), TokenType.FACTOR, Category.UNARY),
+
+        // Local variables
+        new Spec(Pattern.compile("^l[fpcsanbom]\\w+"), TokenType.IDENTIFIER, Category.LOCAL_VARIABLE),
+        // Global variables
+        new Spec(Pattern.compile("^g[fpcsanbom]\\w+"), TokenType.IDENTIFIER, Category.GLOBAL_VARIABLE),
+
+        // Local constants
+        new Spec(Pattern.compile("^[A-Z][A-Z_0-9]*"), TokenType.IDENTIFIER, Category.LOCAL_CONSTANT),
+        // Global constants
+        new Spec(Pattern.compile("^_[A-Z_0-9]*"), TokenType.IDENTIFIER, Category.GLOBAL_CONSTANT),
 
         // Identifier
         new Spec(Pattern.compile("^\\w+"), TokenType.IDENTIFIER, Category.IDENTIFIER),
@@ -184,7 +194,6 @@ public class Scanner {
             Object value = "";
             Category category = spec.category;
             Scope scope = Scope.NONE;
-            boolean isConstant = false;
 
             switch (spec.type) {
                 case NUMBER:
@@ -233,44 +242,44 @@ public class Scanner {
                         case "!": category = Category.BANG; break;
                         default: break;
                     }
-                    break;
-                case IDENTIFIER:
-                    if (Hungaro.isConstant(lexeme)) {
-                        isConstant = true;
-                        scope = Scope.LOCAL; // local by default
-                        if (lexeme.charAt(0) == '_') {
-                            scope = Scope.GLOBAL;
-                        }
-                        checkVariableLength(lexeme);
-                    } else { // is a variable
-                        if (lexeme.charAt(0) == 'g') {
-                            scope = Scope.GLOBAL;
-                        } else if (lexeme.charAt(0) == 'l') {
-                            scope = Scope.LOCAL;
-                        } else if (lexeme.charAt(0) == 'p') {
-                            scope = Scope.PARAM;
-                        }
-                        checkVariableLength(lexeme);
-                    }
-                    value = lexeme;
-                    break;
+                    break;                
+                // case IDENTIFIER:
+                //     if (Hungaro.isConstant(lexeme)) {
+                //         scope = Scope.LOCAL; // local by default
+                //         if (lexeme.charAt(0) == '_') {
+                //             scope = Scope.GLOBAL;
+                //         }
+                //         checkVariableLength(lexeme);
+                //     } else { // is a variable
+                //         if (lexeme.charAt(0) == 'g') {
+                //             scope = Scope.GLOBAL;
+                //         } else if (lexeme.charAt(0) == 'l') {
+                //             scope = Scope.LOCAL;
+                //         } else if (lexeme.charAt(0) == 'p') {
+                //             scope = Scope.PARAM;
+                //         }
+                //         checkVariableLength(lexeme);
+                //     }
+                //     value = lexeme;
+                //     break;
                 default:
                     value = lexeme;
                     break;
             }
-            Token tok = new Token(spec.type, category, lexeme, value, line, col, scope, isConstant);
+            Token tok = new Token(spec.type, category, lexeme, value, line, col, scope);
             col += lexeme.length();
             return tok;
         }
-        Hungaro.error(line, col, "Unknown character: " + input.charAt(0));
+        String where = "";
+        String explanation = "Plese check your code with the following suggestions:\n1. There is an unknown character.\n2. You have a typo.\n3. You are using a reserved word as an identifier.\n4. You are using a variable which size is less than 3 characters."; 
+        if (input.length() <= 10) {
+            where = input;
+        } else {
+            where = input.substring(0, 10) + "...";
+        }
+        Hungaro.error(line, col, where, explanation);
         cursor += input.length();
         return null;
-    }
-
-    private void checkVariableLength(String lexeme) {
-        if (lexeme.length() <= 2) {
-            Hungaro.error(line, col, lexeme, "Variable name must be at least 3 characters long.");
-        }
     }
 
     public static void main(String[] args) throws IOException {

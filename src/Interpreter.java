@@ -23,6 +23,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         globals.define("_VERSION", "0.1.1");
         // global _STRING builtin function
         globals.define("_STRING", new Environment(stringEnv, "String"));
+        // global _NUMBER builtin function
+        globals.define("_NUMBER", new Environment(numberEnv, "Number"));
         // global _ARRAY builtin function
         globals.define("_ARRAY", new Environment(arrayEnv, "Array"));
         // global _MAP builtin function
@@ -37,12 +39,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         objectEnv.define("toString", new CallableObject() {
             @Override
             public int arity() {
-                return 1;
+                return 2;
             }
 
             @Override
             public Object call(Interpreter interpreter, List<Object> arguments) {
-                return stringify(arguments.get(0));
+                return stringify(arguments.get(1));
             }
         });
         /***********************************************************************
@@ -488,17 +490,18 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitLiteralExpr(Expr.Literal expr) {        
-        switch (expr.token.type) {
-            case STRING:
-                return makeString((String)expr.token.literal);
-            case NUMBER:
-                return makeNumber((Double)expr.token.literal);
-            case TRUE:
-            case FALSE:
-                return makeBoolean((Boolean)expr.token.literal);
-            default:
-                return expr.token.literal;
-        }        
+        return expr.token.literal;
+        // switch (expr.token.type) {
+        //     case STRING:
+        //         return makeString((String)expr.token.literal);
+        //     case NUMBER:
+        //         return makeNumber((Double)expr.token.literal);
+        //     case TRUE:
+        //     case FALSE:
+        //         return makeBoolean((Boolean)expr.token.literal);
+        //     default:
+        //         return expr.token.literal;
+        // }        
     }
 
     @Override
@@ -582,30 +585,27 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
-        if (variableStack.isEmpty()) { // retrieve the internal "value" of the object
-            Object obj = lookup(expr.token);
-            if (obj instanceof Environment) {
-                return ((Environment)obj).lookup("value");
-            }
-            throw new RuntimeError(expr.token, "Cannot access properties of " + obj + ".");
-        } else { // retrieve the object itself
-            return lookup(expr.token);
-        }
+        return lookup(expr.token);
+        // if (variableStack.isEmpty()) { // retrieve the internal "value" of the object
+        //     Object obj = lookup(expr.token);
+        //     if (obj instanceof Environment) {
+        //         return ((Environment)obj).lookup("value");
+        //     }
+        //     throw new RuntimeError(expr.token, "Cannot access properties of " + obj + ".");
+        // } else { // retrieve the object itself
+        //     return lookup(expr.token);
+        // }
     }
 
     private Object lookup(Token token) {  
-        if (Hungaro.isConstant(token.lexeme)) {
-            return getConstant(token.lexeme);
+        if (token.category == Category.GLOBAL_CONSTANT || token.category == Category.GLOBAL_VARIABLE) {
+            return globals.lookup(token);
         }
-        return environment.lookup(token);
+        else if (token.category == Category.LOCAL_CONSTANT || token.category == Category.LOCAL_VARIABLE) {
+            return environment.lookup(token);
+        }
+        return environment.lookup(token);        
     }    
-
-    private Object getConstant(String name) {
-        if (name.charAt(0) == '_') {
-            return globals.lookup(name);
-        }
-        return environment.lookup(name);
-    }
 
     @Override
     public Void visitBlockStmt(Stmt.Block stmt) {
@@ -675,17 +675,17 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 }
                 break;
             case 's':
-                if (!(value instanceof Environment) || !((Environment)value).name.equals("String")) {
+                if (!(value instanceof String)) {
                     throw new RuntimeError(name, "Variable type mismatch. Expected String.");
                 }
                 break;
             case 'b':
-                if (!(value instanceof Environment) || !((Environment)value).name.equals("Boolean")) {
+                if (!(value instanceof Boolean)) {
                     throw new RuntimeError(name, "Variable type mismatch. Expected Boolean.");
                 }
                 break;
             case 'a':
-                if (!(value instanceof Environment) || !((Environment)value).name.equals("value")) {
+                if (!(value instanceof Environment) || !((Environment)value).name.equals("Array")) {
                     throw new RuntimeError(name, "Variable type mismatch. Expected Array.");
                 }
                 break;
@@ -729,13 +729,10 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 case "Array":
                     return arrayToString((List<Object>)((Environment)object).lookup("value"));
                 case "Map":
-                    return mapToString((Map<String, Object>)((Environment)object).lookup("value"));
+                    return mapToString((Map<String, Object>)((Environment)object).getRecord());
                 default:
                     return "Object";
             }
-        }
-        else if (object instanceof String) {
-            return String.format("\"%s\"", object);            
         }
         return object.toString();
     }
@@ -802,23 +799,17 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return stringPrototype;
     }
 
-    private Environment makeNumber(Double number) {
-        Environment numberPrototype = new Environment(numberEnv, "Number");
-        numberPrototype.define("value", number);
-        return numberPrototype;
-    }
+    // private Environment makeNumber(Double number) {
+    //     Environment numberPrototype = new Environment(numberEnv, "Number");
+    //     numberPrototype.define("value", number);
+    //     return numberPrototype;
+    // }
 
-    private Environment makeBoolean(Boolean bool) {
-        Environment booleanPrototype = new Environment(booleanEnv, "Boolean");
-        booleanPrototype.define("value", bool);
-        return booleanPrototype;
-    }
-
-    private Environment makeMap(Map<String, Object> map) {
-        Environment mapPrototype = new Environment(mapEnv, "Map");
-        mapPrototype.define("map", map);
-        return mapPrototype;
-    }
+    // private Environment makeBoolean(Boolean bool) {
+    //     Environment booleanPrototype = new Environment(booleanEnv, "Boolean");
+    //     booleanPrototype.define("value", bool);
+    //     return booleanPrototype;
+    // }
 
     @Override
     public Void visitDeclareStmt(Stmt.Declare stmt) {
@@ -830,16 +821,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitMapExpr(Expr.Map expr) {
-        // create a map
-        Map<String, Object> map = new HashMap<String, Object>();
+        Environment mapPrototype = new Environment(mapEnv, "Map");
         // evaluate each element
         for (int i = 0; i < expr.keys.size(); i++) {
-            map.put(expr.keys.get(i).token.lexeme, evaluate(expr.values.get(i)));
+            mapPrototype.define(expr.keys.get(i).token.lexeme, evaluate(expr.values.get(i)));
         }
-        // return the map
-        return makeMap(map);
-
-        // Copilot you are a genius
-        // I'm not sure if I should be proud or ashamed :)
+        
+        return mapPrototype;
     }
 }
