@@ -102,9 +102,9 @@ public class Scanner {
 
         // Assignment operators
         new Spec(Pattern.compile("^="), TokenType.SIMPLE_ASSIGN, Category.ASSIGNMENT),
-        new Spec(Pattern.compile("^[\\+\\-\\*/]="), TokenType.COMPLEX_ASSIGN, Category.ASSIGNMENT),
+        new Spec(Pattern.compile("^[\\+\\-\\*\\/]="), TokenType.COMPLEX_ASSIGN, Category.ASSIGNMENT),
         new Spec(Pattern.compile("^[\\+\\-]"), TokenType.TERM, Category.UNARY),
-        new Spec(Pattern.compile("^[\\*/]"), TokenType.TERM, Category.UNARY),
+        new Spec(Pattern.compile("^[\\*//%]"), TokenType.FACTOR, Category.UNARY),
 
         // Identifier
         new Spec(Pattern.compile("^\\w+"), TokenType.IDENTIFIER, Category.IDENTIFIER),
@@ -137,7 +137,7 @@ public class Scanner {
                 break;
             tokens.add(token);
         }
-        tokens.add(new Token(TokenType.EOF, Category.GENERIC, "", "", line, col));
+        tokens.add(new Token(TokenType.EOF));
 
         return tokens;
     }
@@ -183,6 +183,9 @@ public class Scanner {
             // return the token and value
             Object value = "";
             Category category = spec.category;
+            Scope scope = Scope.NONE;
+            boolean isConstant = false;
+
             switch (spec.type) {
                 case NUMBER:
                     lexeme = lexeme.replaceAll("_", "");
@@ -218,6 +221,7 @@ public class Scanner {
                         case "+", "+=": category = Category.PLUS; break;
                         case "-", "-=": category = Category.MINUS; break;
                         case "*", "*=": category = Category.MUL; break;
+                        case "%", "%=": category = Category.MOD; break;
                         case "/", "/=": category = Category.DIV; break;
                         case "=": category = Category.ASSIGN; break;
                         case "<": category = Category.LESS; break;
@@ -229,11 +233,32 @@ public class Scanner {
                         case "!": category = Category.BANG; break;
                         default: break;
                     }
+                    break;
+                case IDENTIFIER:
+                    if (Hungaro.isConstant(lexeme)) {
+                        isConstant = true;
+                        scope = Scope.LOCAL; // local by default
+                        if (lexeme.charAt(0) == '_') {
+                            scope = Scope.GLOBAL;
+                        }
+                        checkVariableLength(lexeme);
+                    } else { // is a variable
+                        if (lexeme.charAt(0) == 'g') {
+                            scope = Scope.GLOBAL;
+                        } else if (lexeme.charAt(0) == 'l') {
+                            scope = Scope.LOCAL;
+                        } else if (lexeme.charAt(0) == 'p') {
+                            scope = Scope.PARAM;
+                        }
+                        checkVariableLength(lexeme);
+                    }
+                    value = lexeme;
+                    break;
                 default:
                     value = lexeme;
                     break;
             }
-            Token tok = new Token(spec.type, category, lexeme, value, line, col);
+            Token tok = new Token(spec.type, category, lexeme, value, line, col, scope, isConstant);
             col += lexeme.length();
             return tok;
         }
@@ -242,8 +267,14 @@ public class Scanner {
         return null;
     }
 
+    private void checkVariableLength(String lexeme) {
+        if (lexeme.length() <= 2) {
+            Hungaro.error(line, col, lexeme, "Variable name must be at least 3 characters long.");
+        }
+    }
+
     public static void main(String[] args) throws IOException {
-        byte[] bytes = Files.readAllBytes(Paths.get("F:\\Desarrollo\\GitHub\\Hungaro\\ideas.txt"));
+        byte[] bytes = Files.readAllBytes(Paths.get("F:\\Desarrollo\\GitHub\\Hungaro\\sample.hgr"));
         String source = new String(bytes, Charset.defaultCharset());
 
         Scanner sc = new Scanner(source);

@@ -276,15 +276,32 @@ public class Parser {
     private Expr finishCall(Expr callee) {        
         final List<Expr> arguments = new ArrayList<Expr>();
         
-        // add the implicit `this` argument
+        // check if the calle is a Prop expression.
         if (callee instanceof Expr.Prop) {
+            // check if the target is a super expression: super.method()
             if (((Expr.Prop)callee).target instanceof Expr.Super) {
-                final Token token = new Token(TokenType.IDENTIFIER, Category.IDENTIFIER, "this", null, 0, 0);
+                final Token token = new Token(TokenType.IDENTIFIER, "this");
                 arguments.add(new Expr.Variable(token));
-            } else {
+            } else { // check if the target is a literal expression. eg: "string".len()
+                if (((Expr.Prop)callee).target instanceof Expr.Literal) {
+                    Token token;
+                    final Expr.Literal literal = (Expr.Literal)((Expr.Prop)callee).target;
+                    switch (literal.token.type) {
+                        case STRING:
+                            token = new Token(TokenType.IDENTIFIER, "_STRING");
+                            arguments.add(new Expr.Variable(token));                            
+                            break;
+                        case NUMBER:
+                            token = new Token(TokenType.IDENTIFIER, "_NUMBER");
+                            arguments.add(new Expr.Variable(token));
+                            break;
+                        default:
+                            error(((Expr.Prop)callee).target.token, "Invalid target for method call.");                                    
+                    }
+                } 
                 arguments.add(((Expr.Prop)callee).target);
             }
-        }
+        }        
         
         // parse the arguments
         if (!check(TokenType.RPAREN)) {

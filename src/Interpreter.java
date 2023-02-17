@@ -2,6 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Stack;
 
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment globals = new Environment("Global");
@@ -10,12 +11,28 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment objectEnv = new Environment("Object");
     final Environment arrayEnv = new Environment(objectEnv, "Array");
     final Environment mapEnv = new Environment(objectEnv, "Map");
+    final Environment stringEnv = new Environment(objectEnv, "String");
+    final Environment numberEnv = new Environment(objectEnv, "Number");
+    final Environment booleanEnv = new Environment(objectEnv, "Boolean");
+
+    final Stack<Boolean> variableStack = new Stack<Boolean>();
 
     private Environment environment = globals;
 
     public Interpreter() {
         globals.define("_VERSION", "0.1.1");
+        // global _STRING builtin function
+        globals.define("_STRING", new Environment(stringEnv, "String"));
+        // global _ARRAY builtin function
+        globals.define("_ARRAY", new Environment(arrayEnv, "Array"));
+        // global _MAP builtin function
+        globals.define("_MAP", new Environment(mapEnv, "Map"));
+        // global _OBJECT builtin function
+        globals.define("_OBJECT", new Environment(objectEnv, "Object"));
 
+        /***********************************************************************
+         * Object
+         ***********************************************************************/
         // object toString builtin function
         objectEnv.define("toString", new CallableObject() {
             @Override
@@ -28,8 +45,10 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 return stringify(arguments.get(0));
             }
         });
-
-        // array push builtin function
+        /***********************************************************************
+         * Array
+         ***********************************************************************/
+        // array push builtin function: eg. array.push(1)
         arrayEnv.define("push", new CallableObject() {
             @Override
             public int arity() {
@@ -40,7 +59,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("array");
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
                     array.add(arguments.get(1));
                 }
                 return null;
@@ -58,7 +77,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("array");
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
                     return array.remove(array.size() - 1);
                 }
                 return null;
@@ -76,7 +95,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("array");
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
                     return array.size();
                 }
                 return 0;
@@ -94,7 +113,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("array");
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
                     try {
                         Double index = (Double)arguments.get(1);
                         int i = index.intValue();                
@@ -118,7 +137,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("array");
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
                     try {
                         Double index = (Double)arguments.get(1);
                         int i = index.intValue();                
@@ -142,7 +161,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("array");
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
                     try {
                         Double start = (Double)arguments.get(1);
                         Double end = (Double)arguments.get(2);
@@ -168,7 +187,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("array");
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
                     String separator = (String)arguments.get(1);
                     String result = String.join(separator, array.stream().map(Object::toString).toArray(String[]::new));
                     return result;
@@ -177,6 +196,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         });
 
+        /***********************************************************************
+         * Map
+         ***********************************************************************/
         // map get builtin function
         mapEnv.define("get", new CallableObject() {
             @Override
@@ -321,6 +343,21 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         });
 
+        /***********************************************************************
+         * String
+         ***********************************************************************/
+        // string len builtin function
+        stringEnv.define("len", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                return ((String)arguments.get(1)).length();
+            }
+        });
     }
 
     public void interpret(List<Stmt> statements) {
@@ -355,7 +392,74 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitBinaryExpr(Expr.Binary expr) {        
-        return null;
+        final Object left = evaluate(expr.left);
+        final Object right = evaluate(expr.right);
+        switch (expr.operator.category) {
+            case NOT_EQ:
+                return !isEqual(left, right);
+            case EQUAL:
+                return isEqual(left, right);
+            case GREATER:
+                checkNumberOperands(expr.operator, left, right);
+                return (Double)left > (Double)right;
+            case GREATER_EQ:
+                checkNumberOperands(expr.operator, left, right);
+                return (Double)left >= (Double)right;
+            case LESS:
+                checkNumberOperands(expr.operator, left, right);
+                return (Double)left < (Double)right;
+            case LESS_EQ:
+                checkNumberOperands(expr.operator, left, right);
+                return (Double)left <= (Double)right;
+            case MINUS:
+                checkNumberOperands(expr.operator, left, right);
+                return (Double)left - (Double)right;
+            case PLUS:
+                if (left instanceof Double && right instanceof Double) {
+                    return (Double)left + (Double)right;
+                }
+                if (left instanceof String && right instanceof String) {
+                    return (String)left + (String)right;
+                }
+                throw new RuntimeError(expr.operator, "Operands must be two numbers or two strings.");
+            case DIV:
+                checkNumberOperands(expr.operator, left, right);
+                // check for division by zero
+                if ((Double)right == 0) {
+                    throw new RuntimeError(expr.operator, "Division by zero.");
+                }
+                return (Double)left / (Double)right;
+            case MUL:
+                checkNumberOperands(expr.operator, left, right);
+                return (Double)left * (Double)right;
+            case MOD:
+                checkNumberOperands(expr.operator, left, right);
+                return (Double)left % (Double)right;
+            default:
+                throw new RuntimeError(expr.operator, "Unknown operator.");
+        }
+    }
+
+    private boolean isEqual(Object a, Object b) {
+        if (a == null && b == null) return true;
+        if (a == null) return false;
+        return a.equals(b);
+    }
+
+    private boolean isTruthy(Object object) {
+        if (object == null) return false;
+        if (object instanceof Boolean) return (Boolean)object;
+        return true;
+    }
+
+    private void checkNumberOperand(Token operator, Object operand) {
+        if (operand instanceof Double) return;
+        throw new RuntimeError(operator, "Operand must be a number.");
+    }
+
+    private void checkNumberOperands(Token operator, Object left, Object right) {
+        if (left instanceof Double && right instanceof Double) return;
+        throw new RuntimeError(operator, "Operands must be numbers.");
     }
 
     @Override
@@ -384,12 +488,28 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitLiteralExpr(Expr.Literal expr) {        
-        return expr.token.literal;
+        switch (expr.token.type) {
+            case STRING:
+                return makeString((String)expr.token.literal);
+            case NUMBER:
+                return makeNumber((Double)expr.token.literal);
+            case TRUE:
+            case FALSE:
+                return makeBoolean((Boolean)expr.token.literal);
+            default:
+                return expr.token.literal;
+        }        
     }
 
     @Override
     public Object visitLogicalExpr(Expr.Logical expr) {
-        return null;
+        final Object left = evaluate(expr.left);
+        if (expr.operator.type == TokenType.LOGICAL_OR) {
+            if (isTruthy(left)) return left;
+        } else {
+            if (!isTruthy(left)) return left;
+        }
+        return evaluate(expr.right);
     }
 
     @Override
@@ -399,7 +519,30 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitPropExpr(Expr.Prop expr) {
-        Environment object = (Environment)evaluate(expr.target);        
+        Environment object = null;
+        if (expr.target instanceof Expr.Literal) {
+            switch (expr.target.token.type) {
+                case STRING:
+                    object = (Environment)globals.lookup("_STRING");
+                    break;
+                case NUMBER:
+                    object = (Environment)globals.lookup("_NUMBER");
+                    break;
+                case TRUE:
+                case FALSE:
+                    object = (Environment)globals.lookup("_BOOLEAN");
+                    break;
+                case NULL:
+                    throw new RuntimeError(expr.target.token, "Cannot access properties of null.");
+                default:
+                    break;
+            }
+        } else {
+            // retrieve the object
+            variableStack.push(true);
+            object = (Environment)evaluate(expr.target);
+            variableStack.pop();
+        }        
         if (expr.computable) {
             Object property = evaluate(expr.property);
             return object.lookup(stringify(property), expr.property.token);
@@ -422,16 +565,46 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitUnaryExpr(Expr.Unary expr) {
-        return null;
+        Object right = evaluate(expr.right);
+        switch (expr.operator.category) {
+            case MINUS:
+                checkNumberOperand(expr.operator, right);
+                return -(Double)right;
+            case PLUS:
+                checkNumberOperand(expr.operator, right);
+                return +(Double)right;
+            case BANG:
+                return !isTruthy(right);
+            default:
+                throw new RuntimeError(expr.operator, "Unknown operator.");
+        }
     }
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
-        return lookup(expr.token);
+        if (variableStack.isEmpty()) { // retrieve the internal "value" of the object
+            Object obj = lookup(expr.token);
+            if (obj instanceof Environment) {
+                return ((Environment)obj).lookup("value");
+            }
+            throw new RuntimeError(expr.token, "Cannot access properties of " + obj + ".");
+        } else { // retrieve the object itself
+            return lookup(expr.token);
+        }
     }
 
-    private Object lookup(Token token) {        
+    private Object lookup(Token token) {  
+        if (Hungaro.isConstant(token.lexeme)) {
+            return getConstant(token.lexeme);
+        }
         return environment.lookup(token);
+    }    
+
+    private Object getConstant(String name) {
+        if (name.charAt(0) == '_') {
+            return globals.lookup(name);
+        }
+        return environment.lookup(name);
     }
 
     @Override
@@ -502,28 +675,22 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 }
                 break;
             case 's':
-                if (!(value instanceof String)) {
+                if (!(value instanceof Environment) || !((Environment)value).name.equals("String")) {
                     throw new RuntimeError(name, "Variable type mismatch. Expected String.");
                 }
                 break;
             case 'b':
-                if (!(value instanceof Boolean)) {
+                if (!(value instanceof Environment) || !((Environment)value).name.equals("Boolean")) {
                     throw new RuntimeError(name, "Variable type mismatch. Expected Boolean.");
                 }
                 break;
             case 'a':
-                if (!(value instanceof Environment)) {
-                    throw new RuntimeError(name, "Variable type mismatch. Expected Array.");
-                }
-                if (!((Environment)value).name.equals("Array")) {
+                if (!(value instanceof Environment) || !((Environment)value).name.equals("value")) {
                     throw new RuntimeError(name, "Variable type mismatch. Expected Array.");
                 }
                 break;
             case 'm':
-                if (!(value instanceof Environment)) {
-                    throw new RuntimeError(name, "Variable type mismatch. Expected Map.");
-                }
-                if (!((Environment)value).name.equals("Map")) {
+                if (!(value instanceof Environment) || !((Environment)value).name.equals("Map")) {
                     throw new RuntimeError(name, "Variable type mismatch. Expected Map.");
                 }
                 break;
@@ -560,9 +727,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         else if (object instanceof Environment) {
             switch (((Environment)object).name) {
                 case "Array":
-                    return arrayToString((List<Object>)((Environment)object).lookup("array"));
+                    return arrayToString((List<Object>)((Environment)object).lookup("value"));
                 case "Map":
-                    return mapToString((Map<String, Object>)((Environment)object).lookup("map"));
+                    return mapToString((Map<String, Object>)((Environment)object).lookup("value"));
                 default:
                     return "Object";
             }
@@ -612,21 +779,45 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
-    public Object visitArrayExpr(Expr.Array expr) {        
-        // Environment arrayPrototype = new Environment(arrayEnv, "Array");
+    public Object visitArrayExpr(Expr.Array expr) {
+        // create an array
         List<Object> array = new ArrayList<Object>();
-        // arrayPrototype.define("array", array);
+        // evaluate each element
         for (int i = 0; i < expr.elements.size(); i++) {
             array.add(evaluate(expr.elements.get(i)));
         }
-        return makeArray(array);
-        // return arrayPrototype;
+        // return the array
+        return makeArray(array);        
     }
 
     private Environment makeArray(List<Object> array) {
         Environment arrayPrototype = new Environment(arrayEnv, "Array");
-        arrayPrototype.define("array", array);
+        arrayPrototype.define("value", array);
         return arrayPrototype;
+    }
+
+    private Environment makeString(String string) {
+        Environment stringPrototype = new Environment(stringEnv, "String");
+        stringPrototype.define("value", string);
+        return stringPrototype;
+    }
+
+    private Environment makeNumber(Double number) {
+        Environment numberPrototype = new Environment(numberEnv, "Number");
+        numberPrototype.define("value", number);
+        return numberPrototype;
+    }
+
+    private Environment makeBoolean(Boolean bool) {
+        Environment booleanPrototype = new Environment(booleanEnv, "Boolean");
+        booleanPrototype.define("value", bool);
+        return booleanPrototype;
+    }
+
+    private Environment makeMap(Map<String, Object> map) {
+        Environment mapPrototype = new Environment(mapEnv, "Map");
+        mapPrototype.define("map", map);
+        return mapPrototype;
     }
 
     @Override
@@ -639,14 +830,16 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitMapExpr(Expr.Map expr) {
-        Environment objectPrototype = new Environment(mapEnv, "Map");
+        // create a map
         Map<String, Object> map = new HashMap<String, Object>();
-        // fill map
+        // evaluate each element
         for (int i = 0; i < expr.keys.size(); i++) {
             map.put(expr.keys.get(i).token.lexeme, evaluate(expr.values.get(i)));
         }
-        objectPrototype.define("map", map);
+        // return the map
+        return makeMap(map);
 
-        return objectPrototype;
+        // Copilot you are a genius
+        // I'm not sure if I should be proud or ashamed :)
     }
 }

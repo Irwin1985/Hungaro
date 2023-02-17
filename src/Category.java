@@ -18,4 +18,5 @@ public enum Category {
     MINUS,
     MUL,
     DIV,
+    MOD,    
 }

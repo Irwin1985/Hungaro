@@ -52,27 +52,38 @@ public class Hungaro {
     }
 
     public static void run(String source) {
-        final Scanner scanner = new Scanner(source);
-        final List<Token> tokens = scanner.scanTokens();
-        final boolean printTokens = false;
-        // debug
-        if (printTokens) {
-            System.out.println("=============================");
-            for (Token token : tokens) {
-                System.out.println(token);
+        List<Token> tokens = null;        
+        try {
+            final Scanner scanner = new Scanner(source);
+            tokens = scanner.scanTokens();
+            final boolean printTokens = false;
+            // debug
+            if (printTokens) {
+                System.out.println("=============================");
+                for (Token token : tokens) {
+                    System.out.println(token);
+                }
+                System.out.println("=============================");
             }
-            System.out.println("=============================");
+            // end debug
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
-        // end debug
+        if (hadError) return;
 
-        Parser parser = new Parser(tokens);
+        // continue parsing
+        Parser parser = new Parser(tokens);        
         List<Stmt> statements = parser.parse();            
         if (hadError) return;
-        interpreter.interpret(statements);
+        interpreter.interpret(statements);        
     }
 
     static void error(int line, int col, String message) {
         report(line, col, "", message);
+    }
+
+    static void error(int line, int col, String where, String message) {
+        report(line, col, where, message);
     }
 
     private static void report(int line, int col, String where, String message) {
