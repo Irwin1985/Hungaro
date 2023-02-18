@@ -22,17 +22,27 @@ public class RuntimeFunction implements CallableObject {
     @Override
     public Object call(Interpreter interpreter, List<Object> arguments) {
         Environment environment = new Environment(closure, "function call of " + declaration.name.lexeme);
+        boolean foundReturn = false;
+
+        // load arguments into environment
         for (int i = 0; i < declaration.params.size(); i++) {
-            environment.define(declaration.params.get(i).lexeme, arguments.get(i));
+            interpreter.checkVariableType(declaration.params.get(i).name, arguments.get(i), "Parameter");
+            environment.define(declaration.params.get(i).name.lexeme, arguments.get(i));
         }
 
+        // execute function body
         try {
-            interpreter.executeBlock(declaration.body, environment);
+            interpreter.executeBlock(declaration.body.statements, environment);
         } catch (Return returnValue) {
+            // return value
+            foundReturn = true;
             return returnValue.value;
         }
 
-        return null;
+        if (!foundReturn && declaration.mustReturnValue) {
+            throw new RuntimeError(declaration.name, "Function must return a value.");
+        }
+        return null;        
     }
     
 }

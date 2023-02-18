@@ -143,10 +143,10 @@ public abstract class Expr {
      * Map expression: {a: 1, b: 2}
      */
     public static class Map extends Expr {
-        final List<Expr> keys;
+        final List<String> keys;
         final List<Expr> values;
 
-        public Map(Token token, List<Expr> keys, List<Expr> values) {
+        public Map(Token token, List<String> keys, List<Expr> values) {
             super(token);
             this.keys = keys;
             this.values = values;

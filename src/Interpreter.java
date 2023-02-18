@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Stack;
 
+@SuppressWarnings("unchecked")
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment globals = new Environment("Global");
     
@@ -169,7 +170,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                         Double end = (Double)arguments.get(2);
                         int s = start.intValue();
                         int e = end.intValue();
-                        return makeArray(array.subList(s, e));
+                        return makeObject(array.subList(s, e), arrayEnv, "Array");
                     } catch(Exception e) {
                         return null;
                     }
@@ -212,7 +213,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("value");
                     return map.get(arguments.get(1));
                 }
                 return null;
@@ -230,7 +231,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("value");
                     map.put(arguments.get(1), arguments.get(2));
                 }
                 return null;
@@ -248,7 +249,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("value");
                     return map.size();
                 }
                 return 0;
@@ -266,8 +267,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
-                    return makeArray(new ArrayList<Object>(map.keySet()));                    
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("value");
+                    return makeObject(new ArrayList<Object>(map.keySet()), arrayEnv, "Array");
                 }
                 return null;
             }
@@ -284,8 +285,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
-                    return makeArray(new ArrayList<Object>(map.values()));                    
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("value");
+                    return makeObject(new ArrayList<Object>(map.values()), arrayEnv, "Array");
                 }
                 return null;
             }
@@ -302,7 +303,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("value");
                     return map.containsKey(arguments.get(1));
                 }
                 return false;
@@ -320,7 +321,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("value");
                     return map.remove(arguments.get(1));
                 }
                 return null;
@@ -338,7 +339,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("map");
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("value");
                     map.clear();
                 }
                 return null;
@@ -490,18 +491,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitLiteralExpr(Expr.Literal expr) {        
-        return expr.token.literal;
-        // switch (expr.token.type) {
-        //     case STRING:
-        //         return makeString((String)expr.token.literal);
-        //     case NUMBER:
-        //         return makeNumber((Double)expr.token.literal);
-        //     case TRUE:
-        //     case FALSE:
-        //         return makeBoolean((Boolean)expr.token.literal);
-        //     default:
-        //         return expr.token.literal;
-        // }        
+        return expr.token.literal;              
     }
 
     @Override
@@ -548,17 +538,69 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }        
         if (expr.computable) {
             Object property = evaluate(expr.property);
+            if (object.name.equals("Array")) {
+                if (property instanceof Double) {
+                    return object.lookup((int)(double)(Double)property, expr.property.token);
+                } else {
+                    throw new RuntimeError(expr.property.token, "Array index must be a number.");
+                }
+            }
+            else if (object.name.equals("Map")) {
+                return ((Map<String, Object>)object.lookup("value")).get((String)property);
+            }
             return object.lookup(stringify(property), expr.property.token);
+        }
+        if (object.name.equals("Map")) {
+            HashMap<Object, Object> map = (HashMap<Object, Object>)object.lookup("value");
+            Object value = map.get(expr.property.token.lexeme);
+            if (value != null) {
+                return value;
+            }
         }
         return object.lookup(expr.property.token);
     }
 
     @Override
     public Object visitSetExpr(Expr.Set expr) {
-        if (expr.computable) {            
+        // set the value of a variable or property
+        // eg. a = 1, a.b = 2, a[1] = 2
+        // no computable set: eg: a.b = 2
+        // computable set: eg: a[1] = 2
+
+        String name = "Variable";
+        final Object value = evaluate(expr.value);
+        if (expr.computable) { // eg. a[1] = 2
+            name = "Property";
+            final Expr.Prop prop = (Expr.Prop)expr.target;
+            final Environment instance = (Environment)evaluate(prop.target);
+            Object property = prop.property.token.lexeme;
+            if (prop.computable) {                
+                property = evaluate(prop.property);
+            }
+            if (instance.name.equals("Array")) {
+                if (property instanceof Double) {
+                    int index = (int)(double)(Double)property;  
+                    ArrayList<Object> array = (ArrayList<Object>)instance.lookup("value");
+                    if (index < 0 || index >= array.size()) {
+                        throw new RuntimeError(prop.property.token, "Array index out of bounds.");
+                    }
+                    return array.set(index, value);
+                } else {
+                    throw new RuntimeError(prop.property.token, "Array index must be a number.");
+                }
+            }
+            else if (instance.name.equals("Map")) {
+                HashMap<Object, Object> map = (HashMap<Object, Object>)instance.lookup("value");
+                map.put(property, value);
+                return value;
+            }
             return null;
         }
-        return environment.assign(((Expr.Variable)expr.target).name, evaluate(expr.value));
+        // check variable or property value
+        Token variableToken = ((Expr.Variable)expr.target).name;        
+        checkVariableType(variableToken, value, name);
+
+        return environment.assign(variableToken, value);
     }
 
     @Override
@@ -585,16 +627,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
-        return lookup(expr.token);
-        // if (variableStack.isEmpty()) { // retrieve the internal "value" of the object
-        //     Object obj = lookup(expr.token);
-        //     if (obj instanceof Environment) {
-        //         return ((Environment)obj).lookup("value");
-        //     }
-        //     throw new RuntimeError(expr.token, "Cannot access properties of " + obj + ".");
-        // } else { // retrieve the object itself
-        //     return lookup(expr.token);
-        // }
+        return lookup(expr.token);       
     }
 
     private Object lookup(Token token) {  
@@ -625,12 +658,31 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
-    public Void visitFunctionStmt(Stmt.Function stmt) {
+    public Void visitFunctionStmt(Stmt.Function stmt) {        
+        final RuntimeFunction function =  new RuntimeFunction(stmt, environment);
+        switch (stmt.name.category) {
+            case GLOBAL_FUNCTION:
+            case GLOBAL_PROCEDURE:
+                globals.define(stmt.name.lexeme, function);
+                break;
+            case LOCAL_FUNCTION:
+            case LOCAL_PROCEDURE:
+                environment.define(stmt.name.lexeme, function);
+                break;
+            default:
+                break;
+        }
         return null;
     }
 
     @Override
     public Void visitIfStmt(Stmt.If stmt) {
+        final Object condition = evaluate(stmt.condition);
+        if (isTruthy(condition)) {
+            execute(stmt.thenBranch);
+        } else if (stmt.elseBranch != null) {
+            execute(stmt.elseBranch);
+        }
         return null;
     }
 
@@ -644,7 +696,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitReturnStmt(Stmt.Return stmt) {
-        return null;
+        Object returnValue = null;
+        if (stmt.value != null) returnValue = evaluate(stmt.value);
+        throw new Return(returnValue);
     }
 
     @Override
@@ -652,7 +706,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         Object value = null;
         if (stmt.initializer != null) {
             value = evaluate(stmt.initializer);
-            validateVariableType(stmt.name, value);
+            checkVariableType(stmt.name, value, "Variable");
         }
         if (stmt.name.lexeme.substring(0,1) == "g") {
             // global variable
@@ -664,48 +718,40 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return null;
     }
 
-    private void validateVariableType(Token name, Object value) {
-        if (value == null) return;
-        
-        char type = name.lexeme.substring(1, 2).charAt(0);
-        switch (type) {
-            case 'n':
-                if (!(value instanceof Double)) {
-                    throw new RuntimeError(name, "Variable type mismatch. Expected Number.");
-                }
-                break;
+    public void checkVariableType(Token name, Object value, String type) {                
+        char linkedType = name.lexeme.substring(1, 2).charAt(0);
+        if (value == null) {
+            if (linkedType == 'o') return;
+            throw new RuntimeError(name, type + " type mismatch. Expected " + Hungaro.getTypeOf(name, linkedType) + ".");
+        }
+        switch (linkedType) {
             case 's':
-                if (!(value instanceof String)) {
-                    throw new RuntimeError(name, "Variable type mismatch. Expected String.");
-                }
+                if (value instanceof String) return;
+                break;
+            case 'n':
+                if (value instanceof Double) return;
                 break;
             case 'b':
-                if (!(value instanceof Boolean)) {
-                    throw new RuntimeError(name, "Variable type mismatch. Expected Boolean.");
-                }
+                if (value instanceof Boolean) return;
                 break;
             case 'a':
-                if (!(value instanceof Environment) || !((Environment)value).name.equals("Array")) {
-                    throw new RuntimeError(name, "Variable type mismatch. Expected Array.");
+                if (value instanceof Environment) {
+                    if (((Environment)value).name.equals("Array")) return;
                 }
                 break;
             case 'm':
-                if (!(value instanceof Environment) || !((Environment)value).name.equals("Map")) {
-                    throw new RuntimeError(name, "Variable type mismatch. Expected Map.");
+                if (value instanceof Environment) {
+                    if (((Environment)value).name.equals("Map")) return;
                 }
                 break;
             case 'o':
-                if (!(value instanceof Environment)) {
-                    throw new RuntimeError(name, "Variable type mismatch. Expected Object.");
-                }
-                if (!((Environment)value).name.equals("Object")) {
-                    throw new RuntimeError(name, "Variable type mismatch. Expected Object.");
-                }
+                if (value instanceof Environment) return;
                 break;
             default:
-                throw new RuntimeError(name, "Invalid variable type.");
-        }        
-    }
+                break;
+        }
+        throw new RuntimeError(name, type + " type mismatch. Expected " + Hungaro.getTypeOf(name, linkedType) + ".");
+    }    
 
     @Override
     public Void visitWhileStmt(Stmt.While stmt) {
@@ -729,7 +775,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 case "Array":
                     return arrayToString((List<Object>)((Environment)object).lookup("value"));
                 case "Map":
-                    return mapToString((Map<String, Object>)((Environment)object).getRecord());
+                    return mapToString((Map<String, Object>)((Environment)object).lookup("value"));
                 default:
                     return "Object";
             }
@@ -784,32 +830,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             array.add(evaluate(expr.elements.get(i)));
         }
         // return the array
-        return makeArray(array);        
+        return makeObject(array, arrayEnv, "Array");
     }
 
-    private Environment makeArray(List<Object> array) {
-        Environment arrayPrototype = new Environment(arrayEnv, "Array");
-        arrayPrototype.define("value", array);
-        return arrayPrototype;
+    private Environment makeObject(Object object, Environment parent, String name) {
+        Environment objectPrototype = new Environment(parent, name);
+        objectPrototype.define("value", object);
+        return objectPrototype;
     }
-
-    private Environment makeString(String string) {
-        Environment stringPrototype = new Environment(stringEnv, "String");
-        stringPrototype.define("value", string);
-        return stringPrototype;
-    }
-
-    // private Environment makeNumber(Double number) {
-    //     Environment numberPrototype = new Environment(numberEnv, "Number");
-    //     numberPrototype.define("value", number);
-    //     return numberPrototype;
-    // }
-
-    // private Environment makeBoolean(Boolean bool) {
-    //     Environment booleanPrototype = new Environment(booleanEnv, "Boolean");
-    //     booleanPrototype.define("value", bool);
-    //     return booleanPrototype;
-    // }
 
     @Override
     public Void visitDeclareStmt(Stmt.Declare stmt) {
@@ -821,12 +849,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitMapExpr(Expr.Map expr) {
-        Environment mapPrototype = new Environment(mapEnv, "Map");
+        final HashMap<String, Object> map = new HashMap<String, Object>();
+        
         // evaluate each element
         for (int i = 0; i < expr.keys.size(); i++) {
-            mapPrototype.define(expr.keys.get(i).token.lexeme, evaluate(expr.values.get(i)));
+            map.put(expr.keys.get(i), evaluate(expr.values.get(i)));
         }
         
-        return mapPrototype;
+        return makeObject(map, mapEnv, "Map");
     }
 }

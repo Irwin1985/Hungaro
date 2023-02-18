@@ -30,7 +30,7 @@ public abstract class Stmt {
         final List<Stmt> statements;
 
         public Block(List<Stmt> statements) {
-            super(null);                            
+            super(statements.get(0).token);                            
             this.statements = statements;
         }
 
@@ -102,11 +102,13 @@ public abstract class Stmt {
      */
     public static class Function extends Stmt {
         final Token name;
-        final List<Token> params;
-        final List<Stmt> body;
+        final List<Expr.Variable> params;
+        final Block body;
+        final boolean mustReturnValue;
 
-        public Function(Token name, List<Token> params, List<Stmt> body) {
+        public Function(boolean mustReturnValue, Token name, List<Expr.Variable> params, Block body) {
             super(name);
+            this.mustReturnValue = mustReturnValue;
             this.name = name;
             this.params = params;
             this.body = body;
@@ -123,10 +125,10 @@ public abstract class Stmt {
      */
     public static class If extends Stmt {
         final Expr condition;
-        final Stmt thenBranch;
-        final Stmt elseBranch;
+        final Block thenBranch;
+        final Block elseBranch;
 
-        public If(Expr condition, Stmt thenBranch, Stmt elseBranch) {
+        public If(Expr condition, Block thenBranch, Block elseBranch) {
             super(condition.token);
             this.condition = condition;
             this.thenBranch = thenBranch;

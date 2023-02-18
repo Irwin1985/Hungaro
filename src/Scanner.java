@@ -107,9 +107,27 @@ public class Scanner {
         new Spec(Pattern.compile("^[\\*//%]"), TokenType.FACTOR, Category.UNARY),
 
         // Local variables
-        new Spec(Pattern.compile("^l[fpcsanbom]\\w+"), TokenType.IDENTIFIER, Category.LOCAL_VARIABLE),
+        new Spec(Pattern.compile("^l[sanbom]\\w+"), TokenType.IDENTIFIER, Category.LOCAL_VARIABLE),
         // Global variables
-        new Spec(Pattern.compile("^g[fpcsanbom]\\w+"), TokenType.IDENTIFIER, Category.GLOBAL_VARIABLE),
+        new Spec(Pattern.compile("^g[sanbom]\\w+"), TokenType.IDENTIFIER, Category.GLOBAL_VARIABLE),
+
+        // Parameters
+        new Spec(Pattern.compile("^p[sanbom]\\w+"), TokenType.IDENTIFIER, Category.PARAMETER),
+
+        // Local functions
+        new Spec(Pattern.compile("^lf\\w+"), TokenType.IDENTIFIER, Category.LOCAL_FUNCTION),
+        // Global functions
+        new Spec(Pattern.compile("^gf\\w+"), TokenType.IDENTIFIER, Category.GLOBAL_FUNCTION),
+
+        // Local procedures
+        new Spec(Pattern.compile("^lp\\w+"), TokenType.IDENTIFIER, Category.LOCAL_PROCEDURE),
+        // Global procedures
+        new Spec(Pattern.compile("^gp\\w+"), TokenType.IDENTIFIER, Category.GLOBAL_PROCEDURE),
+
+        // Local class
+        new Spec(Pattern.compile("^lc\\w+"), TokenType.IDENTIFIER, Category.LOCAL_CLASS),
+        // Global class
+        new Spec(Pattern.compile("^gc\\w+"), TokenType.IDENTIFIER, Category.GLOBAL_CLASS),
 
         // Local constants
         new Spec(Pattern.compile("^[A-Z][A-Z_0-9]*"), TokenType.IDENTIFIER, Category.LOCAL_CONSTANT),

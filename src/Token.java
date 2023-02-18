@@ -17,6 +17,16 @@ public class Token {
         this.scope = scope;
     }
 
+    public Token(TokenType type, Object literal) {
+        this.type = type;
+        this.lexeme = literal.toString();
+        this.category = Category.GENERIC;
+        this.literal = literal;
+        this.line = 0;
+        this.col = 0;
+        this.scope = Scope.NONE;
+    }
+
     public Token(TokenType type, String lexeme) {
         this.type = type;
         this.lexeme = lexeme;

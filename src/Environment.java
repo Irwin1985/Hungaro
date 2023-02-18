@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class Environment {
     private final Map<String, Object> record;
@@ -33,7 +34,7 @@ public class Environment {
         return value;
     }
 
-    public Object lookup(Token name) {
+    public Object lookup(Token name) {        
         return resolve(name).record.get(name.lexeme);
     }
     
@@ -79,5 +80,13 @@ public class Environment {
 
     public Map<String, Object> getRecord() {
         return record;
+    }
+
+    public Object lookup(int index, Token token) {
+        try {
+            return ((ArrayList<Object>)record.get("value")).get(index);
+        } catch (Exception e) {
+            throw new RuntimeError(token, "Invalid index `" + index + "`.");
+        }
     }
 }

@@ -1,2 +1,9 @@
-declare laNames = ["John", "Paul", "George", "Ringo"]
-? laNames.join(", ")
+declare lmPaisesConPoblacion = {}
+
+lmPaisesConPoblacion["Argentina"] = 40000000
+lmPaisesConPoblacion["Brasil"] = 200000000
+lmPaisesConPoblacion["Chile"] = 18000000
+lmPaisesConPoblacion.USA = 300000000
+lmPaisesConPoblacion.set("Canada", 35000000)
+
+? lmPaisesConPoblacion

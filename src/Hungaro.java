@@ -114,5 +114,24 @@ public class Hungaro {
         java.util.regex.Matcher matcher = pattern.matcher(name);
         return matcher.find();
     }
+
+    public static String getTypeOf(Token token, char type) {
+        switch (type) {
+            case 'n':
+                return "Number";
+            case 's':
+                return "String";
+            case 'b':
+                return "Boolean";
+            case 'a':
+                return "Array";
+            case 'm':
+                return "Map";
+            case 'o':
+                return "Object";
+            default:
+                throw new RuntimeError(token, "Invalid " + type + " type.");
+        }        
+    }
 }
 
