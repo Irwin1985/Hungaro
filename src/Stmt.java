@@ -65,13 +65,15 @@ public abstract class Stmt {
     public static class Class extends Stmt {
         final Token name;
         final Expr.Variable superclass;
-        final List<Stmt.Function> methods;
+        final List<Expr.Set> properties;
+        final Block body;
 
-        public Class(Token name, Expr.Variable superclass, List<Stmt.Function> methods) {
-            super(name);
+        public Class(Token keyword, Token name, Expr.Variable superclass, List<Expr.Set> properties, Block body) {
+            super(keyword);
             this.name = name;
             this.superclass = superclass;
-            this.methods = methods;
+            this.properties = properties;
+            this.body = body;
         }
 
         @Override

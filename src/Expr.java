@@ -162,10 +162,10 @@ public abstract class Expr {
      * New expression: new Foo()
      */
     public static class New extends Expr {
-        final Token name;
+        final Variable name;
         final List<Expr> arguments;
 
-        public New(Token keyword, Token name, List<Expr> arguments) {
+        public New(Token keyword, Variable name, List<Expr> arguments) {
             super(keyword);
             this.name = name;
             this.arguments = arguments;
@@ -226,11 +226,13 @@ public abstract class Expr {
      */
     public static class Super extends Expr {
         final Token keyword;
+        final Token className;
         final Variable method;
 
-        public Super(Token keyword, Variable method) {
+        public Super(Token keyword, Token className, Variable method) {
             super(keyword);
             this.keyword = keyword;
+            this.className = className;
             this.method = method;
         }
 

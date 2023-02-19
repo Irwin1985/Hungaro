@@ -49,6 +49,6 @@ public class Token {
 
     @Override
     public String toString() {
-        return String.format("%s[%d:%d]<lexeme: '%s'>", type, line, col, lexeme);
+        return String.format("(type:%s, cat: %s)[%d:%d]<lexeme: '%s'>", type, category, line, col, lexeme);
     }    
 }

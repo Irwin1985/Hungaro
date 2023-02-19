@@ -30,4 +30,7 @@ public enum Category {
     LOCAL_CLASS,
     GLOBAL_CLASS,
     PARAMETER,
+    CLASS_PROPERTY,
+    CLASS_FUNCTION,
+    CLASS_PROCEDURE
 }

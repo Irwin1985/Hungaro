@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Environment {
     private final Map<String, Object> record;
-    private final Environment parent;
+    public final Environment parent;
     public final String name;
 
     public Environment(Map<String, Object> record, Environment parent, String name) {
@@ -25,8 +25,9 @@ public class Environment {
         this.name = name;
     }
 
-    public void define(String name, Object value) {
+    public Object define(String name, Object value) {
         record.put(name, value);
+        return value;
     }
 
     public Object assign(Token name, Object value) {
@@ -75,7 +76,14 @@ public class Environment {
     }
 
     public Object lookup(String name) {
-        return record.get(name);
+        // return record.get(name);
+        if (record.containsKey(name)) {
+            return record.get(name);
+        }
+        if (parent != null) {
+            return parent.lookup(name);
+        }
+        return null;
     }
 
     public Map<String, Object> getRecord() {

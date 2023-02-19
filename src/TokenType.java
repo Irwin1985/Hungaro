@@ -34,6 +34,7 @@ public enum TokenType {
     UNTIL,
     FOR,
     TO,
+    SUPER,
     STEP,
     IMPORT,
     MODULE,

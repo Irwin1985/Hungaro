@@ -506,7 +506,54 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitNewExpr(Expr.New expr) {
-        return null;
+        // class instance: an instance is just an environment
+        // and it's parent is the class environment (which is the class itself)
+
+        Environment classEnv = null;
+        // so we need to get the class environment first
+        if (expr.name.name.category == Category.GLOBAL_CLASS) {
+            classEnv = (Environment)globals.lookup(expr.name.name.lexeme);
+        } else { // it's a local class
+            classEnv = (Environment)environment.lookup(expr.name.name.lexeme);        
+        }
+
+        // now we can create the instance
+        Environment instance = new Environment(classEnv, "Instance of " + expr.name.name.lexeme);
+
+        // define the class properties in the instance
+        // we need to install all properties found in the class chain (parent classes)
+        Environment currentClass = classEnv;
+        while (currentClass != null) {
+            List<Expr.Set> properties = (List<Expr.Set>)currentClass.lookup("properties");
+            if (properties == null) break;
+
+            for (Expr.Set property : properties) {
+                Object value = evaluate(property.value);
+                checkVariableType(property.target.token, value, "Property");
+                instance.define(((Expr.Variable)property.target).name.lexeme, value);
+            }
+            currentClass = currentClass.parent;
+        }
+
+        // next we need to evaluate the arguments
+        // and the first argument is the 'this' object
+        List<Object> arguments = new ArrayList<Object>();
+        // add the 'this' object
+        arguments.add(instance);
+        // add the rest of the arguments
+        for (Expr argument : expr.arguments) {
+            arguments.add(evaluate(argument));
+        }
+
+        // now we can call the constructor (if it exists)
+        // class constructor name is always 'pInit'
+        CallableObject constructor = (CallableObject)classEnv.lookup("pInit");
+        if (constructor != null) {
+            constructor.call(this, arguments);
+        }
+
+        // finally we can return the instance
+        return instance;                
     }
 
     @Override
@@ -588,16 +635,43 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
             return null;
         }
+        
         // check variable or property value
-        Token variableToken = ((Expr.Variable)expr.target).name;        
-        checkVariableType(variableToken, value, name);
+        Token variableToken = ((Expr.Variable)expr.target).name;
 
-        return environment.assign(variableToken, value);
+        // check if variable is a class property
+        if (variableToken.category == Category.CLASS_PROPERTY) {
+            checkVariableType(variableToken, value, "Property");
+            // define the property in the instance environment
+            Environment instance = (Environment)environment.lookup("poThis");
+            // if (instance == null) {
+            //     // define the property in current environment
+            //     return environment.define(variableToken.lexeme, value);                
+            // }
+            return instance.define(variableToken.lexeme, value);            
+        } else {
+            checkVariableType(variableToken, value, name);
+            return environment.assign(variableToken, value);
+        }
     }
 
     @Override
     public Object visitSuperExpr(Expr.Super expr) {
-        return null;
+        // get the current class in the local or global environment based on the superclass scope
+        Environment superClassEnv = null;
+        if (expr.className.category == Category.GLOBAL_CLASS) {
+            superClassEnv = (Environment)globals.lookup(expr.className.lexeme);
+        } else {
+            superClassEnv = (Environment)environment.lookup(expr.className.lexeme);
+        }        
+        if (superClassEnv == null) {
+            throw new RuntimeError(expr.keyword, "Cannot find superclass.");
+        }
+        Object method = superClassEnv.lookup(expr.method.name);
+        if (method == null) {
+            throw new RuntimeError(expr.method.name, "Cannot find superclass method.");
+        }
+        return method;
     }
 
     @Override
@@ -626,9 +700,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (token.category == Category.GLOBAL_CONSTANT || token.category == Category.GLOBAL_VARIABLE) {
             return globals.lookup(token);
         }
-        else if (token.category == Category.LOCAL_CONSTANT || token.category == Category.LOCAL_VARIABLE) {
-            return environment.lookup(token);
+        else if (token.category == Category.CLASS_PROPERTY) {
+            Environment instance = (Environment)environment.lookup("poThis");
+            if (instance == null) {
+                return environment.lookup(token);
+            }
+            return instance.lookup(token.lexeme, token);
         }
+        // local identifier: variable, constant, function, procedure, parameters, etc.
         return environment.lookup(token);        
     }    
 
@@ -640,6 +719,43 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitClassStmt(Stmt.Class stmt) {
+        Environment superclass = null;
+        // check if superclass is a class and if not we provide the local environment
+        if (stmt.superclass != null) {
+            Object result = null;
+            // check if superclass is local or global
+            if (stmt.superclass.name.category == Category.GLOBAL_CLASS) {
+                result = globals.lookup(stmt.superclass.name.lexeme, stmt.superclass.name);
+            } else {
+                result = environment.lookup(stmt.superclass.name.lexeme, stmt.superclass.name);
+            }            
+            if (!(result instanceof Environment)) {
+                throw new RuntimeError(stmt.superclass.name, "Superclass must be a class.");
+            }
+            superclass = (Environment)result;
+        } else {
+            superclass = environment;
+        }
+        // create a new environment for the class and provide the superclass
+        final Environment classEnvironment = new Environment(null, superclass, "Class " + stmt.name.lexeme);
+        
+        // define the class properties
+        classEnvironment.define("properties", stmt.properties);
+        
+        // evaluate the class body in the new environment
+        executeBlock(stmt.body.statements, classEnvironment);
+
+        // finally define the class in the global or local environment based on the category
+        switch (stmt.name.category) {
+            case GLOBAL_CLASS: // eg: gcPerson
+                globals.define(stmt.name.lexeme, classEnvironment);
+                break;
+            case LOCAL_CLASS: // eg: lcPerson
+                environment.define(stmt.name.lexeme, classEnvironment);
+                break;
+            default:
+                break;
+        }
         return null;
     }
 
@@ -654,11 +770,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         final RuntimeFunction function =  new RuntimeFunction(stmt, environment);
         switch (stmt.name.category) {
             case GLOBAL_FUNCTION:
-            case GLOBAL_PROCEDURE:
+            case GLOBAL_PROCEDURE:            
                 globals.define(stmt.name.lexeme, function);
                 break;
             case LOCAL_FUNCTION:
             case LOCAL_PROCEDURE:
+            case CLASS_FUNCTION:
+            case CLASS_PROCEDURE:
                 environment.define(stmt.name.lexeme, function);
                 break;
             default:
@@ -711,7 +829,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     public void checkVariableType(Token name, Object value, String type) {                
-        char linkedType = name.lexeme.substring(1, 2).charAt(0);
+        char linkedType = 0;
+        if (type.equals("Property")) {
+            linkedType = name.lexeme.substring(0, 1).charAt(0);    
+        } else {
+            linkedType = name.lexeme.substring(1, 2).charAt(0);
+        }
         if (value == null) {
             if (linkedType == 'o') return;
             throw new RuntimeError(name, type + " type mismatch. Expected " + Hungaro.getTypeOf(name, linkedType) + ".");

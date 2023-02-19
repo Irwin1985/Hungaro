@@ -95,6 +95,7 @@ public class Scanner {
         new Spec(Pattern.compile("^\\bfor\\b"), TokenType.FOR,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bto\\b"), TokenType.TO,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bstep\\b"), TokenType.STEP,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\bsuper\\b"), TokenType.SUPER, Category.KEYWORD),
         new Spec(Pattern.compile("^\\bimport\\b"), TokenType.IMPORT,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bmodule\\b"), TokenType.MODULE,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bexit\\b"), TokenType.EXIT,Category.KEYWORD),
@@ -107,27 +108,36 @@ public class Scanner {
         new Spec(Pattern.compile("^[\\*//%]"), TokenType.FACTOR, Category.UNARY),
 
         // Local variables
-        new Spec(Pattern.compile("^l[sanbom]\\w+"), TokenType.IDENTIFIER, Category.LOCAL_VARIABLE),
+        new Spec(Pattern.compile("^l[sanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_VARIABLE),
         // Global variables
-        new Spec(Pattern.compile("^g[sanbom]\\w+"), TokenType.IDENTIFIER, Category.GLOBAL_VARIABLE),
+        new Spec(Pattern.compile("^g[sanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_VARIABLE),
+
+        // Class properties
+        new Spec(Pattern.compile("^[sanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_PROPERTY),
 
         // Parameters
-        new Spec(Pattern.compile("^p[sanbom]\\w+"), TokenType.IDENTIFIER, Category.PARAMETER),
+        new Spec(Pattern.compile("^p[sanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.PARAMETER),
+
+        // Class function
+        new Spec(Pattern.compile("^f([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_FUNCTION),
+
+        // Class procedure
+        new Spec(Pattern.compile("^p([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_PROCEDURE),
 
         // Local functions
-        new Spec(Pattern.compile("^lf\\w+"), TokenType.IDENTIFIER, Category.LOCAL_FUNCTION),
+        new Spec(Pattern.compile("^lf([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_FUNCTION),
         // Global functions
-        new Spec(Pattern.compile("^gf\\w+"), TokenType.IDENTIFIER, Category.GLOBAL_FUNCTION),
+        new Spec(Pattern.compile("^gf([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_FUNCTION),
 
         // Local procedures
-        new Spec(Pattern.compile("^lp\\w+"), TokenType.IDENTIFIER, Category.LOCAL_PROCEDURE),
+        new Spec(Pattern.compile("^lp([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_PROCEDURE),
         // Global procedures
-        new Spec(Pattern.compile("^gp\\w+"), TokenType.IDENTIFIER, Category.GLOBAL_PROCEDURE),
+        new Spec(Pattern.compile("^gp([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_PROCEDURE),
 
         // Local class
-        new Spec(Pattern.compile("^lc\\w+"), TokenType.IDENTIFIER, Category.LOCAL_CLASS),
+        new Spec(Pattern.compile("^lc([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_CLASS),
         // Global class
-        new Spec(Pattern.compile("^gc\\w+"), TokenType.IDENTIFIER, Category.GLOBAL_CLASS),
+        new Spec(Pattern.compile("^gc([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_CLASS),
 
         // Local constants
         new Spec(Pattern.compile("^[A-Z][A-Z_0-9]*"), TokenType.IDENTIFIER, Category.LOCAL_CONSTANT),

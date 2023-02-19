@@ -3,14 +3,20 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Parser {
+    // static enum for parameters and properties validation
+    static enum ValidateTypes {
+        PARAMETER,
+        PROPERTY,
+    } 
+
     private int current = 0;
     private List<Token> tokens;
-    private final Stack<Integer> functionStack = new Stack<Integer>();
-    
-    private final int PARSING_FUNCTION = 1;
-    private final int PARSING_PROCEDURE = 2;
+    private final Stack<String> functionStack = new Stack<String>();
+    private final Stack<ValidateTypes> validateStack = new Stack<ValidateTypes>();    
+    private final Stack<Token> classStack = new Stack<Token>();
 
     private static class ParseError extends RuntimeException {}
+
 
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
@@ -64,7 +70,7 @@ public class Parser {
             case GLOBAL_CLASS:
                 return classDeclaration(keyword, identifier);
             default:
-                error(identifier, "Invalid name: please provide one of the following suffixes:\n`l` for locals\n`g` for globals\n`p` for parameters\nNOTE: you can omite the scoping suffix (first letter) if you are declaring a constant (all uppercase) or your are inside of a class body.");
+                error(identifier, "Invalid name: please check the following naming rules:\nSCOPE:the first letter indicates the variable scope.\n`l` for locals\n`g` for globals\n`p` for parameters\nOTHER RULES:\n*You can omite the scoping suffix (first letter) if you are declaring a constant (all uppercase).\n*All identifiers must follow the camel case naming convention. e.g: lnPersonAge\n*All identifiers must start with a lowercase letter.\n*All identifiers must be at least 3 characters long.\n*All identifiers must be unique within the scope.\n*All identifiers must be unique within the program.\n*All identifiers must be unique within the class.\n");
         }
         return null;
     }
@@ -115,10 +121,14 @@ public class Parser {
         List<Expr.Variable> parameters = new ArrayList<Expr.Variable>();
         boolean mustReturnValue = true;
         Token param = null;
+        ValidateTypes validateType = ValidateTypes.PARAMETER;
 
-        if (name.equals("method")) {
-            parameters.add(new Expr.Variable(new Token(TokenType.IDENTIFIER, "this")));
+        if (name.equals("class function") || name.equals("class procedure")) {
+            validateType = ValidateTypes.PROPERTY;
+            parameters.add(new Expr.Variable(new Token(TokenType.IDENTIFIER, "poThis")));
         }
+        validateStack.push(validateType);
+
         if (match(TokenType.LPAREN)) {
             if (!check(TokenType.RPAREN)) {
                 do {
@@ -132,15 +142,15 @@ public class Parser {
             consume(TokenType.RPAREN, "Expect `)` after parameters.");
         }
 
-        if (name.equals("procedure")) {
+        functionStack.push(identifier.lexeme); // fName or pName
+        if (name.equals("procedure") || name.equals("class procedure")) {
             mustReturnValue = false;
-            functionStack.push(PARSING_PROCEDURE);
-        } else {
-            functionStack.push(PARSING_FUNCTION);
         }
             
         final Stmt.Block body = block();
         functionStack.pop();
+        validateStack.pop();
+
         return new Stmt.Function(mustReturnValue, identifier, parameters, body);
     }
 
@@ -157,8 +167,51 @@ public class Parser {
         return new Stmt.Block(statements);
     }
 
-    private Stmt classDeclaration(Token keyword, Token identifier) {
-        return null;
+    private Stmt classDeclaration(Token keyword, Token identifier) {        
+        Expr.Variable superClass = null;        
+        final List<Stmt> statements = new ArrayList<Stmt>();
+        final List<Expr.Set> properties = new ArrayList<Expr.Set>();
+        
+        
+        // check if class is extending another class
+        if (match(TokenType.AS)) {
+            final Token superClassName = consume(TokenType.IDENTIFIER, "Expect superclass name.");
+            classStack.push(superClassName); // push the inherited class token
+            superClass = new Expr.Variable(superClassName);
+        }
+        match(TokenType.SEMICOLON); // optional semicolon
+
+        // parse class properties
+        validateStack.push(ValidateTypes.PROPERTY);
+        while (check(Category.CLASS_PROPERTY)) {
+            Stmt.Expression exp = (Stmt.Expression)expressionStmt();
+            if (!(exp.expression instanceof Expr.Set)) {
+                error(exp.token, "Invalid class property.");
+            }
+            properties.add((Expr.Set)exp.expression);
+            match(TokenType.SEMICOLON); // optional semicolon
+        }
+        validateStack.pop();
+
+        // parse class methods
+        String name = "";
+        while (match(Category.CLASS_FUNCTION, Category.CLASS_PROCEDURE)) {
+            if (previous().category == Category.CLASS_FUNCTION)
+                name = "class function";
+            else if (previous().category == Category.CLASS_PROCEDURE) {
+                name = "class procedure";
+            }
+            statements.add((Stmt.Function) functionDeclaration(keyword, previous(), name));
+        }        
+        match(TokenType.SEMICOLON); // optional semicolon
+        consume(TokenType.END, "Expect `end` after class declaration.");
+        consume(TokenType.SEMICOLON, "Expect new line after `end` keyword.");
+        
+        if (superClass != null) {
+            classStack.pop(); // pop the class name
+        }
+
+        return new Stmt.Class(keyword, identifier, superClass, properties, new Stmt.Block(statements));
     }
 
     private Stmt statement() {
@@ -183,7 +236,7 @@ public class Parser {
         if (functionStack.isEmpty()) {
             error(previous(), "Cannot return from top-level code.");
         }
-        if (functionStack.peek() == PARSING_PROCEDURE) {
+        if (functionStack.peek().startsWith("p")) { // procedure
             error(previous(), "Cannot return a value from a procedure.");
         }
 
@@ -242,8 +295,13 @@ public class Parser {
         if (peek().category == Category.ASSIGNMENT) {
             Token equals = advance();            
             Expr value = assignment();
+            // validate value
+            if (value instanceof Expr.Variable) {
+                validateTypes((Expr.Variable) value); // validate right side of assignment
+            }
 
             if (target instanceof Expr.Variable) {
+                validateTypes((Expr.Variable) target); // validate left side of assignment                
                 Category targetCategory = ((Expr.Variable) target).name.category;
                 if (targetCategory == Category.GLOBAL_CONSTANT || targetCategory == Category.LOCAL_CONSTANT) {
                     error(equals, "Cannot assign to constant.");
@@ -257,6 +315,24 @@ public class Parser {
         }
 
         return target;
+    }
+
+    private void validateTypes(Expr.Variable variable) {
+        if (variable.name.category == Category.PARAMETER) {
+            checkType(variable.name, "parameters", "function or procedure");
+        } else if (variable.name.category == Category.CLASS_PROPERTY) {
+            checkType(variable.name, "properties", "class");
+            // is stack is not empty then we check if we are inside a class
+            if (validateStack.peek() != ValidateTypes.PROPERTY) {
+                error(variable.name, "Cannot use `property` outside of a class.");
+            }
+        }
+    }    
+
+    private void checkType(Token token, String typeName, String scope) {
+        if (validateStack.isEmpty()) {
+            error(token, "Cannot use `" + typeName + "` outside of a " + scope + ".");
+        }
     }
 
     private Expr logicalOr() {
@@ -373,14 +449,13 @@ public class Parser {
         
         // check if the calle is a Prop expression.
         if (callee instanceof Expr.Prop) {
-            // check if the target is a super expression: super.method()
-            if (((Expr.Prop)callee).target instanceof Expr.Super) {
-                final Token token = new Token(TokenType.IDENTIFIER, "this");
-                arguments.add(new Expr.Variable(token));
-            } else { // otherwise, add the target as the first argument.
-                arguments.add(((Expr.Prop)callee).target);
-            }
-        }        
+            // add the target as the first argument. eg: foo.bar(1,2,3) => bar(foo, 1, 2, 3)            
+            arguments.add(((Expr.Prop)callee).target);
+        } else if (callee instanceof Expr.Super) {
+            // add 'poThis' pointer as the first argument. eg: super(poThis)
+            final Token token = new Token(TokenType.IDENTIFIER, "poThis");
+            arguments.add(new Expr.Variable(token));            
+        }
         
         // parse the arguments
         if (!check(TokenType.RPAREN)) {
@@ -411,6 +486,12 @@ public class Parser {
         }
         else if (match(TokenType.LBRACE)) {
             return map();
+        }
+        else if (match(TokenType.NEW)) {
+            return newExpr();
+        }
+        else if (match(TokenType.SUPER)) {
+            return superExpr();
         }
 
         throw error(peek(), "Expect expression.");
@@ -465,10 +546,60 @@ public class Parser {
         return new Expr.Map(keyword, keys, values);
     }
 
+    private Expr newExpr() {
+        // the 'new' keyword
+        Token keyword = previous();
+
+        // clas name
+        Token name = consume(TokenType.IDENTIFIER, "Expect class name after 'new'.");
+        // name.lexeme must be a valid class name
+        if (name.category != Category.GLOBAL_CLASS && name.category != Category.LOCAL_CLASS) {
+            error(name, "Invalid class name.");
+        }
+        Expr.Variable className = new Expr.Variable(name);
+
+        consume(TokenType.LPAREN, "Expect '(' after class name.");
+        final List<Expr> arguments = new ArrayList<Expr>();
+
+        if (!check(TokenType.RPAREN)) {
+            do {
+                arguments.add(expression());
+            } while (match(TokenType.COMMA));
+        }
+
+        consume(TokenType.RPAREN, "Expect ')' after arguments.");
+
+        return new Expr.New(keyword, className, arguments);
+    }
+
+    private Expr superExpr() {
+        Token keyword = previous();
+        if (functionStack.isEmpty() || classStack.isEmpty()) {
+            error(keyword, "Cannot use `super` outside of a class.");
+        }    
+
+        final String methodName = functionStack.peek();
+        final Expr.Variable method = new Expr.Variable(new Token(TokenType.IDENTIFIER, methodName));
+        final Token className = classStack.peek();
+
+        return new Expr.Super(keyword, className, method);
+    }
+
 
     private boolean match(TokenType... types) {
         for (TokenType type : types) {
             if (check(type)) {
+                advance();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean match(Category... categories) {
+        for (Category category : categories) {
+            if (check(category)) {
                 advance();
                 return true;
             }
@@ -486,6 +617,11 @@ public class Parser {
     private boolean check(TokenType type) {
         if (isAtEnd()) return false;
         return peek().type == type;
+    }
+
+    private boolean check(Category category) {
+        if (isAtEnd()) return false;
+        return peek().category == category;
     }
 
     private Token advance() {
