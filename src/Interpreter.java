@@ -2,7 +2,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Stack;
 
 @SuppressWarnings("unchecked")
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
@@ -16,7 +15,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment numberEnv = new Environment(objectEnv, "Number");
     final Environment booleanEnv = new Environment(objectEnv, "Boolean");
 
-    final Stack<Boolean> variableStack = new Stack<Boolean>();
+    // final Stack<Boolean> variableStack = new Stack<Boolean>();
 
     private Environment environment = globals;
 
@@ -353,12 +352,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         stringEnv.define("len", new CallableObject() {
             @Override
             public int arity() {
-                return 2;
+                return 1;
             }
 
             @Override
             public Object call(Interpreter interpreter, List<Object> arguments) {
-                return ((String)arguments.get(1)).length();
+                return ((String)arguments.get(0)).length();
             }
         });
     }
@@ -513,29 +512,22 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitPropExpr(Expr.Prop expr) {
         Environment object = null;
-        if (expr.target instanceof Expr.Literal) {
-            switch (expr.target.token.type) {
-                case STRING:
-                    object = (Environment)globals.lookup("_STRING");
-                    break;
-                case NUMBER:
-                    object = (Environment)globals.lookup("_NUMBER");
-                    break;
-                case TRUE:
-                case FALSE:
-                    object = (Environment)globals.lookup("_BOOLEAN");
-                    break;
-                case NULL:
-                    throw new RuntimeError(expr.target.token, "Cannot access properties of null.");
-                default:
-                    break;
-            }
+        Object obj = evaluate(expr.target);
+
+        if (obj == null) {
+            throw new RuntimeError(expr.target.token, "Cannot access properties of null.");
+        } else if (obj instanceof String) {
+            object = (Environment)globals.lookup("_STRING");
+        } else if (obj instanceof Double) {
+            object = (Environment)globals.lookup("_NUMBER");
+        } else if (obj instanceof Boolean) {
+            object = (Environment)globals.lookup("_BOOLEAN");
+        } else if (obj instanceof Environment) {
+            object = (Environment)obj;
         } else {
-            // retrieve the object
-            variableStack.push(true);
-            object = (Environment)evaluate(expr.target);
-            variableStack.pop();
-        }        
+            throw new RuntimeError(expr.target.token, "Cannot access properties of non-object.");
+        }
+
         if (expr.computable) {
             Object property = evaluate(expr.property);
             if (object.name.equals("Array")) {

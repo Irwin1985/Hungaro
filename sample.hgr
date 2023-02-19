@@ -1,9 +1,8 @@
-declare lmPaisesConPoblacion = {}
+declare gfibonacci(pnSerie)
+    if (pnSerie < 2)
+        return pnSerie
+    end
+    return gfibonacci(pnSerie - 1) + gfibonacci(pnSerie - 2)
+end
 
-lmPaisesConPoblacion["Argentina"] = 40000000
-lmPaisesConPoblacion["Brasil"] = 200000000
-lmPaisesConPoblacion["Chile"] = 18000000
-lmPaisesConPoblacion.USA = 300000000
-lmPaisesConPoblacion.set("Canada", 35000000)
-
-? lmPaisesConPoblacion
+? gfibonacci(35)

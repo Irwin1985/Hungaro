@@ -377,23 +377,7 @@ public class Parser {
             if (((Expr.Prop)callee).target instanceof Expr.Super) {
                 final Token token = new Token(TokenType.IDENTIFIER, "this");
                 arguments.add(new Expr.Variable(token));
-            } else { // check if the target is a literal expression. eg: "string".len()
-                if (((Expr.Prop)callee).target instanceof Expr.Literal) {
-                    Token token;
-                    final Expr.Literal literal = (Expr.Literal)((Expr.Prop)callee).target;
-                    switch (literal.token.type) {
-                        case STRING:
-                            token = new Token(TokenType.IDENTIFIER, "_STRING");
-                            arguments.add(new Expr.Variable(token));                            
-                            break;
-                        case NUMBER:
-                            token = new Token(TokenType.IDENTIFIER, "_NUMBER");
-                            arguments.add(new Expr.Variable(token));
-                            break;
-                        default:
-                            error(((Expr.Prop)callee).target.token, "Invalid target for method call.");                                    
-                    }
-                } 
+            } else { // otherwise, add the target as the first argument.
                 arguments.add(((Expr.Prop)callee).target);
             }
         }        
