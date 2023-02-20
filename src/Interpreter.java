@@ -17,7 +17,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     // final Stack<Boolean> variableStack = new Stack<Boolean>();
 
-    private Environment environment = globals;
+    public Environment environment = globals;
 
     public Interpreter() {
         globals.define("_VERSION", "0.1.1");
@@ -372,7 +372,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
     }
 
-    private void execute(Stmt stmt) {
+    public void execute(Stmt stmt) {
         stmt.accept(this);
     }
 
@@ -1193,5 +1193,10 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         }    
         return null;    
+    }
+
+    @Override
+    public Void visitDeferStmt(Stmt.Defer stmt) {
+        throw new Defer(stmt.body);
     }
 }

@@ -6,20 +6,21 @@ public abstract class Stmt {
     interface Visitor<R> {
         R visitBlockStmt(Block stmt);        
         R visitConstantStmt(Constant stmt);
-        R visitLoopStmt(Loop stmt);
         R visitClassStmt(Class stmt);
-        R visitExpressionStmt(Expression stmt);
+        R visitDeclareStmt(Declare stmt);
+        R visitDeferStmt(Defer stmt);
         R visitExitStmt(Exit stmt);
-        R visitForStmt(For stmt);
+        R visitExpressionStmt(Expression stmt);
         R visitForeachStmt(Foreach stmt);
+        R visitForStmt(For stmt);
         R visitFunctionStmt(Function stmt);
         R visitIfStmt(If stmt);
+        R visitLoopStmt(Loop stmt);
         R visitPrintStmt(Print stmt);
         R visitRepeatStmt(Repeat stmt);
         R visitReturnStmt(Return stmt);
         R visitVarStmt(Var stmt);
         R visitWhileStmt(While stmt);
-        R visitDeclareStmt(Declare stmt);
     }
 
     public Stmt(Token token) {
@@ -340,4 +341,21 @@ public abstract class Stmt {
             return visitor.visitDeclareStmt(this);
         }
     }
+
+    /*
+    * Defer: defer { ... }
+    */
+    public static class Defer extends Stmt {
+        final Block body;
+
+        public Defer(Token keyword, Block body) {
+            super(keyword);
+            this.body = body;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitDeferStmt(this);
+        }
+    }     
 }

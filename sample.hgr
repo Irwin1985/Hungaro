@@ -1,3 +1,13 @@
-# string interpolation example
-declare lsName = "John"
-print "Hello, ${lsName}!"
+declare _PI = 3.14
+# defer statement example
+declare lfCalculateAreaOfCircle(pnRadius)
+    print "This line will be executed before the function returns"
+    defer
+        defer
+            print "This line will be executed after the function returns"
+        end
+    end
+    return _PI * pnRadius * pnRadius
+end
+
+print lfCalculateAreaOfCircle(5) # 78.5

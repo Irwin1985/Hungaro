@@ -14,6 +14,7 @@ public class Parser {
     private final Stack<String> functionStack = new Stack<String>();
     private final Stack<ValidateTypes> validateStack = new Stack<ValidateTypes>();    
     private final Stack<Token> classStack = new Stack<Token>();
+    private final Stack<Boolean> deferStack = new Stack<Boolean>();
 
     private static class ParseError extends RuntimeException {}
 
@@ -247,6 +248,7 @@ public class Parser {
         if (match(TokenType.EXIT)) return exitStatement();
         if (match(TokenType.REPEAT)) return repeatStatement();
         if (match(TokenType.WHILE)) return whileStatement();
+        if (match(TokenType.DEFER)) return deferStatement();
         return expressionStmt();
     }
 
@@ -399,9 +401,28 @@ public class Parser {
         if (parseRightParen) {
             consume(TokenType.RPAREN, "Expect `)` after `while` condition.");
         }
-        Stmt.Block body = block();        
+        Stmt.Block body = block();
 
         return new Stmt.While(keyword, condition, body);
+    }
+
+    private Stmt deferStatement() {
+        // defer are found in function and procedures
+        if (functionStack.isEmpty()) {
+            error(previous(), "Cannot use `defer` outside of function or procedure.");
+        }
+        // if deferStack is not empty, we are already in a defer block
+        if (!deferStack.isEmpty()) {
+            error(previous(), "Cannot use `defer` inside another `defer` block.");
+        }
+        
+        // notify we are in defer block
+        deferStack.push(true);
+        Token keyword = previous();
+        Stmt.Block body = block();
+        // notify we are out of defer block
+        deferStack.pop();
+        return new Stmt.Defer(keyword, body);
     }
 
     private Stmt expressionStmt() {
