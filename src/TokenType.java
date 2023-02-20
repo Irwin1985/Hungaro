@@ -35,7 +35,6 @@ public enum TokenType {
     FOR,
     EACH,
     IN,
-    OF,
     TO,
     SUPER,
     STEP,

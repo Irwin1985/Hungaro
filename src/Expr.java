@@ -127,10 +127,10 @@ public abstract class Expr {
      */
     public static class Lambda extends Expr {
         final List<Token> params;
-        final Stmt body;
+        final Stmt.Block body;
 
-        public Lambda(Token token, List<Token> params, Stmt body) {
-            super(token);
+        public Lambda(Token keyword, List<Token> params, Stmt.Block body) {
+            super(keyword);
             this.params = params;
             this.body = body;
         }

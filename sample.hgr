@@ -1,13 +1,27 @@
-declare _PI = 3.14
-# defer statement example
-declare lfCalculateAreaOfCircle(pnRadius)
-    print "This line will be executed before the function returns"
-    defer
-        defer
-            print "This line will be executed after the function returns"
-        end
-    end
-    return _PI * pnRadius * pnRadius
+declare lfAdd(pnX, pnY)
+    return pnX + pnY
 end
 
-print lfCalculateAreaOfCircle(5) # 78.5
+declare lfSub(pnX, pnY)
+    return pnX - pnY
+end
+
+declare lfMul(pnX, pnY)
+    return pnX * pnY
+end
+
+declare lfDiv(pnX, pnY)
+    return pnX / pnY
+end
+
+# create a map with all arithmetic functions
+declare lmArithmeticFunctions = {
+    "add": lfAdd,
+    "sub": lfSub,
+    "mul": lfMul,
+    "div": lfDiv,
+}
+
+# call any function from the map
+declare lnResult = lmArithmeticFunctions["add"](2, 3) # 5
+print lnResult # 5

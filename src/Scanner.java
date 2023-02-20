@@ -96,7 +96,6 @@ public class Scanner {
         new Spec(Pattern.compile("^\\bfor\\b"), TokenType.FOR,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bto\\b"), TokenType.TO,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bin\\b"), TokenType.IN,Category.KEYWORD),
-        new Spec(Pattern.compile("^\\bof\\b"), TokenType.OF,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bstep\\b"), TokenType.STEP,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bsuper\\b"), TokenType.SUPER, Category.KEYWORD),
         new Spec(Pattern.compile("^\\bimport\\b"), TokenType.IMPORT,Category.KEYWORD),
@@ -163,7 +162,6 @@ public class Scanner {
         new Spec(Pattern.compile("^\\?"), TokenType.PRINT, Category.KEYWORD),
         new Spec(Pattern.compile("^&"), TokenType.TERM, Category.GENERIC),
     };
-
 
     public Scanner(String source) {
         if (!source.endsWith("\n")) {
