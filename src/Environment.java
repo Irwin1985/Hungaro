@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 
+@SuppressWarnings("unchecked")
 public class Environment {
     private final Map<String, Object> record;
     public final Environment parent;
