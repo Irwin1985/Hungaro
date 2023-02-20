@@ -45,8 +45,13 @@ public class Parser {
         final List<Stmt> statements = new ArrayList<Stmt>();
         do {
             match(TokenType.SEMICOLON); // consume optional semicolon
+            if (check(TokenType.END)) break;
             statements.add(parseDeclareStatement(keyword));            
-        } while (match(TokenType.COMMA) && !isAtEnd());    
+        } while (match(TokenType.COMMA) && !isAtEnd());
+        
+        match(TokenType.END); // consume optional end
+        // consume mandatory semicolon
+        consume(TokenType.SEMICOLON, "Expect new line after `end`.");
 
         return new Stmt.Declare(keyword, statements);
     }
@@ -75,6 +80,16 @@ public class Parser {
         return null;
     }
 
+    private Stmt constantDeclaration(Token keyword, Token identifier) {
+        consume(TokenType.SIMPLE_ASSIGN, "Expect `=` after constant declaration.");
+        final Expr value = expression();
+
+        if (!check(TokenType.COMMA))
+            consume(TokenType.SEMICOLON, "Expect new line after constant declaration.");
+
+        return new Stmt.Constant(keyword, identifier, value);
+    }
+
     private Stmt variableDeclaration(Token keyword, Token identifier) {
         Expr value = null;
         if (match(TokenType.SIMPLE_ASSIGN)) {            
@@ -85,36 +100,35 @@ public class Parser {
                 error(identifier, "Constants must be initialized.");
             }
             switch (identifier.lexeme.charAt(1)) {
-                case 's':
+                case 'v': // variant
+                    value = null;
+                    break;
+                case 's': // string
                     value = new Expr.Literal(new Token(TokenType.STRING, ""));
                     break;
-                case 'n':
-                    value = new Expr.Literal(new Token(TokenType.NUMBER, 0));
-                    break;
-                case 'b':
-                    value = new Expr.Literal(new Token(TokenType.FALSE, false));
-                    break;
-                case 'a':
+                case 'a': // array
                     value = new Expr.Array(null, null);
                     break;
-                case 'm':
+                case 'n': // number
+                    value = new Expr.Literal(new Token(TokenType.NUMBER, 0));
+                    break;
+                case 'b': // boolean
+                    value = new Expr.Literal(new Token(TokenType.FALSE, false));
+                    break;
+                case 'o': // object         
+                    break;
+                case 'm': // map
                     value = new Expr.Map(null, null, null);
                     break;
-                case 'o':                    
-                    break;
                 default:
-                    error(identifier, "Invalid variable type: variables must follow the following rule: first letter `l` or `g` match the variable scope and second letter match the type: \n1. `s` for string.\n2. `n` for number.\n3. `b` for boolean.\n4. `a` for array.\n5. `m` for map.\n6. `o` for object.\n");
+                    error(identifier, "Invalid variable type: variables must follow the following rule: first letter `l` or `g` match the variable scope and second letter match the type: \n1. `v` for variant\n2.`s` for string.\n2. `a` for array.\n4. `n` for number.\n5. `b` for boolean.\n6. `o` for object.\n7. `m` for map.\n");
             }
         }
-        consume(TokenType.SEMICOLON, "Expect new line after variable declaration.");
-        return new Stmt.Var(keyword, identifier, value);
-    }
 
-    private Stmt constantDeclaration(Token keyword, Token identifier) {
-        consume(TokenType.SIMPLE_ASSIGN, "Expect `=` after constant declaration.");
-        final Expr value = expression();
-        consume(TokenType.SEMICOLON, "Expect new line after constant declaration.");
-        return new Stmt.Constant(keyword, identifier, value);
+        if (!check(TokenType.COMMA))
+            consume(TokenType.SEMICOLON, "Expect new line after variable declaration.");
+        
+        return new Stmt.Var(keyword, identifier, value);
     }
 
     private Stmt functionDeclaration(Token keyword, Token identifier, String name) {
@@ -162,7 +176,9 @@ public class Parser {
             statements.add(declaration());
         }
         consume(TokenType.END, "Expect `end` after block declaration.");
-        consume(TokenType.SEMICOLON, "Expect new line after block declaration.");
+
+        if (!check(TokenType.COMMA))
+            consume(TokenType.SEMICOLON, "Expect new line after block declaration.");
 
         return new Stmt.Block(statements);
     }
@@ -205,7 +221,9 @@ public class Parser {
         }        
         match(TokenType.SEMICOLON); // optional semicolon
         consume(TokenType.END, "Expect `end` after class declaration.");
-        consume(TokenType.SEMICOLON, "Expect new line after `end` keyword.");
+
+        if (!check(TokenType.COMMA))
+            consume(TokenType.SEMICOLON, "Expect new line after `end` keyword.");
         
         if (superClass != null) {
             classStack.pop(); // pop the class name
@@ -218,6 +236,9 @@ public class Parser {
         if (match(TokenType.PRINT)) return printStatement();
         if (match(TokenType.RETURN)) return returnStatement();
         if (match(TokenType.IF)) return ifStatement();
+        if (match(TokenType.FOR)) return parseForStatement();
+        if (match(TokenType.LOOP)) return loopStatement();
+        if (match(TokenType.EXIT)) return exitStatement();
         return expressionStmt();
     }
 
@@ -277,6 +298,77 @@ public class Parser {
         }
 
         return new Stmt.If(condition, thenBranch, elseBranch);
+    }
+
+    private Stmt parseForStatement() {
+        // for i = 1 to 10 | for each i in array
+        Token keyword = previous();
+        if (match(TokenType.EACH)) {
+            return foreachStatement(keyword);
+        } else {
+            return forStatement(keyword);
+        }     
+    }
+
+    private Stmt foreachStatement(Token keyword) {
+        Expr.Variable variable = null;
+        Expr iterable = null;
+        Stmt.Block body = null;        
+        
+        Token token = consume(TokenType.IDENTIFIER, "Expect variable name after `for each`.");
+        // variable lexeme must start with 'l' and followed by 'v' for variant or 'o' for object
+        if (!token.lexeme.startsWith("lv") && !token.lexeme.startsWith("lo")) {
+            error(token, "Invalid variable name in `for each` statement.\nPlease use either `lv` for variant or `lo` for object.");
+        }
+        
+        variable = new Expr.Variable(token);
+        final boolean isArray = match(TokenType.OF);
+        if (!isArray) {
+            consume(TokenType.IN, "Expect `in` after `for each` counter.");
+        }        
+        iterable = expression();
+
+        body = block();
+
+        return new Stmt.Foreach(keyword, variable, iterable, isArray, body);
+    }
+
+    private Stmt forStatement(Token keyword) {        
+        Token counter = null;
+        Expr start = null;
+        Expr stop = null;
+        Expr step = null;
+        Stmt.Block body = null;        
+        
+        counter = consume(TokenType.IDENTIFIER, "Expect variable name after `for`.");
+        // variable lexeme must start with 'ln' for local number or 'lv' for local variant
+        if (!counter.lexeme.startsWith("ln") && !counter.lexeme.startsWith("lv")) {
+            error(counter, "Invalid variable name in `for` statement.\nPlease use either `ln` for number or `lv` for variant.");
+        }
+        consume(TokenType.SIMPLE_ASSIGN, "Expect `=` after `for` counter.");
+        start = expression();
+
+        consume(TokenType.TO, "Expect `to` after `for` counter.");
+        stop = expression();
+        if (match(TokenType.STEP)) {
+            step = expression();
+        }
+
+        body = block();
+
+        return new Stmt.For(keyword, counter, start, stop, step, body);
+    }
+
+    private Stmt loopStatement() {
+        // eat new line
+        consume(TokenType.SEMICOLON, "Expect new line after `loop` keyword.");
+        return new Stmt.Loop(previous());
+    }
+
+    private Stmt exitStatement() {
+        // eat new line
+        consume(TokenType.SEMICOLON, "Expect new line after `exit` keyword.");
+        return new Stmt.Exit(previous());
     }
 
     private Stmt expressionStmt() {
@@ -389,7 +481,12 @@ public class Parser {
         while (match(TokenType.TERM)) {
             Token operator = previous();
             Expr right = factor();
-            expr = new Expr.Binary(expr, operator, right);
+            // if operator is AMPERSAND then we are concatenating strings
+            if (operator.lexeme.equals("&")) {
+                expr = new Expr.BinaryString(expr, operator, right);
+            } else {
+                expr = new Expr.Binary(expr, operator, right);
+            }
         }
 
         return expr;
@@ -432,9 +529,31 @@ public class Parser {
             }
             else if (match(TokenType.LBRACKET)) {
                 Token keyword = previous();
-                Expr indexOrkey = expression();
-                consume(TokenType.RBRACKET, "Expect ']' after expression.");
-                left = new Expr.Prop(keyword, left, indexOrkey, true);
+                // add support for array slicing eg. foo[1:2], foo[:2], foo[1:]
+                if (match(TokenType.COLON)) {
+                    // foo[:2]
+                    Token start = new Token(TokenType.NUMBER, 0);
+                    Expr startExpr = new Expr.Literal(start);
+                    Expr endExpr = expression();
+                    consume(TokenType.RBRACKET, "Expect ']' after expression.");
+                    left = new Expr.Slice(keyword, left, startExpr, endExpr);                    
+                } else {
+                    Expr indexOrkey = expression();
+                    if (match(TokenType.COLON)) {
+                        // foo[1:] or foo[1:2]
+                        Expr startExpr = indexOrkey;
+                        Expr endExpr = null;
+                        if (!check(TokenType.RBRACKET)) {
+                            endExpr = expression();
+                        }
+                        consume(TokenType.RBRACKET, "Expect ']' after expression.");
+                        left = new Expr.Slice(keyword, left, startExpr, endExpr);
+                    } else {
+                        // array or map indexing eg. foo[1] or foo["bar"]
+                        consume(TokenType.RBRACKET, "Expect ']' after expression.");
+                        left = new Expr.Prop(keyword, left, indexOrkey, true);
+                    }
+                }
             }
             else {
                 break;

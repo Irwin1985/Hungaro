@@ -98,7 +98,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
                     ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
-                    return array.size();
+                    return Double.valueOf(array.size());
                 }
                 return 0;
             }
@@ -417,13 +417,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 checkNumberOperands(expr.operator, left, right);
                 return (Double)left - (Double)right;
             case PLUS:
-                if (left instanceof Double && right instanceof Double) {
-                    return (Double)left + (Double)right;
-                }
-                if (left instanceof String && right instanceof String) {
-                    return (String)left + (String)right;
-                }
-                throw new RuntimeError(expr.operator, "Operands must be two numbers or two strings.");
+                checkNumberOperands(expr.operator, left, right);
+                return (Double)left + (Double)right;
+                // if (left instanceof Double && right instanceof Double) {
+                //     return (Double)left + (Double)right;
+                // }
+                // if (left instanceof String && right instanceof String) {
+                //     return (String)left + (String)right;
+                // }
+                // throw new RuntimeError(expr.operator, "Operands must be two numbers or two strings.");
             case DIV:
                 checkNumberOperands(expr.operator, left, right);
                 // check for division by zero
@@ -828,17 +830,27 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return null;
     }
 
-    public void checkVariableType(Token name, Object value, String type) {                
+    public void checkVariableType(Token name, Object value, String type) {                        
         char linkedType = 0;
+        
+        // get the type of the variable 
+        // the type for variable starts at the second character and for properties at the first        
         if (type.equals("Property")) {
             linkedType = name.lexeme.substring(0, 1).charAt(0);    
         } else {
             linkedType = name.lexeme.substring(1, 2).charAt(0);
         }
+
+        // if value is null then we check if the type is 'o' or 'v'
         if (value == null) {
-            if (linkedType == 'o') return;
+            // if linkedType is either 'o' or 'v' then we allow null
+            if (linkedType == 'o' || linkedType == 'v') return;
             throw new RuntimeError(name, type + " type mismatch. Expected " + Hungaro.getTypeOf(name, linkedType) + ".");
         }
+        // if linkedType is 'v' then we allow any type
+        if (linkedType == 'v') return;
+
+        // otherwise we check the type
         switch (linkedType) {
             case 's':
                 if (value instanceof String) return;
@@ -972,5 +984,184 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
         
         return makeObject(map, mapEnv, "Map");
+    }
+
+    @Override
+    public Object visitSliceExpr(Expr.Slice expr) {
+        try {
+            Object target = evaluate(expr.target);
+            if (!(target instanceof Environment)) {
+                throw new RuntimeError(expr.target.token, "Cannot slice a non-array.");
+            }
+
+            ArrayList<Object> array = (ArrayList<Object>)((Environment)target).lookup("value");
+
+            Object start = evaluate(expr.start);
+            // end by default gets the size of the array but convert it to Double
+            Object end = Double.valueOf(array.size());
+            if (expr.end != null) {
+                end = evaluate(expr.end);
+            }
+            // check if start and end are numbers
+            if (!(start instanceof Double)) {
+                throw new RuntimeError(expr.start.token, "Start index must be a number.");
+            }
+            if (!(end instanceof Double)) {
+                throw new RuntimeError(expr.end.token, "End index must be a number.");
+            }
+
+            int s = ((Double)start).intValue();
+            int e = ((Double)end).intValue();
+            return makeObject(array.subList(s, e), arrayEnv, "Array");
+        } catch(Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Void visitForStmt(Stmt.For stmt) {
+        // a for statement creates an environment
+        Environment forEnv = new Environment(environment, "For");
+        
+        Object initialValue = evaluate(stmt.start);
+        if (!(initialValue instanceof Double)) {
+            throw new RuntimeError(stmt.start.token, "Start index must be a number.");
+        }
+
+        Object finalValue = evaluate(stmt.stop);
+        if (!(finalValue instanceof Double)) {
+            throw new RuntimeError(stmt.stop.token, "Stop index must be a number.");
+        }
+
+        Object stepValue = 1.0;
+
+        if (stmt.step != null) {
+            stepValue = evaluate(stmt.step);
+            if (!(stepValue instanceof Double)) {
+                throw new RuntimeError(stmt.step.token, "Step index must be a number.");
+            }
+        }
+
+        Double start = (Double)initialValue;
+        Double end = (Double)finalValue;
+        Double inc = (Double)stepValue;
+
+        if ((inc > 0 && start > end) || (inc < 0 && start < end)) {
+            return null;
+        }
+        
+        // trick to make the loop work
+        if (inc > 0)
+            start -= inc;
+        else
+            start += inc;
+
+        // define the counter
+        forEnv.define(stmt.counter.lexeme, start);
+
+        // execute the for statement block
+        while (true) {
+            try {
+                // update counter
+                start = (Double)forEnv.lookup(stmt.counter) + inc;
+                forEnv.assign(stmt.counter, start);
+                // check if we need to exit
+                if ((inc > 0 && start > end) || (inc < 0 && start < end)) {
+                    break;
+                }
+                // execute the block
+                executeBlock(stmt.body.statements, forEnv);
+            } catch(Loop e) {
+                continue;
+            } catch (Exit e) {
+                break;
+            }
+        }        
+        return null;
+    }
+
+    @Override
+    public Void visitForeachStmt(Stmt.Foreach stmt) {
+        // foreach: 
+        // if isArray then iterate over the array keys
+        // if isMap then iterate over the map keys
+
+        // a foreach statement creates an environment
+        Environment foreachEnv = new Environment(environment, "Foreach");
+        // evaluate the target
+        Object target = evaluate(stmt.iterable);
+        if (!(target instanceof Environment)) {
+            throw new RuntimeError(stmt.iterable.token, "Invalid iterable object.");
+        }
+        // if it is an array then iterate over the array values
+        // if it is a map then create an object with the key and value
+        // and iterate over the map entries
+        Object value = ((Environment)target).lookup("value");
+        if (value instanceof ArrayList) {
+            ArrayList<Object> array = (ArrayList<Object>)value;
+            for (int i = 0; i < array.size(); i++) {
+                // check the type of the value against the type of the variable                
+                foreachEnv.define(stmt.variable.name.lexeme, array.get(i));
+                
+                // execute the block
+                try {
+                    executeBlock(stmt.body.statements, foreachEnv);
+                } catch(Loop e) {
+                    continue;
+                } catch (Exit e) {
+                    break;
+                }
+            }
+        } else if (value instanceof HashMap) {
+            // we need to create the entry object with an environment
+            Environment entryEnv = new Environment(null, "MapEntry");
+            // now we define the key and value
+            entryEnv.define("key", null);
+            entryEnv.define("value", null);
+            // define the value in the foreach environment
+            foreachEnv.define(stmt.variable.name.lexeme, entryEnv);
+
+            // create the object
+            HashMap<String, Object> map = (HashMap<String, Object>)value;
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                // update the key and value
+                entryEnv.define("key", entry.getKey());
+                entryEnv.define("value", entry.getValue());
+                // execute the block
+                try {
+                    executeBlock(stmt.body.statements, foreachEnv);
+                } catch(Loop e) {
+                    continue;
+                } catch (Exit e) {
+                    break;
+                }
+            }
+        } else {
+            throw new RuntimeError(stmt.iterable.token, "Invalid iterable object.");
+        }
+        
+        return null;
+    }
+
+    @Override
+    public Void visitLoopStmt(Stmt.Loop stmt) {
+        throw new Loop();
+    }
+
+    @Override
+    public Void visitExitStmt(Stmt.Exit stmt) {
+        throw new Exit();
+    }
+
+    @Override
+    public Object visitBinaryStringExpr(Expr.BinaryString expr) {
+        final Object left = evaluate(expr.left);
+        // check if left is a string
+        if (!(left instanceof String)) {
+            throw new RuntimeError(expr.left.token, "Left operand must be a string.");
+        }
+        final Object right = evaluate(expr.right);        
+        // return the concatenation
+        return (String)left + stringify(right);
     }
 }

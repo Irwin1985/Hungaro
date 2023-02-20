@@ -1,131 +1,22 @@
-declare lcPoint2D 
-    nX = 0
-    nY = 0
+# simple declare
+declare gsAppName = 'MyApp'
 
-    pInit(pnX, pnY)
-        nX = pnX
-        nY = pnY
-    end
+# comma separated declare
+declare gsVersion = '1.0.0', gbDebug = true, gnCount = 0, goObject = null, gaArray = [], gmMap = {}
 
-    pSetX(pnX)
-        nX = pnX
-    end
-
-    pSetY(pnY)
-        nY = pnY
-    end
-
-    fGetX()
-        return nX
-    end
-
-    fGetY()
-        return nY
-    end
-
-    pSet(pnX, pnY)
-        nX = pnX
-        nY = pnY
-    end
-
-    pAdd(pnX, pnY)
-        nX = nX + pnX
-        nY = nY + pnY
-    end
-
-    pSub(pnX, pnY)
-        nX = nX - pnX
-        nY = nY - pnY
-    end
-
-    pMul(pnX, pnY)
-        nX = nX * pnX
-        nY = nY * pnY
-    end
-
-    pDiv(pnX, pnY)
-        nX = nX / pnX
-        nY = nY / pnY
-    end
-
-    pAddPoint(poPoint)
-        nX = nX + poPoint.pGetX()
-        nY = nY + poPoint.pGetY()
-    end
-
-    pSubPoint(poPoint)
-        nX = nX - poPoint.pGetX()
-        nY = nY - poPoint.pGetY()
-    end
-
-    pMulPoint(poPoint)
-        nX = nX * poPoint.pGetX()
-        nY = nY * poPoint.pGetY()
-    end
-
-    pDivPoint(poPoint)
-        nX = nX / poPoint.pGetX()
-        nY = nY / poPoint.pGetY()
-    end
-
-    pAddX(pnX)
-        nX = nX + pnX
-    end
-
-    pAddY(pnY)
-        nY = nY + pnY
-    end
-
-    pSubX(pnX)
-        nX = nX - pnX
-    end
-
-    pSubY(pnY)
-        nY = nY - pnY
-    end
-
-    pMulX(pnX)
-        nX = nX * pnX
-    end
-
-    pMulY(pnY)
-        nY = nY * pnY
-    end
-
-    pDivX(pnX)
-        nX = nX / pnX
-    end
-
-    pDivY(pnY)
-        nY = nY / pnY
-    end  
-
-    fGetPoint()
-        return [nX, nY]
-    end  
+# declare with end keyword
+declare 
+    lvVariant = 1,
+    lsName = 'John',
+    laColors = ['red', 'green', 'blue'],
+    lnAge = 20,
+    lbIsAdult = lnAge > 18,
+    loObject = null,
+    lmProducts = {
+        'product1': 1,
+        'product2': 2,
+        'product3': 3
+    },
 end
 
-declare loPoint = new lcPoint2D(10, 20)
-
-? loPoint.fGetX() # 10
-? loPoint.fGetY() # 20
-loPoint.pSetX(30) # 30
-? loPoint.fGetPoint() # 30, 20
-
-loPoint.pSetY(40) # 40
-? loPoint.fGetPoint() # 30, 40
-
-loPoint.pSet(50, 60) # 50, 60
-? loPoint.fGetPoint() # 50, 60
-
-loPoint.pAdd(10, 20) # 60, 80
-? loPoint.fGetPoint() # 60, 80
-
-loPoint.pSub(10, 20) # 50, 60
-? loPoint.fGetPoint() # 50, 60
-
-loPoint.pMul(10, 20) # 500, 1200
-? loPoint.fGetPoint() # 500, 1200
-
-loPoint.pDiv(10, 20) # 50, 60
-? loPoint.fGetPoint() # 50, 60
+print 'lvVariant = ' & lvVariant

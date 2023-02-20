@@ -77,6 +77,7 @@ public class Scanner {
         new Spec(Pattern.compile("^\\bdeclare\\b"), TokenType.DECLARE,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bif\\b"), TokenType.IF,Category.KEYWORD),
         new Spec(Pattern.compile("^\\belse\\b"), TokenType.ELSE,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\beach\\b"), TokenType.EACH,Category.KEYWORD),
         new Spec(Pattern.compile("^\\btrue\\b"), TokenType.TRUE,Category.LITERAL),
         new Spec(Pattern.compile("^\\bfalse\\b"), TokenType.FALSE,Category.LITERAL),
         new Spec(Pattern.compile("^\\bnull\\b"), TokenType.NULL,Category.LITERAL),
@@ -94,6 +95,8 @@ public class Scanner {
         new Spec(Pattern.compile("^\\buntil\\b"), TokenType.UNTIL,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bfor\\b"), TokenType.FOR,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bto\\b"), TokenType.TO,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\bin\\b"), TokenType.IN,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\bof\\b"), TokenType.OF,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bstep\\b"), TokenType.STEP,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bsuper\\b"), TokenType.SUPER, Category.KEYWORD),
         new Spec(Pattern.compile("^\\bimport\\b"), TokenType.IMPORT,Category.KEYWORD),
@@ -108,15 +111,15 @@ public class Scanner {
         new Spec(Pattern.compile("^[\\*//%]"), TokenType.FACTOR, Category.UNARY),
 
         // Local variables
-        new Spec(Pattern.compile("^l[sanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_VARIABLE),
+        new Spec(Pattern.compile("^l[vsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_VARIABLE),
         // Global variables
-        new Spec(Pattern.compile("^g[sanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_VARIABLE),
+        new Spec(Pattern.compile("^g[vsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_VARIABLE),
 
         // Class properties
-        new Spec(Pattern.compile("^[sanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_PROPERTY),
+        new Spec(Pattern.compile("^[vsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_PROPERTY),
 
         // Parameters
-        new Spec(Pattern.compile("^p[sanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.PARAMETER),
+        new Spec(Pattern.compile("^p[vsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.PARAMETER),
 
         // Class function
         new Spec(Pattern.compile("^f([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_FUNCTION),
@@ -158,6 +161,7 @@ public class Scanner {
         new Spec(Pattern.compile("^,"), TokenType.COMMA, Category.GENERIC),
         new Spec(Pattern.compile("^\\:"), TokenType.COLON, Category.GENERIC),
         new Spec(Pattern.compile("^\\?"), TokenType.PRINT, Category.KEYWORD),
+        new Spec(Pattern.compile("^&"), TokenType.TERM, Category.GENERIC),
     };
 
 

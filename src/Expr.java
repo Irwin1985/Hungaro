@@ -11,6 +11,7 @@ public abstract class Expr {
         R visitArrayExpr(Array expr);
         R visitLiteralExpr(Literal expr);
         R visitBinaryExpr(Binary expr);
+        R visitBinaryStringExpr(BinaryString expr);
         R visitCallExpr(Call expr);
         R visitLambdaExpr(Lambda expr);
         R visitLogicalExpr(Logical expr);
@@ -18,6 +19,7 @@ public abstract class Expr {
         R visitNewExpr(New expr);
         R visitPropExpr(Prop expr);
         R visitSetExpr(Set expr);
+        R visitSliceExpr(Slice expr);
         R visitSuperExpr(Super expr);
         R visitUnaryExpr(Unary expr);
         R visitVariableExpr(Variable expr);
@@ -75,6 +77,27 @@ public abstract class Expr {
         @Override
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitBinaryExpr(this);
+        }
+    }
+
+    /*
+     * Binary string expression: "hello" + lnNumber
+     */
+    public static class BinaryString extends Expr {
+        final Expr left;
+        final Token operator;
+        final Expr right;
+
+        public BinaryString(Expr left, Token operator, Expr right) {
+            super(operator);
+            this.left = left;
+            this.operator = operator;
+            this.right = right;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitBinaryStringExpr(this);
         }
     }
 
@@ -222,6 +245,27 @@ public abstract class Expr {
     }
 
     /*
+     * Slice expression: foo[1:2]
+     */
+    public static class Slice extends Expr {
+        final Expr target;
+        final Expr start;
+        final Expr end;
+
+        public Slice(Token token, Expr target, Expr start, Expr end) {
+            super(token);
+            this.target = target;
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitSliceExpr(this);
+        }
+    }
+
+    /*
      * Super expression: super.foo
      */
     public static class Super extends Expr {
@@ -277,6 +321,4 @@ public abstract class Expr {
             return visitor.visitVariableExpr(this);
         }
     }
-
-
 }

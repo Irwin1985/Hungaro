@@ -4,10 +4,14 @@ public abstract class Stmt {
     final Token token;
 
     interface Visitor<R> {
-        R visitBlockStmt(Block stmt);
+        R visitBlockStmt(Block stmt);        
         R visitConstantStmt(Constant stmt);
+        R visitLoopStmt(Loop stmt);
         R visitClassStmt(Class stmt);
         R visitExpressionStmt(Expression stmt);
+        R visitExitStmt(Exit stmt);
+        R visitForStmt(For stmt);
+        R visitForeachStmt(Foreach stmt);
         R visitFunctionStmt(Function stmt);
         R visitIfStmt(If stmt);
         R visitPrintStmt(Print stmt);
@@ -58,6 +62,21 @@ public abstract class Stmt {
             return visitor.visitConstantStmt(this);
         }
     }
+    
+    /*
+     * Loop statement: throws an exception to continue the loop
+     */
+    public static class Loop extends Stmt {        
+
+        public Loop(Token keyword) {
+            super(keyword);            
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitLoopStmt(this);
+        }
+    }
 
     /*
      * Class statement: class Foo { ... }
@@ -96,6 +115,69 @@ public abstract class Stmt {
         @Override
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitExpressionStmt(this);
+        }
+    }
+
+    /*
+     * Exit statement: throws an exception to exit the loop
+     */
+    public static class Exit extends Stmt {        
+
+        public Exit(Token keyword) {
+            super(keyword);            
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitExitStmt(this);
+        }
+    }
+
+    /*
+    * For statement: for i = 1 to 10 { ... }
+    */
+    public static class For extends Stmt {
+        final Token counter;
+        final Expr start;
+        final Expr stop;
+        final Expr step;
+        final Block body;
+
+        public For(Token keyword, Token counter, Expr start, Expr stop, Expr step, Stmt.Block body) {
+            super(keyword);
+            this.counter = counter;
+            this.start = start;
+            this.stop = stop;
+            this.step = step;
+            this.body = body;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitForStmt(this);
+        }
+    }
+
+    /*
+     * Foreach statement: foreach i in [1, 2, 3] { ... }
+     */
+    public static class Foreach extends Stmt {
+        final Expr.Variable variable;
+        final Expr iterable;
+        final boolean isArray;
+        final Block body;
+
+        public Foreach(Token keyword, Expr.Variable variable, Expr iterable, boolean isArray, Stmt.Block body) {
+            super(keyword);
+            this.variable = variable;
+            this.iterable = iterable;
+            this.isArray = isArray;
+            this.body = body;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitForeachStmt(this);
         }
     }
 
