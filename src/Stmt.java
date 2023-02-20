@@ -15,6 +15,7 @@ public abstract class Stmt {
         R visitFunctionStmt(Function stmt);
         R visitIfStmt(If stmt);
         R visitPrintStmt(Print stmt);
+        R visitRepeatStmt(Repeat stmt);
         R visitReturnStmt(Return stmt);
         R visitVarStmt(Var stmt);
         R visitWhileStmt(While stmt);
@@ -164,14 +165,12 @@ public abstract class Stmt {
     public static class Foreach extends Stmt {
         final Expr.Variable variable;
         final Expr iterable;
-        final boolean isArray;
         final Block body;
 
-        public Foreach(Token keyword, Expr.Variable variable, Expr iterable, boolean isArray, Stmt.Block body) {
+        public Foreach(Token keyword, Expr.Variable variable, Expr iterable, Stmt.Block body) {
             super(keyword);
             this.variable = variable;
             this.iterable = iterable;
-            this.isArray = isArray;
             this.body = body;
         }
 
@@ -243,6 +242,25 @@ public abstract class Stmt {
     }
 
     /*
+    * Repeat statement: repeat { ... } until (a)
+    */
+    public static class Repeat extends Stmt {
+        final Block body;
+        final Expr condition;
+
+        public Repeat(Token keyword, Block body, Expr condition) {
+            super(keyword);
+            this.body = body;
+            this.condition = condition;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitRepeatStmt(this);
+        }
+    }
+
+    /*
      * Return statement: return 1 + 2;
      */
     public static class Return extends Stmt {
@@ -293,10 +311,10 @@ public abstract class Stmt {
      */
     public static class While extends Stmt {
         final Expr condition;
-        final Stmt body;
+        final Stmt.Block body;
 
-        public While(Expr condition, Stmt body) {
-            super(condition.token);
+        public While(Token keyword, Expr condition, Stmt.Block body) {
+            super(keyword);
             this.condition = condition;
             this.body = body;
         }

@@ -882,6 +882,17 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitWhileStmt(Stmt.While stmt) {
+        // execute the while body while the condition is truthy
+        // consider the Exit and Loop statements
+        while (isTruthy(evaluate(stmt.condition))) {
+            try {
+                execute(stmt.body);
+            } catch (Exit e) {
+                break;
+            } catch (Loop l) {
+                continue;
+            }
+        }
         return null;
     }
 
@@ -1163,5 +1174,24 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         final Object right = evaluate(expr.right);        
         // return the concatenation
         return (String)left + stringify(right);
+    }
+
+    @Override
+    public Void visitRepeatStmt(Stmt.Repeat stmt) {
+        // execute the block until the condition is truthy
+        // NOTE: consider the Loop and Exit statements
+        while (true) {
+            try {
+                executeBlock(stmt.body.statements, environment);
+                if (isTruthy(evaluate(stmt.condition))) {
+                    break;
+                }
+            } catch(Loop e) {
+                continue;
+            } catch (Exit e) {
+                break;
+            }
+        }    
+        return null;    
     }
 }

@@ -49,9 +49,10 @@ public class Parser {
             statements.add(parseDeclareStatement(keyword));            
         } while (match(TokenType.COMMA) && !isAtEnd());
         
-        match(TokenType.END); // consume optional end
-        // consume mandatory semicolon
-        consume(TokenType.SEMICOLON, "Expect new line after `end`.");
+        if (match(TokenType.END)) {
+            // consume mandatory semicolon
+            consume(TokenType.SEMICOLON, "Expect new line after `end`.");
+        }
 
         return new Stmt.Declare(keyword, statements);
     }
@@ -84,8 +85,10 @@ public class Parser {
         consume(TokenType.SIMPLE_ASSIGN, "Expect `=` after constant declaration.");
         final Expr value = expression();
 
-        if (!check(TokenType.COMMA))
+        // if it is semi colon, consume it
+        if (!check(TokenType.COMMA) && !check(TokenType.END)) {
             consume(TokenType.SEMICOLON, "Expect new line after constant declaration.");
+        }
 
         return new Stmt.Constant(keyword, identifier, value);
     }
@@ -125,8 +128,9 @@ public class Parser {
             }
         }
 
-        if (!check(TokenType.COMMA))
+        if (!check(TokenType.COMMA) && !check(TokenType.END)) {
             consume(TokenType.SEMICOLON, "Expect new line after variable declaration.");
+        }
         
         return new Stmt.Var(keyword, identifier, value);
     }
@@ -177,8 +181,9 @@ public class Parser {
         }
         consume(TokenType.END, "Expect `end` after block declaration.");
 
-        if (!check(TokenType.COMMA))
+        if (!check(TokenType.COMMA) && !check(TokenType.END)) {
             consume(TokenType.SEMICOLON, "Expect new line after block declaration.");
+        }
 
         return new Stmt.Block(statements);
     }
@@ -222,8 +227,9 @@ public class Parser {
         match(TokenType.SEMICOLON); // optional semicolon
         consume(TokenType.END, "Expect `end` after class declaration.");
 
-        if (!check(TokenType.COMMA))
+        if (!check(TokenType.COMMA) && !check(TokenType.END)) {
             consume(TokenType.SEMICOLON, "Expect new line after `end` keyword.");
+        }
         
         if (superClass != null) {
             classStack.pop(); // pop the class name
@@ -239,6 +245,8 @@ public class Parser {
         if (match(TokenType.FOR)) return parseForStatement();
         if (match(TokenType.LOOP)) return loopStatement();
         if (match(TokenType.EXIT)) return exitStatement();
+        if (match(TokenType.REPEAT)) return repeatStatement();
+        if (match(TokenType.WHILE)) return whileStatement();
         return expressionStmt();
     }
 
@@ -263,7 +271,7 @@ public class Parser {
 
         Token keyword = previous();
         Expr value = null;
-        if (!check(TokenType.SEMICOLON)) {
+        if (!check(TokenType.COMMA) && !check(TokenType.END)) {
             value = expression();
         }
         consume(TokenType.SEMICOLON, "Expect new line after return statement.");
@@ -322,15 +330,11 @@ public class Parser {
         }
         
         variable = new Expr.Variable(token);
-        final boolean isArray = match(TokenType.OF);
-        if (!isArray) {
-            consume(TokenType.IN, "Expect `in` after `for each` counter.");
-        }        
+        consume(TokenType.IN, "Expect `in` after `for each` counter.");
         iterable = expression();
-
         body = block();
 
-        return new Stmt.Foreach(keyword, variable, iterable, isArray, body);
+        return new Stmt.Foreach(keyword, variable, iterable, body);
     }
 
     private Stmt forStatement(Token keyword) {        
@@ -369,6 +373,35 @@ public class Parser {
         // eat new line
         consume(TokenType.SEMICOLON, "Expect new line after `exit` keyword.");
         return new Stmt.Exit(previous());
+    }
+
+    private Stmt repeatStatement() {
+        Token keyword = previous();
+        List<Stmt> statements = new ArrayList<Stmt>();
+        // eat new line
+        consume(TokenType.SEMICOLON, "Expect new line after `repeat` keyword.");
+        do {
+            statements.add(declaration());
+        } while (!check(TokenType.UNTIL) && !isAtEnd());        
+        consume(TokenType.UNTIL, "Expect `until` after `repeat` block.");
+        Stmt.Block body = new Stmt.Block(statements);
+
+        Expr condition = expression();        
+        consume(TokenType.SEMICOLON, "Expect new line after `until`.");
+
+        return new Stmt.Repeat(keyword, body, condition);
+    }
+
+    private Stmt whileStatement() {
+        Token keyword = previous();
+        final boolean parseRightParen = match(TokenType.LPAREN);
+        Expr condition = expression();
+        if (parseRightParen) {
+            consume(TokenType.RPAREN, "Expect `)` after `while` condition.");
+        }
+        Stmt.Block body = block();        
+
+        return new Stmt.While(keyword, condition, body);
     }
 
     private Stmt expressionStmt() {

@@ -1,22 +1,3 @@
-# simple declare
-declare gsAppName = 'MyApp'
-
-# comma separated declare
-declare gsVersion = '1.0.0', gbDebug = true, gnCount = 0, goObject = null, gaArray = [], gmMap = {}
-
-# declare with end keyword
-declare 
-    lvVariant = 1,
-    lsName = 'John',
-    laColors = ['red', 'green', 'blue'],
-    lnAge = 20,
-    lbIsAdult = lnAge > 18,
-    loObject = null,
-    lmProducts = {
-        'product1': 1,
-        'product2': 2,
-        'product3': 3
-    },
-end
-
-print 'lvVariant = ' & lvVariant
+# string interpolation example
+declare lsName = "John"
+print "Hello, ${lsName}!"
