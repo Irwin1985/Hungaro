@@ -77,6 +77,8 @@ public class Scanner {
         new Spec(Pattern.compile("^\\bdeclare\\b"), TokenType.DECLARE,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bif\\b"), TokenType.IF,Category.KEYWORD),
         new Spec(Pattern.compile("^\\belse\\b"), TokenType.ELSE,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\becho\\b"), TokenType.ECHO,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\bguard\\b"), TokenType.GUARD,Category.KEYWORD),
         new Spec(Pattern.compile("^\\beach\\b"), TokenType.EACH,Category.KEYWORD),
         new Spec(Pattern.compile("^\\btrue\\b"), TokenType.TRUE,Category.LITERAL),
         new Spec(Pattern.compile("^\\bfalse\\b"), TokenType.FALSE,Category.LITERAL),
@@ -110,15 +112,15 @@ public class Scanner {
         new Spec(Pattern.compile("^[\\*//%]"), TokenType.FACTOR, Category.UNARY),
 
         // Local variables
-        new Spec(Pattern.compile("^l[vsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_VARIABLE),
+        new Spec(Pattern.compile("^l[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_VARIABLE),
         // Global variables
-        new Spec(Pattern.compile("^g[vsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_VARIABLE),
+        new Spec(Pattern.compile("^g[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_VARIABLE),
 
         // Class properties
-        new Spec(Pattern.compile("^[vsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_PROPERTY),
+        new Spec(Pattern.compile("^[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_PROPERTY),
 
         // Parameters
-        new Spec(Pattern.compile("^p[vsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.PARAMETER),
+        new Spec(Pattern.compile("^p[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.PARAMETER),
 
         // Class function
         new Spec(Pattern.compile("^f([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_FUNCTION),
@@ -272,26 +274,7 @@ public class Scanner {
                         case "!": category = Category.BANG; break;
                         default: break;
                     }
-                    break;                
-                // case IDENTIFIER:
-                //     if (Hungaro.isConstant(lexeme)) {
-                //         scope = Scope.LOCAL; // local by default
-                //         if (lexeme.charAt(0) == '_') {
-                //             scope = Scope.GLOBAL;
-                //         }
-                //         checkVariableLength(lexeme);
-                //     } else { // is a variable
-                //         if (lexeme.charAt(0) == 'g') {
-                //             scope = Scope.GLOBAL;
-                //         } else if (lexeme.charAt(0) == 'l') {
-                //             scope = Scope.LOCAL;
-                //         } else if (lexeme.charAt(0) == 'p') {
-                //             scope = Scope.PARAM;
-                //         }
-                //         checkVariableLength(lexeme);
-                //     }
-                //     value = lexeme;
-                //     break;
+                    break;                                
                 default:
                     value = lexeme;
                     break;

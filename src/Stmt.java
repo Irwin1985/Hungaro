@@ -14,6 +14,7 @@ public abstract class Stmt {
         R visitForeachStmt(Foreach stmt);
         R visitForStmt(For stmt);
         R visitFunctionStmt(Function stmt);
+        R visitGuardStmt(Guard stmt);
         R visitIfStmt(If stmt);
         R visitLoopStmt(Loop stmt);
         R visitPrintStmt(Print stmt);
@@ -201,6 +202,25 @@ public abstract class Stmt {
         @Override
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitFunctionStmt(this);
+        }
+    }
+
+    /*
+     * Guard statement: keyword, condition, body
+     */
+    public static class Guard extends Stmt {
+        final Expr condition;
+        final Block body;
+
+        public Guard(Token keyword, Expr condition, Block body) {
+            super(keyword);
+            this.condition = condition;
+            this.body = body;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitGuardStmt(this);
         }
     }
 

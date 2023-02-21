@@ -47,7 +47,12 @@ public class RuntimeFunction implements CallableObject {
                 } catch (Defer defer) {
                     // save deferred statements and continue execution
                     deferredStatements = defer.body;                    
-                }                
+                } // we need to catch Exit exception here only for procedures (mustReturnValue = false)
+                catch (Exit exit) {
+                    if (!declaration.mustReturnValue) {
+                        break;
+                    }
+                }
             }
         } finally {
             interpreter.environment = previous;

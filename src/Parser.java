@@ -15,6 +15,7 @@ public class Parser {
     private final Stack<ValidateTypes> validateStack = new Stack<ValidateTypes>();    
     private final Stack<Token> classStack = new Stack<Token>();
     private final Stack<Boolean> deferStack = new Stack<Boolean>();
+    private final Stack<Boolean> loopStack = new Stack<Boolean>();
 
     private static class ParseError extends RuntimeException {}
 
@@ -104,6 +105,12 @@ public class Parser {
                 error(identifier, "Constants must be initialized.");
             }
             switch (identifier.lexeme.charAt(1)) {
+                case 'd': // date
+                    value = null;
+                    break;
+                case 't': // date and time
+                    value = null;
+                    break;
                 case 'v': // variant
                     value = null;
                     break;
@@ -240,7 +247,7 @@ public class Parser {
     }
 
     private Stmt statement() {
-        if (match(TokenType.PRINT)) return printStatement();
+        if (match(TokenType.PRINT, TokenType.ECHO)) return printStatement();
         if (match(TokenType.RETURN)) return returnStatement();
         if (match(TokenType.IF)) return ifStatement();
         if (match(TokenType.FOR)) return parseForStatement();
@@ -249,6 +256,7 @@ public class Parser {
         if (match(TokenType.REPEAT)) return repeatStatement();
         if (match(TokenType.WHILE)) return whileStatement();
         if (match(TokenType.DEFER)) return deferStatement();
+        if (match(TokenType.GUARD)) return guardStatement();
         return expressionStmt();
     }
 
@@ -311,13 +319,17 @@ public class Parser {
     }
 
     private Stmt parseForStatement() {
+        loopStack.push(true); // push true to indicate that we are in a for loop
         // for i = 1 to 10 | for each i in array
         Token keyword = previous();
+        Stmt forStmt = null;
         if (match(TokenType.EACH)) {
-            return foreachStatement(keyword);
+            forStmt = foreachStatement(keyword);
         } else {
-            return forStatement(keyword);
-        }     
+            forStmt = forStatement(keyword);
+        }
+        loopStack.pop(); // pop the for loop
+        return forStmt;
     }
 
     private Stmt foreachStatement(Token keyword) {
@@ -366,18 +378,32 @@ public class Parser {
     }
 
     private Stmt loopStatement() {
+        // throw error if we are not in a loop
+        if (loopStack.isEmpty()) {
+            error(previous(), "Cannot use `loop` outside of a loop.");
+        }
         // eat new line
         consume(TokenType.SEMICOLON, "Expect new line after `loop` keyword.");
         return new Stmt.Loop(previous());
     }
 
     private Stmt exitStatement() {
+        // throw error if we are not either in a loop or a procedure
+        if (loopStack.isEmpty() && functionStack.isEmpty()) {
+            error(previous(), "Cannot use `exit` outside of a loop or a procedure.");
+        }
+        // if functionStack is a function name (starts with 'f'), then we throw error
+        if (functionStack.peek().startsWith("f")) {
+            error(previous(), "Cannot use `exit` inside a function.\nUse `return` instead.\nExit is only for loops and procedures.");
+        }
+        
         // eat new line
         consume(TokenType.SEMICOLON, "Expect new line after `exit` keyword.");
         return new Stmt.Exit(previous());
     }
 
     private Stmt repeatStatement() {
+        loopStack.push(true); // push true to indicate that we are in a repeat loop
         Token keyword = previous();
         List<Stmt> statements = new ArrayList<Stmt>();
         // eat new line
@@ -390,11 +416,12 @@ public class Parser {
 
         Expr condition = expression();        
         consume(TokenType.SEMICOLON, "Expect new line after `until`.");
-
+        loopStack.pop(); // pop the repeat loop
         return new Stmt.Repeat(keyword, body, condition);
     }
 
     private Stmt whileStatement() {
+        loopStack.push(true); // push true to indicate that we are in a while loop
         Token keyword = previous();
         final boolean parseRightParen = match(TokenType.LPAREN);
         Expr condition = expression();
@@ -402,7 +429,7 @@ public class Parser {
             consume(TokenType.RPAREN, "Expect `)` after `while` condition.");
         }
         Stmt.Block body = block();
-
+        loopStack.pop(); // pop the while loop
         return new Stmt.While(keyword, condition, body);
     }
 
@@ -423,6 +450,25 @@ public class Parser {
         // notify we are out of defer block
         deferStack.pop();
         return new Stmt.Defer(keyword, body);
+    }
+
+    private Stmt guardStatement() {
+        // guard are found in function and procedures
+        if (functionStack.isEmpty()) {
+            error(previous(), "Cannot use `guard` outside of function or procedure.");
+        }
+        // if deferStack is not empty, we are already in a defer block
+        if (!deferStack.isEmpty()) {
+            error(previous(), "Cannot use `guard` inside another `defer` block.");
+        }
+        
+        Token keyword = previous();
+        final Expr condition = expression();
+        consume(TokenType.ELSE, "Expect `else` after `guard` condition.");
+
+        final Stmt.Block body = block();
+
+        return new Stmt.Guard(keyword, condition, body);
     }
 
     private Stmt expressionStmt() {

@@ -1,27 +1,22 @@
-declare lfAdd(pnX, pnY)
-    return pnX + pnY
-end
-
-declare lfSub(pnX, pnY)
-    return pnX - pnY
-end
-
-declare lfMul(pnX, pnY)
-    return pnX * pnY
-end
-
-declare lfDiv(pnX, pnY)
-    return pnX / pnY
-end
-
-# create a map with all arithmetic functions
-declare lmArithmeticFunctions = {
-    "add": lfAdd,
-    "sub": lfSub,
-    "mul": lfMul,
-    "div": lfDiv,
+declare lmCursos = {
+    nombre: "Curso de Lenguaje de Modelado",
+    year: 2020,
+    endYear: 2019,
+    periodo: "2019-2020",
+    fechaInicio: date(),
+    fechaFin: date(),
 }
 
-# call any function from the map
-declare lnResult = lmArithmeticFunctions["add"](2, 3) # 5
-print lnResult # 5
+# declare a procedure to show the name of the course
+declare lpValidateCourses(pmCourse)
+    # the year must be less than the end year
+    guard lmCursos.year <= lmCursos.endYear else
+        echo "La fecha de inicio debe ser menor a la fecha de fin"        
+        exit
+    end
+    # show the name of the course
+    echo "El curso se llama: " & lmCursos.nombre
+end
+
+# call the procedure
+lpValidateCourses(lmCursos)

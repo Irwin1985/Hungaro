@@ -14,6 +14,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment stringEnv = new Environment(objectEnv, "String");
     final Environment numberEnv = new Environment(objectEnv, "Number");
     final Environment booleanEnv = new Environment(objectEnv, "Boolean");
+    final Environment dateEnv = new Environment(objectEnv, "Date");
 
     // final Stack<Boolean> variableStack = new Stack<Boolean>();
 
@@ -30,7 +31,23 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         // global _MAP builtin function
         globals.define("_MAP", new Environment(mapEnv, "Map"));
         // global _OBJECT builtin function
-        globals.define("_OBJECT", new Environment(objectEnv, "Object"));
+        globals.define("_OBJECT", new Environment(objectEnv, "Object"));        
+
+
+        // date() builtin function
+        globals.define("date", new CallableObject() {
+            @Override
+            public int arity() {
+                return 0;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                Environment date = new Environment(dateEnv, "Date");
+                date.define("value", new java.util.Date());
+                return date;
+            }
+        });
 
         /***********************************************************************
          * Object
@@ -39,12 +56,19 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         objectEnv.define("toString", new CallableObject() {
             @Override
             public int arity() {
-                return 2;
+                return 1;
             }
 
             @Override
             public Object call(Interpreter interpreter, List<Object> arguments) {
-                return stringify(arguments.get(1));
+                // print the internal value if object is an instance of Environment
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    // get the "value" property and print it
+                    Object value = env.lookup("value");
+                    return stringify(value);
+                }
+                return stringify(arguments.get(0));
             }
         });
         /***********************************************************************
@@ -844,7 +868,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         // if value is null then we check if the type is 'o' or 'v'
         if (value == null) {
             // if linkedType is either 'o' or 'v' then we allow null
-            if (linkedType == 'o' || linkedType == 'v') return;
+            if (linkedType == 'o' || linkedType == 'v' || linkedType == 'd') return;
             throw new RuntimeError(name, type + " type mismatch. Expected " + Hungaro.getTypeOf(name, linkedType) + ".");
         }
         // if linkedType is 'v' then we allow any type
@@ -873,6 +897,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 break;
             case 'o':
                 if (value instanceof Environment) return;
+                break;
+            case 'd':
+                if (value instanceof Environment) {
+                    if (((Environment)value).name.equals("Date")) return;
+                }
                 break;
             default:
                 break;
@@ -909,14 +938,16 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             return text;
         }
         else if (object instanceof Environment) {
-            switch (((Environment)object).name) {
-                case "Array":
-                    return arrayToString((List<Object>)((Environment)object).lookup("value"));
-                case "Map":
-                    return mapToString((Map<String, Object>)((Environment)object).lookup("value"));
-                default:
-                    return "Object";
-            }
+            return stringify(((Environment)object).lookup("value"));           
+        }
+        else if (object instanceof List) {
+            return arrayToString((List<Object>)object);
+        }
+        else if (object instanceof Map) {
+            return mapToString((Map<String, Object>)object);
+        }        
+        else if (object instanceof java.util.Date) {
+            return ((java.util.Date)object).toString();
         }
         return object.toString();
     }
@@ -1198,5 +1229,19 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitDeferStmt(Stmt.Defer stmt) {
         throw new Defer(stmt.body);
+    }
+
+    @Override
+    public Void visitGuardStmt(Stmt.Guard stmt) {
+        // guard condition must be a boolean 
+        // if it is false or generates an exception then execute the block
+        try {
+            if (!isTruthy(evaluate(stmt.condition))) {
+                executeBlock(stmt.body.statements, environment);
+            }
+        } catch (RuntimeError e) {
+            executeBlock(stmt.body.statements, environment);
+        }
+        return null;
     }
 }
