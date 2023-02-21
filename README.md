@@ -7,12 +7,23 @@ A hungarian notation based programming language.
 
 - [x] Expressions
 - [x] Variables
-- [] Functions
+- [x] Functions
+- [x] Procedures
+- [x] First class functions and procedures
+- [x] While loop
+- [x] For loop
+- [x] Repeat loop
+- [x] If/else statement
+- [x] Defer Statement
+- [x] Simple declare statement
+- [x] Commam separated declare statements
+- [x] Block (declare - end) of declarations
 - [x] Arrays
 - [x] Maps
-- [] Modules
-- [] Classes
-- [] Objects (Instances)
+- [ ] Modules
+- [x] Builtin type checker
+- [x] Classes
+- [x] Objects (Instances)
 
 ### Syntax
 
