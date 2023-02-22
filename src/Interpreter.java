@@ -11,6 +11,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment objectEnv = new Environment("Object");
     final Environment arrayEnv = new Environment(objectEnv, "Array");
     final Environment mapEnv = new Environment(objectEnv, "Map");
+    final Environment functionEnv = new Environment(objectEnv, "Function");
     final Environment stringEnv = new Environment(objectEnv, "String");
     final Environment numberEnv = new Environment(objectEnv, "Number");
     final Environment booleanEnv = new Environment(objectEnv, "Boolean");
@@ -71,6 +72,25 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 return stringify(arguments.get(0));
             }
         });
+
+        // object type builtin function: return the name of the Environment
+        objectEnv.define("type", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    return env.name;
+                }
+                return "Object";
+            }
+        });
+
+
         /***********************************************************************
          * Array
          ***********************************************************************/
@@ -370,8 +390,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         });
 
         /***********************************************************************
-         * String
-         ***********************************************************************/
+        * String
+        ***********************************************************************/
         // string len builtin function
         stringEnv.define("len", new CallableObject() {
             @Override
@@ -384,6 +404,29 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 return ((String)arguments.get(0)).length();
             }
         });
+
+        /***********************************************************************
+        * Function prototype
+        ***********************************************************************/
+        // function arity builtin function: extract the internal "value" which is the 
+        // RuntimeFunction object and call its arity() method
+        functionEnv.define("arity", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    RuntimeFunction function = (RuntimeFunction)env.lookup("value");
+                    // arity is the number of parameters, not including the "poThis" parameter
+                    return function.arity()-1;
+                }
+                return 0;
+            }
+        });                
     }
 
     public void interpret(List<Stmt> statements) {
@@ -494,8 +537,16 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Object visitCallExpr(Expr.Call expr) {
         Object callee = evaluate(expr.callee);
         List<Object> arguments = new ArrayList<Object>();
-        for (Expr argument : expr.arguments) {
-            arguments.add(evaluate(argument));
+        int firstArg = 0;
+        for (Expr argument : expr.arguments) {            
+            Object evaluatedArgument = evaluate(argument);
+            // if the first argument is an instance of RuntimeFunction then 
+            // we need to create an object with the functionEnv as the environment            
+            if (firstArg == 0 && evaluatedArgument instanceof RuntimeFunction) {
+                evaluatedArgument = makeObject(evaluatedArgument, functionEnv, "Function");
+            }
+            firstArg++;
+            arguments.add(evaluatedArgument);
         }
         if (!(callee instanceof CallableObject)) {
             throw new RuntimeError(expr.paren, "Can only call functions, classes and objects.");
@@ -503,7 +554,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
         CallableObject function = (CallableObject)callee;
         if (arguments.size() != function.arity()) {
-            throw new RuntimeError(expr.paren, "Expected " + function.arity() + " arguments but got " + arguments.size() + ".");
+            String message = "Expected " + (function.arity()-1) + " arguments but got " + (arguments.size()-1) + ".";
+            // if arity is 0 then throw unexpected arguments error
+            if (function.arity()-1 == 0) {
+                message = "Expected no arguments but got " + (arguments.size()-1) + ".";
+            }
+            throw new RuntimeError(expr.paren, message);
         }
 
         return function.call(this, arguments);

@@ -151,8 +151,11 @@ public class Parser {
 
         if (name.equals("class function") || name.equals("class procedure")) {
             validateType = ValidateTypes.PROPERTY;
-            parameters.add(new Expr.Variable(new Token(TokenType.IDENTIFIER, "poThis")));
+            // parameters.add(new Expr.Variable(new Token(TokenType.IDENTIFIER, "poThis")));
         }
+        // we always pass 'poThis' as first parameter
+        parameters.add(new Expr.Variable(new Token(TokenType.IDENTIFIER, "poThis")));
+
         validateStack.push(validateType);
 
         if (match(TokenType.LPAREN)) {
@@ -663,7 +666,8 @@ public class Parser {
         return left;
     }
 
-    private Expr finishCall(Expr callee) {        
+    private Expr finishCall(Expr callee) {  
+        Token paren = previous();      
         final List<Expr> arguments = new ArrayList<Expr>();
         
         // check if the calle is a Prop expression.
@@ -674,6 +678,9 @@ public class Parser {
             // add 'poThis' pointer as the first argument. eg: super(poThis)
             final Token token = new Token(TokenType.IDENTIFIER, "poThis");
             arguments.add(new Expr.Variable(token));            
+        } // if the target is a variable then we add the function name itself as the first argument
+        else if (callee instanceof Expr.Variable) {            
+            arguments.add(callee);
         }
         
         // parse the arguments
@@ -683,7 +690,7 @@ public class Parser {
             } while (match(TokenType.COMMA));
         }
 
-        Token paren = consume(TokenType.RPAREN, "Expect ')' after arguments.");
+        consume(TokenType.RPAREN, "Expect ')' after arguments.");
 
         return new Expr.Call(callee, paren, arguments);
     }

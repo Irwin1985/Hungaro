@@ -11,11 +11,14 @@ public class RuntimeFunction implements CallableObject {
 
     @Override
     public String toString() {
-        return "<fn " + declaration.name.lexeme + ">";
+        if (declaration.mustReturnValue) {
+            return "(function " + declaration.name.lexeme + ")";
+        }
+        return "(procedure " + declaration.name.lexeme + ")";
     }
 
     @Override
-    public int arity() {
+    public int arity() {        
         return declaration.params.size();
     }
 
