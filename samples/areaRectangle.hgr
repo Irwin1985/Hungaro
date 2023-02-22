@@ -1,0 +1,13 @@
+"""
+ Find the area of the rectangle with the given width and height.
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-22
+"""
+
+declare 
+    lnWidth = val(input("Enter the width of the rectangle: ")),
+    lnHeight = val(input("Enter the height of the rectangle: ")),
+    lnArea = lnWidth * lnHeight
+end
+
+print("The area of the rectangle is: " & lnArea)

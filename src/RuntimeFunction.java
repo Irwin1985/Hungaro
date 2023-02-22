@@ -1,8 +1,8 @@
 import java.util.List;
 
 public class RuntimeFunction implements CallableObject {
-    private final Stmt.Function declaration;
-    private final Environment closure;
+    public final Stmt.Function declaration;
+    public final Environment closure;
 
     public RuntimeFunction(Stmt.Function declaration, Environment closure) {
         this.declaration = declaration;

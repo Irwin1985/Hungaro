@@ -1,0 +1,22 @@
+"""
+ Arithmetic and string operations
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-22
+"""
+
+# Arithmetic operations
+declare lnX = 5, lnY = 7, lnZ
+
+lnZ = lnX + lnY
+lnZ = lnX - lnY
+lnZ = lnX * lnY
+lnZ = lnX / lnY
+lnZ = lnX ^ lnY 
+lnZ = lnX % lnY
+
+# String operations (we dont use the + operator, we use the & operator)
+declare lsSay1 = "Say", lsSay2 = " ", lsSay3 = "Hello"
+
+declare lsSay4 = lsSay1 & lsSay2 & lsSay3
+
+print(lsSay4) # Say Hello

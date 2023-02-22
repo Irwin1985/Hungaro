@@ -1,0 +1,17 @@
+"""
+ Arrays part 2
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-22
+"""
+
+declare laNotes = []
+
+# populate the array using a loop
+for lnI = 1 to 10
+    laNotes.push(lnI)
+end
+
+# iterate over the array
+for lnI = 0 to laNotes.len()-1
+    println(laNotes[lnI])
+end

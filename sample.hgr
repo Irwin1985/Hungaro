@@ -1,0 +1,105 @@
+"""
+ Arrays part 3
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-22
+"""
+
+# declare an array of strings
+declare laNames = [
+    "John", 
+    "Mary", 
+    "Peter", 
+    "Susan", 
+    "Jane", 
+    "Mark", 
+    "Bob", 
+    "Mary",
+    "Alice", 
+    "Sarah", 
+    "Tom", 
+    "Peter", 
+    "Jack",
+    "Mary", 
+    "Robert", 
+    "Arnold", 
+    "Bob",     
+    "Mary", 
+    "Rose",
+]
+
+println("All elements in the array: " & laNames)
+
+# sort the array
+laNames.sort()
+println("Sorted elements: " & laNames)
+
+# get the first element of the array using the index
+println("The first element (using index) is: " & laNames[0])
+
+# get the first element using the Array.first() function
+println("The first element (using Array.first()) is: " & laNames.first())
+
+# get the last element of the array using the index
+println("The last element (using index) is: " & laNames[laNames.len() - 1])
+
+# get the last element using the Array.last() function
+println("The last element (using Array.last()) is: " & laNames.last())
+
+# reverse the array
+laNames.reverse()
+println("Reversed elements: " & laNames)
+
+# get the length of the array
+println("The length of the array is: " & laNames.len())
+
+# check if the array is empty
+println("Is the array empty? " & laNames.isEmpty())
+
+# check if an element is in the array
+println("Is \'John\' in the array? " & laNames.contains("John"))
+
+# join the elements of the array into a string
+println("The elements of the array joined into a string are: " & laNames.join(", "))
+
+# slice the array
+println("The first 3 elements of the array are: " & laNames.slice(0, 3))
+
+# print the array
+println("The array elements: " & laNames)
+
+# get the index of an element
+println("The index of \'John\' is: " & laNames.indexOf("John"))
+
+# get the last index of an element
+println("The last index of \'Peter\' is: " & laNames.lastIndexOf("Peter"))
+
+# remove an element from the array
+declare lsDeletedItem = laNames.remove("John")
+println("The deleted item is: " & lsDeletedItem)
+
+# check if 'John' is in the array
+println("Is \'John\' in the array? " & laNames.contains("John"))
+
+# remove an element from the array using the index
+declare lsDeletedItem = laNames.removeAt(5)
+println("The deleted item removed using removeAt() is: " & lsDeletedItem)
+
+# print the array
+println("The array elements: " & laNames)
+
+# insert an element into the array
+laNames.push("John")
+println("The array elements: " & laNames)
+
+# insert an element at the given index
+laNames.insertAt(5, "Maria")
+println("The array elements: " & laNames)
+
+# get the number of occurrences of an element
+println("The number of occurrences of \'Mary\' is: " & laNames.occurs("Mary"))
+
+# takes the first 5 elements of the array using the Array.take() function
+println("The first 5 elements of the array are: " & laNames.take(5))
+
+# take the last 3 elements using Array.take(-3)
+println("The last 3 elements of the array are: " & laNames.take(-3))

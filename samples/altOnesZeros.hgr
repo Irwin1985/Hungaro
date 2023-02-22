@@ -1,0 +1,21 @@
+"""
+ Print a matriz of 1 and 0 in alternative columns
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-22
+"""
+
+declare lnRows = val(input("Please Enter the total Number of Rows: "))
+declare lnColumns = val(input("Please Enter the total Number of Columns: "))
+
+println("Print Number Pattern - 1 and 0 in alternative Columns")
+
+for lnI = 1 to lnRows
+    for lnJ = 1 to lnColumns
+        if lnJ % 2 == 0
+            print("0 ")
+        else
+            print("1 ")
+        end
+    end
+    println("")
+end

@@ -121,7 +121,7 @@ public class Parser {
                     value = new Expr.Array(null, null);
                     break;
                 case 'n': // number
-                    value = new Expr.Literal(new Token(TokenType.NUMBER, 0));
+                    value = new Expr.Literal(new Token(TokenType.NUMBER, 0.0));
                     break;
                 case 'b': // boolean
                     value = new Expr.Literal(new Token(TokenType.FALSE, false));
@@ -250,7 +250,7 @@ public class Parser {
     }
 
     private Stmt statement() {
-        if (match(TokenType.PRINT, TokenType.ECHO)) return printStatement();
+        // if (match(TokenType.PRINT, TokenType.ECHO)) return printStatement();
         if (match(TokenType.RETURN)) return returnStatement();
         if (match(TokenType.IF)) return ifStatement();
         if (match(TokenType.FOR)) return parseForStatement();
@@ -263,16 +263,16 @@ public class Parser {
         return expressionStmt();
     }
 
-    private Stmt printStatement() {
-        List<Expr> expressions = new ArrayList<Expr>();        
+    // private Stmt printStatement() {
+    //     List<Expr> expressions = new ArrayList<Expr>();        
 
-        do {
-            expressions.add(expression());
-        } while (match(TokenType.COMMA));
+    //     do {
+    //         expressions.add(expression());
+    //     } while (match(TokenType.COMMA));
 
-        consume(TokenType.SEMICOLON, "Expect new line after expression.");
-        return new Stmt.Print(expressions);
-    }
+    //     consume(TokenType.SEMICOLON, "Expect new line after expression.");
+    //     return new Stmt.Print(expressions);
+    // }
 
     private Stmt returnStatement() {
         if (functionStack.isEmpty()) {
@@ -596,9 +596,21 @@ public class Parser {
     }
 
     private Expr factor() {
-        Expr expr = unary();
+        Expr expr = exponent();
 
         while (match(TokenType.FACTOR)) {
+            Token operator = previous();
+            Expr right = exponent();
+            expr = new Expr.Binary(expr, operator, right);
+        }
+
+        return expr;
+    }
+
+    private Expr exponent() {
+        Expr expr = unary();
+
+        while (match(TokenType.EXPONENT)) {
             Token operator = previous();
             Expr right = unary();
             expr = new Expr.Binary(expr, operator, right);
@@ -878,7 +890,7 @@ public class Parser {
         while (!isAtEnd()) {
             if (previous().type == TokenType.SEMICOLON) return;
             switch (peek().type) {
-                case PRINT:
+                // case PRINT:
                 case RETURN:
                 case IF:
                 case FOR:

@@ -1,0 +1,16 @@
+"""
+ Add by recursion
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-22
+"""
+
+declare lfAddNumbers(pnNumber)
+    if pnNumber != 0
+        return pnNumber + lfAddNumbers(pnNumber - 1)
+    else
+        return pnNumber    
+    end
+end
+
+declare lnNumber = val(input("Enter a number: "))
+println("Sum of numbers from 1 to " & lnNumber & " is " & lfAddNumbers(lnNumber))

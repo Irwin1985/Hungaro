@@ -1,5 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -90,10 +92,351 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         });
 
-
         /***********************************************************************
-         * Array
-         ***********************************************************************/
+        * Array
+        ***********************************************************************/
+        // concat builtin function: an array takes another array and call makeObject() to create a new array
+        arrayEnv.define("concat", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment && arguments.get(1) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    Environment env2 = (Environment)arguments.get(1);
+                    ArrayList<Object> array2 = (ArrayList<Object>)env2.lookup("value");
+                    ArrayList<Object> newArray = new ArrayList<Object>();
+                    newArray.addAll(array);
+                    newArray.addAll(array2);
+                    return makeObject(newArray, arrayEnv, "Array");
+                }
+                return null;
+            }
+        });
+
+        // array indexOf builtin function
+        arrayEnv.define("indexOf", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    return array.indexOf(arguments.get(1));
+                }
+                return null;
+            }
+        });
+
+        // array lastIndexOf builtin function
+        arrayEnv.define("lastIndexOf", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    return array.lastIndexOf(arguments.get(1));
+                }
+                return null;
+            }
+        });
+
+        // array contains builtin function
+        arrayEnv.define("contains", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    return array.contains(arguments.get(1));
+                }
+                return null;
+            }
+        });
+
+        // array isEmpty builtin function
+        arrayEnv.define("isEmpty", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    return array.isEmpty();
+                }
+                return null;
+            }
+        });
+
+        // array sort builtin function: sort the array in ascending order
+        arrayEnv.define("sort", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    // check if the first element is a string
+                    if (array.get(0) instanceof String) {
+                        // all elements must be strings
+                        for (int i = 0; i < array.size(); i++) {
+                            if (!(array.get(i) instanceof String)) {
+                                throw new RuntimeError(null, "Array elements must be of the same type");
+                            }
+                        }
+                        // convert the array to an ArrayList of strings
+                        ArrayList<String> stringArray = new ArrayList<String>();
+                        for (int i = 0; i < array.size(); i++) {
+                            stringArray.add((String)array.get(i));
+                        }
+                        // sort the array
+                        Collections.sort(stringArray);
+                        // define the new array in the "value" of the array environment
+                        env.define("value", stringArray);
+                    }
+                    else if (array.get(0) instanceof Double) {
+                        // all elements must be numbers
+                        for (int i = 0; i < array.size(); i++) {
+                            if (!(array.get(i) instanceof Double)) {
+                                throw new RuntimeError(null, "Array elements must be of the same type");
+                            }
+                        }
+                        // convert the array to an ArrayList of numbers
+                        ArrayList<Double> numberArray = new ArrayList<Double>();
+                        for (int i = 0; i < array.size(); i++) {
+                            numberArray.add((Double)array.get(i));
+                        }
+                        // sort the array
+                        Collections.sort(numberArray);
+                        // define the new array in the "value" of the array environment
+                        env.define("value", numberArray);
+                    }
+                    else {
+                        throw new RuntimeError(null, "Array elements must be of the same type and either numbers or strings");
+                    }
+                }
+                return null;
+            }
+        });
+
+        // array reverse builtin function
+        arrayEnv.define("reverse", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    Collections.reverse(array);
+                    // define the new array in the "value" of the array environment
+                    env.define("value", array);
+                }
+                return null;
+            }
+        });
+
+        // array first() builtin function
+        arrayEnv.define("first", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    // if the array is empty, return null
+                    if (array.isEmpty()) {
+                        return null;
+                    }
+                    return array.get(0);
+                }
+                return null;
+            }
+        });
+
+        // array last() builtin function
+        arrayEnv.define("last", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    // if the array is empty, return null
+                    if (array.isEmpty()) {
+                        return null;
+                    }
+                    return array.get(array.size() - 1);
+                }
+                return null;
+            }
+        });
+
+        // array remove() removes the first occurrence of the given element
+        arrayEnv.define("remove", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    // if the array is empty, return null
+                    if (array.isEmpty()) {
+                        return null;
+                    }
+                    // if the element is not in the array, return null
+                    if (!array.contains(arguments.get(1))) {
+                        return null;
+                    }
+                    array.remove(arguments.get(1));
+                    return arguments.get(1);
+                }
+                return null;
+            }
+        });
+
+        // array removeAt() builtin function
+        arrayEnv.define("removeAt", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    // if the array is empty, return null
+                    if (array.isEmpty()) {
+                        return null;
+                    }
+                    // if the index is out of bounds, return null
+                    if ((int)(double)(Double)arguments.get(1) < 0 || (int)(double)(Double)arguments.get(1) >= array.size()) {
+                        return null;
+                    }
+                    return array.remove((int)(double)(Double)arguments.get(1));
+                }
+                return null;
+            }
+        });
+
+        // array insertAt() builtin function
+        arrayEnv.define("insertAt", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    // if the index is out of bounds, return null
+                    if ((int)(double)(Double)arguments.get(1) < 0 || (int)(double)(Double)arguments.get(1) >= array.size()) {
+                        return null;
+                    }
+                    array.add((int)(double)(Double)arguments.get(1), arguments.get(2));
+                }
+                return null;
+            }
+        }); 
+        
+        // array occurs() builtin function: returns the number of times the given element occurs in the array
+        arrayEnv.define("occurs", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    int count = 0;
+                    for (int i = 0; i < array.size(); i++) {
+                        if (array.get(i).equals(arguments.get(1))) {
+                            count++;
+                        }
+                    }
+                    return count;
+                }
+                return null;
+            }
+        });
+        
+        // array takes() builtin function: returns a new array containing the first n elements of the given array
+        // if the argument is negative then the last n elements are returned
+        arrayEnv.define("take", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    ArrayList<Object> newArray = new ArrayList<Object>();
+                    if ((int)(double)(Double)arguments.get(1) < 0) {
+                        for (int i = array.size() + (int)(double)(Double)arguments.get(1); i < array.size(); i++) {
+                            newArray.add(array.get(i));
+                        }
+                    } else {
+                        for (int i = 0; i < (int)(double)(Double)arguments.get(1); i++) {
+                            newArray.add(array.get(i));
+                        }
+                    }
+                    return newArray;
+                }
+                return null;
+            }
+        });        
+
         // array push builtin function: eg. array.push(1)
         arrayEnv.define("push", new CallableObject() {
             @Override
@@ -144,7 +487,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
                     return Double.valueOf(array.size());
                 }
-                return 0;
+                return 0.0;
             }
         });
 
@@ -241,6 +584,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 return null;
             }
         });
+
+        
 
         /***********************************************************************
          * Map
@@ -426,7 +771,94 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 }
                 return 0;
             }
-        });                
+        }); 
+        /***********************************************************************
+        * Built-in functions
+        ***********************************************************************/
+        // input builtin function: read a line from the console
+        globals.define("input", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the prompt
+                System.out.print(arguments.get(1));                
+                return Hungaro.readLine();
+            }
+        });
+
+        // val() builtin function: convert a string to a number
+        globals.define("val", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                final Object arg = arguments.get(1);
+                if (arg instanceof String) {
+                    return Double.parseDouble((String)arg);
+                }
+                return arg;
+            }
+        });
+
+        // type() builtin function: return the type of an object eg: 
+        globals.define("type", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                final Object arg = arguments.get(1);
+                if (arg instanceof String) {
+                    return "s";
+                } else if (arg instanceof Double) {
+                    return "n";
+                } else if (arg instanceof Boolean) {
+                    return "b";
+                } else if (arg instanceof Environment) {
+                    return ((Environment)arg).name;
+                }
+                return "u";
+            }
+        });
+
+        // print builtin function: print a string to the console
+        globals.define("print", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the string to print
+                System.out.print(stringify(arguments.get(1)));
+                return null;
+            }
+        });
+
+        // println builtin function: print a string to the console with a newline
+        globals.define("println", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the string to print
+                System.out.println(stringify(arguments.get(1)));
+                return null;
+            }
+        });
     }
 
     public void interpret(List<Stmt> statements) {
@@ -506,6 +938,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             case MOD:
                 checkNumberOperands(expr.operator, left, right);
                 return (Double)left % (Double)right;
+            case POW:
+                checkNumberOperands(expr.operator, left, right);
+                return Math.pow((Double)left, (Double)right);
             default:
                 throw new RuntimeError(expr.operator, "Unknown operator.");
         }
@@ -661,7 +1096,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             Object property = evaluate(expr.property);
             if (object.name.equals("Array")) {
                 if (property instanceof Double) {
-                    return object.lookup((int)(double)(Double)property, expr.property.token);
+                    try {
+                        return object.lookup((int)(double)(Double)property, expr.property.token);
+                    } catch(Exception e){
+                        return null;
+                    }
                 } else {
                     throw new RuntimeError(expr.property.token, "Array index must be a number.");
                 }
@@ -703,7 +1142,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     int index = (int)(double)(Double)property;  
                     ArrayList<Object> array = (ArrayList<Object>)instance.lookup("value");
                     if (index < 0 || index >= array.size()) {
-                        throw new RuntimeError(prop.property.token, "Array index out of bounds.");
+                        // throw new RuntimeError(prop.property.token, "Array index out of bounds.");
+                        return null;
                     }
                     return array.set(index, value);
                 } else {
@@ -881,7 +1321,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitPrintStmt(Stmt.Print stmt) {
         for (Expr expression : stmt.expressions) {
-            System.out.println(stringify(evaluate(expression)));
+            System.out.print(stringify(evaluate(expression)));
         }
         return null;
     }

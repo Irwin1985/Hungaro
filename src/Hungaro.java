@@ -100,6 +100,10 @@ public class Hungaro {
     }
 
     static void runtimeError(RuntimeError error) {
+        if (error.token == null) {
+            System.err.println(error.getMessage());
+            return;
+        }
         System.err.println(formatError("Runtime", error.token.line, error.token.col, error.token.lexeme, error.getMessage()));
         hadRuntimeError = true;
     }
@@ -133,5 +137,15 @@ public class Hungaro {
                 throw new RuntimeError(token, "Invalid " + type + " type.");
         }        
     }
-}
 
+    // function that reads a line from the console
+    public static String readLine() {
+        InputStreamReader input = new InputStreamReader(System.in);
+        BufferedReader reader = new BufferedReader(input);
+        try {
+            return reader.readLine();
+        } catch (IOException e) {
+            return "";
+        }
+    }
+}

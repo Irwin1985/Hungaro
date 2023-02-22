@@ -88,7 +88,7 @@ public class Scanner {
         new Spec(Pattern.compile("^\\bcase\\b"), TokenType.CASE,Category.KEYWORD),
         new Spec(Pattern.compile("^\\botherwise\\b"), TokenType.OTHERWISE,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bnew\\b"), TokenType.NEW,Category.KEYWORD),
-        new Spec(Pattern.compile("^\\bprint\\b"), TokenType.PRINT,Category.KEYWORD),
+        // new Spec(Pattern.compile("^\\bprint\\b"), TokenType.PRINT,Category.KEYWORD),
         new Spec(Pattern.compile("^\\brelease\\b"), TokenType.RELEASE,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bdefer\\b"), TokenType.DEFER,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bend\\b"), TokenType.END,Category.KEYWORD),
@@ -109,7 +109,9 @@ public class Scanner {
         new Spec(Pattern.compile("^="), TokenType.SIMPLE_ASSIGN, Category.ASSIGNMENT),
         new Spec(Pattern.compile("^[\\+\\-\\*\\/]="), TokenType.COMPLEX_ASSIGN, Category.ASSIGNMENT),
         new Spec(Pattern.compile("^[\\+\\-]"), TokenType.TERM, Category.UNARY),
-        new Spec(Pattern.compile("^[\\*//%]"), TokenType.FACTOR, Category.UNARY),
+        new Spec(Pattern.compile("^[\\*//]"), TokenType.FACTOR, Category.UNARY),
+        new Spec(Pattern.compile("^%"), TokenType.FACTOR, Category.GENERIC),
+        new Spec(Pattern.compile("^\\^"), TokenType.EXPONENT, Category.POW),
 
         // Local variables
         new Spec(Pattern.compile("^l[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_VARIABLE),
@@ -161,7 +163,7 @@ public class Scanner {
         new Spec(Pattern.compile("^\\."), TokenType.DOT, Category.GENERIC),
         new Spec(Pattern.compile("^,"), TokenType.COMMA, Category.GENERIC),
         new Spec(Pattern.compile("^\\:"), TokenType.COLON, Category.GENERIC),
-        new Spec(Pattern.compile("^\\?"), TokenType.PRINT, Category.KEYWORD),
+        // new Spec(Pattern.compile("^\\?"), TokenType.PRINT, Category.KEYWORD),
         new Spec(Pattern.compile("^&"), TokenType.TERM, Category.GENERIC),
     };
 
@@ -263,7 +265,7 @@ public class Scanner {
                         case "-", "-=": category = Category.MINUS; break;
                         case "*", "*=": category = Category.MUL; break;
                         case "%", "%=": category = Category.MOD; break;
-                        case "/", "/=": category = Category.DIV; break;
+                        case "/", "/=": category = Category.DIV; break;                        
                         case "=": category = Category.ASSIGN; break;
                         case "<": category = Category.LESS; break;
                         case "<=": category = Category.LESS_EQ; break;
