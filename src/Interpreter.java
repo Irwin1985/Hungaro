@@ -1,6 +1,5 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
@@ -585,7 +584,45 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         });
 
-        
+        // array shuffle builtin function
+        arrayEnv.define("shuffle", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    Collections.shuffle(array);
+                    // update the array
+                    env.define("value", array);
+                }
+                return null;
+            }
+        });
+
+        // array equals builtin function: the argument must be an array
+        arrayEnv.define("equals", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment && arguments.get(1) instanceof Environment) {
+                    Environment env1 = (Environment)arguments.get(0);
+                    Environment env2 = (Environment)arguments.get(1);
+                    ArrayList<Object> array1 = (ArrayList<Object>)env1.lookup("value");
+                    ArrayList<Object> array2 = (ArrayList<Object>)env2.lookup("value");
+                    return array1.equals(array2);
+                }
+                return false;
+            }
+        });
 
         /***********************************************************************
          * Map
@@ -859,6 +896,64 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 return null;
             }
         });
+
+        // int() builtin function: trim the decimal part of a number
+        globals.define("int", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the number to trim
+                return Math.floor((double)arguments.get(1));
+            }
+        });   
+        
+        // space() builtin function: return a string of spaces
+        globals.define("space", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the number of spaces
+                // but we need to convert it to an integer
+                return " ".repeat((int)(double)arguments.get(1));
+            }
+        });
+
+        // chr() builtin function: return a string of a single character
+        globals.define("chr", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the character code
+                return Character.toString((char)(int)arguments.get(1));
+            }
+        });
+
+        // sin() builtin function: return the sine of a number
+        globals.define("sin", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the number
+                return Math.sin((double)arguments.get(1));
+            }
+        });        
+        
     }
 
     public void interpret(List<Stmt> statements) {
@@ -1128,7 +1223,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         // computable set: eg: a[1] = 2
 
         String name = "Variable";
-        final Object value = evaluate(expr.value);
+        Object value = evaluate(expr.value);
+        final boolean isComplexOperator = (expr.operator.type == TokenType.COMPLEX_ASSIGN);
+
         if (expr.computable) { // eg. a[1] = 2
             name = "Property";
             final Expr.Prop prop = (Expr.Prop)expr.target;
@@ -1141,9 +1238,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 if (property instanceof Double) {
                     int index = (int)(double)(Double)property;  
                     ArrayList<Object> array = (ArrayList<Object>)instance.lookup("value");
-                    if (index < 0 || index >= array.size()) {
-                        // throw new RuntimeError(prop.property.token, "Array index out of bounds.");
+                    if (index < 0 || index >= array.size()) {                        
                         return null;
+                    }
+                    if (isComplexOperator) {
+                        value = resolveComplexAssignment(expr.target.token, array.get(index), value, expr.operator.category);
                     }
                     return array.set(index, value);
                 } else {
@@ -1152,28 +1251,74 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
             else if (instance.name.equals("Map")) {
                 HashMap<Object, Object> map = (HashMap<Object, Object>)instance.lookup("value");
+                if (isComplexOperator) {
+                    value = resolveComplexAssignment(expr.target.token, map.get(property), value, expr.operator.category);
+                }
                 map.put(property, value);
                 return value;
             }
             return null;
         }
-        
+
         // check variable or property value
-        Token variableToken = ((Expr.Variable)expr.target).name;
+        final Token variableToken = ((Expr.Variable)expr.target).name;
 
         // check if variable is a class property
         if (variableToken.category == Category.CLASS_PROPERTY) {
             checkVariableType(variableToken, value, "Property");
             // define the property in the instance environment
             Environment instance = (Environment)environment.lookup("poThis");
-            // if (instance == null) {
-            //     // define the property in current environment
-            //     return environment.define(variableToken.lexeme, value);                
-            // }
-            return instance.define(variableToken.lexeme, value);            
+            if (isComplexOperator) {
+                value = resolveComplexAssignment(variableToken, instance.lookup(variableToken.lexeme), value, expr.operator.category);
+            }
+            return instance.define(variableToken.lexeme, value);
         } else {
-            checkVariableType(variableToken, value, name);
+            checkVariableType(variableToken, value, name);            
+            if (isComplexOperator) {
+                value = resolveComplexAssignment(variableToken, environment.lookup(variableToken.lexeme), value, expr.operator.category);                
+            }
             return environment.assign(variableToken, value);
+        }
+    }
+
+    private Object resolveComplexAssignment(Token variableToken, Object oldVal, Object newVal, Category operator) {        
+        if (oldVal instanceof Double) {
+            double current = (double)oldVal;
+            double newValue = (double)newVal;
+            switch (operator) {
+                case PLUS:
+                    newValue = current + newValue;
+                    break;
+                case MINUS:
+                    newValue = current - newValue;
+                    break;
+                case MUL:
+                    newValue = current * newValue;
+                    break;
+                case DIV:
+                    newValue = current / newValue;
+                    break;
+                case MOD:
+                    newValue = current % newValue;
+                    break;
+                default:
+                    break;
+            }
+            return newValue;
+        } // add support for String type (& operator)
+        else if (oldVal instanceof String) {
+            String current = (String)oldVal;
+            String newValue = (String)newVal;
+            switch (operator) {
+                case PLUS:
+                    newValue = current + newValue;
+                    break;
+                default:
+                    break;
+            }
+            return newValue;
+        } else {
+            throw new RuntimeError(variableToken, "This operator cannot be used with this type.");
         }
     }
 

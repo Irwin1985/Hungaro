@@ -102,12 +102,14 @@ public class Scanner {
         new Spec(Pattern.compile("^\\bsuper\\b"), TokenType.SUPER, Category.KEYWORD),
         new Spec(Pattern.compile("^\\bimport\\b"), TokenType.IMPORT,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bmodule\\b"), TokenType.MODULE,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\bnot\\b"), TokenType.LOGICAL_NOT,Category.UNARY),
         new Spec(Pattern.compile("^\\bexit\\b"), TokenType.EXIT,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bloop\\b"), TokenType.LOOP,Category.KEYWORD),
 
         // Assignment operators
-        new Spec(Pattern.compile("^="), TokenType.SIMPLE_ASSIGN, Category.ASSIGNMENT),
-        new Spec(Pattern.compile("^[\\+\\-\\*\\/]="), TokenType.COMPLEX_ASSIGN, Category.ASSIGNMENT),
+        new Spec(Pattern.compile("^="), TokenType.SIMPLE_ASSIGN, Category.ASSIGNMENT),                
+        new Spec(Pattern.compile("^[\\+\\-\\*\\/&]="), TokenType.COMPLEX_ASSIGN, Category.ASSIGNMENT),
+        new Spec(Pattern.compile("^&"), TokenType.TERM, Category.GENERIC),
         new Spec(Pattern.compile("^[\\+\\-]"), TokenType.TERM, Category.UNARY),
         new Spec(Pattern.compile("^[\\*//]"), TokenType.FACTOR, Category.UNARY),
         new Spec(Pattern.compile("^%"), TokenType.FACTOR, Category.GENERIC),
@@ -163,8 +165,7 @@ public class Scanner {
         new Spec(Pattern.compile("^\\."), TokenType.DOT, Category.GENERIC),
         new Spec(Pattern.compile("^,"), TokenType.COMMA, Category.GENERIC),
         new Spec(Pattern.compile("^\\:"), TokenType.COLON, Category.GENERIC),
-        // new Spec(Pattern.compile("^\\?"), TokenType.PRINT, Category.KEYWORD),
-        new Spec(Pattern.compile("^&"), TokenType.TERM, Category.GENERIC),
+        // new Spec(Pattern.compile("^\\?"), TokenType.PRINT, Category.KEYWORD),        
     };
 
     public Scanner(String source) {
@@ -261,11 +262,11 @@ public class Scanner {
                     break;
                 case COMPLEX_ASSIGN, TERM, FACTOR, REL_OPE, EQU_OPE, LOGICAL_NOT:
                     switch (lexeme) {
-                        case "+", "+=": category = Category.PLUS; break;
+                        case "+", "+=", "&", "&=": category = Category.PLUS; break;                        
                         case "-", "-=": category = Category.MINUS; break;
                         case "*", "*=": category = Category.MUL; break;
                         case "%", "%=": category = Category.MOD; break;
-                        case "/", "/=": category = Category.DIV; break;                        
+                        case "/", "/=": category = Category.DIV; break;
                         case "=": category = Category.ASSIGN; break;
                         case "<": category = Category.LESS; break;
                         case "<=": category = Category.LESS_EQ; break;
@@ -273,7 +274,7 @@ public class Scanner {
                         case ">=": category = Category.GREATER_EQ; break;
                         case "==": category = Category.EQUAL; break;
                         case "!=": category = Category.NOT_EQ; break;
-                        case "!": category = Category.BANG; break;
+                        case "!", "not": category = Category.BANG; break;
                         default: break;
                     }
                     break;                                

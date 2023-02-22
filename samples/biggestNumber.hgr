@@ -1,0 +1,21 @@
+"""
+ The biggest number
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-22
+"""
+
+declare lnNumber = val(input("Enter the number of elements you wish to find the greatest element of: "))
+
+println("Enter " & lnNumber & " numbers: ")
+
+declare lnMax = val(input(""))
+
+for lnIndex = 2 to lnNumber
+    println("Element " & lnIndex & ": ")
+    declare lnNumber = val(input(""))
+    if lnNumber > lnMax
+        lnMax = lnNumber # update the maximum
+    end
+end
+
+println("The maximum number is: " & lnMax)

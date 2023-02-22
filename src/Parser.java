@@ -485,10 +485,9 @@ public class Parser {
     }
 
     private Expr assignment() {
-        Expr target = logicalOr();
-
-        if (peek().category == Category.ASSIGNMENT) {
-            Token equals = advance();            
+        Expr target = logicalOr();        
+        if (peek().type == TokenType.SIMPLE_ASSIGN || peek().type == TokenType.COMPLEX_ASSIGN) {
+            Token equals = advance();
             Expr value = assignment();
             // validate value
             if (value instanceof Expr.Variable) {

@@ -1,0 +1,36 @@
+"""
+ Bubble sort algorithm
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-22
+"""
+
+# NOTE: procedures does not return values
+declare lpBubbleSort(paList) # `lp` stands for `local procedure`
+    declare lbSorted = false, lnLength = paList.len()
+    while not lbSorted
+        lbSorted = true
+        lnLength -= 1
+        for lnIndex = 0 to lnLength - 1
+            if paList[lnIndex+1] < paList[lnIndex]
+                declare lnTemp = paList[lnIndex]
+                paList[lnIndex] = paList[lnIndex+1]
+                paList[lnIndex+1] = lnTemp
+                lbSorted = false
+            end
+        end
+    end
+end
+
+# Driver code to test above
+declare laNumbers = [12, 7, 13, 5, 6]
+
+println("Unsorted list: " & laNumbers)
+lpBubbleSort(laNumbers)
+println("Sorted list: " & laNumbers)
+
+# Check the output:
+if laNumbers.equals([5, 6, 7, 12, 13])
+    println("Test passed")
+else
+    println("Test failed")
+end

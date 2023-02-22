@@ -15,3 +15,7 @@ end
 for lnI = 0 to laNotes.len()-1
     println(laNotes[lnI])
 end
+
+# shuffle the array
+laNotes.shuffle()
+println(laNotes)

@@ -1,0 +1,22 @@
+"""
+ Binary search algorithm
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-22
+"""
+
+declare lfBinarySearch(paArray, pnValue)
+    declare lnLow = 0, lnHigh = paArray.len() - 1, lnMid
+    while 0 <= lnHigh
+        lnMid = int(lnLow + lnHigh / 2)
+        if paArray[lnMid] == pnValue
+            return lnMid
+        end
+        if paArray[lnMid] < pnValue
+            lnLow = lnMid + 1
+        else
+            lnHigh = lnMid - 1
+        end
+    end
+end
+
+println(lfBinarySearch([3, 5, 2, 8], 8)) # index 3
