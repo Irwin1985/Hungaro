@@ -7,6 +7,11 @@ import java.util.HashMap;
 @SuppressWarnings("unchecked")
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment globals = new Environment("Global");
+    // define a variable to hold the current color selected by the user.
+    
+    // this variable will be used to colorize the output of the interpreter
+    public static String currentForeColor = Hungaro.ANSI_RESET;
+    public static String currentBackColor = Hungaro.ANSI_RESET;
     
     // Objects inheritance chain
     final Environment objectEnv = new Environment("Object");
@@ -871,13 +876,18 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         globals.define("print", new CallableObject() {
             @Override
             public int arity() {
-                return 2;
+                return -1;
             }
 
             @Override
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 // the second argument is the string to print
-                System.out.print(stringify(arguments.get(1)));
+                // we start printing from argument 1 because argument 0 is the "poThis" parameter                
+
+                for (int i = 1; i < arguments.size(); i++) {
+                    System.out.print(currentBackColor + currentForeColor + stringify(arguments.get(i)));
+                }
+
                 return null;
             }
         });
@@ -886,13 +896,17 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         globals.define("println", new CallableObject() {
             @Override
             public int arity() {
-                return 2;
+                return -1;
             }
 
             @Override
             public Object call(Interpreter interpreter, List<Object> arguments) {
-                // the second argument is the string to print
-                System.out.println(stringify(arguments.get(1)));
+                // the second argument is the list to print
+                
+                for (int i = 1; i < arguments.size(); i++) {
+                    System.out.println(currentBackColor + currentForeColor + stringify(arguments.get(i)));
+                }
+
                 return null;
             }
         });
@@ -952,8 +966,51 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 // the second argument is the number
                 return Math.sin((double)arguments.get(1));
             }
-        });        
+        });  
         
+        // setConsoleForeColor() builtin function: set the console foreground color
+        globals.define("setConsoleForeColor", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the color
+                // check if it is a string and if it is a valid color
+                // the forecolor is in the Hungaro.foreColors map
+                if (arguments.get(1) instanceof String) {
+                    String color = (String)arguments.get(1);
+                    if (Hungaro.foreColors.containsKey(color)) {
+                        currentForeColor = Hungaro.foreColors.get(color);
+                    }
+                }            
+                return null;
+            }
+        });
+
+        // setConsoleBackColor() builtin function: set the console background color
+        globals.define("setConsoleBackColor", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the color
+                // check if it is a string and if it is a valid color
+                // the backcolor is in the Hungaro.backColors map
+                if (arguments.get(1) instanceof String) {
+                    String color = (String)arguments.get(1);
+                    if (Hungaro.backColors.containsKey(color)) {
+                        currentBackColor = Hungaro.backColors.get(color);
+                    }
+                }            
+                return null;
+            }
+        });        
     }
 
     public void interpret(List<Stmt> statements) {
@@ -1083,7 +1140,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
 
         CallableObject function = (CallableObject)callee;
-        if (arguments.size() != function.arity()) {
+        if (function.arity() != -1 && arguments.size() != function.arity()) {
             String message = "Expected " + (function.arity()-1) + " arguments but got " + (arguments.size()-1) + ".";
             // if arity is 0 then throw unexpected arguments error
             if (function.arity()-1 == 0) {
@@ -1465,8 +1522,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitPrintStmt(Stmt.Print stmt) {
+        String consoleColor = "\u001B[31m;]";
         for (Expr expression : stmt.expressions) {
-            System.out.print(stringify(evaluate(expression)));
+            System.out.print(consoleColor + stringify(evaluate(expression)));
         }
         return null;
     }

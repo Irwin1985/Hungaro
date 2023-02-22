@@ -1,0 +1,23 @@
+"""
+ Convert to binary
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-22
+"""
+
+println("Convert number to binary")
+
+declare lnNumber = 176
+
+# array to store binary number
+declare laBinary = []
+
+while lnNumber > 0
+    # storing remainder in binary array
+    laBinary.push(lnNumber % 2)
+    lnNumber = int(lnNumber / 2)
+end
+
+# printing binary array in reverse order
+laBinary.reverse()
+
+print("Binary number: " & laBinary)

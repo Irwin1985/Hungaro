@@ -1,0 +1,54 @@
+"""
+ Playing with colors in the console
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-22
+"""
+
+setConsoleForeColor("yellow")
+println("yellow")
+
+setConsoleForeColor("red")
+println("red")
+
+setConsoleForeColor("green")
+println("green")
+
+setConsoleForeColor("blue")
+println("blue")
+
+setConsoleForeColor("purple")
+println("purple")
+
+setConsoleForeColor("cyan")
+println("cyan")
+
+setConsoleForeColor("white")
+println("white")
+
+# Reset the color
+println(":::Background colors:::")
+setConsoleForeColor("white")
+setConsoleBackColor("yellow")
+println("yellow")
+
+setConsoleBackColor("red")
+println("red")
+
+setConsoleBackColor("green")
+println("green")
+
+setConsoleBackColor("blue")
+println("blue")
+
+setConsoleBackColor("purple")
+println("purple")
+
+setConsoleBackColor("cyan")
+println("cyan")
+
+setConsoleBackColor("white")
+println("white")
+
+
+setConsoleBackColor("black")
+println("reset")
