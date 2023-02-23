@@ -1,0 +1,43 @@
+"""
+ Is PalinDrome
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-23
+"""
+
+# version 1 using reverse()
+declare lfIsPalindrome(psString)
+    return psString == psString.reverse()
+end
+
+# version 2
+declare lfIsPalindrome2
+    declare lnReversedN = 0
+    declare lnN = val(input("Enter a number: "))
+    println("Number entered: " & lnN)
+    declare lnOriginalN = lnN
+
+    # reversed integer is stored in lnReversedN
+    while (lnN != 0)
+        declare lnRemainder = lnN % 10
+        lnReversedN = lnReversedN * 10 + lnRemainder
+        lnN = int(lnN / 10)
+    end
+
+    # palindrome if lnOrignalN and lnReversedN are equal
+    println("Reversed number: " & lnReversedN)
+    println("Original number: " & lnOriginalN)
+    if (lnOriginalN == lnReversedN)
+        return true
+    else
+        return false
+    end
+end
+
+# Drive test code
+assert(lfIsPalindrome("abba"), "abba is a palindrome")
+if lfIsPalindrome2()
+    print("Palindrome")
+else
+    print("Not a palindrome")
+end

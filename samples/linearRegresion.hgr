@@ -1,0 +1,47 @@
+"""
+ Linear Regression
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-23
+"""
+
+declare lfMean(paX)
+    declare lnSum = 0
+    for lnI = 0 to paX.len() - 1
+        lnSum += paX[lnI]
+    end
+    return int(lnSum / paX.len())
+end
+
+declare laX = [] * 10 = 0
+
+for lnI = 0 to 9
+    laX[lnI] = lnI
+end
+
+declare laY = [] * 10 = 0
+for lnI = 0 to 9
+    laY[lnI] = lnI * 2
+end
+
+# mean laX and laY
+declare lnMeanX = lfMean(laX)
+declare lnMeanY = lfMean(laY)
+
+# total number of values
+declare lnN = laX.len()
+
+# using the formula to calculate lnB0 and lnB1
+declare lnNum = 0
+declare lnDen = 0
+for lnI = 0 to lnN - 1
+    lnNum += (laX[lnI] - lnMeanX) * (laY[lnI] - lnMeanY)
+    lnDen += (laX[lnI] - lnMeanX) ^ 2
+end
+
+declare lnB1 = lnNum / lnDen
+declare lnB0 = lnMeanY - (lnB1 * lnMeanX)
+
+# print coefficients
+print("b1 = " & lnB1)
+print("b0 = " & lnB0)

@@ -792,6 +792,201 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         });
 
+        // string slice builtin function
+        stringEnv.define("slice", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                // start and end must be converted from Double to Integer
+                int start = ((Double)arguments.get(1)).intValue();
+                int end = ((Double)arguments.get(2)).intValue();
+                return str.substring(start, end);
+            }
+        });
+
+        // string find builtin function
+        stringEnv.define("find", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                String substr = (String)arguments.get(1);
+                return str.indexOf(substr);
+            }
+        });
+
+        // string contains builtin function
+        stringEnv.define("contains", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                String substr = (String)arguments.get(1);
+                return str.contains(substr);
+            }
+        });
+
+        // string replace builtin function
+        stringEnv.define("replace", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                String substr = (String)arguments.get(1);
+                String newstr = (String)arguments.get(2);
+                return str.replace(substr, newstr);
+            }
+        });
+
+        // string split builtin function
+        stringEnv.define("split", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                String substr = (String)arguments.get(1);
+                return makeObject(java.util.Arrays.asList(str.split(substr)), arrayEnv, "Array");
+            }
+        });
+
+        // string trim builtin function
+        stringEnv.define("trim", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return str.trim();
+            }
+        });
+
+        // string toUpper builtin function
+        stringEnv.define("toUpper", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return str.toUpperCase();
+            }
+        });
+
+        // string toLower builtin function
+        stringEnv.define("toLower", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return str.toLowerCase();
+            }
+        });
+
+        // string toInt builtin function
+        stringEnv.define("toInt", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return Integer.parseInt(str);
+            }
+        });
+
+        // string toFloat builtin function
+        stringEnv.define("toFloat", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return Float.parseFloat(str);
+            }
+        });
+
+        // string toBool builtin function
+        stringEnv.define("toBool", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return Boolean.parseBoolean(str);
+            }
+        });
+
+        // reverse builtin function
+        stringEnv.define("reverse", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return new StringBuilder(str).reverse().toString();
+            }
+        });  
+        
+        // charAt builtin function
+        stringEnv.define("charAt", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                try {
+                    String str = (String)arguments.get(0);
+                    int index = ((Double)arguments.get(1)).intValue();
+                    return str.charAt(index);
+                } catch(Exception e) {
+                    return null;
+                }
+            }
+        });
+
         /***********************************************************************
         * Function prototype
         ***********************************************************************/
@@ -843,7 +1038,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 final Object arg = arguments.get(1);
                 if (arg instanceof String) {
-                    return Double.parseDouble((String)arg);
+                    try {
+                        return Double.parseDouble((String)arg);
+                    } catch(NumberFormatException e) {
+                        return 0.0;
+                    }
                 }
                 return arg;
             }
@@ -920,8 +1119,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
             @Override
             public Object call(Interpreter interpreter, List<Object> arguments) {
-                // the second argument is the number to trim
-                return Math.floor((double)arguments.get(1));
+                // check if the argument is a number
+                if (arguments.get(1) instanceof Double) {
+                    // convert from double to int
+                    int result = (int)(double)arguments.get(1);
+                    return Double.valueOf(result);
+                }
+                return Double.valueOf(0);                
             }
         });   
         
@@ -940,7 +1144,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         });
 
-        // chr() builtin function: return a string of a single character
+        // chr() builtin function: return the string representation of a number (ASCII code)
         globals.define("chr", new CallableObject() {
             @Override
             public int arity() {
@@ -949,10 +1153,18 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
             @Override
             public Object call(Interpreter interpreter, List<Object> arguments) {
-                // the second argument is the character code
-                return Character.toString((char)(int)arguments.get(1));
+                // the second argument is the number
+                // but we need to convert it to an integer
+                // check if the argument is a number
+                if (arguments.get(1) instanceof Double) {
+                    // convert from double to int
+                    int result = (int)(double)arguments.get(1);
+                    return String.valueOf((char)result);
+                }
+                return String.valueOf((char)0);                
             }
         });
+        
 
         // sin() builtin function: return the sine of a number
         globals.define("sin", new CallableObject() {
@@ -1026,6 +1238,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 // the third argument is the error message
                 if (!(boolean)arguments.get(1)) {
                     System.out.println(Hungaro.backColors.get("red") + Hungaro.foreColors.get("white") + "Assertion failed: " + arguments.get(2));
+                    System.out.println(Hungaro.backColors.get("reset") + Hungaro.foreColors.get("reset") + " ");
                 }
                 return null;
             }
@@ -1251,6 +1464,16 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     private boolean isEqual(Object a, Object b) {
         if (a == null && b == null) return true;
         if (a == null) return false;
+
+        // if a and b are instance of Environment then extract the value and compare them
+        if (a instanceof Environment && b instanceof Environment) {
+            a = ((Environment)a).lookup("value");
+            if (a == null)
+                return false;
+            b = ((Environment)b).lookup("value");
+            if (b == null)
+                return false;
+        }
         return a.equals(b);
     }
 
@@ -1976,10 +2199,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
         
         // trick to make the loop work
-        if (inc > 0)
+        // if inc is positive, we need to start at start - inc
+        // if inc is negative, we need to start at start + inc
+        // this is because the loop will increment the counter before checking the condition
+        if (inc > 0) {
             start -= inc;
-        else
-            start += inc;
+        } else {
+            // if inc is negative, we need to start at start + inc so we need inc without the sign
+            start += Math.abs(inc);
+        }
 
         // define the counter
         forEnv.define(stmt.counter.lexeme, start);

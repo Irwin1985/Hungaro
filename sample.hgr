@@ -1,18 +1,47 @@
+for lnI = 1 to 10 step 1
+    println(lnI)
+end
+
 """
- Compute the Hilbert matrix
+ Print out aA 10 times
 
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
  Date: 2023-02-23
-"""
 
-declare lnSize = 5
-declare laRow = [] * lnSize = 0
-declare laMatrix = [] * lnSize = laRow
 
-for lnI = 0 to lnSize - 1
-    for lnJ = 0 to lnSize - 1
-        laMatrix[lnI][lnJ] = 1 / ((lnI + 1) + (lnJ + 1) - 1)
-    end    
+println("Print out aA 10 times")
+
+declare lsX = "a", lsY = "A", lsAns = ""
+
+for lnI = 1 to 10
+    declare lsTheaA = lsX & lsY
+    lsAns = lsAns & lsTheaA
 end
 
-println(laMatrix)
+println(lsAns)
+
+println("=========Print alphabet backwards=========")
+declare lsX = "abcdefghijklmnopqrstuvwxyz"
+
+for lnI = 27 to 0 step -1
+    print(lsX.charAt(lnI))
+end
+
+println(" ")
+
+println("=========Print alphabet in a diagonal line=========")
+for lnI = 0 to 25
+    for lnJ = 0 to lnI
+        print(" ")
+    end
+    println(lsX.charAt(lnI))
+end
+
+println("=========Write a word backwards=========")
+declare lsX = "Hello", lnLength = 5
+
+for lnI = lnLength+1 to 0 step -1
+    print(lsX.charAt(lnI))
+end
+println()
+"""
