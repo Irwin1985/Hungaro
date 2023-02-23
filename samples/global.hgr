@@ -1,0 +1,29 @@
+"""
+ Global Variables
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-23
+"""
+
+declare gnX = 2, gnY = 3, gnW = 4
+
+declare lpFoo
+    gnW = 6.7
+    gnY = 5.6
+    gnX = 2.1
+    print("Inside lpFoo: gnX = ", gnX, ", gnY = ", gnY, ", gnW = ", gnW, "\n")
+end
+
+lpFoo()
+
+# Testing global functionality
+
+gnX = 1.2
+
+declare lpTestGlobal
+    gnX = 4.5
+end
+
+lpTestGlobal()
+println("After lpTestGlobal: gnX = ", gnX)
+assert(gnX == 4.5, "gnX should be 4.5")

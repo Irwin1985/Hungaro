@@ -1,0 +1,46 @@
+"""
+ Hamming Code
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-23
+"""
+
+declare lfHamming(pnLimit)
+    declare laH = []
+    # Initialize the array
+    for lnI=1 to pnLimit
+        laH.push(0)
+    end
+
+    # Calculate the Hamming Code
+    laH[0] = 1
+    declare 
+        lnX2 = 2, 
+        lnX3 = 3, 
+        lnX5 = 5,
+        lnI = 0,
+        lnJ = 0,
+        lnK = 0,
+    end
+
+    for lnN = 1 to pnLimit
+        laH[lnN] = min(lnX2, min(lnX3, lnX5))
+        if lnX2 == laH[lnN]
+            lnI += 1
+            lnX2 = 2 * laH[lnI]
+        end
+        if lnX3 == laH[lnN]
+            lnJ += 1
+            lnX3 = 3 * laH[lnJ]
+        end
+        if lnX5 == laH[lnN]
+            lnK += 1
+            lnX5 = 5 * laH[lnK]
+        end
+    end
+    return laH[pnLimit-1]
+end
+
+for lnI = 1 to 20
+    println(lfHamming(lnI))
+end

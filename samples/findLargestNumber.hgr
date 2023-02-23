@@ -1,0 +1,25 @@
+"""
+ Find largest number
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-23
+"""
+
+declare laNumbers = []
+
+for lnI = 0 to 30
+    laNumbers.push(random(1, 31))
+end
+
+println("The array is: " & laNumbers)
+
+# Find the largest number in the array
+declare lnLargest = laNumbers[0]
+
+for lnI = 0 to laNumbers.len()-1
+    if laNumbers[lnI] > lnLargest
+        lnLargest = laNumbers[lnI]
+    end
+end
+
+println("The largest number is: " & lnLargest)

@@ -1,0 +1,56 @@
+"""
+ Fibbonacci Sequence
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-23
+"""
+
+println("Two different functions to compute Fibbonacci Sequence")
+println("lfFibonacci1() is a non-recursive version")
+println("lfFibonacci2() is a recursive version")
+
+# Non-recursive version
+declare lfFibonacci1(pnX)
+    declare lnA = 0, lnB = 1, lnC = 0
+    print(lnA, " ")
+    while lnB < pnX
+        lnC = lnB
+        lnB = lnA + lnB
+        lnA = lnC
+        print(lnA, " ")
+    end
+    println(" ")
+    return lnA
+end
+
+# Recursive version
+declare lfFibonacci2(pnX)
+    if pnX == 0 or pnX == 1
+        return pnX
+    end
+    return lfFibonacci2(pnX - 1) + lfFibonacci2(pnX - 2)
+end
+
+# Test
+declare lnResult = lfFibonacci1(10000)
+if lnResult == 6765
+    println("lfFibonacci1() is correct")
+else
+    println("lfFibonacci1() is incorrect")
+end
+
+println("Recursive routine to compute Fibbonacci Sequence")
+assert(lfFibonacci2(0) == 0, "lfFibonacci2(0) is incorrect")
+assert(lfFibonacci2(1) == 1, "lfFibonacci2(1) is incorrect")
+assert(lfFibonacci2(2) == 1, "lfFibonacci2(2) is incorrect")
+assert(lfFibonacci2(3) == 2, "lfFibonacci2(3) is incorrect")
+assert(lfFibonacci2(4) == 3, "lfFibonacci2(4) is incorrect")
+assert(lfFibonacci2(5) == 5, "lfFibonacci2(5) is incorrect")
+assert(lfFibonacci2(6) == 8, "lfFibonacci2(6) is incorrect")
+assert(lfFibonacci2(7) == 13, "lfFibonacci2(7) is incorrect")
+assert(lfFibonacci2(8) == 21, "lfFibonacci2(8) is incorrect")
+assert(lfFibonacci2(9) == 34, "lfFibonacci2(9) is incorrect")
+assert(lfFibonacci2(10) == 55, "lfFibonacci2(10) is incorrect")
+assert(lfFibonacci2(11) == 89, "lfFibonacci2(11) is incorrect")
+
+println(" ")

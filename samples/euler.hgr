@@ -1,0 +1,24 @@
+"""
+ Euler method for solving a system of ODEs
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-23
+"""
+
+declare lnVo = 0.5, lnK1 = 0.1, lnK2 = 0.14
+
+declare lfOde(paX, paDf)
+    paDf[0] = lnVo - lnK1 * paX[0]
+    paDf[1] = lnK1 * paX[0] - lnK2 * paX[1]
+    return paDf
+end
+
+declare lnHstep = 0.1, laX = [0, 0], laDf = [0, 0], lnT = 0
+
+for lnI = 0 to 80
+    lfOde(laX, laDf)
+    laX[0] = laX[0] + lnHstep * laDf[0]
+    laX[1] = laX[1] + lnHstep * laDf[1]
+    lnT = lnT + lnHstep
+    println(lnT, laX[0], laX[1])
+end

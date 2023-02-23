@@ -1,0 +1,17 @@
+"""
+ Procedure test: procedures does not return values
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-23
+"""
+
+declare lpFoo1
+    println("1.5")
+end
+
+declare lpFoo2
+    println("5.6")
+end
+
+lpFoo1() # 1.5
+lpFoo2() # 5.6

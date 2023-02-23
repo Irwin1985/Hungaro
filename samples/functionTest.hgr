@@ -1,0 +1,17 @@
+"""
+ Function test: all functions must return a value
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-23
+"""
+
+declare lfFoo1
+    return "1.5"
+end
+
+declare lfFoo2
+    return "5.6"
+end
+
+println(lfFoo1()) # 1.5
+println(lfFoo2()) # 5.6

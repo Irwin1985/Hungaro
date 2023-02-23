@@ -1,0 +1,211 @@
+"""
+ Gaussian Elimination
+ NOTE: this example is not tested yet
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-23
+"""
+
+declare lpSwapRow(paA, paB, pnRow1, pnRow2, pnCol)
+    if pnRow1 != pnRow2
+        declare laTemp = []
+        for lnI = 0 to pnCol - 1
+            declare laP1 = paA[pnRow1][lnI]
+            declare laP2 = paA[pnRow2][lnI]
+            laTemp = laP1
+            laP1 = laP2
+            laP2 = laTemp
+        end
+
+        for lnJ = pnRow1 to pnCol-1
+            declare laTemp = pnA[pnRow1][lnJ]
+            pnA[pnRow1][lnJ] = pnA[pnRow2][lnJ]
+            pnA[pnRow2][lnJ] = laTemp
+        end
+
+        laTemp = paB[pnRow1]
+        paB[pnRow1] = paB[pnRow2]
+        paB[pnRow2] = laTemp
+    end
+end
+
+# procedure gauss eliminate
+declare lpGaussEliminate(paA, paB, paX, pnN)
+    for lnK = 0 to pnN-1
+        declare lnMax = abs(paA[lnK][lnK])
+        declare lnMaxRow = lnK
+
+        for lnRow = lnK+1 to pnN-1
+            declare lnTemp = abs(paA[lnRow][lnK])
+            if lnTemp > lnMax
+                lnMaxRow = lnRow
+                lnMax = lnTemp
+            end
+        end
+
+        lpSwapRow(paA, paB, lnK, lnMaxRow, pnN)
+
+        for lnRow = lnK+1 to pnN-1
+            declare lnTemp = paA[lnRow][lnK] / paA[lnK][lnK]
+            for lnCol = lnK+1 to pnN-1
+                paA[lnRow][lnCol] = paA[lnRow][lnCol] - lnTemp * paA[lnK][lnCol]
+            end
+            paA[lnRow][lnK] = 0
+            paB[lnRow] = paB[lnRow] - lnTemp * paB[lnK]
+        end
+    end
+
+    println("Back substitution")
+    for lnRow = pnN-1 to 0 step -1
+        declare lnTemp = paB[lnRow]
+        for lnJ = pnN-1 to lnRow step -1
+            lnTemp = lnTemp - paA[lnRow][lnJ] * paX[lnJ]        
+        end
+        paX[lnRow] = lnTemp / paA[lnRow][lnRow]
+    end
+end
+
+# Solve A x = b
+declare lpGauss(paA, paB, paX)
+    declare lnRowX = 0 # Keep count of the row interchanges
+    declare lnN = paA.len()-1 # Ignore first row
+
+    for lnK = 1 to lnN-1
+        declare lnMax = abs(paA[lnK][lnK])
+        declare lnMaxRow = lnK
+        # Find the row with the largest pivot
+        for lnI = lnK+1 to lnN
+            declare lnXfac = abs(paA[lnI][lnK])
+            if lnXfac > lnMax
+                lnMax = lnXfac
+                lnMaxRow = lnI
+            end
+        end
+
+        if lnMaxRow != lnK
+            # row interchanges
+            lnRowX += 1
+            declare lnTemp1 = paB[lnK]
+            paB[lnK] = paB[lnMaxRow]
+            paB[lnMaxRow] = lnTemp1
+            for lnJ = lnK to lnN
+                declare lnTemp = paA[lnK][lnJ]
+                paA[lnK][lnJ] = paA[lnMaxRow][lnJ]
+                paA[lnMaxRow][lnJ] = lnTemp
+            end
+        end
+
+        for lnI = lnK+1 to lnN
+            declare lnXfac = paA[lnI][lnK] / paA[lnK][lnK]            
+            for lnJ = lnK+1 to lnN
+                paA[lnI][lnJ] = paA[lnI][lnJ] - lnXfac * paA[lnK][lnJ]
+            end
+            paB[lnI] = paB[lnI] - lnXfac * paB[lnK]    
+        end
+    end
+
+    # Back substitution
+    for lnJ = 1 to lnN
+        declare lnK = lnN - lnJ + 1
+        paX[lnK] = paB[lnK]
+        for lnI = lnK+1 to lnN
+            paX[lnK] = paX[lnK] - paA[lnK][lnI] * paX[lnI]
+        end
+        paX[lnK] = paX[lnK] / paA[lnK][lnK]
+    end
+end
+
+# Create the 'A' matrix
+declare laA = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+]
+
+# Create the 'b' matrix
+declare laB = [0, 0, 0, 0]
+declare laX = [0, 0, 0, 0]
+
+# Fill the 'A' matrix
+laA[0][0] = 2
+laA[0][1] = 1
+laA[0][2] = 0
+laA[0][3] = 0
+
+laA[1][0] = 1
+laA[1][1] = 1
+laA[1][2] = 1
+laA[1][3] = 0
+
+laA[2][0] = 0
+laA[2][1] = 1
+laA[2][2] = 2
+laA[2][3] = 1
+
+laA[3][0] = 0
+laA[3][1] = 0
+laA[3][2] = 1
+laA[3][3] = 2
+
+println("A = ", laA)
+
+# Fill the 'b' matrix
+laB[0] = 2
+laB[1] = 1
+laB[2] = 4
+laB[3] = 8
+
+lpGauss(laA, laB, laX)
+
+println(laX[0], ", ", laX[1], ", ", laX[2], ", ", laX[3])
+
+println("Second method")
+
+# Create the 'A' matrix
+laA = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+]
+
+# Create the 'b' matrix
+laB = [0, 0, 0, 0]
+laX = [0, 0, 0, 0]
+
+# Fill the 'A' matrix
+laA[0][0] = 2
+laA[0][1] = 1
+laA[0][2] = 0
+laA[0][3] = 0
+
+laA[1][0] = 1
+laA[1][1] = 1
+laA[1][2] = 1
+laA[1][3] = 0
+
+laA[2][0] = 0
+laA[2][1] = 1
+laA[2][2] = 2
+laA[2][3] = 1
+
+laA[3][0] = 0
+laA[3][1] = 0
+laA[3][2] = 1
+laA[3][3] = 2
+
+println("A = ", laA)
+
+# Fill the 'b' matrix
+laB[0] = 2
+laB[1] = 1
+laB[2] = 4
+laB[3] = 8
+
+lpGaussEliminate(laA, laB, laX)
+
+println("Output results: ")
+
+println(laX[0], ", ", laX[1], ", ", laX[2], ", ", laX[3])

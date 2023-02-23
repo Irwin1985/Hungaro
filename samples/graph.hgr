@@ -1,0 +1,23 @@
+"""
+ Graph
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-23
+"""
+
+declare laData = [], lnDeg = 0, PI = 3.14159265
+
+while lnDeg < 360
+    declare lnX = 1 + sin(lnDeg*PI/180)
+    laData.push(int(lnX*20))
+    lnDeg += 10
+end
+
+declare lnN = int(360/10)
+
+for lnI = 0 to lnN-1
+    for lnJ = 0 to laData[lnI]-1
+        print(" ")
+    end
+    println("*")
+end

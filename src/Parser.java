@@ -118,7 +118,7 @@ public class Parser {
                     value = new Expr.Literal(new Token(TokenType.STRING, ""));
                     break;
                 case 'a': // array
-                    value = new Expr.Array(null, null);
+                    value = new Expr.Array(null, null, null, null);
                     break;
                 case 'n': // number
                     value = new Expr.Literal(new Token(TokenType.NUMBER, 0.0));
@@ -292,13 +292,13 @@ public class Parser {
     }
 
     private Stmt ifStatement() {
-        Expr condition = null;
-        if (match(TokenType.LPAREN)) {
-            condition = expression();
-            consume(TokenType.RPAREN, "Expect `)` after `if` condition.");
-        } else {
-            condition = expression();
-        }
+        final Expr condition = expression();
+        // if (match(TokenType.LPAREN)) {
+        //     condition = expression();
+        //     consume(TokenType.RPAREN, "Expect `)` after `if` condition.");
+        // } else {
+        //     condition = expression();
+        // }
         
         consume(TokenType.SEMICOLON, "Expect new line before `if` block.");
         List<Stmt> thenStmt = new ArrayList<Stmt>();
@@ -396,7 +396,7 @@ public class Parser {
             error(previous(), "Cannot use `exit` outside of a loop or a procedure.");
         }
         // if functionStack is a function name (starts with 'f'), then we throw error
-        if (functionStack.peek().startsWith("f")) {
+        if (!functionStack.isEmpty() && functionStack.peek().startsWith("f")) {
             error(previous(), "Cannot use `exit` inside a function.\nUse `return` instead.\nExit is only for loops and procedures.");
         }
         
@@ -426,11 +426,12 @@ public class Parser {
     private Stmt whileStatement() {
         loopStack.push(true); // push true to indicate that we are in a while loop
         Token keyword = previous();
-        final boolean parseRightParen = match(TokenType.LPAREN);
-        Expr condition = expression();
-        if (parseRightParen) {
-            consume(TokenType.RPAREN, "Expect `)` after `while` condition.");
-        }
+        final Expr condition = expression();
+        // final boolean parseRightParen = match(TokenType.LPAREN);
+        // Expr condition = expression();
+        // if (parseRightParen) {
+        //     consume(TokenType.RPAREN, "Expect `)` after `while` condition.");
+        // }
         Stmt.Block body = block();
         loopStack.pop(); // pop the while loop
         return new Stmt.While(keyword, condition, body);
@@ -737,8 +738,27 @@ public class Parser {
     private Expr array() {
         Token keyword = previous();
         List<Expr> elements = new ArrayList<Expr>();
-        match(TokenType.SEMICOLON); // optional semicolon
+        // get the first 3 tokens
+        Token t1 = peek();
+        Token t2 = peek(1);        
+        // check if those tokens shapes a: ]*number
+        if (t1.type == TokenType.RBRACKET && t2.category == Category.MUL) {
+            // consume the first 3 tokens
+            advance();
+            advance();
+            
+            // parse the size expression
+            final Expr expSize = term();
+            Expr initializer = null;
+            if (match(TokenType.SIMPLE_ASSIGN)) {
+                initializer = expression();
+            }
+            
+            return new Expr.Array(keyword, elements, expSize, initializer);
+        }
 
+        match(TokenType.SEMICOLON); // optional semicolon
+        
         if (!check(TokenType.RBRACKET)) {
             do {
                 match(TokenType.SEMICOLON); // optional semicolon (before element)
@@ -749,7 +769,7 @@ public class Parser {
         }
         match(TokenType.SEMICOLON); // optional semicolon (after last element)        
         consume(TokenType.RBRACKET, "Expect ']' after array elements.");
-        return new Expr.Array(keyword, elements);
+        return new Expr.Array(keyword, elements, null, null);
     }
 
     private Expr map() {
@@ -872,6 +892,14 @@ public class Parser {
 
     private Token peek() {
         return tokens.get(current);
+    }
+
+    private Token peek(int offset) {
+        // check if the offset is out of bounds, if so, return EOF
+        if (current + offset >= tokens.size()) {
+            return new Token(TokenType.EOF, "");
+        }
+        return tokens.get(current + offset);
     }
 
     private Token previous() {

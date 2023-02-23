@@ -37,7 +37,7 @@ public abstract class Stmt {
         final List<Stmt> statements;
 
         public Block(List<Stmt> statements) {
-            super(statements.get(0).token);                            
+            super(null);                            
             this.statements = statements;
         }
 

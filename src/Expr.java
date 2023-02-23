@@ -32,10 +32,14 @@ public abstract class Expr {
      */
     public static class Array extends Expr {
         final List<Expr> elements;
+        final Expr fixedSize;
+        final Expr initializer;
 
-        public Array(Token token, List<Expr> elements) {
+        public Array(Token token, List<Expr> elements, Expr fixedSize, Expr initializer) {
             super(token);
             this.elements = elements;
+            this.fixedSize = fixedSize;
+            this.initializer = initializer;
         }
 
         @Override

@@ -989,7 +989,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 return null;
             }
         });
-
+        
         // setConsoleBackColor() builtin function: set the console background color
         globals.define("setConsoleBackColor", new CallableObject() {
             @Override
@@ -1010,7 +1010,157 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 }            
                 return null;
             }
-        });        
+        }); 
+        
+        // assert() builtin function: assert that a condition is true
+        // otherwise print an error message in red color
+        globals.define("assert", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the condition
+                // the third argument is the error message
+                if (!(boolean)arguments.get(1)) {
+                    System.out.println(Hungaro.backColors.get("red") + Hungaro.foreColors.get("white") + "Assertion failed: " + arguments.get(2));
+                }
+                return null;
+            }
+        });
+
+        // random(from, to) builtin function: return a random number between from and to
+        globals.define("random", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the from number
+                // the third argument is the to number
+                // return the integer part of the random number
+                return Math.floor(Math.random() * ((double)arguments.get(2) - (double)arguments.get(1) + 1) + (double)arguments.get(1));                
+            }
+        });
+
+        // abs() builtin function: return the absolute value of a number
+        globals.define("abs", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the number
+                return Math.abs((double)arguments.get(1));
+            }
+        });
+
+        // sqrt() builtin function: return the square root of a number
+        globals.define("sqrt", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the number
+                return Math.sqrt((double)arguments.get(1));
+            }
+        });
+
+        // pow() builtin function: return the power of a number
+        globals.define("pow", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the number
+                // the third argument is the power
+                return Math.pow((double)arguments.get(1), (double)arguments.get(2));
+            }
+        });
+
+        // round() builtin function: return the rounded value of a number
+        globals.define("round", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the number
+                return Math.round((double)arguments.get(1));
+            }
+        });
+
+        // floor() builtin function: return the floor value of a number
+        globals.define("floor", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the number
+                return Math.floor((double)arguments.get(1));
+            }
+        });
+        
+        // ceil() builtin function: return the ceiling value of a number
+        globals.define("ceil", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the number
+                return Math.ceil((double)arguments.get(1));
+            }
+        });
+
+        // min() builtin function: return the minimum value of two numbers
+        globals.define("min", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the first number
+                // the third argument is the second number
+                return Math.min((double)arguments.get(1), (double)arguments.get(2));
+            }
+        });
+
+        // max() builtin function: return the maximum value of two numbers
+        globals.define("max", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the first number
+                // the third argument is the second number
+                return Math.max((double)arguments.get(1), (double)arguments.get(2));
+            }
+        });
     }
 
     public void interpret(List<Stmt> statements) {
@@ -1691,7 +1841,41 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitArrayExpr(Expr.Array expr) {
-        // create an array
+        // fixed size array
+        if (expr.fixedSize != null) {
+            // evaluate the size
+            Object size = evaluate(expr.fixedSize);
+            // check if the size is a number
+            if (!(size instanceof Double)) {
+                throw new RuntimeError(expr.fixedSize.token, "Array size must be a number.");
+            }
+            // check if the size is an integer
+            if (((Double)size) % 1 != 0) {
+                throw new RuntimeError(expr.fixedSize.token, "Array size must be an integer.");
+            }
+            // check if the size is positive
+            if (((Double)size) < 0) {
+                throw new RuntimeError(expr.fixedSize.token, "Array size must be positive.");
+            }
+            
+            // convert from double to int
+            int capacity = ((Double)size).intValue();
+
+            // fill the capacity with zero
+            List<Object> array = new ArrayList<Object>(capacity);
+            Object initializer = null;
+            if (expr.initializer != null) {
+                initializer = evaluate(expr.initializer);
+            }
+            for (int i = 0; i < capacity; i++) {
+                array.add(initializer);
+            }
+
+            // return the array
+            return makeObject(array, arrayEnv, "Array");
+        }
+
+        // dynamic size array
         List<Object> array = new ArrayList<Object>();
         // evaluate each element
         for (int i = 0; i < expr.elements.size(); i++) {
