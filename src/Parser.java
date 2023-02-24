@@ -45,16 +45,22 @@ public class Parser {
     private Stmt genericDeclaration() {
         final Token keyword = previous();
         final List<Stmt> statements = new ArrayList<Stmt>();
+        int commaCounter = 0;
         do {
             match(TokenType.SEMICOLON); // consume optional semicolon
             if (check(TokenType.END)) break;
-            statements.add(parseDeclareStatement(keyword));            
+            statements.add(parseDeclareStatement(keyword));
+            commaCounter++;
         } while (match(TokenType.COMMA) && !isAtEnd());
         
-        if (match(TokenType.END)) {
-            // consume mandatory semicolon
-            consume(TokenType.SEMICOLON, "Expect new line after `end`.");
+        if (commaCounter > 1) {
+            // it was a list of declarations (l1, l2, l3) so we need to consume the end
+            consume(TokenType.END, "Expect `end` after declaration list.");
         }
+        // if (match(TokenType.END)) {
+        //     // consume mandatory semicolon
+        //     consume(TokenType.SEMICOLON, "Expect new line after `end`.");
+        // }
 
         return new Stmt.Declare(keyword, statements);
     }
@@ -638,7 +644,7 @@ public class Parser {
             } 
             else if (match(TokenType.DOT)) {
                 Token keyword = previous();
-                Token propIdent = consume(TokenType.IDENTIFIER, "Expect property keyword after '.'.");
+                Token propIdent = consume(TokenType.IDENTIFIER, "Invalid property name.");
                 Expr property = new Expr.Variable(propIdent);
                 left = new Expr.Prop(keyword, left, property, false);                
             }

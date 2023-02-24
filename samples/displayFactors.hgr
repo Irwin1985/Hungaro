@@ -5,7 +5,7 @@
  Date: 2023-02-23
 """
 
-declare lnNum = val(input("Enter a positive number: "))
+declare lnNum = val(readln("Enter a positive number: "))
 println("Factors of " & lnNum & " are: ")
 
 for lnI = 1 to lnNum

@@ -1,0 +1,71 @@
+"""
+ Print out aA 10 times
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-23
+"""
+
+println("Print out aA 10 times")
+
+declare lsX = "a", lsY = "A", lsAns = ""
+
+for lnI = 1 to 10
+    declare lsTheaA = lsX & lsY
+    lsAns = lsAns & lsTheaA
+end
+
+println(lsAns)
+
+println("=========Print alphabet backwards=========")
+declare lsX = "abcdefghijklmnopqrstuvwxyz"
+
+for lnI = 25 to 0 step -1
+    print(lsX.charAt(lnI))
+end
+
+println(" ")
+
+println("=========Print alphabet in a diagonal line=========")
+for lnI = 0 to 25
+    for lnJ = 0 to lnI
+        print(" ")
+    end
+    println(lsX.charAt(lnI))
+end
+
+println("=========Write a word backwards=========")
+declare lsX = "Hello", lnLength = 5
+
+for lnI = lnLength-1 to 0 step -1
+    print(lsX.charAt(lnI))
+end
+println()
+
+println("=========Code and Decode a secret message=========")
+declare lsX = "abcdefghijklmnopqrstuvwxyz"
+declare lsCode = "yzabcdefghijklmnopqrstuvwx"
+
+# encode
+declare lsSecret = ""
+declare lsWord = "hello"
+
+for lnK = 0 to 4
+    for lnI = 0 to 25
+        if lsWord.charAt(lnK) == lsX.charAt(lnI)
+            lsSecret = lsSecret & lsCode.charAt(lnI)
+        end
+    end
+end
+println("Secret: " & lsSecret)
+
+# decode
+declare lsDecoded = ""
+
+for lnK = 0 to 4
+    for lnI = 0 to 25
+        if lsSecret.charAt(lnK) == lsCode.charAt(lnI)
+            lsDecoded = lsDecoded & lsX.charAt(lnI)
+        end
+    end
+end
+println("Decoded: " & lsDecoded)

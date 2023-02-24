@@ -10,7 +10,7 @@ declare lnNumber = 9, lnGuess = 0
 println("Guess a number between 1 and 10")
 
 for lnI = 1 to 10
-    lnGuess = val(input("Guess: "))
+    lnGuess = val(readln("Guess: "))
     if lnGuess == lnNumber
         println("You guessed it!")
         exit

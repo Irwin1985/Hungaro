@@ -102,7 +102,7 @@ public class Hungaro {
 
     public static void run(String source) {
         List<Token> tokens = null;        
-        try {
+        // try {
             final Scanner scanner = new Scanner(source);
             tokens = scanner.scanTokens();
             final boolean printTokens = false;
@@ -115,9 +115,9 @@ public class Hungaro {
                 System.out.println("=============================");
             }
             // end debug
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
+        // } catch (Exception e) {
+        //     System.err.println(e.getMessage());
+        // }
         if (hadError) return;
 
         // continue parsing

@@ -5,8 +5,8 @@
 """
 
 declare 
-    lnWidth = val(input("Enter the width of the rectangle: ")),
-    lnHeight = val(input("Enter the height of the rectangle: ")),
+    lnWidth = val(readln("Enter the width of the rectangle: ")),
+    lnHeight = val(readln("Enter the height of the rectangle: ")),
     lnArea = lnWidth * lnHeight
 end
 

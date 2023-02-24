@@ -1,0 +1,38 @@
+"""
+ String methods
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-24
+"""
+declare lsString = "1234567890"
+
+assert(lsString.len() == 10, "String length")
+assert(lsString.slice(0, 5) == "12345", "Substring")
+assert("abc".toUpper() == "ABC", "To upper")
+assert("ABC".toLower() == "abc", "To lower")
+assert("Hungaro".find("gar") == 3, "Find")
+assert("Hungaro".contains("gar"), "Contains")
+assert("Hungaro".startsWith("Hung"), "Starts with")
+assert("Hungaro".endsWith("aro"), "Ends with")
+assert("Hungaro".replace("gar", "garo") == "Hungaroo", "Replace")
+assert("A,B,C,D".split(",") == ["A", "B", "C", "D"], "Split")
+assert("HUNGARO".times(3) == "HUNGAROHUNGAROHUNGARO", "Times")
+assert("Hungaro".reverse() == "oragnuH", "Reverse")
+assert("    Hungaro     ".trim() == "Hungaro", "Trim")
+assert("Hungaro".padl(10, " ") == "   Hungaro", "Pad left")
+assert("Hungaro".padr(10, " ") == "Hungaro   ", "Pad right")
+assert("1985".toNumber() == 1985, "To Number")
+assert("1985.37".toNumber() == 1985.37, "To Number")
+assert("Hungaro".charAt(3) == "g", "Char at")
+assert("Hungaro is a new programming language".occurs("a") == 5, "Occurs")
+assert("Hungaro".indexOf("a") == 4, "Index of")
+assert("Hungaro Programming language".lastIndexOf("a") == 25, "Last index of")
+assert("Hungaro".isAlpha(), "Is alpha")
+assert(lsString.isNumeric(), "Is digit")
+assert("Hungaro123".isAlphaNum(), "Is alpha numeric")
+assert("hungaro".isLower(), "Is lower")
+assert("HUNGARO".isUpper(), "Is upper")
+assert(" ".isSpace(), "Is space")
+assert("\t".isSpace(), "Is space")
+assert("\r".isSpace(), "Is space")
+assert("\n".isSpace(), "Is space")

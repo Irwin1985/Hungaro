@@ -5,7 +5,7 @@
  Date: 2023-02-23
 """
 
-declare lnRows = val(input("Enter K Shape Alphabet Pattern Rows = "))
+declare lnRows = val(readln("Enter K Shape Alphabet Pattern Rows = "))
 
 print("====K Shape Alphabet Pattern====\n")
 

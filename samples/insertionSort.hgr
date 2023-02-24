@@ -29,9 +29,9 @@ println("Sorted array is:" & laArray)
 assert(laArray == [5, 6, 11, 12, 13], "Insertion Sort failed")
 
 # Bigger example
-declare laArray = [] * int(random(1, 50)) = 0
+declare laArray = [] * int(rand(1, 50)) = 0
 for lnI = 0 to laArray.len()-1
-    laArray[lnI] = int(random(1, 100))
+    laArray[lnI] = int(rand(1, 100))
 end
 
 lpInsertionSort(laArray)

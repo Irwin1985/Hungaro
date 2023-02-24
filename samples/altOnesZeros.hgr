@@ -4,8 +4,8 @@
  Date: 2023-02-22
 """
 
-declare lnRows = val(input("Please Enter the total Number of Rows: "))
-declare lnColumns = val(input("Please Enter the total Number of Columns: "))
+declare lnRows = val(readln("Please Enter the total Number of Rows: "))
+declare lnColumns = val(readln("Please Enter the total Number of Columns: "))
 
 println("Print Number Pattern - 1 and 0 in alternative Columns")
 

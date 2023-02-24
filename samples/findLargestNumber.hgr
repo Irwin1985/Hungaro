@@ -8,7 +8,7 @@
 declare laNumbers = []
 
 for lnI = 0 to 30
-    laNumbers.push(random(1, 31))
+    laNumbers.push(rand(1, 31))
 end
 
 println("The array is: " & laNumbers)

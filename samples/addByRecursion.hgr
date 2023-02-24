@@ -12,5 +12,5 @@ declare lfAddNumbers(pnNumber)
     end
 end
 
-declare lnNumber = val(input("Enter a number: "))
+declare lnNumber = val(readln("Enter a number: "))
 println("Sum of numbers from 1 to " & lnNumber & " is " & lfAddNumbers(lnNumber))

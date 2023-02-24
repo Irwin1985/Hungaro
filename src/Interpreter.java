@@ -1,4 +1,8 @@
 import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -134,7 +138,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
                     ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
-                    return array.indexOf(arguments.get(1));
+                    return (double)array.indexOf(arguments.get(1));
                 }
                 return null;
             }
@@ -152,7 +156,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
                     ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
-                    return array.lastIndexOf(arguments.get(1));
+                    return (double)array.lastIndexOf(arguments.get(1));
                 }
                 return null;
             }
@@ -406,7 +410,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                             count++;
                         }
                     }
-                    return count;
+                    return (double)count;
                 }
                 return null;
             }
@@ -434,8 +438,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                         for (int i = 0; i < (int)(double)(Double)arguments.get(1); i++) {
                             newArray.add(array.get(i));
                         }
-                    }
-                    return newArray;
+                    }                    
+                    return makeObject(newArray, arrayEnv, "Array");
                 }
                 return null;
             }
@@ -581,9 +585,16 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
                     ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    // create an array of strings by calling stringify on each element
+                    String[] strings = new String[array.size()];
+                    for (int i = 0; i < array.size(); i++) {
+                        strings[i] = stringify(array.get(i));
+                    }
                     String separator = (String)arguments.get(1);
-                    String result = String.join(separator, array.stream().map(Object::toString).toArray(String[]::new));
-                    return result;
+                    return String.join(separator, strings);                    
+
+                    // String result = String.join(separator, array.stream().map(Object::toString).toArray(String[]::new));
+                    // return result;
                 }
                 return null;
             }
@@ -626,6 +637,146 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     return array1.equals(array2);
                 }
                 return false;
+            }
+        });
+
+        // array sum() builtin function: the argument must be an array of numbers
+        arrayEnv.define("sum", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    double sum = 0.0;
+                    for (Object o : array) {
+                        if (o instanceof Double) {
+                            sum += (Double)o;
+                        }
+                    }
+                    return sum;
+                }
+                return 0.0;
+            }
+        });
+
+        // array avg() builtin function: the argument must be an array of numbers
+        arrayEnv.define("avg", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    double sum = 0.0;
+                    for (Object o : array) {
+                        if (o instanceof Double) {
+                            sum += (Double)o;
+                        }
+                    }
+                    return sum / array.size();
+                }
+                return 0.0;
+            }
+        });
+
+        // array min() builtin function: the argument must be an array of numbers
+        arrayEnv.define("min", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    double min = Double.MAX_VALUE;
+                    for (Object o : array) {
+                        if (o instanceof Double) {
+                            double d = (Double)o;
+                            if (d < min) {
+                                min = d;
+                            }
+                        }
+                    }
+                    return min;
+                }
+                return 0.0;
+            }
+        });
+
+        // array max() builtin function: the argument must be an array of numbers
+        arrayEnv.define("max", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    double max = Double.MIN_VALUE;
+                    for (Object o : array) {
+                        if (o instanceof Double) {
+                            double d = (Double)o;
+                            if (d > max) {
+                                max = d;
+                            }
+                        }
+                    }
+                    return max;
+                }
+                return 0.0;
+            }
+        });  
+        
+        // array clone() builtin function: the argument must be an array
+        arrayEnv.define("clone", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    ArrayList<Object> clone = new ArrayList<Object>(array);
+                    return makeObject(clone, arrayEnv, "Array");
+                }
+                return null;
+            }
+        });
+
+        // array clear() builtin function: the argument must be an array
+        arrayEnv.define("clear", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    array.clear();
+                    env.define("value", array);
+                }
+                return null;
             }
         });
 
@@ -680,9 +831,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
                     HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("value");
-                    return map.size();
+                    return (double)map.size();
                 }
-                return 0;
+                return 0.0;
             }
         });
 
@@ -776,6 +927,42 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         });
 
+        // map isEmpty builtin function
+        mapEnv.define("isEmpty", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("value");
+                    return map.isEmpty();
+                }
+                return true;
+            }
+        });
+
+        // map clone builtin function
+        mapEnv.define("clone", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("value");
+                    return makeObject(new HashMap<Object, Object>(map), mapEnv, "Map");
+                }
+                return null;
+            }
+        });
+
         /***********************************************************************
         * String
         ***********************************************************************/
@@ -788,7 +975,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
             @Override
             public Object call(Interpreter interpreter, List<Object> arguments) {
-                return ((String)arguments.get(0)).length();
+                return (double)((String)arguments.get(0)).length();
             }
         });
 
@@ -820,7 +1007,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 String str = (String)arguments.get(0);
                 String substr = (String)arguments.get(1);
-                return str.indexOf(substr);
+                return (double)str.indexOf(substr);
             }
         });
 
@@ -884,6 +1071,66 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         });
 
+        // string ltrim builtin function
+        stringEnv.define("ltrim", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return str.replaceAll("^\\s+", "");
+            }
+        });
+
+        // string rtrim builtin function
+        stringEnv.define("rtrim", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return str.replaceAll("\\s+$", "");
+            }
+        });
+
+        // string padl builtin function: pad left
+        stringEnv.define("padl", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                int len = ((Double)arguments.get(1)).intValue();
+                String pad = (String)arguments.get(2);
+                return String.format("%1$" + len + "s", str).replace(' ', pad.charAt(0));
+            }
+        });
+
+        // string padr builtin function: pad right
+        stringEnv.define("padr", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                int len = ((Double)arguments.get(1)).intValue();
+                String pad = (String)arguments.get(2);
+                return String.format("%1$-" + len + "s", str).replace(' ', pad.charAt(0));
+            }
+        });        
+
         // string toUpper builtin function
         stringEnv.define("toUpper", new CallableObject() {
             @Override
@@ -912,8 +1159,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         });
 
-        // string toInt builtin function
-        stringEnv.define("toInt", new CallableObject() {
+        // string toNumber builtin function
+        stringEnv.define("toNumber", new CallableObject() {
             @Override
             public int arity() {
                 return 1;
@@ -922,39 +1169,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             @Override
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 String str = (String)arguments.get(0);
-                return Integer.parseInt(str);
+                try {
+                    return (double)Double.parseDouble(str);
+                } catch (NumberFormatException e) {
+                    return 0.0;
+                }
             }
-        });
+        });        
 
-        // string toFloat builtin function
-        stringEnv.define("toFloat", new CallableObject() {
-            @Override
-            public int arity() {
-                return 1;
-            }
-
-            @Override
-            public Object call(Interpreter interpreter, List<Object> arguments) {
-                String str = (String)arguments.get(0);
-                return Float.parseFloat(str);
-            }
-        });
-
-        // string toBool builtin function
-        stringEnv.define("toBool", new CallableObject() {
-            @Override
-            public int arity() {
-                return 1;
-            }
-
-            @Override
-            public Object call(Interpreter interpreter, List<Object> arguments) {
-                String str = (String)arguments.get(0);
-                return Boolean.parseBoolean(str);
-            }
-        });
-
-        // reverse builtin function
+        // string reverse builtin function
         stringEnv.define("reverse", new CallableObject() {
             @Override
             public int arity() {
@@ -980,12 +1203,197 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 try {
                     String str = (String)arguments.get(0);
                     int index = ((Double)arguments.get(1)).intValue();
-                    return str.charAt(index);
+                    char result = str.charAt(index);
+                    return String.valueOf(result);
                 } catch(Exception e) {
                     return null;
                 }
             }
         });
+
+        // string startsWith builtin function: return true if the string starts with the given substring
+        stringEnv.define("startsWith", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                String substr = (String)arguments.get(1);
+                return str.startsWith(substr);
+            }
+        });
+
+        // string endsWith builtin function: return true if the string ends with the given substring
+        stringEnv.define("endsWith", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                String substr = (String)arguments.get(1);
+                return str.endsWith(substr);
+            }
+        });
+
+        // string times builtin function: return a string that is the given string repeated n times
+        stringEnv.define("times", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                int n = ((Double)arguments.get(1)).intValue();
+                StringBuilder sb = new StringBuilder();
+                for (int i=0; i<n; i++) {
+                    sb.append(str);
+                }
+                return sb.toString();
+            }
+        });
+
+        // string indexOf builtin function: return the index of the first occurrence of the given substring
+        stringEnv.define("indexOf", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                String substr = (String)arguments.get(1);
+                return (double)str.indexOf(substr);
+            }
+        });
+
+        // string lastIndexOf builtin function: return the index of the last occurrence of the given substring
+        stringEnv.define("lastIndexOf", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                String substr = (String)arguments.get(1);
+                return (double)str.lastIndexOf(substr);
+            }
+        });
+
+        // string occurs builtin function: return the number of occurrences of the given substring
+        stringEnv.define("occurs", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                String substr = (String)arguments.get(1);
+                int count = 0;
+                int index = str.indexOf(substr);
+                while (index != -1) {
+                    count++;
+                    index = str.indexOf(substr, index+1);
+                }
+                return (double)count;
+            }
+        });
+
+        // string isAlpha() builtin function: return true if the string contains only alphabetic characters
+        stringEnv.define("isAlpha", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return str.matches("[a-zA-Z]+");
+            }
+        });
+
+        // string isAlphaNum() builtin function: return true if the string contains only alphabetic and numeric characters
+        stringEnv.define("isAlphaNum", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return str.matches("[a-zA-Z0-9]+");
+            }
+        });
+
+        // string isNumeric() builtin function: return true if the string contains only numeric characters
+        stringEnv.define("isNumeric", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return str.matches("[0-9]+");
+            }
+        });
+
+        // string isSpace() builtin function: return true if the string contains only whitespace characters
+        stringEnv.define("isSpace", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return str.matches("\\s+");
+            }
+        });
+
+        // string isUpper() builtin function: return true if the string contains only uppercase characters
+        stringEnv.define("isUpper", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return str.matches("[A-Z]+");
+            }
+        });
+
+        // string isLower() builtin function: return true if the string contains only lowercase characters
+        stringEnv.define("isLower", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                String str = (String)arguments.get(0);
+                return str.matches("[a-z]+");
+            }
+        });        
 
         /***********************************************************************
         * Function prototype
@@ -1004,16 +1412,16 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     Environment env = (Environment)arguments.get(0);
                     RuntimeFunction function = (RuntimeFunction)env.lookup("value");
                     // arity is the number of parameters, not including the "poThis" parameter
-                    return function.arity()-1;
+                    return (double)function.arity()-1;
                 }
-                return 0;
+                return 0.0;
             }
         }); 
         /***********************************************************************
         * Built-in functions
         ***********************************************************************/
-        // input builtin function: read a line from the console
-        globals.define("input", new CallableObject() {
+        // readln builtin function: read a line from the console
+        globals.define("readln", new CallableObject() {
             @Override
             public int arity() {
                 return 2;
@@ -1244,8 +1652,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         });
 
-        // random(from, to) builtin function: return a random number between from and to
-        globals.define("random", new CallableObject() {
+        // rand(from, to) builtin function: return a random number between from and to
+        globals.define("rand", new CallableObject() {
             @Override
             public int arity() {
                 return 3;
@@ -1374,6 +1782,150 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 return Math.max((double)arguments.get(1), (double)arguments.get(2));
             }
         });
+
+        // between() builtin function: return true if a number is between two numbers
+        globals.define("between", new CallableObject() {
+            @Override
+            public int arity() {
+                return 4;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the number
+                // the third argument is the first number
+                // the fourth argument is the second number
+                return ((double)arguments.get(1) >= (double)arguments.get(2) && (double)arguments.get(1) <= (double)arguments.get(3));
+            }
+        });
+        
+        // seconds() builtin function: return the number of seconds since the beginning of the program
+        globals.define("seconds", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                return (double)System.currentTimeMillis() / 1000.0;
+            }
+        });
+
+        // tick() builtin function: return the number of ticks since the beginning of the program
+        globals.define("tick", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                return (double)System.currentTimeMillis() / 1000.0;
+            }
+        });
+
+        // tack() builtin function: takes a tick() value and returns the number of seconds since that tick
+        globals.define("tack", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the tick value
+                return (double)System.currentTimeMillis() / 1000.0 - (double)arguments.get(1);
+            }
+        });
+
+        // sleep() builtin function: sleep for a number of seconds
+        globals.define("sleep", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the number of seconds
+                try {
+                    Thread.sleep((long)((double)arguments.get(1) * 1000.0));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
+
+        // file() builtin function: check if a file exists
+        globals.define("file", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the file name
+                return new File((String)arguments.get(1)).exists();
+            }
+        });
+        
+        // filetostr() builtin function: read a file and return its content as a string
+        globals.define("filetostr", new CallableObject() {
+            @Override
+            public int arity() {
+                return 2;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the file name
+                try {
+                    return new String(Files.readAllBytes(Paths.get((String)arguments.get(1))));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
+
+        // strtofile() builtin function: write a string to a file
+        globals.define("strtofile", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the file name
+                // the third argument is the string
+                try {
+                    String content = stringify(arguments.get(1));
+                    byte[] bytes = content.getBytes();
+                    Files.write(Paths.get((String)arguments.get(2)), bytes);
+                } catch (IOException e) {
+                    return null;
+                }
+                return null;
+            }
+        });
+        
+        // curdir() builtin function: return the current directory
+        globals.define("curdir", new CallableObject() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                return System.getProperty("user.dir");
+            }
+        });
+
     }
 
     public void interpret(List<Stmt> statements) {
@@ -2010,6 +2562,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             return text;
         }
         else if (object instanceof Environment) {
+            if (((Environment)object).name.equals("MapEntry")) {
+                return stringify(((Environment)object).lookup("key")) + ": " + stringify(((Environment)object).lookup("value"));
+            }
             return stringify(((Environment)object).lookup("value"));           
         }
         else if (object instanceof List) {
@@ -2246,10 +2801,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (!(target instanceof Environment)) {
             throw new RuntimeError(stmt.iterable.token, "Invalid iterable object.");
         }
+        // checkVariableType(stmt.variable.name, target, "Variable");
+
         // if it is an array then iterate over the array values
         // if it is a map then create an object with the key and value
         // and iterate over the map entries
         Object value = ((Environment)target).lookup("value");
+        
+
         if (value instanceof ArrayList) {
             ArrayList<Object> array = (ArrayList<Object>)value;
             for (int i = 0; i < array.size(); i++) {
@@ -2267,7 +2826,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         } else if (value instanceof HashMap) {
             // we need to create the entry object with an environment
-            Environment entryEnv = new Environment(null, "MapEntry");
+            Environment entryEnv = new Environment(objectEnv, "MapEntry");
             // now we define the key and value
             entryEnv.define("key", null);
             entryEnv.define("value", null);

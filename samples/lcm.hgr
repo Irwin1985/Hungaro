@@ -6,8 +6,8 @@
 """
 
 println("Enter two positive numbers: ")
-declare lnN1 = val(input("First number: "))
-declare lnN2 = val(input("Second number: "))
+declare lnN1 = val(readln("First number: "))
+declare lnN2 = val(readln("Second number: "))
 
 # minimun number between lnN1 and lnN2 is stored in lnMin
 declare lnMin = lnN1

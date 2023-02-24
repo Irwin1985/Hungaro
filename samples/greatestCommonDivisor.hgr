@@ -6,8 +6,8 @@
 """
 println("Enter two positive integers")
 
-declare lnN1 = val(input("Enter the first integer: "))
-declare lnN2 = val(input("Enter the second integer: "))
+declare lnN1 = val(readln("Enter the first integer: "))
+declare lnN2 = val(readln("Enter the second integer: "))
 
 while lnN1 != lnN2
     if lnN1 > lnN2

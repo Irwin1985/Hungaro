@@ -13,7 +13,7 @@ end
 # version 2
 declare lfIsPalindrome2
     declare lnReversedN = 0
-    declare lnN = val(input("Enter a number: "))
+    declare lnN = val(readln("Enter a number: "))
     println("Number entered: " & lnN)
     declare lnOriginalN = lnN
 

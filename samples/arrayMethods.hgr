@@ -1,0 +1,118 @@
+"""
+ Test array methods
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-24
+"""
+
+declare laArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+assert(laArray.len() == 10, "Array length is not 10")
+
+laArray.push([-1, -2])
+
+assert(laArray.toString() == "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, [-1, -2]]", "Array is not equal")
+
+# Math functions
+
+declare laNumbers = [1, 2, 3, 4, 5, 6]
+assert(laNumbers.sum() == 21, "Sum is not 21")
+assert(laNumbers.avg() == 3.5, "Average is not 3.5")
+assert(laNumbers.min() == 1, "Min is not 1")
+assert(laNumbers.max() == 6, "Max is not 6")
+
+# Array functions
+declare laArray1 = [1, 2, 3, 4, 5, 6]
+declare laArray2 = [7, 8, 9, 10, 11, 12]
+
+# concat()
+assert(laArray1.concat(laArray2).toString() == "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]", "Concat is not equal")
+
+# toString()
+assert(laArray1.toString() == "[1, 2, 3, 4, 5, 6]", "Array is not equal")
+
+# indexOf()
+assert(laArray1.indexOf(3) == 2, "Index of 3 is not 2")
+
+# lastIndexOf()
+assert([1, 2, 13, 14, 2, 15, 2].lastIndexOf(2) == 6, "Last index of 2 is not 6")
+
+# contains()
+assert(laArray1.contains(3) == true, "Array does not contain 3")
+
+# isEmpty()
+assert(laArray1.isEmpty() == false, "Array is empty")
+
+# sort(): this method alter the array
+laArray1.sort()
+assert(laArray1.toString() == "[1, 2, 3, 4, 5, 6]", "Array is not equal")
+
+# revers(): this method alter the array
+laArray1.reverse()
+assert(laArray1.toString() == "[6, 5, 4, 3, 2, 1]", "Array is not equal")
+
+# first()
+assert(laArray1.first() == 6, "First element is not 6")
+
+# last()
+assert(laArray1.last() == 1, "Last element is not 1")
+
+# remove(): removes the first element that matches the value
+laArray1.remove(3)
+assert(laArray1.toString() == "[6, 5, 4, 2, 1]", "Array is not equal")
+
+# removeAt(): removes the element at the specified index
+laArray1.removeAt(2)
+assert(laArray1.toString() == "[6, 5, 2, 1]", "Array is not equal")
+
+# insertAt(): inserts the element at the specified index
+laArray1.insertAt(2, 4)
+assert(laArray1.toString() == "[6, 5, 4, 2, 1]", "Array is not equal")
+
+# occurs(): returns the number of times the value occurs in the array
+assert(["Robert", "Bob", "Martin", "Robert"].occurs("Robert") == 2, "Robert occurs 2 times")
+
+# take(n>0): returns a new array with the specified number of elements
+assert(laArray1.take(2).toString() == "[6, 5]", "Array is not equal")
+
+# take(n<0): returns a new array with the specified number of elements from the end
+assert(laArray1.take(-2).toString() == "[2, 1]", "Array is not equal")
+
+# push()
+laArray1.push(7)
+assert(laArray1.toString() == "[6, 5, 4, 2, 1, 7]", "Array is not equal")
+
+# pop()
+assert(laArray1.pop() == 7, "Pop is not 7")
+
+# len()
+assert(laArray1.len() == 5, "Array length is not 5")
+
+# get()
+assert(laArray1.get(2) == 4, "Element at index 2 is not 4")
+
+# set()
+laArray1.set(2, 3)
+assert(laArray1.toString() == "[6, 5, 3, 2, 1]", "Array is not equal")
+
+# slice()
+assert(laArray1.slice(1, 3).toString() == "[5, 3]", "Slice is not equal")
+
+# join()
+assert(laArray1.join(",") == "6,5,3,2,1", "Join is not equal")
+
+# shuffle()
+laArray1.shuffle()
+assert(laArray1.toString() != "[6, 5, 3, 2, 1]", "Array is equal")
+
+# equals()
+assert([1, 2, 3].equals([1, 2, 3]) == true, "Arrays are not equal")
+
+# clone()
+declare laOriginal = [1, 2, 3]
+declare laArray3 = laOriginal.clone()
+assert(laArray3.equals(laOriginal) == true, "Arrays are not equal")
+
+# clear()
+laArray3.clear()
+assert(laArray3.len() == 0, "Array length is not 0")
