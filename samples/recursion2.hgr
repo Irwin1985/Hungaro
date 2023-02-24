@@ -1,0 +1,17 @@
+"""
+ Recursion 2
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-24
+"""
+
+
+declare lpRecursion(pnNumber)
+    pnNumber -= 1
+    println(pnNumber)
+    if pnNumber > 0
+        lpRecursion(pnNumber)
+    end
+end
+
+lpRecursion(10) # 9 8 7 6 5 4 3 2 1 0

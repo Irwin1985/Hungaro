@@ -1,0 +1,55 @@
+"""
+ Quick sort algorithm, depends on recursion
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-24
+"""
+
+declare lpQuickSort(paNumbers, pnLeft, pnRight)
+    declare lnLeftPtr = pnLeft, lnRightPtr = pnRight, lnPivot = paNumbers[pnLeft]
+    while pnLeft < pnRight
+        while paNumbers[pnRight] >= lnPivot and pnLeft < pnRight
+            pnRight -= 1
+        end
+
+        if pnLeft != pnRight
+            paNumbers[pnLeft] = paNumbers[pnRight]
+            pnLeft += 1
+        end
+
+        while paNumbers[pnLeft] <= lnPivot and pnLeft < pnRight
+            pnLeft += 1
+        end
+
+        if pnLeft != pnRight
+            paNumbers[pnRight] = paNumbers[pnLeft]
+            pnRight -= 1
+        end            
+    end
+
+    paNumbers[pnLeft] = lnPivot
+    lnPivot = pnLeft
+    pnLeft = lnLeftPtr
+    pnRight = lnRightPtr
+
+    if pnLeft < lnPivot
+        lpQuickSort(paNumbers, pnLeft, lnPivot - 1)
+    end
+
+    if pnRight > lnPivot
+        lpQuickSort(paNumbers, lnPivot + 1, pnRight)
+    end
+end
+
+# Driver code to test above
+declare laNumbers = [12, 7, 13, 5, 6]
+lpQuickSort(laNumbers, 0, 4)
+assert(laNumbers == [5, 6, 7, 12, 13], "Quick sort algorithm failed")
+
+# Bigger example
+declare laNumbers = [] * rand(1, 100) = 0
+for lnIndex = 0 to laNumbers.len() - 1
+    laNumbers[lnIndex] = rand(1, 100)
+end
+lpQuickSort(laNumbers, 0, laNumbers.len() - 1)
+println("Larger example: " & laNumbers)

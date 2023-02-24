@@ -45,18 +45,18 @@ public class Parser {
     private Stmt genericDeclaration() {
         final Token keyword = previous();
         final List<Stmt> statements = new ArrayList<Stmt>();
-        int commaCounter = 0;
+        // int commaCounter = 0;
         do {
             match(TokenType.SEMICOLON); // consume optional semicolon
             if (check(TokenType.END)) break;
             statements.add(parseDeclareStatement(keyword));
-            commaCounter++;
+            // commaCounter++;
         } while (match(TokenType.COMMA) && !isAtEnd());
         
-        if (commaCounter > 1) {
+        // if (commaCounter > 1) {
             // it was a list of declarations (l1, l2, l3) so we need to consume the end
-            consume(TokenType.END, "Expect `end` after declaration list.");
-        }
+            // consume(TokenType.END, "Expect `end` after declaration list.");
+        // }
         // if (match(TokenType.END)) {
         //     // consume mandatory semicolon
         //     consume(TokenType.SEMICOLON, "Expect new line after `end`.");

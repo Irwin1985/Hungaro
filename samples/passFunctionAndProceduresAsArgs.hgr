@@ -1,0 +1,25 @@
+"""
+ Pass function and procedure as arguments
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-24
+"""
+
+# a user defined function
+declare lfSqr(pnX)
+    return pnX * pnX
+end
+
+declare lfCube(pnX)
+    return pnX * pnX * pnX
+end
+
+declare lfRunTest(poFunc, pnX)
+    return poFunc(pnX)
+end
+
+declare lnResult = lfRunTest(lfSqr, 5) # 25
+println(lnResult)
+
+lnResult = lfRunTest(lfCube, 5)
+println(lnResult) # 125

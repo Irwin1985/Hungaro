@@ -1,0 +1,47 @@
+"""
+ Memory test
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-25
+"""
+
+println("First Loop")
+declare lnJ = 0
+while lnJ < 4000
+    declare lsStr = ""
+    for lnI = 1 to 1000
+        lsStr = lsStr & "1"
+    end
+    lnJ += 1
+end
+
+println("Second Loop")
+lnJ = 0
+
+while lnJ < 4000
+    declare lsStr = ""
+    for lnI = 1 to 1000
+        lsStr = lsStr & "1"
+    end
+    lnJ += 1
+end
+
+println("Third Loop")
+lnJ = 0
+while lnJ < 4000
+    declare lsStr = ""
+    for lnI = 1 to 1000
+        lsStr = lsStr & "1"
+    end
+    lnJ += 1
+end
+
+println("Fourth Loop")
+lnJ = 0
+while lnJ < 4000
+    declare lsStr = ""
+    for lnI = 1 to 1000
+        lsStr = lsStr & "1"
+    end
+    lnJ += 1
+end

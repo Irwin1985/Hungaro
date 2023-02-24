@@ -1,0 +1,19 @@
+"""
+ Repeat string
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-24
+"""
+
+
+declare lfRepeatString(pnTimes, psString)
+    declare lsResult = ""
+    
+    for lnI = 1 to pnTimes
+        lsResult += psString
+    end
+
+    return lsResult
+end
+
+assert(lfRepeatString(3, "a") == "aaa")

@@ -8,9 +8,7 @@ declare
     laArray1 = [3, 3],
     laArray2 = [1, 2, 3, 4],
     laArray3 = [[1, 4], [6, 2]],
-    laArray4 = [[1, 4, 2], [6, 2, 8], [34, 52, 12]],
-end
+    laArray4 = [[1, 4, 2], [6, 2, 8], [34, 52, 12]]
 
 # concatenate laArra1 and laArray4
 println(laArray1.concat(laArray4))
-

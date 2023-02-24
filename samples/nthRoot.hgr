@@ -1,0 +1,19 @@
+"""
+ Nth root of a number
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-25
+"""
+
+declare lfNthRoot(pnA, pnPrecision, pnNthRoot)
+    declare lnXP = sqrt(pnA)
+    while abs(pnA - lnXP ^ pnNthRoot) > pnPrecision
+        declare lnX = (1 / pnNthRoot) * (((pnNthRoot - 1) * lnXP) + pnA / (lnXP ^ (pnNthRoot - 1)))
+        lnXP = lnX
+    end
+    return lnXP
+end
+
+declare lnN = val(readln("Enter the root power (eg: 1, 2, 3, 4...): "))
+declare lnX = 25
+println("Nth root of " & lnX & " is ", lfNthRoot(lnX, 0.000001, lnN))

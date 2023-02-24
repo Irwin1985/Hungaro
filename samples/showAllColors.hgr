@@ -1,0 +1,24 @@
+"""
+ Show all colors in the terminal
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-24
+"""
+
+declare laColors = [        
+    "black",
+    "red",
+    "green",
+    "yellow",
+    "blue",
+    "purple",
+    "cyan",
+    "white",
+]
+
+for each lvColor in laColors
+    setConsoleForeColor(lvColor)
+    println("This is a text in " & lvColor & " color")
+end
+setConsoleForeColor("reset")
+println(" ")

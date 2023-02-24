@@ -8,6 +8,5 @@ declare
     lnWidth = val(readln("Enter the width of the rectangle: ")),
     lnHeight = val(readln("Enter the height of the rectangle: ")),
     lnArea = lnWidth * lnHeight
-end
 
 print("The area of the rectangle is: " & lnArea)

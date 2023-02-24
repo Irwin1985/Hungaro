@@ -1,0 +1,15 @@
+"""
+ Local Index
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-24
+"""
+
+declare lpTest(pnIndex)
+    declare laArray = [1, 2, 3]
+    declare lnY = laArray[0]
+    println(lnY)
+    laArray[0] = 77
+    println(laArray[0]) # 77
+end
+lpTest(2)

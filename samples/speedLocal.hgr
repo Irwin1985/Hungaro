@@ -1,0 +1,15 @@
+"""
+ Speel local 
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-24
+"""
+
+declare lnT1 = tick()
+declare lsA = "12345"
+
+for lnI = 1 to 10000
+    declare lsB = lsA, lsC = lsB, lsD = lsA & lsB & lsC
+end
+
+println("Time: " & tack(lnT1) & " ms")

@@ -20,8 +20,7 @@ declare lfHamming(pnLimit)
         lnX5 = 5,
         lnI = 0,
         lnJ = 0,
-        lnK = 0,
-    end
+        lnK = 0    
 
     for lnN = 1 to pnLimit
         laH[lnN] = min(lnX2, min(lnX3, lnX5))

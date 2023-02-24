@@ -1,0 +1,17 @@
+"""
+ Nested repeat
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-25
+"""
+
+declare lnC = 1
+
+repeat
+    declare lnCount = 1
+    repeat
+        println(space(lnC*4) & lnCount)
+        lnCount += 1
+    until lnCount == 6
+    lnC += 1
+until lnC == 5

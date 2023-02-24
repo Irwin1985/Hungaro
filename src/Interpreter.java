@@ -1926,6 +1926,29 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         });
 
+        // format() builtin function: use the java String.format() function to format a string
+        // considering all wildcards as strings eg: %s, %d, %f, %c, %b
+        // this function arity must return -1 to indicate that it can take any number of arguments
+        globals.define("format", new CallableObject() {
+            @Override
+            public int arity() {
+                return -1;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the first argument is the format string
+                // the second argument is the first wildcard value
+                // the third argument is the second wildcard value
+                // etc...
+                String format = (String)arguments.get(1);
+                Object[] values = new Object[arguments.size() - 2];
+                for (int i = 0; i < values.length; i++) {
+                    values[i] = stringify(arguments.get(i + 2));
+                }
+                return String.format(format, values);
+            }
+        });
     }
 
     public void interpret(List<Stmt> statements) {
@@ -2519,8 +2542,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     if (((Environment)value).name.equals("Map")) return;
                 }
                 break;
-            case 'o':
-                if (value instanceof Environment) return;
+            case 'o': // allowed types: Environment, RuntimeFunction
+                if (value instanceof Environment || value instanceof RuntimeFunction) return;
                 break;
             case 'd':
                 if (value instanceof Environment) {
@@ -2811,7 +2834,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
         if (value instanceof ArrayList) {
             ArrayList<Object> array = (ArrayList<Object>)value;
-            for (int i = 0; i < array.size(); i++) {
+            final int size = array.size();
+            for (int i = 0; i < size; i++) {
                 // check the type of the value against the type of the variable                
                 foreachEnv.define(stmt.variable.name.lexeme, array.get(i));
                 

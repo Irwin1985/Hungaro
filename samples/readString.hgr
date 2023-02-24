@@ -1,0 +1,13 @@
+"""
+ Read String from console
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-24
+"""
+
+declare lsAns = readln("Do you want a drink? (y/n): ")
+if lsAns == "y"
+    print("Here is your drink")
+else
+    print("Ok, no drink for you")
+end

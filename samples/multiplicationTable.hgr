@@ -1,0 +1,13 @@
+"""
+ Multiplication table
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-25
+"""
+
+for lnT = 1 to 10
+    println("Multiplication table of " & lnT)
+    for lnJ = 1 to 10
+        println("" & lnT & " x " & lnJ & " = " & lnT * lnJ)
+    end
+end
