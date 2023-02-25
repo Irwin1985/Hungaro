@@ -24,6 +24,13 @@ A hungarian notation based programming language.
 - [x] Builtin type checker
 - [x] Classes
 - [x] Objects (Instances)
+- [x] Variadic Functions
+- [x] Optinal Parameters
+- [x] Array builtins
+- [x] Map builtins
+- [x] String builtins
+- [x] Function builtins
+- [x] Native builtins
 
 ### Syntax
 
