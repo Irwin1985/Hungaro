@@ -1,0 +1,15 @@
+"""
+ Associativity
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-25
+"""
+
+declare lsA = "a", lsB = "b", lsC = "c"
+
+# Assignment is right associative
+lsA = lsB = lsC
+
+assert(lsA == "c", "lsA is not equal to \'c\'")
+assert(lsB == "c", "lsB is not equal to \'c\'")
+assert(lsC == "c", "lsC is not equal to \'c\'")

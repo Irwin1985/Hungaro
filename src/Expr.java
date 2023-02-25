@@ -28,8 +28,32 @@ public abstract class Expr {
     abstract <R> R accept(Visitor<R> visitor);
 
     /*
-     * Array expression: [1, 2, 3]
-     */
+    * Parameter class
+    */
+    public static class Param {
+        final Token name;
+        final boolean isVariadic;
+        final char type;
+        final Expr defaultValue;
+
+        public Param(Token name) {
+            this.name = name;
+            this.isVariadic = name.category == Category.VARIADIC;
+            this.type = name.lexeme.charAt(1);
+            this.defaultValue = null;
+        }
+
+        public Param(Token name, Expr defaultValue) {
+            this.name = name;
+            this.isVariadic = name.category == Category.VARIADIC;
+            this.type = name.lexeme.charAt(1);
+            this.defaultValue = defaultValue;
+        }
+    }
+    
+    /*
+    * Array expression: [1, 2, 3]
+    */
     public static class Array extends Expr {
         final List<Expr> elements;
         final Expr fixedSize;

@@ -33,5 +33,6 @@ public enum Category {
     PARAMETER,
     CLASS_PROPERTY,
     CLASS_FUNCTION,
-    CLASS_PROCEDURE
+    CLASS_PROCEDURE,
+    VARIADIC,
 }

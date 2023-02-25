@@ -1,8 +1,8 @@
 public class Token {
     final TokenType type;
-    final String lexeme;
+    String lexeme;
     final Category category;
-    final Object literal;
+    Object literal;
     final int line;
     final int col;
     final Scope scope;

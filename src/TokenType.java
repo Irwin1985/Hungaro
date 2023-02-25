@@ -62,5 +62,6 @@ public enum TokenType {
     LOGICAL_AND,
     LOGICAL_NOT,
     IGNORE,
+    PARAMETER,
     EOF,    
 }

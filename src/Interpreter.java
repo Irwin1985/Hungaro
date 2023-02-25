@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import java.util.HashMap;
@@ -170,19 +171,114 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
         if (!(callee instanceof CallableObject)) {
             throw new RuntimeError(expr.paren, "Can only call functions, classes and objects.");
-        }
-
-        CallableObject function = (CallableObject)callee;
-        if (function.arity() != -1 && arguments.size() != function.arity()) {
-            String message = "Expected " + (function.arity()-1) + " arguments but got " + (arguments.size()-1) + ".";
-            // if arity is 0 then throw unexpected arguments error
-            if (function.arity()-1 == 0) {
-                message = "Expected no arguments but got " + (arguments.size()-1) + ".";
-            }
-            throw new RuntimeError(expr.paren, message);
-        }
+        }        
+        CallableObject function = (CallableObject)callee;       
 
         return function.call(this, arguments);
+    }
+
+    public Environment createActivationEnvironment(Token token, RuntimeFunction function, List<Object> arguments) {
+        // case 1: validate the function's required parameters
+        // case 2: validate the function's optional parameters vs variadic parameters
+        final CallableObject.Arity arity = function.arity();        
+        
+        // we exclude the first argument and parameter which is the poThis object
+        int required = arity.required-1;
+        int argSize = arguments.size()-1;
+        // <- we add them back later
+
+        final int requiredParamsWithoutPoThis = required;
+
+        // validate the function's required parameters
+        if (required > 0 && argSize < required) {
+            String message = "Expected " + required + " arguments but got " + argSize + ".";
+            throw new RuntimeError(token, message);
+        }
+        // validate no required parameters but arguments are provided
+        if (required == 0 && argSize > 0) {
+            String message = "Expected no arguments but got " + argSize + ".";
+            throw new RuntimeError(token, message);
+        }
+
+        // add the poThis object to the required parameters and arguments
+        required++;
+        argSize++;
+        // <- from here we take them into account
+
+        // Create the activation environment
+        Environment activationEnv = new Environment(function.closure, "function call of " + function.declaration.name.lexeme);                        
+        // add the arguments to the activation environment
+        for (int i = 0; i < required; i++) {
+            if (i < arguments.size()) {
+                activationEnv.define(function.declaration.params.get(i).name.lexeme, arguments.get(i));
+                checkVariableType(function.declaration.params.get(i).name, arguments.get(i), "Parameter");
+                continue;
+            }
+            // if the argument is not provided then we add null and not check the type
+            activationEnv.define(function.declaration.params.get(i).name.lexeme, null);
+        }
+
+        // validate the function's optional parameters vs variadic parameters
+        if (arity.optional > 0) {
+            if (arity.variadic) {
+                String message = "Cannot have both optional and variadic parameters.";
+                throw new RuntimeError(token, message);
+            }
+            // if argSize > required + arity.optional then throw error
+            if (argSize > required + arity.optional) {
+                String message = "Expected at most " + (requiredParamsWithoutPoThis + arity.optional) + " arguments but got " + argSize + ".";
+                throw new RuntimeError(token, message);
+            }
+
+            if (argSize == required + arity.optional) {
+                // arguments and optional parameters are equal so we don't need to add the default values
+                for (int i = required; i < required + arity.optional; i++) {
+                    activationEnv.define(function.declaration.params.get(i).name.lexeme, arguments.get(i));
+                }
+            } else {
+                String parameterName = null;
+                Object parameterValue = null;
+                // arguments and optional parameters are not equal so we need to add the default values
+                for (int i = required; i < required + arity.optional; i++) {
+                    parameterName = function.declaration.params.get(i).name.lexeme;
+                    parameterValue = null;
+                    if (i < arguments.size())            
+                        parameterValue = arguments.get(i);                        
+                    else {
+                        // evaluate the default value
+                        parameterValue = evaluate(function.declaration.params.get(i).defaultValue);
+                    }
+                    checkVariableType(function.declaration.params.get(i).name, parameterValue, "Parameter");
+                    activationEnv.define(parameterName, parameterValue);
+                }
+            }
+        }
+        // if the function has a variadic parameter then add the rest of the arguments to the activation environment
+        if (arity.variadic) {
+            // if argSize < required + 1 then throw error
+            if (argSize < required + 1) {
+                String message = "Expected at least " + (requiredParamsWithoutPoThis + 1) + " arguments but got " + argSize + ".";
+                throw new RuntimeError(token, message);
+            }
+            // create an array with the rest of the arguments
+            List<Object> variadicArguments = new ArrayList<Object>();
+            for (int i = required-1; i < argSize; i++) {
+                variadicArguments.add(arguments.get(i));
+            }
+            // make the array object
+            Object variadicArgumentsObject = makeObject(variadicArguments, arrayEnv, "Array");
+            // add the array to the activation environment
+            final String parameterName = function.declaration.params.get(required-1).name.lexeme;
+            activationEnv.define(parameterName, variadicArgumentsObject);
+        } else {
+            // if argSize > required then throw error
+            if (argSize > required) {
+                String message = "Expected at most " + requiredParamsWithoutPoThis + " arguments but got " + argSize + ".";
+                throw new RuntimeError(token, message);
+            }
+        }
+
+        return activationEnv;
     }
 
     @Override

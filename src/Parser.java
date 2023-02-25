@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Parser {
+    // parser constants
+    private static final String INVALID_PARAMETER_NAME = "Invalid parameter name: parameters must follow the following rule: first letter `p` match the parameter and second letter match the type: \n1. `s` for string.\n2. `n` for number.\n3. `b` for boolean.\n4. `a` for array.\n5. `m` for map.\n6. `o` for object.\n";
     // static enum for parameters and properties validation
     static enum ValidateTypes {
         PARAMETER,
@@ -45,22 +47,12 @@ public class Parser {
     private Stmt genericDeclaration() {
         final Token keyword = previous();
         final List<Stmt> statements = new ArrayList<Stmt>();
-        // int commaCounter = 0;
+
         do {
             match(TokenType.SEMICOLON); // consume optional semicolon
             if (check(TokenType.END)) break;
-            statements.add(parseDeclareStatement(keyword));
-            // commaCounter++;
+            statements.add(parseDeclareStatement(keyword));            
         } while (match(TokenType.COMMA) && !isAtEnd());
-        
-        // if (commaCounter > 1) {
-            // it was a list of declarations (l1, l2, l3) so we need to consume the end
-            // consume(TokenType.END, "Expect `end` after declaration list.");
-        // }
-        // if (match(TokenType.END)) {
-        //     // consume mandatory semicolon
-        //     consume(TokenType.SEMICOLON, "Expect new line after `end`.");
-        // }
 
         return new Stmt.Declare(keyword, statements);
     }
@@ -150,31 +142,72 @@ public class Parser {
     }
 
     private Stmt functionDeclaration(Token keyword, Token identifier, String name) {
-        List<Expr.Variable> parameters = new ArrayList<Expr.Variable>();
+        List<Expr.Param> parameters = new ArrayList<Expr.Param>();
         boolean mustReturnValue = true;
-        Token param = null;
         ValidateTypes validateType = ValidateTypes.PARAMETER;
 
         if (name.equals("class function") || name.equals("class procedure")) {
             validateType = ValidateTypes.PROPERTY;
-            // parameters.add(new Expr.Variable(new Token(TokenType.IDENTIFIER, "poThis")));
         }
         // we always pass 'poThis' as first parameter
-        parameters.add(new Expr.Variable(new Token(TokenType.IDENTIFIER, "poThis")));
+        parameters.add(new Expr.Param(new Token(TokenType.PARAMETER, "poThis")));
 
         validateStack.push(validateType);
+        Token param = null;
+        Expr paramDefaultValue = null;
+        List<Integer> optionalParamIndexes = new ArrayList<Integer>();
+        boolean isVariadic = false;
 
         if (match(TokenType.LPAREN)) {
             if (!check(TokenType.RPAREN)) {
                 do {
-                    param = consume(TokenType.IDENTIFIER, "Expect parameter name.");
-                    if (param.category != Category.PARAMETER) {
-                        error(param, "Invalid parameter name: parameters must follow the following rule: first letter `p` match the parameter and second letter match the type: \n1. `s` for string.\n2. `n` for number.\n3. `b` for boolean.\n4. `a` for array.\n5. `m` for map.\n6. `o` for object.\n");
+                    param = consume(TokenType.PARAMETER, INVALID_PARAMETER_NAME);
+                    paramDefaultValue = null;
+                    if (param.category == Category.VARIADIC) {
+                        isVariadic = true;
+                        // if variadic parameter is not the last parameter then error
+                        if (peek().type != TokenType.RPAREN) {
+                            error(param, "Variadic parameter must be the last parameter.");
+                        }                        
+                        // remove the variadic prefix from the parameter name e.g. `...`
+                        param.lexeme = param.lexeme.substring(3);
+                        param.literal = param.lexeme;
+                    } else {                        
+                        if (match(TokenType.SIMPLE_ASSIGN)) {
+                            // optional parameters are not allowed when variadic parameter is used
+                            if (isVariadic) {
+                                error(param, "Optional parameters are not allowed when variadic parameter is used.");
+                            }
+                            paramDefaultValue = expression();
+                        }
                     }
-                    parameters.add(new Expr.Variable(param));
+                    if (paramDefaultValue != null) {
+                        optionalParamIndexes.add(parameters.size());
+                    }
+                    parameters.add(new Expr.Param(param, paramDefaultValue));
                 } while (match(TokenType.COMMA));
             }
-            consume(TokenType.RPAREN, "Expect `)` after parameters.");
+            consume(TokenType.RPAREN, "Expect `)` after parameters.");                        
+        }
+
+        // if there is optional parameter before variadic parameter then error
+        if (optionalParamIndexes.size() > 0 && isVariadic) {
+            error(param, "Optional parameters are not allowed when variadic parameter is used.");
+        }
+
+        // we need to validate the sequence of optional parameters got in optionalParamIndexes
+        // if we find a hole in the sequence then error
+        int previousIndex = 0;
+        for (int i = 0; i < optionalParamIndexes.size(); i++) {
+            int index = optionalParamIndexes.get(i);
+            if (i == 0) {
+                previousIndex = index;
+                continue;
+            }
+            if (index - previousIndex != 1) {
+                error(parameters.get(index-1).name, "Optional parameters must be the last parameters.");
+            }
+            previousIndex = index;            
         }
 
         functionStack.push(identifier.lexeme); // fName or pName
@@ -186,7 +219,7 @@ public class Parser {
         functionStack.pop();
         validateStack.pop();
 
-        return new Stmt.Function(mustReturnValue, identifier, parameters, body);
+        return new Stmt.Function(mustReturnValue, identifier, parameters, body, isVariadic, optionalParamIndexes.size());
     }
 
     private Stmt.Block block() {
@@ -519,7 +552,7 @@ public class Parser {
     }
 
     private void validateTypes(Expr.Variable variable) {
-        if (variable.name.category == Category.PARAMETER) {
+        if (variable.name.category == Category.PARAMETER || variable.name.category == Category.VARIADIC) {
             checkType(variable.name, "parameters", "function or procedure");
         } else if (variable.name.category == Category.CLASS_PROPERTY) {
             checkType(variable.name, "properties", "class");
@@ -717,7 +750,7 @@ public class Parser {
         if (peek().category == Category.LITERAL) {
             return new Expr.Literal(advance());
         }
-        else if (match(TokenType.IDENTIFIER)) {
+        else if (match(TokenType.IDENTIFIER, TokenType.PARAMETER)) {
             return new Expr.Variable(previous());
         }
         else if (match(TokenType.LPAREN)) {

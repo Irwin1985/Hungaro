@@ -187,16 +187,20 @@ public abstract class Stmt {
      */
     public static class Function extends Stmt {
         final Token name;
-        final List<Expr.Variable> params;
+        final List<Expr.Param> params;
         final Block body;
         final boolean mustReturnValue;
+        final boolean isVariadic;
+        final int optionalParams;
 
-        public Function(boolean mustReturnValue, Token name, List<Expr.Variable> params, Block body) {
+        public Function(boolean mustReturnValue, Token name, List<Expr.Param> params, Block body, boolean isVariadic, int optionalParams) {
             super(name);
             this.mustReturnValue = mustReturnValue;
             this.name = name;
             this.params = params;
             this.body = body;
+            this.isVariadic = isVariadic;
+            this.optionalParams = optionalParams;
         }
 
         @Override

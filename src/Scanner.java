@@ -123,8 +123,10 @@ public class Scanner {
         // Class properties
         new Spec(Pattern.compile("^[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_PROPERTY),
 
-        // Parameters
-        new Spec(Pattern.compile("^p[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.PARAMETER),
+        // Variadic Parameters
+        new Spec(Pattern.compile("^...pa([A-Z]([a-z0-9]+)?)+"), TokenType.PARAMETER, Category.VARIADIC),
+        // Simple Parameters
+        new Spec(Pattern.compile("^p[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.PARAMETER, Category.PARAMETER),
 
         // Class function
         new Spec(Pattern.compile("^f([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_FUNCTION),

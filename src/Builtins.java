@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,8 +29,8 @@ public final class Builtins {
         // object toString builtin function
         interpreter.objectEnv.define("toString", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -48,8 +49,8 @@ public final class Builtins {
         // object type builtin function: return the name of the Environment
         interpreter.objectEnv.define("type", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -70,8 +71,8 @@ public final class Builtins {
         // concat builtin function: an array takes another array and call makeObject() to create a new array
         interpreter.arrayEnv.define("concat", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -93,8 +94,8 @@ public final class Builtins {
         // array indexOf builtin function
         interpreter.arrayEnv.define("indexOf", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -111,8 +112,8 @@ public final class Builtins {
         // array lastIndexOf builtin function
         interpreter.arrayEnv.define("lastIndexOf", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -129,8 +130,8 @@ public final class Builtins {
         // array contains builtin function
         interpreter.arrayEnv.define("contains", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -147,8 +148,8 @@ public final class Builtins {
         // array isEmpty builtin function
         interpreter.arrayEnv.define("isEmpty", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -165,8 +166,8 @@ public final class Builtins {
         // array sort builtin function: sort the array in ascending order
         interpreter.arrayEnv.define("sort", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -220,8 +221,8 @@ public final class Builtins {
         // array reverse builtin function
         interpreter.arrayEnv.define("reverse", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -240,8 +241,8 @@ public final class Builtins {
         // array first() builtin function
         interpreter.arrayEnv.define("first", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -262,8 +263,8 @@ public final class Builtins {
         // array last() builtin function
         interpreter.arrayEnv.define("last", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -284,8 +285,8 @@ public final class Builtins {
         // array remove() removes the first occurrence of the given element
         interpreter.arrayEnv.define("remove", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -311,8 +312,8 @@ public final class Builtins {
         // array removeAt() builtin function
         interpreter.arrayEnv.define("removeAt", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -337,8 +338,8 @@ public final class Builtins {
         // array insertAt() builtin function
         interpreter.arrayEnv.define("insertAt", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -359,8 +360,8 @@ public final class Builtins {
         // array occurs() builtin function: returns the number of times the given element occurs in the array
         interpreter.arrayEnv.define("occurs", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -384,8 +385,8 @@ public final class Builtins {
         // if the argument is negative then the last n elements are returned
         interpreter.arrayEnv.define("take", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -412,8 +413,8 @@ public final class Builtins {
         // array push builtin function: eg. array.push(1)
         interpreter.arrayEnv.define("push", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -430,8 +431,8 @@ public final class Builtins {
         // array pop builtin function
         interpreter.arrayEnv.define("pop", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -448,8 +449,8 @@ public final class Builtins {
         // array len builtin function
         interpreter.arrayEnv.define("len", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -466,8 +467,8 @@ public final class Builtins {
         // array get builtin function
         interpreter.arrayEnv.define("get", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -490,8 +491,8 @@ public final class Builtins {
         // array set builtin function
         interpreter.arrayEnv.define("set", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -514,8 +515,8 @@ public final class Builtins {
         // array slice builtin function
         interpreter.arrayEnv.define("slice", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -540,8 +541,8 @@ public final class Builtins {
         // array join builtin function
         interpreter.arrayEnv.define("join", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -567,8 +568,8 @@ public final class Builtins {
         // array shuffle builtin function
         interpreter.arrayEnv.define("shuffle", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -587,8 +588,8 @@ public final class Builtins {
         // array equals builtin function: the argument must be an array
         interpreter.arrayEnv.define("equals", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -607,8 +608,8 @@ public final class Builtins {
         // array sum() builtin function: the argument must be an array of numbers
         interpreter.arrayEnv.define("sum", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -631,8 +632,8 @@ public final class Builtins {
         // array avg() builtin function: the argument must be an array of numbers
         interpreter.arrayEnv.define("avg", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -655,8 +656,8 @@ public final class Builtins {
         // array min() builtin function: the argument must be an array of numbers
         interpreter.arrayEnv.define("min", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -682,8 +683,8 @@ public final class Builtins {
         // array max() builtin function: the argument must be an array of numbers
         interpreter.arrayEnv.define("max", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -709,8 +710,8 @@ public final class Builtins {
         // array clone() builtin function: the argument must be an array
         interpreter.arrayEnv.define("clone", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -728,8 +729,8 @@ public final class Builtins {
         // array clear() builtin function: the argument must be an array
         interpreter.arrayEnv.define("clear", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -752,8 +753,8 @@ public final class Builtins {
         // string len builtin function
         interpreter.stringEnv.define("len", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -765,8 +766,8 @@ public final class Builtins {
         // string slice builtin function
         interpreter.stringEnv.define("slice", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -782,8 +783,8 @@ public final class Builtins {
         // string find builtin function
         interpreter.stringEnv.define("find", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -797,8 +798,8 @@ public final class Builtins {
         // string contains builtin function
         interpreter.stringEnv.define("contains", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -812,8 +813,8 @@ public final class Builtins {
         // string replace builtin function
         interpreter.stringEnv.define("replace", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -828,8 +829,8 @@ public final class Builtins {
         // string split builtin function
         interpreter.stringEnv.define("split", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -843,8 +844,8 @@ public final class Builtins {
         // string trim builtin function
         interpreter.stringEnv.define("trim", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -857,8 +858,8 @@ public final class Builtins {
         // string ltrim builtin function
         interpreter.stringEnv.define("ltrim", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -871,8 +872,8 @@ public final class Builtins {
         // string rtrim builtin function
         interpreter.stringEnv.define("rtrim", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -885,8 +886,8 @@ public final class Builtins {
         // string padl builtin function: pad left
         interpreter.stringEnv.define("padl", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -901,8 +902,8 @@ public final class Builtins {
         // string padr builtin function: pad right
         interpreter.stringEnv.define("padr", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -917,8 +918,8 @@ public final class Builtins {
         // string toUpper builtin function
         interpreter.stringEnv.define("toUpper", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -931,8 +932,8 @@ public final class Builtins {
         // string toLower builtin function
         interpreter.stringEnv.define("toLower", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -945,8 +946,8 @@ public final class Builtins {
         // string toNumber builtin function
         interpreter.stringEnv.define("toNumber", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -963,8 +964,8 @@ public final class Builtins {
         // string reverse builtin function
         interpreter.stringEnv.define("reverse", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -977,8 +978,8 @@ public final class Builtins {
         // charAt builtin function
         interpreter.stringEnv.define("charAt", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -997,8 +998,8 @@ public final class Builtins {
         // string startsWith builtin function: return true if the string starts with the given substring
         interpreter.stringEnv.define("startsWith", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1012,8 +1013,8 @@ public final class Builtins {
         // string endsWith builtin function: return true if the string ends with the given substring
         interpreter.stringEnv.define("endsWith", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1027,8 +1028,8 @@ public final class Builtins {
         // string times builtin function: return a string that is the given string repeated n times
         interpreter.stringEnv.define("times", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1046,8 +1047,8 @@ public final class Builtins {
         // string indexOf builtin function: return the index of the first occurrence of the given substring
         interpreter.stringEnv.define("indexOf", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1061,8 +1062,8 @@ public final class Builtins {
         // string lastIndexOf builtin function: return the index of the last occurrence of the given substring
         interpreter.stringEnv.define("lastIndexOf", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1076,8 +1077,8 @@ public final class Builtins {
         // string occurs builtin function: return the number of occurrences of the given substring
         interpreter.stringEnv.define("occurs", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1097,8 +1098,8 @@ public final class Builtins {
         // string isAlpha() builtin function: return true if the string contains only alphabetic characters
         interpreter.stringEnv.define("isAlpha", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1111,8 +1112,8 @@ public final class Builtins {
         // string isAlphaNum() builtin function: return true if the string contains only alphabetic and numeric characters
         interpreter.stringEnv.define("isAlphaNum", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1125,8 +1126,8 @@ public final class Builtins {
         // string isNumeric() builtin function: return true if the string contains only numeric characters
         interpreter.stringEnv.define("isNumeric", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1139,8 +1140,8 @@ public final class Builtins {
         // string isSpace() builtin function: return true if the string contains only whitespace characters
         interpreter.stringEnv.define("isSpace", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1153,8 +1154,8 @@ public final class Builtins {
         // string isUpper() builtin function: return true if the string contains only uppercase characters
         interpreter.stringEnv.define("isUpper", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1167,8 +1168,8 @@ public final class Builtins {
         // string isLower() builtin function: return true if the string contains only lowercase characters
         interpreter.stringEnv.define("isLower", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1186,8 +1187,8 @@ public final class Builtins {
         // map get builtin function
         interpreter.mapEnv.define("get", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1204,8 +1205,8 @@ public final class Builtins {
         // map set builtin function
         interpreter.mapEnv.define("set", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -1222,8 +1223,8 @@ public final class Builtins {
         // map len builtin function
         interpreter.mapEnv.define("len", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1240,8 +1241,8 @@ public final class Builtins {
         // map keys builtin function
         interpreter.mapEnv.define("keys", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1258,8 +1259,8 @@ public final class Builtins {
         // map values builtin function
         interpreter.mapEnv.define("values", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1276,8 +1277,8 @@ public final class Builtins {
         // map contains builtin function
         interpreter.mapEnv.define("contains", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1294,8 +1295,8 @@ public final class Builtins {
         // map remove builtin function
         interpreter.mapEnv.define("remove", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1312,8 +1313,8 @@ public final class Builtins {
         // map clear builtin function
         interpreter.mapEnv.define("clear", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1330,8 +1331,8 @@ public final class Builtins {
         // map isEmpty builtin function
         interpreter.mapEnv.define("isEmpty", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1348,8 +1349,8 @@ public final class Builtins {
         // map clone builtin function
         interpreter.mapEnv.define("clone", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1372,8 +1373,8 @@ public final class Builtins {
         // RuntimeFunction object and call its arity() method
         interpreter.functionEnv.define("arity", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1382,9 +1383,9 @@ public final class Builtins {
                     Environment env = (Environment)arguments.get(0);
                     RuntimeFunction function = (RuntimeFunction)env.lookup("value");
                     // arity is the number of parameters, not including the "poThis" parameter
-                    return (double)function.arity()-1;
+                    return function.arity();
                 }
-                return 0.0;
+                return new Arity();
             }
         }); 
     }
@@ -1395,22 +1396,20 @@ public final class Builtins {
         // date() builtin function
         interpreter.globals.define("date", new CallableObject() {
             @Override
-            public int arity() {
-                return 0;
+            public Arity arity() {
+                return new Arity();
             }
 
             @Override
-            public Object call(Interpreter interpreter, List<Object> arguments) {
-                Environment date = new Environment(interpreter.dateEnv, "Date");
-                date.define("value", new java.util.Date());
-                return date;
+            public Object call(Interpreter interpreter, List<Object> arguments) {                
+                return interpreter.makeObject(new Date(), interpreter.dateEnv, "Date");
             }
         });
         // readln builtin function: read a line from the console
         interpreter.globals.define("readln", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1424,8 +1423,8 @@ public final class Builtins {
         // val() builtin function: convert a string to a number
         interpreter.globals.define("val", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1445,8 +1444,8 @@ public final class Builtins {
         // type() builtin function: return the type of an object eg: 
         interpreter.globals.define("type", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1468,8 +1467,8 @@ public final class Builtins {
         // print builtin function: print a string to the console
         interpreter.globals.define("print", new CallableObject() {
             @Override
-            public int arity() {
-                return -1;
+            public Arity arity() {
+                return new Arity(true);
             }
 
             @Override
@@ -1488,8 +1487,8 @@ public final class Builtins {
         // println builtin function: print a string to the console with a newline
         interpreter.globals.define("println", new CallableObject() {
             @Override
-            public int arity() {
-                return -1;
+            public Arity arity() {
+                return new Arity(true);
             }
 
             @Override
@@ -1507,8 +1506,8 @@ public final class Builtins {
         // int() builtin function: trim the decimal part of a number
         interpreter.globals.define("int", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1526,8 +1525,8 @@ public final class Builtins {
         // space() builtin function: return a string of spaces
         interpreter.globals.define("space", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1541,8 +1540,8 @@ public final class Builtins {
         // chr() builtin function: return the string representation of a number (ASCII code)
         interpreter.globals.define("chr", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1563,8 +1562,8 @@ public final class Builtins {
         // sin() builtin function: return the sine of a number
         interpreter.globals.define("sin", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1577,8 +1576,8 @@ public final class Builtins {
         // setConsoleForeColor() builtin function: set the console foreground color
         interpreter.globals.define("setConsoleForeColor", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1599,8 +1598,8 @@ public final class Builtins {
         // setConsoleBackColor() builtin function: set the console background color
         interpreter.globals.define("setConsoleBackColor", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1622,8 +1621,8 @@ public final class Builtins {
         // otherwise print an error message in red color
         interpreter.globals.define("assert", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -1641,8 +1640,8 @@ public final class Builtins {
         // rand(from, to) builtin function: return a random number between from and to
         interpreter.globals.define("rand", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -1657,8 +1656,8 @@ public final class Builtins {
         // abs() builtin function: return the absolute value of a number
         interpreter.globals.define("abs", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -1671,8 +1670,8 @@ public final class Builtins {
         // sqrt() builtin function: return the square root of a number
         interpreter.globals.define("sqrt", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1685,8 +1684,8 @@ public final class Builtins {
         // pow() builtin function: return the power of a number
         interpreter.globals.define("pow", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -1700,8 +1699,8 @@ public final class Builtins {
         // round() builtin function: return the rounded value of a number
         interpreter.globals.define("round", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1714,8 +1713,8 @@ public final class Builtins {
         // floor() builtin function: return the floor value of a number
         interpreter.globals.define("floor", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1728,8 +1727,8 @@ public final class Builtins {
         // ceil() builtin function: return the ceiling value of a number
         interpreter.globals.define("ceil", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1742,8 +1741,8 @@ public final class Builtins {
         // min() builtin function: return the minimum value of two numbers
         interpreter.globals.define("min", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -1757,8 +1756,8 @@ public final class Builtins {
         // max() builtin function: return the maximum value of two numbers
         interpreter.globals.define("max", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -1772,8 +1771,8 @@ public final class Builtins {
         // between() builtin function: return true if a number is between two numbers
         interpreter.globals.define("between", new CallableObject() {
             @Override
-            public int arity() {
-                return 4;
+            public Arity arity() {
+                return new Arity(4);
             }
 
             @Override
@@ -1788,8 +1787,8 @@ public final class Builtins {
         // seconds() builtin function: return the number of seconds since the beginning of the program
         interpreter.globals.define("seconds", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1801,8 +1800,8 @@ public final class Builtins {
         // tick() builtin function: return the number of ticks since the beginning of the program
         interpreter.globals.define("tick", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1814,8 +1813,8 @@ public final class Builtins {
         // tack() builtin function: takes a tick() value and returns the number of seconds since that tick
         interpreter.globals.define("tack", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1828,8 +1827,8 @@ public final class Builtins {
         // sleep() builtin function: sleep for a number of seconds
         interpreter.globals.define("sleep", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1847,8 +1846,8 @@ public final class Builtins {
         // file() builtin function: check if a file exists
         interpreter.globals.define("file", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1861,8 +1860,8 @@ public final class Builtins {
         // filetostr() builtin function: read a file and return its content as a string
         interpreter.globals.define("filetostr", new CallableObject() {
             @Override
-            public int arity() {
-                return 2;
+            public Arity arity() {
+                return new Arity(2);
             }
 
             @Override
@@ -1880,8 +1879,8 @@ public final class Builtins {
         // strtofile() builtin function: write a string to a file
         interpreter.globals.define("strtofile", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -1902,8 +1901,8 @@ public final class Builtins {
         // curdir() builtin function: return the current directory
         interpreter.globals.define("curdir", new CallableObject() {
             @Override
-            public int arity() {
-                return 1;
+            public Arity arity() {
+                return new Arity(1);
             }
 
             @Override
@@ -1917,8 +1916,8 @@ public final class Builtins {
         // this function arity must return -1 to indicate that it can take any number of arguments
         interpreter.globals.define("format", new CallableObject() {
             @Override
-            public int arity() {
-                return -1;
+            public Arity arity() {
+                return new Arity(true);
             }
 
             @Override
@@ -1942,8 +1941,8 @@ public final class Builtins {
         // info(message, title) builtin function: show an information dialog
         interpreter.globals.define("info", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -1963,8 +1962,8 @@ public final class Builtins {
         // warning(message, title) builtin function: show a warning dialog
         interpreter.globals.define("warning", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -1984,8 +1983,8 @@ public final class Builtins {
         // error(message, title) builtin function: show an error dialog
         interpreter.globals.define("error", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -2005,8 +2004,8 @@ public final class Builtins {
         // confirm(message, title) builtin function: show a confirmation dialog
         interpreter.globals.define("confirm", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override
@@ -2025,8 +2024,8 @@ public final class Builtins {
         // input(message, title) builtin function: show an input dialog
         interpreter.globals.define("input", new CallableObject() {
             @Override
-            public int arity() {
-                return 3;
+            public Arity arity() {
+                return new Arity(3);
             }
 
             @Override

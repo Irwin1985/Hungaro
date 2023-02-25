@@ -1,0 +1,17 @@
+"""
+ Global
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-25
+"""
+
+declare lsA = "before"
+println(lsA) # before
+
+lsA = "after"
+println(lsA) # after
+
+# Global variables can be accessed from anywhere in the program
+# and can be modified from anywhere in the program.
+println(lsA = "arg") # arg
+println(lsA) # arg
