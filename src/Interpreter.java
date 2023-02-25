@@ -6,6 +6,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
+
+import javax.swing.JOptionPane;
+
 import java.util.HashMap;
 
 @SuppressWarnings("unchecked")
@@ -1947,6 +1950,112 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     values[i] = stringify(arguments.get(i + 2));
                 }
                 return String.format(format, values);
+            }
+        });
+
+        /*
+        * Dialogs
+        */
+        // info(message, title) builtin function: show an information dialog
+        globals.define("info", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the message
+                // the third argument is the title
+                String message = (String)arguments.get(1);
+                String title = "Information";
+                if (arguments.size() > 2) {
+                    title = (String)arguments.get(2);
+                }
+                JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+        });
+
+        // warning(message, title) builtin function: show a warning dialog
+        globals.define("warning", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the message
+                // the third argument is the title
+                String message = (String)arguments.get(1);
+                String title = "Warning";
+                if (arguments.size() > 2) {
+                    title = (String)arguments.get(2);
+                }
+                JOptionPane.showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE);
+                return null;
+            }
+        });
+
+        // error(message, title) builtin function: show an error dialog
+        globals.define("error", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the message
+                // the third argument is the title
+                String message = (String)arguments.get(1);
+                String title = "Error";
+                if (arguments.size() > 2) {
+                    title = (String)arguments.get(2);
+                }
+                JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+        });
+
+        // confirm(message, title) builtin function: show a confirmation dialog
+        globals.define("confirm", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the message
+                // the third argument is the title
+                String message = (String)arguments.get(1);
+                String title = "Confirmation";
+                if (arguments.size() > 2) {
+                    title = (String)arguments.get(2);
+                }
+                return JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+            }
+        });
+
+        // input(message, title) builtin function: show an input dialog
+        globals.define("input", new CallableObject() {
+            @Override
+            public int arity() {
+                return 3;
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the message
+                // the third argument is the title
+                String message = (String)arguments.get(1);
+                String title = "Input";
+                if (arguments.size() > 2) {
+                    title = (String)arguments.get(2);
+                }
+                return JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE);
             }
         });
     }
