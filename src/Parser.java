@@ -340,9 +340,12 @@ public class Parser {
         Stmt.Block elseBranch = null;
 
         // then branch
-        do {
+        while (!check(TokenType.ELSE) && !check(TokenType.END) && !isAtEnd()) {
             thenStmt.add(declaration());
-        } while (!check(TokenType.ELSE) && !check(TokenType.END) && !isAtEnd());
+        }
+        // do {
+        //     thenStmt.add(declaration());
+        // } while (!check(TokenType.ELSE) && !check(TokenType.END) && !isAtEnd());
         Stmt.Block thenBranch = new Stmt.Block(thenStmt);
         
         // else branch
@@ -887,13 +890,13 @@ public class Parser {
             eatLeftParen = false;
             className = expression();
         } else {
-            className = new Expr.Variable(name);
+            // name.lexeme must be a valid class name
+            if (name.category != Category.GLOBAL_CLASS && name.category != Category.LOCAL_CLASS) {
+                error(name, "Invalid class name.");
+            }
+            className = new Expr.Literal(name);
         }
 
-        // name.lexeme must be a valid class name
-        // if (name.category != Category.GLOBAL_CLASS && name.category != Category.LOCAL_CLASS) {
-        //     error(name, "Invalid class name.");
-        // }
 
         // Expr.Variable className = new Expr.Variable(name);
         if (eatLeftParen)

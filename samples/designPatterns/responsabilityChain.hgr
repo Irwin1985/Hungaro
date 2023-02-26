@@ -1,0 +1,120 @@
+"""
+ Chain of Responsibility Pattern
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+#-------------------------------------------#
+# Abstraction class
+#-------------------------------------------#
+declare lcBase
+    nBalance = 0.0
+    nRate = 0.0
+    nPeriod = 0
+    sType = ""
+    sHandler = "lcCalculateInterest"
+
+    fGetInterestAmount
+        declare loHandler = new object(sHandler)
+        return loHandler.fCalculateInterest(nBalance, nRate, nPeriod, sType)
+    end
+end
+
+#-------------------------------------------#
+# "Handler" classes
+#-------------------------------------------#
+declare lcCalculateInterest
+    sCanhandle = ""
+    sSuccessor = ""
+    oSuccessor = null
+
+    fCalculateInterest(pnBalance, pnRate, pnPeriod, psType)
+        if sCanhandle == psType
+            # virtual
+        else
+            oSuccessor = new object(sSuccessor)
+            return oSuccessor.fCalculateInterest(pnBalance, pnRate, pnPeriod, psType)
+        end
+    end
+end
+
+#-------------------------------------------#
+# Implementations classes
+#-------------------------------------------#
+declare lcSimple as lcCalculateInterest
+    sCanhandle = "simple"
+    sSuccessor = "lcQuarterly"
+
+    fCalculateInterest(pnBalance, pnRate, pnPeriod, psType)
+        declare lnInterest = 0.0
+        if sCanhandle == psType
+            lnInterest = pnBalance * ((pnRate / 100) / 365) * pnPeriod
+        else
+            oSuccessor = new object(sSuccessor)
+            lnInterest = oSuccessor.fCalculateInterest(pnBalance, pnRate, pnPeriod, psType)
+        end
+        return lnInterest
+    end
+end
+
+declare lcQuarterly as lcCalculateInterest
+    sCanhandle = "quarterly"
+    sSuccessor = "lcMonthly"
+
+    fCalculateInterest(pnBalance, pnRate, pnPeriod, psType)
+        declare lnInterest = 0.0
+        if sCanhandle == psType
+            for lnI = 1 to pnPeriod
+                lnInterest += (pnBalance + lnInterest) * ((pnRate / 100) / 4)
+            end
+        else
+            oSuccessor = new object(sSuccessor)
+            lnInterest = oSuccessor.fCalculateInterest(pnBalance, pnRate, pnPeriod, psType)
+        end
+        return lnInterest
+    end
+end
+
+declare lcMonthly as lcCalculateInterest
+    sCanhandle = "monthly"
+    sSuccessor = "lcDaily"
+
+    fCalculateInterest(pnBalance, pnRate, pnPeriod, psType)
+        declare lnInterest = 0.0
+        if sCanhandle == psType
+            for lnI = 1 to pnPeriod
+                lnInterest += (pnBalance + lnInterest) * ((pnRate / 100) / 12)
+            end
+        else
+            oSuccessor = new object(sSuccessor)
+            lnInterest = oSuccessor.fCalculateInterest(pnBalance, pnRate, pnPeriod, psType)
+        end
+        return lnInterest
+    end
+end
+
+declare lcDaily as lcCalculateInterest
+    sCanhandle = "daily"
+    sSuccessor = "" # no successor
+
+    fCalculateInterest(pnBalance, pnRate, pnPeriod, psType)
+        declare lnInterest = 0.0
+        if sCanhandle == psType
+            for lnI = 1 to pnPeriod
+                lnInterest += (pnBalance + lnInterest) * ((pnRate / 100) / 365)
+            end        
+        end
+        return lnInterest
+    end
+end
+
+#-------------------------------------------#
+# Client
+#-------------------------------------------#
+declare loAccount = new object("lcBase")
+loAccount.nBalance = 1000.0
+loAccount.nRate = 5.0
+loAccount.nPeriod = 365
+loAccount.sType = "daily"
+println(loAccount.fGetInterestAmount())

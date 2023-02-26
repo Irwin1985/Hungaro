@@ -54,6 +54,10 @@ public final class Builtins {
                 }
                 return interpreter.stringify(arguments.get(0));
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // object type builtin function: return the name of the Environment
@@ -70,6 +74,10 @@ public final class Builtins {
                     return env.name;
                 }
                 return "Object";
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
     }
@@ -99,6 +107,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // array indexOf builtin function
@@ -116,6 +128,10 @@ public final class Builtins {
                     return (double)array.indexOf(arguments.get(1));
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -135,6 +151,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // array contains builtin function
@@ -153,6 +173,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // array isEmpty builtin function
@@ -170,6 +194,10 @@ public final class Builtins {
                     return array.isEmpty();
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -226,6 +254,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // array reverse builtin function
@@ -245,6 +277,10 @@ public final class Builtins {
                     env.define("value", array);
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -268,6 +304,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // array last() builtin function
@@ -289,6 +329,10 @@ public final class Builtins {
                     return array.get(array.size() - 1);
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -317,6 +361,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // array removeAt() builtin function
@@ -343,6 +391,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // array insertAt() builtin function
@@ -364,6 +416,10 @@ public final class Builtins {
                     array.add((int)(double)(Double)arguments.get(1), arguments.get(2));
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         }); 
         
@@ -388,6 +444,10 @@ public final class Builtins {
                     return (double)count;
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
         
@@ -418,6 +478,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });        
 
         // array push builtin function: eg. array.push(1)
@@ -435,6 +499,10 @@ public final class Builtins {
                     array.add(arguments.get(1));
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -454,6 +522,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // array len builtin function
@@ -471,6 +543,10 @@ public final class Builtins {
                     return Double.valueOf(array.size());
                 }
                 return 0.0;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -496,6 +572,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // array set builtin function
@@ -519,6 +599,10 @@ public final class Builtins {
                     }                    
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -545,6 +629,10 @@ public final class Builtins {
                     }
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -573,6 +661,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // array shuffle builtin function
@@ -593,6 +685,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // array equals builtin function: the argument must be an array
@@ -612,6 +708,10 @@ public final class Builtins {
                     return array1.equals(array2);
                 }
                 return false;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -637,6 +737,10 @@ public final class Builtins {
                 }
                 return 0.0;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // array avg() builtin function: the argument must be an array of numbers
@@ -660,6 +764,10 @@ public final class Builtins {
                     return sum / array.size();
                 }
                 return 0.0;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -688,6 +796,10 @@ public final class Builtins {
                 }
                 return 0.0;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // array max() builtin function: the argument must be an array of numbers
@@ -715,6 +827,10 @@ public final class Builtins {
                 }
                 return 0.0;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });  
         
         // array clone() builtin function: the argument must be an array
@@ -733,6 +849,10 @@ public final class Builtins {
                     return interpreter.makeObject(clone, interpreter.arrayEnv, "Array");
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -753,6 +873,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
     }
 
@@ -771,6 +895,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 return (double)((String)arguments.get(0)).length();
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string slice builtin function
@@ -788,6 +916,10 @@ public final class Builtins {
                 int end = ((Double)arguments.get(2)).intValue();
                 return str.substring(start, end);
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string find builtin function
@@ -803,6 +935,10 @@ public final class Builtins {
                 String substr = (String)arguments.get(1);
                 return (double)str.indexOf(substr);
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string contains builtin function
@@ -817,6 +953,10 @@ public final class Builtins {
                 String str = (String)arguments.get(0);
                 String substr = (String)arguments.get(1);
                 return str.contains(substr);
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -834,6 +974,10 @@ public final class Builtins {
                 String newstr = (String)arguments.get(2);
                 return str.replace(substr, newstr);
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string split builtin function
@@ -849,6 +993,10 @@ public final class Builtins {
                 String substr = (String)arguments.get(1);
                 return interpreter.makeObject(java.util.Arrays.asList(str.split(substr)), interpreter.arrayEnv, "Array");
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string trim builtin function
@@ -862,6 +1010,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 String str = (String)arguments.get(0);
                 return str.trim();
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -877,6 +1029,10 @@ public final class Builtins {
                 String str = (String)arguments.get(0);
                 return str.replaceAll("^\\s+", "");
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string rtrim builtin function
@@ -890,6 +1046,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 String str = (String)arguments.get(0);
                 return str.replaceAll("\\s+$", "");
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -907,6 +1067,10 @@ public final class Builtins {
                 String pad = (String)arguments.get(2);
                 return String.format("%1$" + len + "s", str).replace(' ', pad.charAt(0));
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string padr builtin function: pad right
@@ -923,6 +1087,10 @@ public final class Builtins {
                 String pad = (String)arguments.get(2);
                 return String.format("%1$-" + len + "s", str).replace(' ', pad.charAt(0));
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });        
 
         // string toUpper builtin function
@@ -937,6 +1105,10 @@ public final class Builtins {
                 String str = (String)arguments.get(0);
                 return str.toUpperCase();
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string toLower builtin function
@@ -950,6 +1122,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 String str = (String)arguments.get(0);
                 return str.toLowerCase();
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -969,6 +1145,10 @@ public final class Builtins {
                     return 0.0;
                 }
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });        
 
         // string reverse builtin function
@@ -982,6 +1162,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 String str = (String)arguments.get(0);
                 return new StringBuilder(str).reverse().toString();
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });  
         
@@ -1003,6 +1187,10 @@ public final class Builtins {
                     return null;
                 }
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string startsWith builtin function: return true if the string starts with the given substring
@@ -1018,6 +1206,10 @@ public final class Builtins {
                 String substr = (String)arguments.get(1);
                 return str.startsWith(substr);
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string endsWith builtin function: return true if the string ends with the given substring
@@ -1032,6 +1224,10 @@ public final class Builtins {
                 String str = (String)arguments.get(0);
                 String substr = (String)arguments.get(1);
                 return str.endsWith(substr);
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1052,6 +1248,10 @@ public final class Builtins {
                 }
                 return sb.toString();
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string indexOf builtin function: return the index of the first occurrence of the given substring
@@ -1067,6 +1267,10 @@ public final class Builtins {
                 String substr = (String)arguments.get(1);
                 return (double)str.indexOf(substr);
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string lastIndexOf builtin function: return the index of the last occurrence of the given substring
@@ -1081,6 +1285,10 @@ public final class Builtins {
                 String str = (String)arguments.get(0);
                 String substr = (String)arguments.get(1);
                 return (double)str.lastIndexOf(substr);
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1103,6 +1311,10 @@ public final class Builtins {
                 }
                 return (double)count;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string isAlpha() builtin function: return true if the string contains only alphabetic characters
@@ -1116,6 +1328,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 String str = (String)arguments.get(0);
                 return str.matches("[a-zA-Z]+");
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1131,6 +1347,10 @@ public final class Builtins {
                 String str = (String)arguments.get(0);
                 return str.matches("[a-zA-Z0-9]+");
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string isNumeric() builtin function: return true if the string contains only numeric characters
@@ -1144,6 +1364,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 String str = (String)arguments.get(0);
                 return str.matches("[0-9]+");
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1159,6 +1383,10 @@ public final class Builtins {
                 String str = (String)arguments.get(0);
                 return str.matches("\\s+");
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string isUpper() builtin function: return true if the string contains only uppercase characters
@@ -1173,6 +1401,10 @@ public final class Builtins {
                 String str = (String)arguments.get(0);
                 return str.matches("[A-Z]+");
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // string isLower() builtin function: return true if the string contains only lowercase characters
@@ -1186,6 +1418,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 String str = (String)arguments.get(0);
                 return str.matches("[a-z]+");
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });        
     }
@@ -1210,6 +1446,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // map set builtin function
@@ -1227,6 +1467,10 @@ public final class Builtins {
                     map.put(arguments.get(1), arguments.get(2));
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1246,6 +1490,10 @@ public final class Builtins {
                 }
                 return 0.0;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // map keys builtin function
@@ -1263,6 +1511,10 @@ public final class Builtins {
                     return interpreter.makeObject(new ArrayList<Object>(map.keySet()), interpreter.arrayEnv, "Array");
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1282,6 +1534,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // map contains builtin function
@@ -1299,6 +1555,10 @@ public final class Builtins {
                     return map.containsKey(arguments.get(1));
                 }
                 return false;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1318,6 +1578,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // map clear builtin function
@@ -1335,6 +1599,10 @@ public final class Builtins {
                     map.clear();
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1354,6 +1622,10 @@ public final class Builtins {
                 }
                 return true;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // map clone builtin function
@@ -1371,6 +1643,10 @@ public final class Builtins {
                     return interpreter.makeObject(new HashMap<Object, Object>(map), interpreter.mapEnv, "Map");
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });        
     }
@@ -1397,6 +1673,10 @@ public final class Builtins {
                 }
                 return new Arity();
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         }); 
     }
 
@@ -1415,6 +1695,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {                
                 return interpreter.makeObject(new Date(), interpreter.dateEnv, "Date");
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
         // readln builtin function: read a line from the console
         interpreter.globals.define("readln", new CallableObject() {
@@ -1428,6 +1712,10 @@ public final class Builtins {
                 // the second argument is the prompt
                 System.out.print(arguments.get(1));                
                 return Hungaro.readLine();
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1449,6 +1737,10 @@ public final class Builtins {
                     }
                 }
                 return arg;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1473,6 +1765,10 @@ public final class Builtins {
                 }
                 return "u";
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // print builtin function: print a string to the console
@@ -1493,6 +1789,10 @@ public final class Builtins {
 
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // println builtin function: print a string to the console with a newline
@@ -1511,6 +1811,10 @@ public final class Builtins {
                 }
 
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1531,6 +1835,10 @@ public final class Builtins {
                 }
                 return Double.valueOf(0);                
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });   
         
         // space() builtin function: return a string of spaces
@@ -1545,6 +1853,10 @@ public final class Builtins {
                 // the second argument is the number of spaces
                 // but we need to convert it to an integer
                 return " ".repeat((int)(double)arguments.get(1));
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1567,6 +1879,10 @@ public final class Builtins {
                 }
                 return String.valueOf((char)0);                
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
         
 
@@ -1581,6 +1897,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 // the second argument is the number
                 return Math.sin((double)arguments.get(1));
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });  
         
@@ -1604,6 +1924,10 @@ public final class Builtins {
                 }            
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
         
         // setConsoleBackColor() builtin function: set the console background color
@@ -1626,6 +1950,10 @@ public final class Builtins {
                 }            
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         }); 
         
         // assert() builtin function: assert that a condition is true
@@ -1646,6 +1974,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // rand(from, to) builtin function: return a random number between from and to
@@ -1662,6 +1994,10 @@ public final class Builtins {
                 // return the integer part of the random number
                 return Math.floor(Math.random() * ((double)arguments.get(2) - (double)arguments.get(1) + 1) + (double)arguments.get(1));                
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // abs() builtin function: return the absolute value of a number
@@ -1676,6 +2012,10 @@ public final class Builtins {
                 // the second argument is the number
                 return Math.abs((double)arguments.get(1));
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // sqrt() builtin function: return the square root of a number
@@ -1689,6 +2029,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 // the second argument is the number
                 return Math.sqrt((double)arguments.get(1));
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1705,6 +2049,10 @@ public final class Builtins {
                 // the third argument is the power
                 return Math.pow((double)arguments.get(1), (double)arguments.get(2));
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // round() builtin function: return the rounded value of a number
@@ -1718,6 +2066,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 // the second argument is the number
                 return Math.round((double)arguments.get(1));
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1733,6 +2085,10 @@ public final class Builtins {
                 // the second argument is the number
                 return Math.floor((double)arguments.get(1));
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
         
         // ceil() builtin function: return the ceiling value of a number
@@ -1746,6 +2102,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 // the second argument is the number
                 return Math.ceil((double)arguments.get(1));
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1762,6 +2122,10 @@ public final class Builtins {
                 // the third argument is the second number
                 return Math.min((double)arguments.get(1), (double)arguments.get(2));
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // max() builtin function: return the maximum value of two numbers
@@ -1776,6 +2140,10 @@ public final class Builtins {
                 // the second argument is the first number
                 // the third argument is the second number
                 return Math.max((double)arguments.get(1), (double)arguments.get(2));
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1793,6 +2161,10 @@ public final class Builtins {
                 // the fourth argument is the second number
                 return ((double)arguments.get(1) >= (double)arguments.get(2) && (double)arguments.get(1) <= (double)arguments.get(3));
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
         
         // seconds() builtin function: return the number of seconds since the beginning of the program
@@ -1805,6 +2177,10 @@ public final class Builtins {
             @Override
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 return (double)System.currentTimeMillis() / 1000.0;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1819,6 +2195,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 return (double)System.currentTimeMillis() / 1000.0;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // tack() builtin function: takes a tick() value and returns the number of seconds since that tick
@@ -1832,6 +2212,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 // the second argument is the tick value
                 return (double)System.currentTimeMillis() / 1000.0 - (double)arguments.get(1);
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1852,6 +2236,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // file() builtin function: check if a file exists
@@ -1865,6 +2253,10 @@ public final class Builtins {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 // the second argument is the file name
                 return new File((String)arguments.get(1)).exists();
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
         
@@ -1884,6 +2276,10 @@ public final class Builtins {
                     e.printStackTrace();
                 }
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1907,6 +2303,10 @@ public final class Builtins {
                 }
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
         
         // curdir() builtin function: return the current directory
@@ -1919,6 +2319,10 @@ public final class Builtins {
             @Override
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 return System.getProperty("user.dir");
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -1944,6 +2348,10 @@ public final class Builtins {
                 }
                 return String.format(format, values);
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         /*
@@ -1968,6 +2376,10 @@ public final class Builtins {
                 JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // warning(message, title) builtin function: show a warning dialog
@@ -1988,6 +2400,10 @@ public final class Builtins {
                 }
                 JOptionPane.showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE);
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -2010,6 +2426,10 @@ public final class Builtins {
                 JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
                 return null;
             }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
         });
 
         // confirm(message, title) builtin function: show a confirmation dialog
@@ -2029,6 +2449,10 @@ public final class Builtins {
                     title = (String)arguments.get(2);
                 }
                 return JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });
 
@@ -2050,7 +2474,34 @@ public final class Builtins {
                 }
                 return JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE);
             }
-        });        
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+        
+        // iif(condition, trueValue, falseValue) builtin function: return trueValue if condition is true, falseValue otherwise
+        interpreter.globals.define("iif", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(4);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                final Object condition = interpreter.evaluate((Expr)arguments.get(1));
+                if (interpreter.isTruthy(condition)) {
+                    return interpreter.evaluate((Expr)arguments.get(2));
+                } else {
+                    return interpreter.evaluate((Expr)arguments.get(3));
+                }                
+            }
+            
+            @Override
+            public boolean evaluateArguments() {
+                return false;
+            }
+        });
     }   
 
     /***********************************************************************
@@ -2075,6 +2526,10 @@ public final class Builtins {
                     // return ((Wrapper)wrappedObj).get(propertyName);
                 }                
                 return null;
+            }
+            @Override
+            public boolean evaluateArguments() {
+                return true;
             }
         });        
     }

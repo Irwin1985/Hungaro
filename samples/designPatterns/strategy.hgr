@@ -1,0 +1,97 @@
+"""
+ Strategy pattern
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+#-------------------------------------------#
+# Context class
+#-------------------------------------------#
+declare lcFinancialCalculator
+    nBalance = 0.00
+    nRate = 0.00
+    nPeriod = 0
+    sType = ""
+
+    fGetInterestAmount
+        declare loStrategy = new object("lc" & sType)
+        return loStrategy.fCalculateInterest(nBalance, nRate, nPeriod)
+    end
+end
+
+#-------------------------------------------#
+# Strategy Classes
+#-------------------------------------------#
+
+# Interface class
+declare lcCalculateInterest
+    fCalculateInterest        
+    end
+end
+
+# Implementation classes (Concrete Strategies)
+declare lcSimple as lcCalculateInterest
+    fCalculateInterest(pnBalance, pnRate, pnPeriod)
+        declare lnInterest = pnBalance * ((pnRate / 100) / 365) * pnPeriod
+        return lnInterest
+    end
+end
+
+declare lcQuarterly as lcCalculateInterest
+    fCalculateInterest(pnBalance, pnRate, pnPeriod)
+        declare lnInterest = 0.0
+        for lnI = 1 to pnPeriod
+            lnInterest += (pnBalance + lnInterest) * ((pnRate / 100) / 4)
+        end
+        return lnInterest
+    end
+end
+
+declare lcMonthly as lcCalculateInterest
+    fCalculateInterest(pnBalance, pnRate, pnPeriod)
+        declare lnInterest = 0.0
+        for lnI = 1 to pnPeriod
+            lnInterest += (pnBalance + lnInterest) * ((pnRate / 100) / 12)
+        end
+        return lnInterest
+    end
+end
+
+declare lcDaily as lcCalculateInterest
+    fCalculateInterest(pnBalance, pnRate, pnPeriod)
+        declare lnInterest = 0.0
+        for lnI = 1 to pnPeriod
+            lnInterest += (pnBalance + lnInterest) * ((pnRate / 100) / 365)
+        end
+        return lnInterest
+    end
+end
+
+#-------------------------------------------#
+# Client code
+#-------------------------------------------#
+declare loCalculator = new object("lcFinancialCalculator")
+loCalculator.nBalance = 1000.00
+loCalculator.nRate = 5.00
+loCalculator.nPeriod = 365
+
+# Simple interest
+loCalculator.sType = "Simple"
+println(loCalculator.fGetInterestAmount())
+
+# Quarterly interest
+loCalculator.sType = "Quarterly"
+println(loCalculator.fGetInterestAmount())
+
+# Monthly interest
+loCalculator.sType = "Monthly"
+println(loCalculator.fGetInterestAmount())
+
+# Daily interest
+loCalculator.sType = "Daily"
+println(loCalculator.fGetInterestAmount())
+
+#-------------------------------------------#
+# End
+#-------------------------------------------#

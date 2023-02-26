@@ -1,7 +1,6 @@
 import java.util.List;
 
-public interface CallableObject {
-    
+public interface CallableObject {    
     // Arity class: this will be used to determine the number of arguments
     public static class Arity {
         final int required;
@@ -33,4 +32,5 @@ public interface CallableObject {
     }
     Arity arity();
     Object call(Interpreter interpreter, List<Object> arguments);
+    boolean evaluateArguments();
 }

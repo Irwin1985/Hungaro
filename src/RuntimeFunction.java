@@ -99,5 +99,9 @@ public class RuntimeFunction implements CallableObject {
         // }
 
     }
-    
+
+    @Override
+    public boolean evaluateArguments() {
+        return true;
+    }        
 }

@@ -46,7 +46,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         stmt.accept(this);
     }
 
-    private Object evaluate(Expr expr) {
+    public Object evaluate(Expr expr) {
         return expr.accept(this);
     }
 
@@ -133,7 +133,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return a.equals(b);
     }
 
-    private boolean isTruthy(Object object) {
+    public boolean isTruthy(Object object) {
         if (object == null) return false;
         if (object instanceof Boolean) return (Boolean)object;
         return true;
@@ -152,22 +152,51 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitCallExpr(Expr.Call expr) {
         Object callee = evaluate(expr.callee);
-        List<Object> arguments = new ArrayList<Object>();
-        int firstArg = 0;
-        for (Expr argument : expr.arguments) {            
-            Object evaluatedArgument = evaluate(argument);
-            // if the first argument is an instance of RuntimeFunction then 
-            // we need to create an object with the functionEnv as the environment            
-            if (firstArg == 0 && evaluatedArgument instanceof RuntimeFunction) {
-                evaluatedArgument = makeObject(evaluatedArgument, functionEnv, "Function");
-            }
-            firstArg++;
-            arguments.add(evaluatedArgument);
-        }
+        List<Object> arguments = new ArrayList<Object>();        
+        // int firstArg = 0;
+        // for (Expr argument : expr.arguments) {            
+        //     Object evaluatedArgument = evaluate(argument);
+        //     // if the first argument is an instance of RuntimeFunction then 
+        //     // we need to create an object with the functionEnv as the environment            
+        //     if (firstArg == 0 && evaluatedArgument instanceof RuntimeFunction) {
+        //         evaluatedArgument = makeObject(evaluatedArgument, functionEnv, "Function");
+        //     }
+        //     firstArg++;
+        //     arguments.add(evaluatedArgument);
+        // }
         if (!(callee instanceof CallableObject)) {
             throw new RuntimeError(expr.paren, "Can only call functions, classes and objects.");
         }        
-        CallableObject function = (CallableObject)callee;       
+        CallableObject function = (CallableObject)callee;
+
+        if (function.evaluateArguments()) {
+            // first argument is the poThis object
+            Object evaluatedArgument = evaluate(expr.arguments.get(0));
+            arguments.add(evaluatedArgument);
+            // evaluate and add the rest of the arguments
+            for (int i = 1; i < expr.arguments.size(); i++) {
+                arguments.add(evaluate(expr.arguments.get(i)));
+            }
+            // int firstArg = 0;
+            // for (Expr argument : expr.arguments) {            
+            //     Object evaluatedArgument = evaluate(argument);
+            //     // if the first argument is an instance of RuntimeFunction then 
+            //     // we need to create an object with the functionEnv as the environment            
+            //     if (firstArg == 0 && evaluatedArgument instanceof RuntimeFunction) {
+            //         evaluatedArgument = makeObject(evaluatedArgument, functionEnv, "Function");
+            //     }
+            //     firstArg++;
+            //     arguments.add(evaluatedArgument);
+            // }        
+        } else {
+            // we evaluate just the first argument which is the poThis object            
+            Object evaluatedArgument = evaluate(expr.arguments.get(0));
+            arguments.add(evaluatedArgument);
+            // we add the rest of the arguments as is
+            for (int i = 1; i < expr.arguments.size(); i++) {
+                arguments.add(expr.arguments.get(i));
+            }
+        }
 
         return function.call(this, arguments);
     }
@@ -313,6 +342,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
         // so we need to get the class environment first
         final String className = (String)result;
+        if (className.length() < 2) {
+            String message = "Invalid class name";
+            throw new RuntimeError(expr.name.token, message);
+        }
+
         final String classScope = className.substring(0, 2);
         if (classScope.equals("gc") && classScope.equals("lc")) {
             String message = "Class name must start with `gc` or `lc`.";

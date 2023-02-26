@@ -1,0 +1,38 @@
+"""
+ Bridge pattern
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+#-------------------------------------------#
+# Abstraction class
+#-------------------------------------------#
+
+declare lcCalculateAPY
+    fCalculateAPY(pnRate, pnPeriod)
+        declare lnAPY = (1 + ((pnRate / 100) / pnPeriod)) ^ pnPeriod - 1
+        return round(lnAPY, 2)
+    end
+end
+
+declare lcFinancialCalculator
+    nBalance = 0.00
+    nRate = 0.00
+    nPeriod = 0
+    sType = ""
+
+    fGetAPY
+        declare loBridge = new lcCalculateAPY()
+        return loBridge.fCalculateAPY(nRate, nPeriod)
+    end
+end
+
+#-------------------------------------------#
+# Client code
+#-------------------------------------------#
+declare loCalculator = new lcFinancialCalculator()
+loCalculator.nBalance = 1000.00
+loCalculator.nRate = 5.00
+loCalculator.nPeriod = 12
+println(loCalculator.fGetAPY())

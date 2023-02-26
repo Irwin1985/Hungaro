@@ -1,14 +1,7 @@
 """
- Defer example
+ Mediator Pattern
 
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
  Date: 2023-02-26
 """
 
-try
-    lnA = 10
-catch
-    println("ERROR: " & loEx.message)
-finally
-    println("finally")
-end
