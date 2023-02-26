@@ -33,7 +33,7 @@ public class RuntimeFunction implements CallableObject {
         // if we have a variadic function or optional parameters, we need to create a new environment
         if ((!arity.variadic) && (arity.optional == 0)) {
             if (arguments.size() != arity.required) {                
-                throw new RuntimeError(declaration.name, "Expected " + (arity.required-1) + " arguments but got " + arguments.size() + ".");
+                throw new RuntimeError(declaration.name, "Expected " + (arity.required-1) + " arguments but got " + (arguments.size()-1) + ".");
             }
             activationEnv = new Environment(closure, "function call of " + declaration.name.lexeme);
             // load arguments into environment

@@ -1,0 +1,12 @@
+"""
+ Default
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcFoo
+end
+
+declare loFoo = new lcFoo()
+println(loFoo) # 'Instance of lcFoo'

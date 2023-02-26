@@ -1,0 +1,15 @@
+"""
+ Extra arguments
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcFoo
+    pInit(pnA, pnB)
+        nA = pnA
+        nB = pnB
+    end
+end
+
+declare loFoo = new lcFoo(1, 2, 3, 4) # Error: Too many arguments

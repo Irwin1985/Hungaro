@@ -1,0 +1,23 @@
+"""
+ Call pInit() outside of the class definition
+
+ Inside the class definition you must use pInit()
+ but outside of the class definition you can use
+ lpInit() or gpInit() for local and global procedures
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcFoo
+    pInit(psArg)
+        println("lcFoo.pInit(" & psArg & ")")
+        sField = "init"
+    end
+end
+
+declare lpInit
+    println("Not initializer")
+end
+
+lpInit() # Not initializer

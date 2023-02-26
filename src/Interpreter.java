@@ -354,6 +354,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         CallableObject constructor = (CallableObject)classEnv.lookup("pInit");
         if (constructor != null) {
             constructor.call(this, arguments);
+        } else {
+            if (arguments.size() > 1) {
+                String message = "Expected 0 arguments but got " + (arguments.size() - 1) + ".";
+                throw new RuntimeError(expr.name.name, message);
+            }
         }
 
         // finally we can return the instance
@@ -776,6 +781,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 return stringify(((Environment)object).lookup("key")) + ": " + stringify(((Environment)object).lookup("value"));
             } 
             else if (((Environment)object).name.startsWith("Class")) {
+                return ((Environment)object).name;
+            }
+            else if (((Environment)object).name.startsWith("Instance of")) {
                 return ((Environment)object).name;
             }
             return stringify(((Environment)object).lookup("value"));           

@@ -1,0 +1,8 @@
+"""
+ Line at eof
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+println("ok") # expected: ok
+# comment
