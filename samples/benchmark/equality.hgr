@@ -1,0 +1,36 @@
+"""
+ Equality
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-25
+"""
+
+declare lnI = 0
+declare lnLoopStart = tick()
+
+# NOTE: the character | is used to separate the expressions
+while lnI < 10000000
+    lnI = lnI + 1
+    1    | 1     | 1     | 2     | 1     | null  | 1     | "str"  | 1    | true | null | null | null
+    1    | null  | "str" | null  | true  | true  | true  | true   | 1    | true | false
+    true | "str" | true  | null  | "str" | "str" | "str" | "stru" | "str"
+    1    | "str" | null  | "str" | true
+end
+
+declare lnLoopTime = tack(lnLoopStart)
+
+declare lnStart = tick()
+
+lnI = 0
+while lnI < 10000000
+  lnI = lnI + 1
+  1 == 1        | 1 == 2        | 1 == null         | 1 == "str"
+  1 == true     | null == null  | null == 1         | null == "str"
+  null == true  | true == true  | true == 1         | true == false
+  true == "str" | true == null  | "str" == "str"    | "str" == "stru"
+  "str" == 1    | "str" == null | "str" == true
+end
+
+declare lnElapsed = tack(lnStart)
+
+println("loop: " & lnLoopTime & " elapsed: " & lnElapsed & " equals: " & (lnElapsed - lnLoopTime))

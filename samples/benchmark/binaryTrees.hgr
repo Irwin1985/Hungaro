@@ -1,0 +1,68 @@
+"""
+ Binary Tree
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-25
+"""
+
+declare lcTree
+    pInit(pnItem, pnDepth)
+        nItem = pnItem
+        nDepth = pnDepth
+        if pnDepth > 0
+            declare lnItem2 = pnItem + pnItem
+            pnDepth -= 1
+            oLeft = new lcTree(lnItem2-1, pnDepth)
+            oRight = new lcTree(lnItem2, pnDepth)
+        else
+            oLeft = null
+            oRight = null
+        end
+    end
+
+    fCheck
+        if oLeft == null
+            return nItem        
+        end
+        return nItem + oLeft.fCheck() - oRight.fCheck()
+    end
+end
+
+declare lnMinDepth = 4
+declare lnMaxDepth = 14
+declare lnStretchDepth = lnMaxDepth + 1
+
+declare lnStart = tick()
+
+println("stretch tree of depth " & lnStretchDepth & "\t check: " & new lcTree(0, lnStretchDepth).fCheck())
+
+declare loLongLivedTree = new lcTree(0, lnMaxDepth)
+
+# iterations = 2 ^ lnMaxDepth
+declare lnIterations = 1
+declare lnD = 0
+
+while lnD < lnMaxDepth
+    lnIterations *= 2
+    lnD += 1
+end
+
+declare lnDepth = lnMinDepth
+
+while lnDepth < lnStretchDepth
+    declare lnCheck = 0
+    declare lnI = 1
+    while lnI <= lnIterations
+        lnCheck += new lcTree(lnI, lnDepth).fCheck() + new lcTree(-lnI, lnDepth).fCheck()
+        lnI += 1
+    end
+
+    println("num trees: " & lnIterations * 2 & "\t depth: " & lnDepth & "\t check: " & lnCheck)
+
+    lnIterations = int(lnIterations / 4)
+    lnDepth += 2
+end
+
+println("long lived tree of depth " & lnMaxDepth & "\t check: " & loLongLivedTree.fCheck())
+
+println("elapsed: " & tack(lnStart))

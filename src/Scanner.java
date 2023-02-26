@@ -51,6 +51,9 @@ public class Scanner {
         // New line: emmit a ';'
         new Spec(Pattern.compile("^\\n+"), TokenType.SEMICOLON, Category.GENERIC),
 
+        // '|' operator also emit a ';'
+        new Spec(Pattern.compile("^\\|"), TokenType.SEMICOLON, Category.GENERIC),
+
         // Numbers
         new Spec(Pattern.compile("^\\d+(\\.\\d+)?"), TokenType.NUMBER, Category.LITERAL),
 

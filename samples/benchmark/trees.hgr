@@ -1,0 +1,37 @@
+"""
+ Class Tree
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcTree
+    pInit(pnDepth)
+        nDepth = pnDepth
+        if nDepth > 0
+            oA = new lcTree(nDepth - 1)
+            oB = new lcTree(nDepth - 1)
+            oC = new lcTree(nDepth - 1)
+            oD = new lcTree(nDepth - 1)
+            oE = new lcTree(nDepth - 1)
+        end
+    end
+
+    fWalk
+        if nDepth == 0
+            return 0
+        end
+        return nDepth + oA.fWalk() + oB.fWalk() + oC.fWalk() + oD.fWalk() + oE.fWalk()
+    end
+end
+
+declare loTree = new lcTree(8)
+declare lnStart = tick()
+
+for lnI = 0 to 100
+    if loTree.fWalk() != 122068
+        println("Error")
+    end
+end
+
+println("Time: " & tack(lnStart) & " ms")

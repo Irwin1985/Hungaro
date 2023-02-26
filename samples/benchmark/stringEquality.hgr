@@ -1,0 +1,213 @@
+"""
+ Properties: String equality
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lsA1 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
+        lsA2 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
+        lsA3 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa3",
+        lsA4 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa4",
+        lsA5 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa5",
+        lsA6 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6",
+        lsA7 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7",
+        lsA8 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa8"
+
+declare lnI = 0, lnLoopStart = tick()
+
+while lnI < 100000
+    lnI += 1
+
+    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
+    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
+    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
+    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
+    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
+    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
+    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
+    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+
+    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
+    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
+    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
+    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
+    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
+    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
+    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
+    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+
+    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
+    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
+    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
+    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
+    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
+    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
+    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
+    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+
+    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
+    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
+    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
+    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
+    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
+    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
+    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
+    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+
+    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
+    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
+    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
+    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
+    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
+    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
+    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
+    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+
+    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
+    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
+    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
+    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
+    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
+    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
+    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
+    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+
+    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
+    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
+    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
+    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
+    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
+    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
+    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
+    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+
+    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
+    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
+    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
+    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
+    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
+    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
+    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
+    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+
+    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
+    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
+    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
+    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
+    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
+    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
+    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
+    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+
+    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
+    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
+    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
+    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
+    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
+    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
+    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
+    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+end
+
+declare lnLoopTime = tack(lnLoopStart)
+
+declare lnStart = tick()
+lnI = 0
+
+while lnI < 100000
+    lnI += 1
+    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
+    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
+    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
+    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
+    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
+    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
+    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
+    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+
+    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
+    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
+    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
+    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
+    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
+    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
+    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
+    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+
+    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
+    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
+    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
+    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
+    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
+    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
+    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
+    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+
+    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
+    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
+    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
+    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
+    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
+    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
+    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
+    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+
+    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
+    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
+    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
+    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
+    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
+    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
+    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
+    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+
+    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
+    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
+    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
+    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
+    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
+    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
+    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
+    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+
+    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
+    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
+    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
+    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
+    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
+    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
+    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
+    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+
+    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
+    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
+    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
+    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
+    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
+    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
+    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
+    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+
+    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
+    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
+    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
+    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
+    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
+    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
+    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
+    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+
+    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
+    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
+    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
+    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
+    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
+    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
+    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
+    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |    
+end
+
+declare lnElapsed = tack(lnStart)
+
+println("Loop " & lnLoopTime & " elapsed " & lnElapsed & " equal " & (lnElapsed == lnLoopTime))

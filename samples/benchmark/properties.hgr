@@ -1,0 +1,153 @@
+"""
+ Properties: This benchmark stresses both field and method lookup.
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcFoo
+    pInit
+        nField0 = 1  | nField1 = 1  | nField2 = 1  | nField3 = 1  | nField4 = 1  |
+        nField5 = 1  | nField6 = 1  | nField7 = 1  | nField8 = 1  | nField9 = 1  |
+        nField10 = 1 | nField11 = 1 | nField12 = 1 | nField13 = 1 | nField14 = 1 |
+        nField15 = 1 | nField16 = 1 | nField17 = 1 | nField18 = 1 | nField19 = 1 |
+        nField20 = 1 | nField21 = 1 | nField22 = 1 | nField23 = 1 | nField24 = 1 |
+        nField25 = 1 | nField26 = 1 | nField27 = 1 | nField28 = 1 | nField29 = 1 |
+    end
+
+    fMethod0
+        return nField0
+    end
+
+    fMethod1
+        return nField1
+    end
+
+    fMethod2
+        return nField2
+    end
+
+    fMethod3
+        return nField3
+    end
+
+    fMethod4
+        return nField4
+    end
+
+    fMethod5
+        return nField5
+    end
+
+    fMethod6
+        return nField6
+    end
+
+    fMethod7
+        return nField7
+    end
+
+    fMethod8
+        return nField8
+    end
+
+    fMethod9
+        return nField9
+    end
+
+    fMethod10
+        return nField10
+    end
+
+    fMethod11
+        return nField11
+    end
+
+    fMethod12
+        return nField12
+    end
+
+    fMethod13
+        return nField13
+    end
+
+    fMethod14
+        return nField14
+    end
+
+    fMethod15
+        return nField15
+    end
+
+    fMethod16
+        return nField16
+    end
+
+    fMethod17
+        return nField17
+    end
+
+    fMethod18
+        return nField18
+    end
+
+    fMethod19
+        return nField19
+    end
+
+    fMethod20
+        return nField20
+    end
+
+    fMethod21
+        return nField21
+    end
+
+    fMethod22
+        return nField22
+    end
+
+    fMethod23
+        return nField23
+    end
+
+    fMethod24
+        return nField24
+    end
+
+    fMethod25
+        return nField25
+    end
+
+    fMethod26
+        return nField26
+    end
+
+    fMethod27
+        return nField27
+    end
+
+    fMethod28
+        return nField28
+    end
+
+    fMethod29
+        return nField29
+    end    
+end
+
+declare loFoo = new lcFoo()
+declare lnStart = tick()
+declare lnI = 0
+
+while lnI < 500000
+    loFoo.fMethod0()  | loFoo.fMethod1()  | loFoo.fMethod2()  | loFoo.fMethod3()  | loFoo.fMethod4()  |
+    loFoo.fMethod5()  | loFoo.fMethod6()  | loFoo.fMethod7()  | loFoo.fMethod8()  | loFoo.fMethod9()  |
+    loFoo.fMethod10() | loFoo.fMethod11() | loFoo.fMethod12() | loFoo.fMethod13() | loFoo.fMethod14() |
+    loFoo.fMethod15() | loFoo.fMethod16() | loFoo.fMethod17() | loFoo.fMethod18() | loFoo.fMethod19() |
+    loFoo.fMethod20() | loFoo.fMethod21() | loFoo.fMethod22() | loFoo.fMethod23() | loFoo.fMethod24() |
+    loFoo.fMethod25() | loFoo.fMethod26() | loFoo.fMethod27() | loFoo.fMethod28() | loFoo.fMethod29() |
+    lnI += 1
+end
+
+println("Elapsed time: " & tack(lnStart) & " ms")

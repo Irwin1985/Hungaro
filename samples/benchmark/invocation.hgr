@@ -1,0 +1,85 @@
+"""
+ This benchmark stresses just method invocation
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcFoo
+    pMethod0
+    end
+    pMethod1
+    end
+    pMethod2
+    end
+    pMethod3
+    end
+    pMethod4
+    end
+    pMethod5
+    end
+    pMethod6
+    end
+    pMethod7
+    end
+    pMethod8
+    end
+    pMethod9
+    end
+    pMethod10
+    end
+    pMethod11
+    end
+    pMethod12
+    end
+    pMethod13
+    end
+    pMethod14
+    end
+    pMethod15
+    end
+    pMethod16
+    end
+    pMethod17
+    end
+    pMethod18
+    end
+    pMethod19
+    end
+    pMethod20
+    end
+    pMethod21
+    end
+    pMethod22
+    end
+    pMethod23
+    end
+    pMethod24
+    end
+    pMethod25
+    end
+    pMethod26
+    end
+    pMethod27
+    end
+    pMethod28
+    end
+    pMethod29
+    end
+end
+
+declare loFoo = new lcFoo()
+declare lnStart = tick()
+declare lnI = 0
+
+while lnI < 500000
+    loFoo.pMethod0()  | loFoo.pMethod1()  | loFoo.pMethod2()  | loFoo.pMethod3()  | loFoo.pMethod4()  |
+    loFoo.pMethod5()  | loFoo.pMethod6()  | loFoo.pMethod7()  | loFoo.pMethod8()  | loFoo.pMethod9()  |
+    loFoo.pMethod10() | loFoo.pMethod11() | loFoo.pMethod12() | loFoo.pMethod13() | loFoo.pMethod14() |
+    loFoo.pMethod15() | loFoo.pMethod16() | loFoo.pMethod17() | loFoo.pMethod18() | loFoo.pMethod19() |
+    loFoo.pMethod20() | loFoo.pMethod21() | loFoo.pMethod22() | loFoo.pMethod23() | loFoo.pMethod24() |
+    loFoo.pMethod25() | loFoo.pMethod26() | loFoo.pMethod27() | loFoo.pMethod28() | loFoo.pMethod29() |
+    lnI += 1
+end
+
+println("Elapsed time: " & tack(lnStart) & " ms")

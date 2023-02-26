@@ -213,8 +213,7 @@ public class Parser {
         functionStack.push(identifier.lexeme); // fName or pName
         if (name.equals("procedure") || name.equals("class procedure")) {
             mustReturnValue = false;
-        }
-            
+        }            
         final Stmt.Block body = block();
         functionStack.pop();
         validateStack.pop();
@@ -535,17 +534,21 @@ public class Parser {
             }
 
             if (target instanceof Expr.Variable) {
+                // check if variable is 'poThis' which results in an error
+                if (((Expr.Variable) target).name.lexeme.equals("poThis")) {
+                    error(target.token, "Cannot assign to `poThis`.");
+                }
                 validateTypes((Expr.Variable) target); // validate left side of assignment                
                 Category targetCategory = ((Expr.Variable) target).name.category;
                 if (targetCategory == Category.GLOBAL_CONSTANT || targetCategory == Category.LOCAL_CONSTANT) {
-                    error(equals, "Cannot assign to constant.");
+                    error(target.token, "Cannot assign to constant.");
                 }
                 return new Expr.Set(equals, target, value, false);
             } else if (target instanceof Expr.Prop) {
                 return new Expr.Set(equals, target, value, true);
             }
 
-            error(equals, "Invalid assignment target.");
+            error(target.token, "Invalid assignment target.");
         }
 
         return target;

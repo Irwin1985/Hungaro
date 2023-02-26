@@ -27,16 +27,28 @@ public class RuntimeFunction implements CallableObject {
 
     @Override
     public Object call(Interpreter interpreter, List<Object> arguments) {
-        Environment activationEnv = interpreter.createActivationEnvironment(declaration.name, this, arguments);
-        // Environment environment = new Environment(closure, "function call of " + declaration.name.lexeme);
+        final Arity arity = arity();
+        Environment activationEnv = null;
+        
+        // if we have a variadic function or optional parameters, we need to create a new environment
+        if ((!arity.variadic) && (arity.optional == 0)) {
+            if (arguments.size() != arity.required) {                
+                throw new RuntimeError(declaration.name, "Expected " + (arity.required-1) + " arguments but got " + arguments.size() + ".");
+            }
+            activationEnv = new Environment(closure, "function call of " + declaration.name.lexeme);
+            // load arguments into environment
+            for (int i = 0; i < declaration.params.size(); i++) {
+                interpreter.checkVariableType(declaration.params.get(i).name, arguments.get(i), "Parameter");
+                activationEnv.define(declaration.params.get(i).name.lexeme, arguments.get(i));
+            }
+        } else {            
+            activationEnv = interpreter.createActivationEnvironment(declaration.name, this, arguments);
+        }
+
+
         boolean foundReturn = false;
         Stmt.Block deferredStatements = null;
         Object returnedValue = null;
-        // load arguments into environment
-        // for (int i = 0; i < declaration.params.size(); i++) {
-        //     interpreter.checkVariableType(declaration.params.get(i).name, arguments.get(i), "Parameter");
-        //     activationEnv.define(declaration.params.get(i).name.lexeme, arguments.get(i));
-        // }
 
         // execute every statement in the function body and catch return or defer exepctions
         Environment previous = interpreter.environment;

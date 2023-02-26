@@ -124,11 +124,11 @@ public class Hungaro {
         Parser parser = new Parser(tokens);        
         List<Stmt> statements = parser.parse();            
         if (hadError) return;
-        try {
+        // try {
             interpreter.interpret(statements);        
-        } catch(Exception e) {
-            System.err.println(e.getMessage());
-        }
+        // } catch(Exception e) {
+        //     System.err.println(e.getMessage());
+        // }
     }
 
     static void error(int line, int col, String message) {

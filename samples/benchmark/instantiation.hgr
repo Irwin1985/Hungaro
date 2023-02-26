@@ -1,0 +1,27 @@
+"""
+ Instantiation benchmark stresses instance creation and initializer calling.
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcFoo
+    pInit
+        # None
+    end
+end
+
+declare lnStart = tick()
+declare lnI = 0
+
+while lnI < 500000
+    new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | 
+    new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | 
+    new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | 
+    new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | 
+    new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | 
+    new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() |
+    lnI += 1
+end
+
+print("Elapsed time: " & tack(lnStart) & " ms")

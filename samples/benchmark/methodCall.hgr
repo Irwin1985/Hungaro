@@ -1,0 +1,79 @@
+"""
+ Method call
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcToggle
+    pInit(pbStartState)
+        bState = pbStartState
+    end
+
+    fValue
+        return bState
+    end
+
+    fActivate
+        bState = !bState
+        return poThis
+    end
+end
+
+declare lcNthToggle as lcToggle
+    pInit(pbStartState, pnMaxCounter)
+        super(pbStartState)
+        nCountMax = pnMaxCounter
+        nCount = 0
+    end
+
+    fActivate
+        nCount += 1
+        if nCount >= nCountMax
+            super()
+            nCount = 0
+        end
+
+        return poThis
+    end
+end
+
+declare lnStart = tick()
+declare lnN = 100000
+declare lbVal = true
+declare loToggle = new lcToggle(lbVal)
+
+for lnI = 1 to lnN
+    lbVal = loToggle.fActivate().fValue()
+    lbVal = loToggle.fActivate().fValue()
+    lbVal = loToggle.fActivate().fValue()
+    lbVal = loToggle.fActivate().fValue()
+    lbVal = loToggle.fActivate().fValue()
+    lbVal = loToggle.fActivate().fValue()
+    lbVal = loToggle.fActivate().fValue()
+    lbVal = loToggle.fActivate().fValue()
+    lbVal = loToggle.fActivate().fValue()
+    lbVal = loToggle.fActivate().fValue()
+end
+
+println(loToggle.fValue())
+
+lbVal = true
+declare loNToggle = new lcNthToggle(lbVal, 3)
+
+for lnI = 1 to lnN
+    lbVal = loNToggle.fActivate().fValue()
+    lbVal = loNToggle.fActivate().fValue()
+    lbVal = loNToggle.fActivate().fValue()
+    lbVal = loNToggle.fActivate().fValue()
+    lbVal = loNToggle.fActivate().fValue()
+    lbVal = loNToggle.fActivate().fValue()
+    lbVal = loNToggle.fActivate().fValue()
+    lbVal = loNToggle.fActivate().fValue()
+    lbVal = loNToggle.fActivate().fValue()
+    lbVal = loNToggle.fActivate().fValue()
+end
+
+println(loNToggle.fValue())
+
+println(tack(lnStart))

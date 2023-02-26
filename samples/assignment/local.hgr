@@ -1,0 +1,15 @@
+"""
+ Local
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-25
+"""
+
+declare lsA = "external A"
+
+for lnI = 1 to 3
+    declare lsA = "internal A"
+    println(lsA)
+end
+
+println(lsA) # external A
