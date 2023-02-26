@@ -213,10 +213,10 @@ public abstract class Expr {
      * New expression: new Foo()
      */
     public static class New extends Expr {
-        final Variable name;
+        final Expr name;
         final List<Expr> arguments;
 
-        public New(Token keyword, Variable name, List<Expr> arguments) {
+        public New(Token keyword, Expr name, List<Expr> arguments) {
             super(keyword);
             this.name = name;
             this.arguments = arguments;

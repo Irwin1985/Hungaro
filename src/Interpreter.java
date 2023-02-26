@@ -307,21 +307,30 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         // and it's parent is the class environment (which is the class itself)
 
         Environment classEnv = null;
+
+        // get the class name
+        Object result = evaluate(expr.name);
+        if (!(result instanceof String)) {
+            String message = "Class name must be a string.";
+            throw new RuntimeError(expr.name.token, message);
+        }
+
         // so we need to get the class environment first
-        if (expr.name.name.category == Category.GLOBAL_CLASS) {
-            classEnv = (Environment)globals.lookup(expr.name.name.lexeme);
+        final String className = (String)result;
+        if (className.startsWith("gc")) {
+            classEnv = (Environment)globals.lookup(className);
         } else { // it's a local class
-            classEnv = (Environment)environment.lookup(expr.name.name.lexeme);        
+            classEnv = (Environment)environment.lookup(className);        
         }
 
         // check if class exists
         if (classEnv == null) {
-            String message = "Undefined class `" + expr.name.name.lexeme + "`.";
-            throw new RuntimeError(expr.name.name, message);
+            String message = "Undefined class `" + className + "`.";
+            throw new RuntimeError(expr.name.token, message);
         }
 
         // now we can create the instance
-        Environment instance = new Environment(classEnv, "Instance of " + expr.name.name.lexeme);
+        Environment instance = new Environment(classEnv, "Instance of " + className);
 
         // define the class properties in the instance
         // we need to install all properties found in the class chain (parent classes)
@@ -356,7 +365,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         } else {
             if (arguments.size() > 1) {
                 String message = "Expected 0 arguments but got " + (arguments.size() - 1) + ".";
-                throw new RuntimeError(expr.name.name, message);
+                throw new RuntimeError(expr.name.token, message);
             }
         }
 

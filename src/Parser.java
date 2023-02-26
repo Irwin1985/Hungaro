@@ -852,16 +852,27 @@ public class Parser {
     private Expr newExpr() {
         // the 'new' keyword
         Token keyword = previous();
-
-        // clas name
+        Expr className = null;
+        boolean eatLeftParen = true;
+        // class name
         Token name = consume(TokenType.IDENTIFIER, "Expect class name after 'new'.");
-        // name.lexeme must be a valid class name
-        if (name.category != Category.GLOBAL_CLASS && name.category != Category.LOCAL_CLASS) {
-            error(name, "Invalid class name.");
+        if (name.lexeme.equals("object")) {
+            consume(TokenType.LPAREN, "Expect '(' after Object constructor.");
+            eatLeftParen = false;
+            className = expression();
+        } else {
+            className = new Expr.Variable(name);
         }
-        Expr.Variable className = new Expr.Variable(name);
 
-        consume(TokenType.LPAREN, "Expect '(' after class name.");
+        // name.lexeme must be a valid class name
+        // if (name.category != Category.GLOBAL_CLASS && name.category != Category.LOCAL_CLASS) {
+        //     error(name, "Invalid class name.");
+        // }
+
+        // Expr.Variable className = new Expr.Variable(name);
+        if (eatLeftParen)
+            consume(TokenType.LPAREN, "Expect '(' after class name.");
+        
         final List<Expr> arguments = new ArrayList<Expr>();
 
         if (!check(TokenType.RPAREN)) {
