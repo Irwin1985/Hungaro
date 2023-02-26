@@ -317,7 +317,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
         // so we need to get the class environment first
         final String className = (String)result;
-        if (className.startsWith("gc")) {
+        final String classScope = className.substring(0, 2);
+        if (classScope.equals("gc") && classScope.equals("lc")) {
+            String message = "Class name must start with `gc` or `lc`.";
+            throw new RuntimeError(expr.name.token, message);
+        }
+        
+        if (classScope.equals("gc")) {
             classEnv = (Environment)globals.lookup(className);
         } else { // it's a local class
             classEnv = (Environment)environment.lookup(className);        
