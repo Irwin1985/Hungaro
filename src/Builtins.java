@@ -13,7 +13,17 @@ import javax.swing.JOptionPane;
 @SuppressWarnings("unchecked")
 public final class Builtins {
 
-    public static void createNativeObjects(Interpreter interpreter) {
+    public static void defineGlobals(Interpreter interpreter) {
+        createNativeObjects(interpreter);
+        createArrayBuiltins(interpreter);
+        createMapBuiltins(interpreter);
+        createFunctionBuiltins(interpreter);
+        createBuiltins(interpreter);
+        createStringBuiltins(interpreter);
+        defineWrapperBuiltins(interpreter);        
+    }
+
+    private static void createNativeObjects(Interpreter interpreter) {
         interpreter.globals.define("_VERSION", "0.1.1");
         // global _STRING builtin function
         interpreter.globals.define("_STRING", new Environment(interpreter.stringEnv, "String"));
@@ -67,7 +77,7 @@ public final class Builtins {
     /***********************************************************************
     * Array
     ***********************************************************************/
-    public static void createArrayBuiltins(Interpreter interpreter) {
+    private static void createArrayBuiltins(Interpreter interpreter) {
         // concat builtin function: an array takes another array and call makeObject() to create a new array
         interpreter.arrayEnv.define("concat", new CallableObject() {
             @Override
@@ -749,7 +759,7 @@ public final class Builtins {
     /***********************************************************************
     * String
     ***********************************************************************/
-    public static void createStringBuiltins(Interpreter interpreter) {
+    private static void createStringBuiltins(Interpreter interpreter) {
         // string len builtin function
         interpreter.stringEnv.define("len", new CallableObject() {
             @Override
@@ -1180,10 +1190,10 @@ public final class Builtins {
         });        
     }
 
-    public static void createMapBuiltins(Interpreter interpreter) {
-        /***********************************************************************
-        * Map
-        ***********************************************************************/
+    /***********************************************************************
+    * Map
+    ***********************************************************************/
+    private static void createMapBuiltins(Interpreter interpreter) {
         // map get builtin function
         interpreter.mapEnv.define("get", new CallableObject() {
             @Override
@@ -1368,7 +1378,7 @@ public final class Builtins {
     /***********************************************************************
     * Function prototype
     ***********************************************************************/
-    public static void createFunctionBuiltins(Interpreter interpreter) {
+    private static void createFunctionBuiltins(Interpreter interpreter) {
         // function arity builtin function: extract the internal "value" which is the 
         // RuntimeFunction object and call its arity() method
         interpreter.functionEnv.define("arity", new CallableObject() {
@@ -1389,10 +1399,11 @@ public final class Builtins {
             }
         }); 
     }
+
     /***********************************************************************
     * Built-in functions
     ***********************************************************************/
-    public static void createBuiltins(Interpreter interpreter) {
+    private static void createBuiltins(Interpreter interpreter) {
         // date() builtin function
         interpreter.globals.define("date", new CallableObject() {
             @Override
@@ -2041,4 +2052,29 @@ public final class Builtins {
             }
         });        
     }   
+
+    /***********************************************************************
+    * Wrapper builtins functions
+    ***********************************************************************/
+    private static void defineWrapperBuiltins(Interpreter interpreter) {
+        // get() builtin function: get a property from the wrapped object
+        // the wrapper object is stored in 'value' property of the environment
+        interpreter.wrapperEnv.define("get", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(2);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    Object wrappedObj = env.lookup("value");
+                    String propertyName = (String)arguments.get(1);
+                    return ((Wrapper)wrappedObj).get(propertyName);
+                }                
+                return null;
+            }
+        });        
+    }
 }

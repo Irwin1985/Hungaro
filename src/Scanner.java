@@ -108,6 +108,9 @@ public class Scanner {
         new Spec(Pattern.compile("^\\bnot\\b"), TokenType.LOGICAL_NOT,Category.UNARY),
         new Spec(Pattern.compile("^\\bexit\\b"), TokenType.EXIT,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bloop\\b"), TokenType.LOOP,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\btry\\b"), TokenType.TRY,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\bcatch\\b"), TokenType.CATCH,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\bfinally\\b"), TokenType.FINALLY,Category.KEYWORD),
 
         // Assignment operators
         new Spec(Pattern.compile("^="), TokenType.SIMPLE_ASSIGN, Category.ASSIGNMENT),                

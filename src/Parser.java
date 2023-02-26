@@ -14,6 +14,7 @@ public class Parser {
     private int current = 0;
     private List<Token> tokens;
     private final Stack<String> functionStack = new Stack<String>();
+    private final Stack<Boolean> finallyStack = new Stack<Boolean>();
     private final Stack<ValidateTypes> validateStack = new Stack<ValidateTypes>();    
     private final Stack<Token> classStack = new Stack<Token>();
     private final Stack<Boolean> deferStack = new Stack<Boolean>();
@@ -302,19 +303,10 @@ public class Parser {
         if (match(TokenType.WHILE)) return whileStatement();
         if (match(TokenType.DEFER)) return deferStatement();
         if (match(TokenType.GUARD)) return guardStatement();
+        if (match(TokenType.TRY)) return tryCatchStatement();
+        if (match(TokenType.SEMICOLON)) return new Stmt.Empty(previous());
         return expressionStmt();
     }
-
-    // private Stmt printStatement() {
-    //     List<Expr> expressions = new ArrayList<Expr>();        
-
-    //     do {
-    //         expressions.add(expression());
-    //     } while (match(TokenType.COMMA));
-
-    //     consume(TokenType.SEMICOLON, "Expect new line after expression.");
-    //     return new Stmt.Print(expressions);
-    // }
 
     private Stmt returnStatement() {
         if (functionStack.isEmpty()) {
@@ -322,6 +314,11 @@ public class Parser {
         }
         if (functionStack.peek().startsWith("p")) { // procedure
             error(previous(), "Cannot return a value from a procedure.");
+        }
+
+        // cannot return from a finally block
+        if (finallyStack.size() > 0) {
+            error(previous(), "Cannot return from a finally block.");
         }
 
         Token keyword = previous();
@@ -335,13 +332,6 @@ public class Parser {
 
     private Stmt ifStatement() {
         final Expr condition = expression();
-        // if (match(TokenType.LPAREN)) {
-        //     condition = expression();
-        //     consume(TokenType.RPAREN, "Expect `)` after `if` condition.");
-        // } else {
-        //     condition = expression();
-        // }
-        
         consume(TokenType.SEMICOLON, "Expect new line before `if` block.");
         List<Stmt> thenStmt = new ArrayList<Stmt>();
         Stmt.Block elseBranch = null;
@@ -516,6 +506,39 @@ public class Parser {
 
         return new Stmt.Guard(keyword, condition, body);
     }
+
+    private Stmt tryCatchStatement() {
+        final Token keyword = previous();
+        match(TokenType.SEMICOLON); // eat new line
+        final List<Stmt> tryStatements = new ArrayList<Stmt>();
+        final List<Stmt> catchStatements = new ArrayList<Stmt>();        
+        Stmt.Block finallyBlock = null;
+
+        // parse try statements until we find a catch or finally
+        while (!check(TokenType.CATCH) && !check(TokenType.FINALLY) && !isAtEnd()) {
+            tryStatements.add(declaration());
+        }
+        
+        // parse catch statements until we find a finally or end
+        if (match(TokenType.CATCH)) {
+            match(TokenType.SEMICOLON); // eat new line
+            while (!check(TokenType.FINALLY) && !check(TokenType.END) && !isAtEnd()) {
+                catchStatements.add(declaration());
+            }
+            if (match(TokenType.END)) {
+                consume(TokenType.SEMICOLON, "Expect new line after `end` keyword.");
+            }
+        }
+
+        // parse finally statements
+        if (match(TokenType.FINALLY)) {
+            finallyStack.push(true); // push true to indicate that we are in a finally block
+            finallyBlock = block();
+            finallyStack.pop(); // pop the finally block
+        }
+
+        return new Stmt.TryCatch(keyword, new Stmt.Block(tryStatements), new Stmt.Block(catchStatements), finallyBlock);
+    }    
 
     private Stmt expressionStmt() {
         Expr expr = expression();

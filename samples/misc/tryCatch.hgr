@@ -1,0 +1,21 @@
+"""
+ try catch example
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lfTest
+    try        
+        declare lnA = 10, lnB = 20
+        lnC = lnA + lnB # lnC is not defined
+        return "try"
+    catch
+        println("ERROR MESSAGE: " & loEx.get("message"))
+    finally
+        println("finally block should be used to close resources")
+    end
+    return "end"
+end
+
+println(lfTest())

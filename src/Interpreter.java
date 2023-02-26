@@ -22,18 +22,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment numberEnv = new Environment(objectEnv, "Number");
     final Environment booleanEnv = new Environment(objectEnv, "Boolean");
     final Environment dateEnv = new Environment(objectEnv, "Date");
+    final Environment wrapperEnv = new Environment(objectEnv, "Wrapper");
 
     // final Stack<Boolean> variableStack = new Stack<Boolean>();
 
     public Environment environment = globals;
 
     public Interpreter() {        
-        Builtins.createNativeObjects(this);
-        Builtins.createArrayBuiltins(this);
-        Builtins.createMapBuiltins(this);
-        Builtins.createFunctionBuiltins(this);
-        Builtins.createBuiltins(this);
-        Builtins.createStringBuiltins(this);
+        Builtins.defineGlobals(this);        
     }
 
     public void interpret(List<Stmt> statements) {
@@ -1156,6 +1152,60 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         } catch (RuntimeError e) {
             executeBlock(stmt.body.statements, environment);
         }
+        return null;
+    }
+
+    @Override
+    public Void visitTryCatchStmt(Stmt.TryCatch stmt) {
+        try {            
+            Environment tryEnv = new Environment(environment, "Try");
+            executeBlock(stmt.tryBlock.statements, tryEnv);
+        } catch (RuntimeError e) {            
+            if (stmt.finallyBlock != null) {
+                executeFinallyBlock(stmt.finallyBlock.statements);
+            }            
+            if (stmt.catchBlock != null) {
+                // instead of bubbling up the exception we wrap it in a Wrapper object
+                executeCatchBlock(stmt.catchBlock.statements, e);
+            } else {
+                throw e; // we need to bubble up the runtime exception
+            }
+        } catch (Return e) {
+            if (stmt.finallyBlock != null) {
+                executeFinallyBlock(stmt.finallyBlock.statements);
+            }
+            throw e; // we need to bubble up the return exception
+        } catch (Exit e) {
+            if (stmt.finallyBlock != null) {
+                executeFinallyBlock(stmt.finallyBlock.statements);
+            }
+            // we dont need to throw the Exit exception            
+        }
+
+        return null;
+    }
+
+    private void executeFinallyBlock(List<Stmt> statements) {
+        Environment finallyEnv = new Environment(environment, "Finally");
+        executeBlock(statements, finallyEnv);
+    }
+
+    private void executeCatchBlock(List<Stmt> statements, Exception e) {
+        // create a new environment for the catch block
+        // and define the exception variable 'loEx'
+        Environment catchEnv = new Environment(environment, "Catch");
+        // wrap the exception in a Wrapper object
+        Wrapper.ExceptionClass wrapper = new Wrapper.ExceptionClass(e);
+        // create the wrapper object
+        Environment exceptionEnv = makeObject(wrapper, wrapperEnv, "Exception");
+        // define the exception variable
+        catchEnv.define("loEx", exceptionEnv);            
+        // execute the catch block                        
+        executeBlock(statements, catchEnv);
+    }
+
+    @Override
+    public Void visitEmptyStmt(Stmt.Empty stmt) {        
         return null;
     }
 }

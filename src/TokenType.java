@@ -29,6 +29,9 @@ public enum TokenType {
     RELEASE,
     DEFER,
     END,
+    TRY,
+    CATCH,
+    FINALLY,
 
     // Iterator keywords
     WHILE,
@@ -62,6 +65,6 @@ public enum TokenType {
     LOGICAL_AND,
     LOGICAL_NOT,
     IGNORE,
-    PARAMETER,
+    PARAMETER,    
     EOF,    
 }

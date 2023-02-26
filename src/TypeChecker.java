@@ -303,4 +303,16 @@ public class TypeChecker implements Expr.Visitor<Type>, Stmt.Visitor<Void> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'visitGuardStmt'");
     }
+
+    @Override
+    public Void visitTryCatchStmt(Stmt.TryCatch stmt) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'visitTryCatchStmt'");
+    }
+
+    @Override
+    public Void visitEmptyStmt(Stmt.Empty stmt) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'visitEmptyStmt'");
+    }
 }

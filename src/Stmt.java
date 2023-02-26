@@ -9,6 +9,7 @@ public abstract class Stmt {
         R visitClassStmt(Class stmt);
         R visitDeclareStmt(Declare stmt);
         R visitDeferStmt(Defer stmt);
+        R visitEmptyStmt(Empty stmt);
         R visitExitStmt(Exit stmt);
         R visitExpressionStmt(Expression stmt);
         R visitForeachStmt(Foreach stmt);
@@ -20,6 +21,7 @@ public abstract class Stmt {
         R visitPrintStmt(Print stmt);
         R visitRepeatStmt(Repeat stmt);
         R visitReturnStmt(Return stmt);
+        R visitTryCatchStmt(TryCatch stmt);
         R visitVarStmt(Var stmt);
         R visitWhileStmt(While stmt);
     }
@@ -305,6 +307,27 @@ public abstract class Stmt {
     }
 
     /*
+    * Try/Catch/Finally
+    */
+    public static class TryCatch extends Stmt {
+        final Block tryBlock;        
+        final Block catchBlock;
+        final Block finallyBlock;
+
+        public TryCatch(Token keyword, Block tryBlock, Block catchBlock, Block finallyBlock) {
+            super(keyword);
+            this.tryBlock = tryBlock;
+            this.catchBlock = catchBlock;
+            this.finallyBlock = finallyBlock;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitTryCatchStmt(this);
+        }
+    }
+
+    /*
      * Declaration statement: 
      * 1. declare lsName = 1 + 2
      * 2. declare lnAge = 18
@@ -381,5 +404,19 @@ public abstract class Stmt {
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitDeferStmt(this);
         }
-    }     
+    }  
+    
+    /*
+    * Empty statement: ;
+    */
+    public static class Empty extends Stmt {
+        public Empty(Token keyword) {
+            super(keyword);
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitEmptyStmt(this);
+        }
+    }
 }
