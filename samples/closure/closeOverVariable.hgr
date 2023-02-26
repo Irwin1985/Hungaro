@@ -1,0 +1,17 @@
+"""
+ Close over variable
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lpTest
+    declare lsA = "a", lsB = "b"
+    declare lpG
+        println(lsB)
+        println(lsA)
+    end
+    lpG()
+end
+
+lpTest()

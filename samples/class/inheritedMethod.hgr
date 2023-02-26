@@ -1,0 +1,29 @@
+"""
+ Inherited method
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcFoo
+    pInFoo
+        println("in foo")
+    end
+end
+
+declare lcBar as lcFoo
+    pInBar
+        println("in bar")
+    end
+end
+
+declare lcBaz as lcBar
+    pInBaz
+        println("in baz")
+    end
+end
+
+declare loBaz = new lcBaz()
+loBaz.pInFoo() # in foo
+loBaz.pInBar() # in bar
+loBaz.pInBaz() # in baz

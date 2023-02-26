@@ -1,0 +1,30 @@
+"""
+ Equality
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+println(true == true) # true
+println(true == false) # false
+println(false == true) # false
+println(false == false) # true
+
+# Not equal to other types.
+println(true == 1) # false
+println(false == 0) # false
+println(true == "true") # false
+println(false == "false") # false
+println(false == "") # false
+
+println(true != true) # false
+println(true != false) # true
+println(false != true) # true
+println(false != false) # false
+
+# Not equal to other types.
+println(true != 1) # true
+println(false != 0) # true
+println(true != "true") # true
+println(false != "false") # true
+println(false != "") # true

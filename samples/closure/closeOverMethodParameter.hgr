@@ -1,0 +1,20 @@
+"""
+ Close over method parameter
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare loF
+
+declare lcFoo
+    pMethod(psParam)
+        declare lpF
+            println(psParam)
+        end
+        loF = lpF
+    end
+end
+
+new lcFoo().pMethod("Hello World")
+loF() # Hello World

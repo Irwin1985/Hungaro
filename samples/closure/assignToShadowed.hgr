@@ -1,0 +1,22 @@
+"""
+ Assign to shadowed later
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+
+declare lsA = "global"
+
+declare lpTest
+    declare lpAssign
+        lsA = "assigned"
+    end
+
+    declare lsA = "inner"
+    lpAssign()
+    println(lsA) # inner    
+end
+
+lpTest()
+println(lsA)

@@ -246,6 +246,10 @@ public class Parser {
         // check if class is extending another class
         if (match(TokenType.AS)) {
             final Token superClassName = consume(TokenType.IDENTIFIER, "Expect superclass name.");
+            // cannot inherit from itself
+            if (superClassName.lexeme.equals(identifier.lexeme)) {
+                error(superClassName, "A class cannot inherit from itself.");
+            }
             classStack.push(superClassName); // push the inherited class token
             superClass = new Expr.Variable(superClassName);
         }

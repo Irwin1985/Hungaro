@@ -206,7 +206,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         // <- from here we take them into account
 
         // Create the activation environment
-        Environment activationEnv = new Environment(function.closure, "function call of " + function.declaration.name.lexeme);                        
+        Environment activationEnv = new Environment(function.closure, "Function call of " + function.declaration.name.lexeme);                        
         // add the arguments to the activation environment
         for (int i = 0; i < required; i++) {
             if (i < arguments.size()) {
@@ -313,6 +313,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             classEnv = (Environment)globals.lookup(expr.name.name.lexeme);
         } else { // it's a local class
             classEnv = (Environment)environment.lookup(expr.name.name.lexeme);        
+        }
+
+        // check if class exists
+        if (classEnv == null) {
+            String message = "Undefined class `" + expr.name.name.lexeme + "`.";
+            throw new RuntimeError(expr.name.name, message);
         }
 
         // now we can create the instance
@@ -566,7 +572,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitBlockStmt(Stmt.Block stmt) {
-        executeBlock(stmt.statements, new Environment(null, environment, "block"));
+        executeBlock(stmt.statements, new Environment(environment, "Block"));
         return null;
     }
 
@@ -590,7 +596,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             superclass = environment;
         }
         // create a new environment for the class and provide the superclass
-        final Environment classEnvironment = new Environment(null, superclass, "Class " + stmt.name.lexeme);
+        final Environment classEnvironment = new Environment(superclass, "Class " + stmt.name.lexeme);
         
         // define the class properties
         classEnvironment.define("properties", stmt.properties);
@@ -768,6 +774,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         else if (object instanceof Environment) {
             if (((Environment)object).name.equals("MapEntry")) {
                 return stringify(((Environment)object).lookup("key")) + ": " + stringify(((Environment)object).lookup("value"));
+            } 
+            else if (((Environment)object).name.startsWith("Class")) {
+                return ((Environment)object).name;
             }
             return stringify(((Environment)object).lookup("value"));           
         }

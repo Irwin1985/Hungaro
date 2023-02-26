@@ -1,0 +1,20 @@
+"""
+ Reference closure multiple times
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare loF
+
+declare lpTest
+    declare lsA = "a"
+    declare lpF
+        println(lsA)
+        println(lsA)
+    end
+    loF = lpF
+end
+
+lpTest()
+loF()

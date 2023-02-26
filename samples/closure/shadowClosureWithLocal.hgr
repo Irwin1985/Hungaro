@@ -1,0 +1,22 @@
+"""
+ Shadow closure with local variable
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lpBlockA
+    declare lsFoo = "closure"
+    declare lpF
+        declare lpInnerF
+            println(lsFoo) # closure
+            declare lsFoo = "shadow"
+            println(lsFoo) # shadow
+        end
+        lpInnerF()
+        println(lsFoo) # closure
+    end
+    lpF()
+end
+
+lpBlockA()

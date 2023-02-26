@@ -1,0 +1,11 @@
+"""
+ Empty class
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcFoo
+end
+
+println(lcFoo) # `Class lcFoo`

@@ -1,0 +1,19 @@
+"""
+ Unused closure
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lpBlockA
+    declare lsA = "a"
+    if false
+        declare lpFoo
+            println(lsA)
+        end
+    end
+end
+
+lpBlockA()
+
+println("ok")

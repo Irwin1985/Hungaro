@@ -1,0 +1,8 @@
+"""
+ Invalid call true()
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+true() # Invalid call

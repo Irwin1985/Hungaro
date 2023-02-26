@@ -1,0 +1,31 @@
+"""
+ Assign to closure
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+
+declare loF, loG
+
+declare lpTest
+    declare lsLocal = "local"
+    declare lpF
+        println(lsLocal)
+        lsLocal = "after lpF"
+        println(lsLocal)
+    end
+    loF = lpF
+
+    declare lpG
+        println(lsLocal)
+        lsLocal = "after lpG"
+        println(lsLocal)
+    end
+    loG = lpG
+
+    loF()
+    loG()
+end
+
+lpTest()
