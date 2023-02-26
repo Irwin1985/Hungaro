@@ -1,6 +1,5 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
 import java.util.HashMap;
@@ -454,7 +453,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 map.put(property, value);
                 return value;
             }
-            return null;
+            else if (instance.name.startsWith("Instance of")) {
+                if (isComplexOperator) {
+                    value = resolveComplexAssignment(expr.target.token, instance.lookup(property.toString()), value, expr.operator.category);
+                }
+                return instance.define(property.toString(), value);
+            }
+            else {
+                throw new RuntimeError(expr.target.token, "Cannot set property of non-object. `" + stringify(instance) + "`");
+            }
         }
 
         // check variable or property value

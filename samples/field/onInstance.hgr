@@ -1,0 +1,17 @@
+"""
+ On instances
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcFoo
+end
+
+declare loFoo = new lcFoo()
+
+println(loFoo.sBar = "bar value")
+println(loFoo.sBaz = "baz value")
+
+println(loFoo.sBar)
+println(loFoo.sBaz)

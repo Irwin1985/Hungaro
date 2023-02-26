@@ -1,0 +1,178 @@
+"""
+ Many
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcFoo    
+end
+
+declare loFoo = new lcFoo()
+
+declare lpSetFields
+    loFoo.sBilberry = "bilberry"
+    loFoo.sLime = "lime"
+    loFoo.sElderberry = "elderberry"
+    loFoo.sRaspberry = "raspberry"
+    loFoo.sGooseberry = "gooseberry"
+    loFoo.sLongan = "longan"
+    loFoo.sMandarine = "mandarine"
+    loFoo.sKiwifruit = "kiwifruit"
+    loFoo.sOrange = "orange"
+    loFoo.sPomegranate = "pomegranate"
+    loFoo.sTomato = "tomato"
+    loFoo.sBanana = "banana"
+    loFoo.sJuniper = "juniper"
+    loFoo.sDamson = "damson"
+    loFoo.sBlackcurrant = "blackcurrant"
+    loFoo.sPeach = "peach"
+    loFoo.sGrape = "grape"
+    loFoo.sMango = "mango"
+    loFoo.sRedcurrant = "redcurrant"
+    loFoo.sWatermelon = "watermelon"
+    loFoo.sPlumcot = "plumcot"
+    loFoo.sPapaya = "papaya"
+    loFoo.sCloudberry = "cloudberry"
+    loFoo.sRambutan = "rambutan"
+    loFoo.sSalak = "salak"
+    loFoo.sPhysalis = "physalis"
+    loFoo.sHuckleberry = "huckleberry"
+    loFoo.sCoconut = "coconut"
+    loFoo.sDate = "date"
+    loFoo.sTamarind = "tamarind"
+    loFoo.sLychee = "lychee"
+    loFoo.sRaisin = "raisin"
+    loFoo.sApple = "apple"
+    loFoo.sAvocado = "avocado"
+    loFoo.sNectarine = "nectarine"
+    loFoo.sPomelo = "pomelo"
+    loFoo.sMelon = "melon"
+    loFoo.sCurrant = "currant"
+    loFoo.sPlum = "plum"
+    loFoo.sPersimmon = "persimmon"
+    loFoo.sOlive = "olive"
+    loFoo.sCranberry = "cranberry"
+    loFoo.sBoysenberry = "boysenberry"
+    loFoo.sBlackberry = "blackberry"
+    loFoo.sPassionfruit = "passionfruit"
+    loFoo.sMulberry = "mulberry"
+    loFoo.sMarionberry = "marionberry"
+    loFoo.sPlantain = "plantain"
+    loFoo.sLemon = "lemon"
+    loFoo.sYuzu = "yuzu"
+    loFoo.sLoquat = "loquat"
+    loFoo.sKumquat = "kumquat"
+    loFoo.sSalmonberry = "salmonberry"
+    loFoo.sTangerine = "tangerine"
+    loFoo.sDurian = "durian"
+    loFoo.sPear = "pear"
+    loFoo.sCantaloupe = "cantaloupe"
+    loFoo.sQuince = "quince"
+    loFoo.sGuava = "guava"
+    loFoo.sStrawberry = "strawberry"
+    loFoo.sNance = "nance"
+    loFoo.sApricot = "apricot"
+    loFoo.sJambul = "jambul"
+    loFoo.sGrapefruit = "grapefruit"
+    loFoo.sClementine = "clementine"
+    loFoo.sJujube = "jujube"
+    loFoo.sCherry = "cherry"
+    loFoo.sFeijoa = "feijoa"
+    loFoo.sJackfruit = "jackfruit"
+    loFoo.sFig = "fig"
+    loFoo.sCherimoya = "cherimoya"
+    loFoo.sPineapple = "pineapple"
+    loFoo.sBlueberry = "blueberry"
+    loFoo.sJabuticaba = "jabuticaba"
+    loFoo.sMiracle = "miracle"
+    loFoo.sDragonfruit = "dragonfruit"
+    loFoo.sSatsuma = "satsuma"
+    loFoo.sTamarillo = "tamarillo"
+    loFoo.sHoneydew = "honeydew"   
+end
+lpSetFields()
+
+declare lpPrintFields
+    println(loFoo.sBilberry)
+    println(loFoo.sLime)
+    println(loFoo.sElderberry)
+    println(loFoo.sRaspberry)
+    println(loFoo.sGooseberry)
+    println(loFoo.sLongan)
+    println(loFoo.sMandarine)
+    println(loFoo.sKiwifruit)
+    println(loFoo.sOrange)
+    println(loFoo.sPomegranate)
+    println(loFoo.sTomato)
+    println(loFoo.sBanana)
+    println(loFoo.sJuniper)
+    println(loFoo.sDamson)
+    println(loFoo.sBlackcurrant)
+    println(loFoo.sPeach)
+    println(loFoo.sGrape)
+    println(loFoo.sMango)
+    println(loFoo.sRedcurrant)
+    println(loFoo.sWatermelon)
+    println(loFoo.sPlumcot)
+    println(loFoo.sPapaya)
+    println(loFoo.sCloudberry)
+    println(loFoo.sRambutan)
+    println(loFoo.sSalak)
+    println(loFoo.sPhysalis)
+    println(loFoo.sHuckleberry)
+    println(loFoo.sCoconut)
+    println(loFoo.sDate)
+    println(loFoo.sTamarind)
+    println(loFoo.sLychee)
+    println(loFoo.sRaisin)
+    println(loFoo.sApple)
+    println(loFoo.sAvocado)
+    println(loFoo.sNectarine)
+    println(loFoo.sPomelo)
+    println(loFoo.sMelon)
+    println(loFoo.sCurrant)
+    println(loFoo.sPlum)
+    println(loFoo.sPersimmon)
+    println(loFoo.sOlive)
+    println(loFoo.sCranberry)
+    println(loFoo.sBoysenberry)
+    println(loFoo.sBlackberry)
+    println(loFoo.sPassionfruit)
+    println(loFoo.sMulberry)
+    println(loFoo.sMarionberry)
+    println(loFoo.sPlantain)
+    println(loFoo.sLemon)
+    println(loFoo.sYuzu)
+    println(loFoo.sLoquat)
+    println(loFoo.sKumquat)
+    println(loFoo.sSalmonberry)
+    println(loFoo.sTangerine)
+    println(loFoo.sDurian)
+    println(loFoo.sPear)
+    println(loFoo.sCantaloupe)
+    println(loFoo.sQuince)
+    println(loFoo.sGuava)
+    println(loFoo.sStrawberry)
+    println(loFoo.sNance)
+    println(loFoo.sApricot)
+    println(loFoo.sJambul)
+    println(loFoo.sGrapefruit)
+    println(loFoo.sClementine)
+    println(loFoo.sJujube)
+    println(loFoo.sCherry)
+    println(loFoo.sFeijoa)
+    println(loFoo.sJackfruit)
+    println(loFoo.sFig)
+    println(loFoo.sCherimoya)
+    println(loFoo.sPineapple)
+    println(loFoo.sBlueberry)
+    println(loFoo.sJabuticaba)
+    println(loFoo.sMiracle)
+    println(loFoo.sDragonfruit)
+    println(loFoo.sSatsuma)
+    println(loFoo.sTamarillo)
+    println(loFoo.sHoneydew)
+end
+
+lpPrintFields()

@@ -1,0 +1,32 @@
+"""
+ Get and Set method
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcFoo
+    pMethod(pnA)
+        println("method")
+        println(pnA)
+    end
+
+    pOther(pnA)
+        println("other")
+        println(pnA)
+    end
+end
+
+declare loFoo = new lcFoo()
+declare loMethod = loFoo.pMethod
+
+# Setting a property shadows the instance method
+loFoo.pMethod = loFoo.pOther
+loFoo.pMethod(1)
+# expect: other
+# expect: 1
+
+# The old method handle still points to the original method
+loMethod(2)
+# expect: method
+# expect: 2

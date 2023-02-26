@@ -1,0 +1,22 @@
+"""
+ Call function field
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+declare lcFoo
+    oBar = null
+end
+
+# the following procedure takes the Function prototype as poThis
+declare lpBar(pnA, pnB)
+    println("bar")
+    println(pnA)
+    println(pnB)
+end
+
+declare loFoo = new lcFoo()
+loFoo.oBar = lpBar # this changes the Function prototype of lpBar from Function to instance of lcFoo
+
+loFoo.oBar(1, 2) # here lpBar is owned by loFoo, so it is called as a method of loFoo
