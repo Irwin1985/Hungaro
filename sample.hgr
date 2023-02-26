@@ -5,14 +5,22 @@
  Date: 2023-02-26
 """
 
-declare lpTest
-    defer
-        println("Defered text")
+declare lfValidateData(pmData)
+    guard pmData.contains("name") and pmData.contains("age") and pmData.contains("address") else        
+        exit
+        return false
     end
-
-    for lnI = 1 to 10
-        println("Sample text # " & lnI)
-    end
+    return true
 end
 
-lpTest()
+declare lpTest(pmData)
+    guard lfValidateData(pmData) else
+        println("Missing data")
+        exit
+    end
+    println(pmData.name)
+    println(pmData.age)
+    println(pmData.address)
+end
+
+lpTest({name: "Irwin", age: 27})

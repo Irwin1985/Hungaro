@@ -211,7 +211,7 @@ public class Parser {
             previousIndex = index;            
         }
 
-        functionStack.push(identifier.lexeme); // fName or pName
+        functionStack.push(identifier.lexeme); // fName | gfName | lfName | pName | gpName | lpName
         if (name.equals("procedure") || name.equals("class procedure")) {
             mustReturnValue = false;
         }            
@@ -309,11 +309,14 @@ public class Parser {
     }
 
     private Stmt returnStatement() {
+        // cannot return from top-level code
         if (functionStack.isEmpty()) {
             error(previous(), "Cannot return from top-level code.");
         }
-        if (functionStack.peek().startsWith("p")) { // procedure
-            error(previous(), "Cannot return a value from a procedure.");
+
+        // cannot return from a procedure: procedure name must start with p or gp or lp
+        if (functionStack.peek().charAt(0) == 'p' || functionStack.peek().startsWith("gp") || functionStack.peek().startsWith("lp")) {
+            error(previous(), "`return` statement is not allowed in procedures. Please use `exit` statement instead.");
         }
 
         // cannot return from a finally block
@@ -323,7 +326,7 @@ public class Parser {
 
         Token keyword = previous();
         Expr value = null;
-        if (!check(TokenType.COMMA) && !check(TokenType.END)) {
+        if (!check(TokenType.SEMICOLON) && !check(TokenType.END)) {
             value = expression();
         }
         consume(TokenType.SEMICOLON, "Expect new line after return statement.");
@@ -428,8 +431,8 @@ public class Parser {
             error(previous(), "Cannot use `exit` outside of a loop or a procedure.");
         }
         // if functionStack is a function name (starts with 'f'), then we throw error
-        if (!functionStack.isEmpty() && functionStack.peek().startsWith("f")) {
-            error(previous(), "Cannot use `exit` inside a function.\nUse `return` instead.\nExit is only for loops and procedures.");
+        if (!functionStack.isEmpty() && (functionStack.peek().charAt(0) == 'f' && functionStack.peek().startsWith("gf") || functionStack.peek().startsWith("lf"))) {
+            error(previous(), "Cannot use `exit` inside a function.\nPlease use `return` statement instead.\nExit is only for loops and procedures.");
         }
         
         // eat new line
@@ -495,7 +498,7 @@ public class Parser {
         }
         // if deferStack is not empty, we are already in a defer block
         if (!deferStack.isEmpty()) {
-            error(previous(), "Cannot use `guard` inside another `defer` block.");
+            error(previous(), "Cannot use `guard` inside `defer` block.");
         }
         
         Token keyword = previous();

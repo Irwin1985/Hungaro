@@ -140,7 +140,8 @@ public class Hungaro {
     }
 
     private static void report(int line, int col, String where, String message) {
-        System.err.println(formatError("Parsing", line, col, where, message));
+        System.err.println(ANSI_RED + formatError("Parsing", line, col, where, message));
+        System.err.println(ANSI_RESET+"");
         hadError = true;
     }
 
@@ -154,10 +155,12 @@ public class Hungaro {
 
     static void runtimeError(RuntimeError error) {
         if (error.token == null) {
-            System.err.println(error.getMessage());
+            System.err.println(ANSI_RED + error.getMessage());
+            System.err.println(ANSI_RESET+"");
             return;
         }
-        System.err.println(formatError("Runtime", error.token.line, error.token.col, error.token.lexeme, error.getMessage()));
+        System.err.println(ANSI_RED + formatError("Runtime", error.token.line, error.token.col, error.token.lexeme, error.getMessage()));
+        System.err.println(ANSI_RESET+"");
         hadRuntimeError = true;
     }
 
