@@ -5,22 +5,10 @@
  Date: 2023-02-26
 """
 
-declare lfValidateData(pmData)
-    guard pmData.contains("name") and pmData.contains("age") and pmData.contains("address") else        
-        exit
-        return false
-    end
-    return true
+try
+    lnA = 10
+catch
+    println("ERROR: " & loEx.message)
+finally
+    println("finally")
 end
-
-declare lpTest(pmData)
-    guard lfValidateData(pmData) else
-        println("Missing data")
-        exit
-    end
-    println(pmData.name)
-    println(pmData.age)
-    println(pmData.address)
-end
-
-lpTest({name: "Irwin", age: 27})

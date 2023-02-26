@@ -2059,7 +2059,7 @@ public final class Builtins {
     private static void defineWrapperBuiltins(Interpreter interpreter) {
         // get() builtin function: get a property from the wrapped object
         // the wrapper object is stored in 'value' property of the environment
-        interpreter.wrapperEnv.define("get", new CallableObject() {
+        interpreter.wrapperEnv.define("message", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -2070,8 +2070,9 @@ public final class Builtins {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
                     Object wrappedObj = env.lookup("value");
-                    String propertyName = (String)arguments.get(1);
-                    return ((Wrapper)wrappedObj).get(propertyName);
+                    return ((Exception)wrappedObj).getMessage();
+                    // String propertyName = (String)arguments.get(1);
+                    // return ((Wrapper)wrappedObj).get(propertyName);
                 }                
                 return null;
             }

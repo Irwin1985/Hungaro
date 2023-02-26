@@ -1191,16 +1191,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     private void executeCatchBlock(List<Stmt> statements, Exception e) {
-        // create a new environment for the catch block
-        // and define the exception variable 'loEx'
+        // create the catch environment
         Environment catchEnv = new Environment(environment, "Catch");
-        // wrap the exception in a Wrapper object
-        Wrapper.ExceptionClass wrapper = new Wrapper.ExceptionClass(e);
-        // create the wrapper object
-        Environment exceptionEnv = makeObject(wrapper, wrapperEnv, "Exception");
-        // define the exception variable
-        catchEnv.define("loEx", exceptionEnv);            
-        // execute the catch block                        
+        // create the exception object and define 'message' property.
+        Environment exceptionEnv = makeObject(e, objectEnv, "Exception");
+        exceptionEnv.define("message", e.getMessage());        
+        // define exceptionEnv under the name 'loEx'
+        catchEnv.define("loEx", exceptionEnv);
+        // execute the catch block
         executeBlock(statements, catchEnv);
     }
 

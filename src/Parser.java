@@ -993,7 +993,7 @@ public class Parser {
         Hungaro.error(token, message);
         return new ParseError();
     }
-
+    
     private void synchronize() {
         advance();
 
