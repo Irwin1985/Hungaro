@@ -224,15 +224,21 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             throw new RuntimeError(token, message);
         }
 
+        
+        // Create the activation environment
+        Environment activationEnv = new Environment(function.closure, "Function call of " + function.declaration.name.lexeme);                        
+
         // add the poThis object to the required parameters and arguments
         required++;
         argSize++;
         // <- from here we take them into account
-
-        // Create the activation environment
-        Environment activationEnv = new Environment(function.closure, "Function call of " + function.declaration.name.lexeme);                        
+        
+        int endIndex = required;
+        if (arity.variadic)
+            endIndex -= 1; // we don't add the variadic parameter to the activation environment
+        
         // add the arguments to the activation environment
-        for (int i = 0; i < required; i++) {
+        for (int i = 0; i < endIndex; i++) {
             if (i < arguments.size()) {
                 activationEnv.define(function.declaration.params.get(i).name.lexeme, arguments.get(i));
                 checkVariableType(function.declaration.params.get(i).name, arguments.get(i), "Parameter");
