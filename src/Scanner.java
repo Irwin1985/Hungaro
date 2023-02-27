@@ -58,10 +58,12 @@ public class Scanner {
         new Spec(Pattern.compile("^\\d+(\\.\\d+)?"), TokenType.NUMBER, Category.LITERAL),
 
         // Double quoted string
-        new Spec(Pattern.compile("^\"(?:[^\"\\\\^'\\\\]|\\\\.)*\""), TokenType.STRING, Category.LITERAL),
+        
+        new Spec(Pattern.compile("^([\"'])((?:\\\\1|(?:(?!\\1)).)*)(\\1)"), TokenType.STRING, Category.LITERAL),
+        // new Spec(Pattern.compile("^\"(?:[^\"\\\\^'\\\\]|\\\\.)*\""), TokenType.STRING, Category.LITERAL),
 
         // Single quoted string:
-        new Spec(Pattern.compile("^'(?:[^\"\\\\^'\\\\]|\\\\.)*'"), TokenType.STRING, Category.LITERAL),
+        // new Spec(Pattern.compile("^'(?:[^\"\\\\^'\\\\]|\\\\.)*'"), TokenType.STRING, Category.LITERAL),
 
         // Backticked string:
         new Spec(Pattern.compile("^`[^`]*`"), TokenType.STRING, Category.LITERAL),
@@ -253,13 +255,12 @@ public class Scanner {
                     value = null;
                     break;
                 case STRING:
-                    if (lexeme.startsWith("`")) { // raw string
-                        lexeme = lexeme.substring(1, lexeme.length()-1);
-                    } else {
-                        lexeme = lexeme.substring(1, lexeme.length()-1);
+                    char firstChar = lexeme.charAt(0);
+                    lexeme = lexeme.substring(1, lexeme.length()-1);
+                    if (firstChar != '`') {                        
                         lexeme = lexeme.replaceAll("\\\\r", "\r");
-                        lexeme = lexeme.replaceAll("\\\\n", "\r");
-                        lexeme = lexeme.replaceAll("\\\\t", "\t");
+                        lexeme = lexeme.replaceAll("\\\\n", "\n");
+                        lexeme = lexeme.replaceAll("\\\\t", "\t");                        
                         lexeme = lexeme.replaceAll("\\\\\"", "\"");
                         lexeme = lexeme.replaceAll("\\\\\'", "\'");
                     }

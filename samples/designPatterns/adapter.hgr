@@ -1,0 +1,98 @@
+"""
+ Adapter
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-27
+"""
+
+# Adapter allows fitting square pegs into round holes.
+declare lcSquarePegAdapter
+    oPeg = null
+
+    pInit(poPeg)
+        oPeg = poPeg
+    end
+
+    fGetRadius
+        declare lnResult = 0.0
+        # Calculate a minimun circle radius, which can fit this peg.
+        lnResult = (sqrt(pow((oPeg.fGetWidth() / 2), 2) * 2))
+        return lnResult
+    end
+end
+
+# RoundHoles are compatible with RoundPegs.
+declare lcRoundHole
+    nRadius = 0.0
+    pInit(pnRadius)
+        nRadius = pnRadius
+    end
+
+    fGetRadius
+        return nRadius
+    end
+
+    fFits(poPeg)
+        declare lbResult = false
+        lbResult = (fGetRadius() >= poPeg.fGetRadius())
+        return lbResult
+    end
+end
+
+# RoundPegs are compatible with RoundHoles.
+declare lcRoundPeg
+    nRadius = 0.0
+    
+    pInit(pnRadius)
+        nRadius = pnRadius
+    end
+
+    fGetRadius
+        return nRadius
+    end
+end
+
+# SquarePegs are not compatible with RoundHoles (they were implemented by
+# previous development team). But we have to integrate them into our program.
+declare lcSquarePeg
+    nWidth = 0.0
+
+    pInit(pnWidth)
+        nWidth = pnWidth
+    end
+
+    fGetWidth
+        return nWidth
+    end
+
+    fGetSquare
+        declare lnResult = 0.0
+        lnResult = pow(nWidth, 2)
+        return lnResult
+    end
+end
+
+# Client code can work with any subclass of RoundPeg.
+declare lpMain
+    # Round fits round, no surprise.
+    declare loHole = new lcRoundHole(5)
+    declare loRoundPeg = new lcRoundPeg(5)
+    if loHole.fFits(loRoundPeg)
+        println("Round peg r5 fits round hole r5.")
+    end
+
+    declare loSmallSqPeg = new lcSquarePeg(2)
+    declare loLargeSqPeg = new lcSquarePeg(20)
+
+    # Adapter solves the problem.
+    declare loSmallSqPegAdapter = new lcSquarePegAdapter(loSmallSqPeg)
+    declare loLargeSqPegAdapter = new lcSquarePegAdapter(loLargeSqPeg)
+    if loHole.fFits(loSmallSqPegAdapter)
+        println("Square peg w2 fits round hole r5.")
+    end
+    if not loHole.fFits(loLargeSqPegAdapter)
+        println("Square peg w20 does not fit into round hole r5.")
+    end
+end
+
+lpMain()

@@ -1,0 +1,133 @@
+"""
+ Abstract Factory
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-27
+"""
+#-----------------------------------------------------#
+# Abstract Factory
+#-----------------------------------------------------#
+declare lcApplication
+    oButton = null
+    oCheckbox = null
+
+    pInit(poFactory)
+        oButton = poFactory.fCreateButton()
+        oCheckbox = poFactory.fCreateCheckbox()    
+    end
+
+    pPaint()
+        oButton.pPaint()
+        oCheckbox.pPaint()
+    end
+
+end
+
+#-----------------------------------------------------#
+# Button
+#-----------------------------------------------------#
+declare lcButton
+    pPaint()        
+    end
+end
+
+#-----------------------------------------------------#
+# MacOS Button
+#-----------------------------------------------------#
+declare lcMacOSButton as lcButton
+    pPaint()
+        println("You have created MacOSButton.")
+    end
+end
+
+#-----------------------------------------------------#
+# Windows Button
+#-----------------------------------------------------#
+declare lcWindowsButton as lcButton
+    pPaint()
+        println("You have created WindowsButton.")
+    end
+end
+
+#-----------------------------------------------------#
+# Checkbox
+#-----------------------------------------------------#
+declare lcCheckbox
+    pPaint()
+    end
+end
+
+#-----------------------------------------------------#
+# MacOS Checkbox
+#-----------------------------------------------------#
+declare lcMacOSCheckbox as lcCheckbox
+    pPaint()
+        println("You have created MacOSCheckbox.")
+    end
+end
+
+#-----------------------------------------------------#
+# Windows Checkbox
+#-----------------------------------------------------#
+declare lcWindowsCheckbox as lcCheckbox
+    pPaint()
+        println("You have created WindowsCheckbox.")
+    end
+end
+
+#-----------------------------------------------------#
+# Factory
+#-----------------------------------------------------#
+declare lcGUIFactory
+    fCreateButton
+    end
+
+    fCreateCheckbox
+    end
+end
+
+#-----------------------------------------------------#
+# MacOS Factory
+#-----------------------------------------------------#
+declare lcMacOSFactory as lcGUIFactory
+    fCreateButton()
+        return new lcMacOSButton()
+    end
+
+    fCreateCheckbox()
+        return new lcMacOSCheckbox()
+    end
+end
+
+#-----------------------------------------------------#
+# Windows Factory
+#-----------------------------------------------------#
+declare lcWindowsFactory as lcGUIFactory
+    fCreateButton()
+        return new lcWindowsButton()
+    end
+
+    fCreateCheckbox()
+        return new lcWindowsCheckbox()
+    end
+end
+
+#-----------------------------------------------------#
+# Main
+#-----------------------------------------------------#
+declare lfConfigureApplication
+    declare loApplication = null, loFactory = null    
+    declare lsName = readln("Enter the name of OS you are using (MacOS or Windows): ")
+
+    if lsName == "MacOS"
+        loFactory = new lcMacOSFactory()
+    else
+        loFactory = new lcWindowsFactory()
+    end
+    loApplication = new lcApplication(loFactory)
+
+    return loApplication
+end
+
+declare loApp = lfConfigureApplication()
+loApp.pPaint()

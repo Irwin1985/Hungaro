@@ -1,38 +1,227 @@
 """
- Bridge pattern
+ Bridge
 
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
- Date: 2023-02-26
+ Date: 2023-02-27
 """
 
-#-------------------------------------------#
-# Abstraction class
-#-------------------------------------------#
+# Devices
+declare lcDevice
+    fIsEnabled
+    end
+    
+    pEnable
+    end
+    
+    pDisable
+    end
+    
+    fGetVolume
+    end
+    
+    pSetVolume(pnPercent)
+    end
+    
+    fGetChannel
+    end
+    
+    pSetChannel(pnChannel)
+    end
 
-declare lcCalculateAPY
-    fCalculateAPY(pnRate, pnPeriod)
-        declare lnAPY = (1 + ((pnRate / 100) / pnPeriod)) ^ pnPeriod - 1
-        return round(lnAPY, 2)
+    pPrintStatus
     end
 end
 
-declare lcFinancialCalculator
-    nBalance = 0.00
-    nRate = 0.00
-    nPeriod = 0
-    sType = ""
+# Radio
+declare lcRadio as lcDevice
+    bOn = false
+    nVolume = 30
+    nChannel = 1
 
-    fGetAPY
-        declare loBridge = new lcCalculateAPY()
-        return loBridge.fCalculateAPY(nRate, nPeriod)
+    fIsEnabled
+        return bOn
+    end
+    
+    pEnable
+        bOn = true    
+    end
+    
+    pDisable
+        bOn = false
+    end    
+    
+    fGetVolume
+        return nVolume
+    end    
+    
+    pSetVolume(pnPercent)
+        if nVolume > 100
+            nVolume = 100
+        end
+        if nVolume < 0
+            nVolume = 0
+        else
+            nVolume = pnPercent
+        end
+    end
+        
+    fGetChannel
+        return nChannel
+    end
+    
+    
+    pSetChannel(pnChannel)
+        nChannel = pnChannel
+    end    
+
+    pPrintStatus
+        println("------------------------------------")
+        println("| I\'m radio.")
+        println("| I\'m " & iif(bOn, "enabled", "disabled"))
+        println("| Current volume is " & nVolume & "%")
+        println("| Current channel is " & nChannel)
+        println("------------------------------------\n")
     end
 end
 
-#-------------------------------------------#
-# Client code
-#-------------------------------------------#
-declare loCalculator = new lcFinancialCalculator()
-loCalculator.nBalance = 1000.00
-loCalculator.nRate = 5.00
-loCalculator.nPeriod = 12
-println(loCalculator.fGetAPY())
+# TV
+declare lcTV as lcDevice
+    bOn = false
+    nVolume = 30
+    nChannel = 1
+
+    fIsEnabled
+        return bOn
+    end
+    
+    pEnable
+        bOn = true    
+    end
+    
+    pDisable
+        bOn = false
+    end    
+    
+    fGetVolume
+        return nVolume
+    end    
+    
+    pSetVolume(pnPercent)
+        if nVolume > 100
+            nVolume = 100
+        end
+        if nVolume < 0
+            nVolume = 0
+        else
+            nVolume = pnPercent
+        end
+    end
+        
+    fGetChannel
+        return nChannel
+    end
+    
+    
+    pSetChannel(pnChannel)
+        nChannel = pnChannel
+    end    
+
+    pPrintStatus
+        println("------------------------------------")
+        println("| I\'m TV set.")
+        println("| I\'m " & iif(bOn, "enabled", "disabled"))
+        println("| Current volume is " & nVolume & "%")
+        println("| Current channel is " & nChannel)
+        println("------------------------------------\n")
+    end
+end
+
+# Remote
+declare lcRemote
+    pPower
+    end
+    
+    pVolumeDown
+    end
+    
+    pVolumeUp
+    end
+    
+    pChannelDown
+    end
+
+    pChannelUp
+    end
+end
+
+# Basic remote
+declare lcBasicRemote as lcRemote
+    oDevice = null
+
+    pInit(poDevice)
+        oDevice = poDevice
+    end
+
+    pPower
+        println("Remote: power toggle")
+        if oDevice.fIsEnabled()
+            oDevice.pDisable()
+        else
+            oDevice.pEnable()
+        end
+    end
+    
+    pVolumeDown
+        println("Remote: volume down")
+        oDevice.pSetVolume(oDevice.fGetVolume() - 10)
+    end
+    
+    pVolumeUp
+        println("Remote: volume up")
+        oDevice.pSetVolume(oDevice.fGetVolume() + 10)
+    end
+    
+    pChannelDown
+        println("Remote: channel down")
+        oDevice.pSetChannel(oDevice.fGetChannel() - 1)
+    end
+
+    pChannelUp
+        println("Remote: channel up")
+        oDevice.pSetChannel(oDevice.fGetChannel() + 1)
+    end
+end
+
+# Advanced remote
+declare lcAdvancedRemote as lcBasicRemote
+    pInit(poDevice)
+        super(poDevice)
+    end
+
+    pMute
+        println("Remote: mute")
+        oDevice.pSetVolume(0)
+    end
+end
+
+# Main
+declare lpTestDevice(poDevice)
+    println("Tests with basic remote.")
+    declare loBasicRemote = new lcBasicRemote(poDevice)
+    loBasicRemote.pPower()
+    poDevice.pPrintStatus()
+
+    println("Tests with advanced remote.")
+    declare loAdvancedRemote = new lcAdvancedRemote(poDevice)
+    loAdvancedRemote.pPower()
+    loAdvancedRemote.pMute()
+    poDevice.pPrintStatus()
+end
+
+# Remote
+declare lpMain
+    lpTestDevice(new lcTV())
+    lpTestDevice(new lcRadio())
+end
+
+lpMain()
