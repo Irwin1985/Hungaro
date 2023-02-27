@@ -1,7 +1,20 @@
 """
- Mediator Pattern
+ Factory Pattern
 
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
- Date: 2023-02-26
+ Date: 2023-02-27
 """
 
+declare lfAdd(pnX, pnY)
+    return pnX + pnY
+end
+
+declare lmData = {
+    name: "Irwin",
+    age: 27,
+    add: lfAdd, 
+    x: 50, 
+    y: 10,
+}
+
+println(lmData["add"](lmData.x, lmData.y))

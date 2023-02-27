@@ -4,6 +4,7 @@
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
  Date: 2023-02-26
 """
+
 #-------------------------------------------#
 # Abstraction mediator class
 #-------------------------------------------#
@@ -37,11 +38,75 @@ declare lcOptionGroup as lcMediator
     pShowState
         declare lsMsg = "There are " & mColleagues.len() & " buttons.\n"
         for each lvKey in mColleagues.keys()
-            lsMsg &= mColleagues[lvKey].sName & " is " & mColleagues[lvKey].bState & ".\n"
+            lsMsg &= mColleagues[lvKey].sName & " " & iif(mColleagues[lvKey].bSelected, "is", "is not") & " selected.\n"
         end
+        println(lsMsg)
     end
 
     pSetState(pbState)
         bState = pbState
     end
 end
+
+#-------------------------------------------#
+# Abstract Colleague class
+#-------------------------------------------#
+declare lcColleague
+    sName = ""
+    oMediator = null
+
+    pInit
+        oMediator = goMediator
+    end
+
+    pRegister
+        oMediator.pAddColleague(poThis)
+    end
+
+    pSetState(pbState)
+       # Virtual
+    end
+end
+
+#-------------------------------------------#
+# Concrete Colleague class
+#-------------------------------------------#
+declare lcOptionButton as lcColleague
+    bSelected = false
+    pInit(psName)
+        sName = psName
+        poThis.pRegister()
+    end
+
+    pClick
+        if not bSelected
+            poThis.pSetState(true)
+            oMediator.pChangeState(poThis)
+        end
+    end
+
+    pSetState(pbState)
+        bSelected = pbState
+    end
+end
+
+
+#-------------------------------------------#
+# Main
+#-------------------------------------------#
+declare goMediator = new lcOptionGroup()
+# add 4 buttons
+declare goButton1 = new lcOptionButton("Button1")
+declare goButton2 = new lcOptionButton("Button2")
+declare goButton3 = new lcOptionButton("Button3")
+declare goButton4 = new lcOptionButton("Button4")
+
+goMediator.pShowState() # no button is selected
+
+# Click button 1
+goButton1.pClick() # button1 is selected
+goMediator.pShowState() # button1 is selected
+
+# Click button 3
+goButton3.pClick() # button3 is selected
+goMediator.pShowState() # button3 is selected

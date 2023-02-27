@@ -1,0 +1,81 @@
+"""
+ Factory Pattern
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-27
+"""
+
+#-----------------------------------------#
+# Creator class
+#-----------------------------------------#
+declare lcCafe
+    oProduct = null
+    pMakeCoffee
+        # code
+    end
+end
+
+declare lcMyCafe as lcCafe
+    pMakeCoffee(psType)
+        oProduct = fGetCoffee(psType)
+        oProduct.pPrepare()
+        oProduct.pServe()
+    end
+
+    fGetCoffee(psType)
+        return iif(psType == "brewed", new lcBrewedCoffee(), new lcSpecialtyCoffee(psType))
+    end
+end
+
+#-----------------------------------------#
+# Product class
+#-----------------------------------------#
+declare lcCoffee
+    sName = ""
+
+    pPrepare
+        # code
+    end
+
+    pServe
+        println("Here\'s your cup of " & sName & ". Enjoy!")
+    end
+end
+
+declare lcBrewedCoffee as lcCoffee
+    sName = "Brewed Coffee"
+    pPrepare
+        println("choose coffee")
+        println("put in brew machine")
+        println("add water")
+        println("brew")
+    end
+end
+
+declare lcSpecialtyCoffee as lcCoffee
+    sName = "Specialty Coffee"
+    pPrepare
+        println("choose coffee")
+        println("put in espresso machine")
+        println("pull expresso shot")
+        println("choose milk")
+        println("steam milk")
+        println("add cocoa")
+        println("mix milk and coffee")
+    end
+end
+
+#-----------------------------------------#
+# Client
+#-----------------------------------------#
+declare loCafe = new lcMyCafe()
+loCafe.pMakeCoffee("brewed")
+
+# Output
+# choose coffee
+# put in brew machine
+# add water
+# brew
+# Here's your cup of Brewed Coffee. Enjoy!
+
+loCafe.pMakeCoffee("mocha")

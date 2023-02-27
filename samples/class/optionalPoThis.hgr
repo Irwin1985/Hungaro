@@ -1,0 +1,23 @@
+"""
+ Method access
+
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-27
+"""
+
+declare lcAnimal
+    pInit(psName, psType)
+        sName = psName
+        sType = psType
+        pWhatIs() # Call the method without `poThis`
+        # poThis.pWhatIs() # optional: Call the method with `poThis`
+    end
+
+    pWhatIs
+        println(sName & " is a " & sType)
+    end
+end
+
+# Create an instance of the class
+declare loDog = new lcAnimal("Fido", "dog")
+loDog.pWhatIs()  # here is mandatory to use `object.method()` syntax

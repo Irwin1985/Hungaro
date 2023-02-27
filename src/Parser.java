@@ -767,7 +767,13 @@ public class Parser {
             arguments.add(new Expr.Variable(token));            
         } // if the target is a variable then we add the function name itself as the first argument
         else if (callee instanceof Expr.Variable) {            
-            arguments.add(callee);
+            final Token name = ((Expr.Variable)callee).name;
+            if (name.category == Category.CLASS_FUNCTION || name.category == Category.CLASS_PROCEDURE) {
+                final Token token = new Token(TokenType.IDENTIFIER, "poThis");
+                arguments.add(new Expr.Variable(token));
+            } else {
+                arguments.add(callee);
+            }
         }
         
         // parse the arguments
