@@ -777,12 +777,14 @@ public class Parser {
         }
         
         // parse the arguments
+        match(TokenType.SEMICOLON); // optional semicolon
         if (!check(TokenType.RPAREN)) {
-            do {                
+            do {
+                match(TokenType.SEMICOLON); // optional semicolon
                 arguments.add(expression());
             } while (match(TokenType.COMMA));
         }
-
+        match(TokenType.SEMICOLON); // optional semicolon
         consume(TokenType.RPAREN, "Expect ')' after arguments.");
 
         return new Expr.Call(callee, paren, arguments);

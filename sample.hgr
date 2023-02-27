@@ -1,358 +1,184 @@
 """
- Builder
+ Chain of Responsibility Design Pattern
 
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
  Date: 2023-02-27
 """
 
-# Builder interface defines all possible ways to configure a product.
-declare lcBuilder
-    pSetCarType(poType)
-    end
-    
-    pSetSeats(pnSeats)
-    end
-    
-    pSetEngine(poEngine)
-    end
-    
-    pSetTransmission(psTransmission)
-    end
-    
-    pSetTripComputer(poTripComputer)
-    end
+#-------------------------------------------------#
+# Base middleware class
+#-------------------------------------------------#
+declare lcMiddleware
+    oNext = null
 
-    pSetGPSNavigator(poGPSNavigator)
-    end    
-end
+    # Builds chains of middleware objects
+    fLink(poFirst, ...paChain)
+        declare loHead = poFirst
 
-# Car Type constants.
-declare CITY_CAR    = "City Car", 
-        SPORTS_CAR  = "Sports Car", 
-        SUV         = "SUV"
-
-# Transmission constants.
-declare SINGLE_SPEED   = "Single Speed", 
-        MANUAL         = "Manual", 
-        AUTOMATIC      = "Automatic", 
-        SEMI_AUTOMATIC = "Semi-Automatic"
-
-
-# Concrete builders implement steps defined in the common interface.
-declare lcCarBuilder as lcBuilder
-    sCarType = ""
-    nSeats = 0
-    oEngine = null
-    sTransmission = ""
-    oTripComputer = null
-    oGPSNavigator = null
-
-    pSetCarType(psType)
-        sCarType = psType
-    end
-
-    pSetSeats(pnSeats)
-        nSeats = pnSeats
-    end
-
-    pSetEngine(poEngine)
-        oEngine = poEngine
-    end
-
-    pSetTransmission(psTransmission)
-        sTransmission = psTransmission
-    end
-
-    pSetTripComputer(poTripComputer)
-        oTripComputer = poTripComputer
-    end
-
-    pSetGPSNavigator(poGPSNavigator)
-        oGPSNavigator = poGPSNavigator
-    end
-
-    fGetResult
-        return new lcCar(sCarType, nSeats, oEngine, sTransmission, oTripComputer, oGPSNavigator)
-    end
-end
-
-"""
-    Unlike other creational patterns, Builder can construct unrelated products,
-    which don't have the common interface.
-
-    In this case we build a user manual for a car, using the same steps as we
-    built a car. This allows to produce manuals for specific car models,
-    configured with different features.
-"""
-
-declare lcCarManualBuilder as lcBuilder
-    sCarType = ""
-    nSeats = 0
-    oEngine = null
-    sTransmission = ""
-    oTripComputer = null
-    oGPSNavigator = null
-
-    pSetCarType(psType)
-        sCarType = psType
-    end
-
-    pSetSeats(pnSeats)
-        nSeats = pnSeats
-    end
-
-    pSetEngine(poEngine)
-        oEngine = poEngine
-    end
-
-    pSetTransmission(psTransmission)
-        sTransmission = psTransmission
-    end
-
-    pSetTripComputer(poTripComputer)
-        oTripComputer = poTripComputer
-    end
-
-    pSetGPSNavigator(poGPSNavigator)
-        oGPSNavigator = poGPSNavigator
-    end
-
-    fGetResult
-        return new lcManual(sCarType, nSeats, oEngine, sTransmission, oTripComputer, oGPSNavigator)
-    end
-end
-
-# Car is a product class.
-declare lcCar
-    sCarType = ""
-    nSeats = 0
-    oEngine = null
-    sTransmission = ""
-    oTripComputer = null
-    oGPSNavigator = null
-    nFuel = 0
-
-    pInit(psCarType, pnSeats, poEngine, psTransmission, poTripComputer, poGPSNavigator)
-        sCarType = psCarType
-        nSeats = pnSeats
-        oEngine = poEngine
-        sTransmission = psTransmission
-        oTripComputer = poTripComputer
-        if oTripComputer != null
-            oTripComputer.pSetCar(poThis)
+        for each lvNextInChain in paChain
+            loHead.oNext = lvNextInChain
+            loHead = lvNextInChain
         end
-        oGPSNavigator = poGPSNavigator
+        return poFirst
     end
 
-    fGetCarType
-        return sCarType
+    # Subclasses will implement this method with concrete checks.
+    fCheck(psEmail, psPassword)        
     end
 
-    fGetFuel
-        return nFuel
-    end
-
-    pSetFuel(pnFuel)
-        nFuel = pnFuel
-    end
-
-    fGetSeats
-        return nSeats
-    end
-
-    fGetEngine
-        return oEngine
-    end
-
-    fGetTransmission
-        return sTransmission
-    end
-
-    fGetTripComputer
-        return oTripComputer
-    end
-
-    fGetGPSNavigator
-        return oGPSNavigator
-    end
-end
-
-# Car manual is another product. Note that is does not have the same ancestor
-# as a Car. They are not related by inheritance.
-
-declare lcManual
-    sCarType = ""
-    nSeats = 0
-    oEngine = null
-    sTransmission = ""
-    oTripComputer = null
-    oGPSNavigator = null
-
-    pInit(psCarType, pnSeats, poEngine, psTransmission, poTripComputer, poGPSNavigator)
-        sCarType = psCarType
-        nSeats = pnSeats
-        oEngine = poEngine
-        sTransmission = psTransmission
-        oTripComputer = poTripComputer
-        oGPSNavigator = poGPSNavigator
-    end
-
-    fPrint        
-        declare lsInfo = ""
-        lsInfo &= "Type of car: " & sCarType & "\n"
-        lsInfo &= "Count of seats: " & nSeats & "\n"
-        lsInfo &= "Engine: volume - " & oEngine.fGetVolume() & "; mileage - " & oEngine.fGetMileage() & "\n"
-        lsInfo &= "Transmission: " & sTransmission & "\n"
-        if oTripComputer != null
-            lsInfo &= "Trip Computer: Functional" & "\n"
-        else
-            lsInfo &= "Trip Computer: N/A" & "\n"
+    # Runs check on the next object in chain or ends traversing if we're in
+    # last object in chain.
+    fCheckNext(psEmail, psPassword)
+        if oNext == null
+            return true
         end
-        if oGPSNavigator != null
-            lsInfo &= "GPS Navigator: Functional" & "\n"
-        else
-            lsInfo &= "GPS Navigator: N/A" & "\n"
+        return oNext.fCheck(psEmail, psPassword)
+    end
+end
+
+#-------------------------------------------------#
+# ConcreteHandler. Checks a user's role
+#-------------------------------------------------#
+declare lcRoleCheckMiddleware as lcMiddleware
+    fCheck(psEmail, psPassword)
+        if psEmail == "admin@example.com"
+            println("Hello, admin!")
+            return true
         end
-        return lsInfo
+        println("Hello, user!")
+        return fCheckNext(psEmail, psPassword)        
     end
 end
 
-# Engine: Just another feature of a car.
-declare lcEngine
-    nVolume = 0
-    nMileage = 0
-    bStarted = false
+#---------------------------------------------------------------------------#
+# ConcreteHandler. Checks whether there are too many failed login requests.
+#---------------------------------------------------------------------------#
+declare lcThrottlingMiddleware as lcMiddleware
+    nRequestPerMinute = 0
+    nRequest = 0
+    nCurrentTime = 0
 
-    pInit(pnVolume, pnMileage)
-        nVolume = pnVolume
-        nMileage = pnMileage
+    pInit(pnRequestPerMinute)
+        nRequestPerMinute = pnRequestPerMinute
+        nCurrentTime = seconds()
     end
-
-    pOn
-        bStarted = true
-    end
-
-    pOff
-        bStarted = false
-    end
-
-    fIsStarted
-        return bStarted
-    end
-
-    pGo(pnMileage)
-        if bStarted
-            nMileage += pnMileage
-        else
-            println("Cannot go(), you must start engine first!")
-        end
-    end     
-
-    fGetVolume
-        return nVolume
-    end
-
-    fGetMileage
-        return nMileage
-    end
-end
-
-# GPSNavigator: just another feature of a car.
-declare lcGPSNavigator
-    sRoute = "221b, Baker Street, London  to Scotland Yard, 8-10 Broadway, London"
-
-    pInit(psManualRoute)
-        if psManualRoute.len() > 0
-            sRoute = psManualRoute        
-        end
-    end
-
-    fGetRoute
-        return sRoute
-    end
-end
-
-# TripComputer: another feature of a car.
-declare lcTripComputer
-    oCar = null
-
-    pSetCar(poCar)
-        oCar = poCar
-    end
-
-    pShowFuelLevel
-        println("Fuel level: " & oCar.fGetFuel())
-    end
-
-    pShowStatus
-        if oCar.fGetEngine().fIsStarted()
-            println("Car is started")
-        else
-            println("Car isn\'t started")
-        end
-    end
-end
-
-"""
-    Director defines the order of building steps. It works with a builder object
-    through the common interface. Therefore, it may not know what product is
-    being built.
-"""
-declare lcDirector
-    pConstructSportsCar(poBuilder)
-        poBuilder.pSetCarType(SPORTS_CAR)
-        poBuilder.pSetSeats(2)
-        poBuilder.pSetEngine(new lcEngine(3.0, 0))
-        poBuilder.pSetTransmission(SEMI_AUTOMATIC)
-        poBuilder.pSetTripComputer(new lcTripComputer())
-        poBuilder.pSetGPSNavigator(new lcGPSNavigator(""))
-    end
-
-    pConstructCityCar(poBuilder)
-        poBuilder.pSetCarType(CITY_CAR)
-        poBuilder.pSetSeats(2)
-        poBuilder.pSetEngine(new lcEngine(1.2, 0))
-        poBuilder.pSetTransmission(AUTOMATIC)
-        poBuilder.pSetTripComputer(new lcTripComputer())
-        poBuilder.pSetGPSNavigator(new lcGPSNavigator(""))
-    end
-
-    pConstructSUV(poBuilder)
-        poBuilder.pSetCarType(SUV)
-        poBuilder.pSetSeats(4)
-        poBuilder.pSetEngine(new lcEngine(2.5, 0))
-        poBuilder.pSetTransmission(MANUAL)
-        poBuilder.pSetTripComputer(new lcTripComputer())
-        poBuilder.pSetGPSNavigator(new lcGPSNavigator(""))
-    end
-end
-
-# Demo procedure. Everything comes together here.
-declare lpDemo
-    declare loDirector = new lcDirector()
-    """
-        Director gets the concrete builder object from the client
-        (application code). That's because application knows better which
-        builder to use to get a specific product.
-    """
-    declare loBuilder = new lcCarBuilder()
-    loDirector.pConstructSportsCar(loBuilder)
 
     """
-        The final product is often retrieved from a builder object, since
-        Director is not aware and not dependent on concrete builders and
-        products.
+        Please, note that fCheckNext() call can be inserted both in the beginning
+        of this method and in the end.
+
+        This gives much more flexibility than a simple loop over all middleware
+        objects. For instance, an element of a chain ca change the order of
+        checks by running its check after all other checks.
     """
-    declare loCar = loBuilder.fGetResult()
-    println("Car built:\n" & loCar.fGetCarType())
-
-    declare loManualBuilder = new lcCarManualBuilder()
-
-    # Director may know several building recipes.
-    loDirector.pConstructSportsCar(loManualBuilder)
-    declare loCarManual = loManualBuilder.fGetResult()    
-    
-    println("Car manual built:\n" & loCarManual.fPrint())    
+    fCheck(psEmail, psPassword)
+        if seconds() > nCurrentTime + 60000
+            nRequest = 0
+            nCurrentTime = seconds()
+        end
+        nRequest += 1
+        if nRequest > nRequestPerMinute
+            println("Request limit exceeded!")
+            return false
+        end
+        return fCheckNext(psEmail, psPassword)
+    end
 end
 
-lpDemo()
+#---------------------------------------------------------------------------#
+# ConcreteHandler. Checks whether a user with the given credentials exists.
+#---------------------------------------------------------------------------#
+declare lcUserExistsMiddleware as lcMiddleware
+    oServer = null
+    pInit(poServer)
+        oServer = poServer    
+    end
+
+    fCheck(psEmail, psPassword)
+        if not oServer.hasEmail(psEmail)
+            println("This email is not registered!")
+            return false
+        end
+        if not oServer.isValidPassword(psEmail, psPassword)
+            println("Wrong password!")
+            return false
+        end
+        return fCheckNext(psEmail, psPassword)
+    end
+end
+
+#-------------------------------------------------#
+# Server class
+#-------------------------------------------------#
+declare lcServer
+    mUsers = {}
+    oMiddleware = null
+
+    # Client passes a chain of object to server. This improves flexibility and
+    # makes testing the server class easier.
+    pSetMiddleware(poMiddleware)
+        oMiddleware = poMiddleware
+    end
+
+    # Server gets email and password from client and sends the authorization
+    # request to the chain.
+    fLogin(psEmail, psPassword)
+        if oMiddleware.fCheck(psEmail, psPassword)
+            println("Authorization have been successful!")
+            # Do something useful here for authorized users.
+            return true
+        end
+        return false
+    end
+
+    pRegister(psEmail, psPassword)
+        mUsers.put(psEmail, psPassword)
+    end
+
+    fHasEmail(psEmail)
+        return mUsers.containsKey(psEmail)
+    end
+
+    fIsValidPassword(psEmail, psPassword)
+        return mUsers.get(psEmail) == psPassword
+    end
+end
+
+#-------------------------------------------------#
+# Client code
+#-------------------------------------------------#
+declare lfInit
+    declare loServer = new lcServer()
+    loServer.pRegister("admin@example.com", "admin_pass")
+    loServer.pRegister("user@example.com", "user_pass")
+
+    # All checks are linked. Client can build various chains using the same
+    # components.
+    declare loMiddleware = new lcMiddleware().fLink(
+        new lcThrottlingMiddleware(2),
+        new lcUserExistsMiddleware(loServer),
+        new lcRoleCheckMiddleware()
+    )
+
+    # Server gets a chain from client code.
+    loServer.pSetMiddleware(loMiddleware)
+
+    return loServer
+end
+
+#-------------------------------------------------#
+# Main procedure
+#-------------------------------------------------#
+declare lpMain
+    declare loServer = lfInit()
+
+    declare lbSuccess = false;
+
+    repeat
+        declare lsEmail = input("Enter email: ")
+        declare lsPassword = input("Input password: ")
+        lbSuccess = loServer.fLogin(lsEmail, lsPassword)
+    until not lbSuccess
+end
+
+lpMain()

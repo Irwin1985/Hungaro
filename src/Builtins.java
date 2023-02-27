@@ -1430,6 +1430,30 @@ public final class Builtins {
     * Map
     ***********************************************************************/
     private static void createMapBuiltins(Interpreter interpreter) {
+
+        // map put builtin function
+        interpreter.mapEnv.define("put", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(3);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("value");
+                    map.put(arguments.get(1), arguments.get(2));
+                }
+                return null;
+            }
+            
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+
         // map get builtin function
         interpreter.mapEnv.define("get", new CallableObject() {
             @Override
