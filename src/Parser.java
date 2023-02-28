@@ -897,6 +897,8 @@ public class Parser {
             consume(TokenType.LPAREN, "Expect '(' after Object constructor.");
             eatLeftParen = false;
             className = expression();
+            match(TokenType.COMMA); 
+            // eat ',' if there are more arguments eg: new object("class", arg1, arg2, ...)
         } else {
             // name.lexeme must be a valid class name
             if (name.category != Category.GLOBAL_CLASS && name.category != Category.LOCAL_CLASS) {

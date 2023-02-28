@@ -1,0 +1,136 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Abstract Factory
+    Description:
+        Abstract Factory patterns work around a super-factory which creates other factories. 
+        This factory is also called as factory of factories. This type of design pattern comes under 
+        creational pattern as this pattern provides one of the best ways to create an object.
+
+        In Abstract Factory pattern an interface is responsible for creating a factory of related 
+        objects without explicitly specifying their classes. Each generated factory can give the 
+        objects as per the Factory pattern. 
+           
+    Hugaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcShape
+    pDraw
+    end
+end
+
+declare lcRoundedRectangle as lcShape
+    pDraw
+        println("Inside RoundedRectangle::draw() method.")
+    end
+end
+
+declare lcRoundedSquare as lcShape
+    pDraw
+        println("Inside RoundedSquare::draw() method.")
+    end
+end
+
+declare lcRectangle as lcShape
+    pDraw
+        println("Inside Rectangle::draw() method.")
+    end
+end
+
+declare lcSquare as lcShape
+    pDraw
+        println("Inside Square::draw() method.")
+    end
+end
+
+declare lcAbstractFactory
+    fGetShape(psShapeType)    
+    end
+end
+
+declare lcShapeFactory as lcAbstractFactory
+    fGetShape(psShapeType)
+        if psShapeType == "RECTANGLE"
+            return new lcRectangle()
+        end
+
+        if psShapeType == "SQUARE"
+            return new lcSquare()
+        end
+
+        return null
+    end
+end
+
+declare lcRoundedShapeFactory as lcAbstractFactory
+    fGetShape(psShapeType)
+        if psShapeType == "RECTANGLE"
+            return new lcRoundedRectangle()
+        end
+
+        if psShapeType == "SQUARE"
+            return new lcRoundedSquare()
+        end
+
+        return null
+    end
+end
+
+declare lcFactoryProducer
+    fGetFactory(pbRounded)
+        if pbRounded
+            return new lcRoundedShapeFactory()
+        end
+
+        return new lcShapeFactory()
+    end
+end
+
+declare lpMain
+    # create an instance of lcFactoryProducer
+    declare loFactoryProducer = new lcFactoryProducer()
+    
+    # get shape factory
+    declare loShapeFactory = loFactoryProducer.fGetFactory(false)
+
+    # get an object of Shape Rectangle
+    declare loShape1 = loShapeFactory.fGetShape("RECTANGLE")
+
+    # call draw method of Shape Rectangle
+    loShape1.pDraw()
+
+    # get an object of Shape Square
+    declare loShape2 = loShapeFactory.fGetShape("SQUARE")
+
+    # call draw method of Shape Square
+    loShape2.pDraw()
+
+    # get shape factory
+    declare loRoundedShapeFactory = loFactoryProducer.fGetFactory(true)
+
+    # get an object of Shape Rectangle
+    declare loShape3 = loRoundedShapeFactory.fGetShape("RECTANGLE")
+
+    # call draw method of Shape Rectangle
+    loShape3.pDraw()
+
+    # get an object of Shape Square
+    declare loShape4 = loRoundedShapeFactory.fGetShape("SQUARE")
+
+    # call draw method of Shape Square
+    loShape4.pDraw()
+
+end
+
+lpMain()
+
+# Output
+# Inside Rectangle::draw() method.
+# Inside Square::draw() method.
+# Inside RoundedRectangle::draw() method.
+# Inside RoundedSquare::draw() method.
