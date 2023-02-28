@@ -1,0 +1,90 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Null Object
+    Description:
+        In Null Object pattern, a null object replaces check of NULL object instance. 
+        Instead of putting if check for a null value, Null Object reflects a do nothing 
+        relationship. Such Null object can also be used to provide default behaviour in case 
+        data is not available.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcAbstractCustomer
+    sName = ""
+    
+    fIsNill
+    end
+
+    fGetName
+    end
+end
+
+declare lcRealCustomer as lcAbstractCustomer
+    pInit(psName)
+        sName = psName
+    end
+
+    fGetName
+        return sName
+    end
+
+    fIsNill
+        return false
+    end
+end
+
+declare lcNullCustomer as lcAbstractCustomer
+    fGetName
+        return "Not Available in Customer Database"
+    end
+
+    fIsNill
+        return true
+    end
+end
+
+declare lcCustomerFactory
+    aNames = ["Rob", "Joe", "Julie"]
+
+    fGetCustomer(psName)
+        for lnI = 0 to aNames.len()-1
+            if aNames.get(lnI) == psName
+                return new lcRealCustomer(psName)
+            end
+        end
+        return new lcNullCustomer()
+    end
+end
+
+declare lpMain
+    declare loCustomerFactory = new lcCustomerFactory()
+
+    declare loCustomer1 = loCustomerFactory.fGetCustomer("Rob")
+    declare loCustomer2 = loCustomerFactory.fGetCustomer("Bob")
+    declare loCustomer3 = loCustomerFactory.fGetCustomer("Julie")
+    declare loCustomer4 = loCustomerFactory.fGetCustomer("Laura")
+
+    println("Customers")
+    println(loCustomer1.fGetName())
+    println(loCustomer2.fGetName())
+    println(loCustomer3.fGetName())
+    println(loCustomer4.fGetName())
+end
+
+lpMain()
+
+# Output
+
+# Customers
+# Rob
+# Not Available in Customer Database
+# Bob
+# Julie
+# Not Available in Customer Database

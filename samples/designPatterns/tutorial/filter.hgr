@@ -1,0 +1,187 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Filter
+    Description:
+        Filter pattern or Criteria pattern is a design pattern that enables developers to filter a 
+        set of objects using different criteria and chaining them in a decoupled way through logical 
+        operations. This type of design pattern comes under structural pattern as this pattern 
+        combines multiple criteria to obtain single criteria.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcPerson
+    sName = ""
+    sGender = ""
+    sMaritalStatus = ""
+
+    pInit(psName, psGender, psMaritalStatus)
+        sName = psName
+        sGender = psGender
+        sMaritalStatus = psMaritalStatus
+    end
+
+    fGetName
+        return sName
+    end
+
+    fGetGender
+        return sGender
+    end
+
+    fGetMaritalStatus
+        return sMaritalStatus
+    end
+end
+
+declare lcCriteria
+    fMeetCriteria(paPersons)
+        return paPersons
+    end
+end
+
+declare lcCriteriaMale as lcCriteria
+    fMeetCriteria(paPersons)
+        declare laMalePersons = []
+        for each lvPerson in paPersons
+            if lvPerson.fGetGender() == "MALE"
+                laMalePersons.push(lvPerson)
+            end
+        end
+
+        return laMalePersons
+    end
+end
+
+declare lcCriteriaFemale as lcCriteria
+    fMeetCriteria(paPersons)
+        declare laFemalePersons = []
+        for each lvPerson in paPersons
+            if lvPerson.fGetGender() == "FEMALE"
+                laFemalePersons.push(lvPerson)
+            end
+        end
+
+        return laFemalePersons
+    end
+end
+
+declare lcCriteriaSingle as lcCriteria
+    fMeetCriteria(paPersons)
+        declare laSinglePersons = []
+        for each lvPerson in paPersons
+            if lvPerson.fGetMaritalStatus() == "SINGLE"
+                laSinglePersons.push(lvPerson)
+            end
+        end
+
+        return laSinglePersons
+    end
+end
+
+declare lcAndCriteria as lcCriteria
+    oCriteria = null
+    oOtherCriteria = null
+    
+    pInit(poCriteria, poOtherCriteria)
+        oCriteria = poCriteria
+        oOtherCriteria = poOtherCriteria
+    end
+
+    fMeetCriteria(paPersons)
+        declare laFirstCriteriaPersons = oCriteria.fMeetCriteria(paPersons)
+        return oOtherCriteria.fMeetCriteria(laFirstCriteriaPersons)
+    end
+end
+
+declare lcOrCriteria as lcCriteria
+    oCriteria = null
+    oOtherCriteria = null
+    
+    pInit(poCriteria, poOtherCriteria)
+        oCriteria = poCriteria
+        oOtherCriteria = poOtherCriteria
+    end
+
+    fMeetCriteria(paPersons)
+        declare laFirstCriteriaItems = oCriteria.fMeetCriteria(paPersons)
+        declare laOtherCriteriaItems = oOtherCriteria.fMeetCriteria(paPersons)
+
+        for each lvPerson in laOtherCriteriaItems
+            if !laFirstCriteriaItems.contains(lvPerson)
+                laFirstCriteriaItems.push(lvPerson)
+            end
+        end
+
+        return laFirstCriteriaItems
+    end
+end
+
+declare lpPrintPersons(paPersons)
+    for each lvPerson in paPersons
+        println("Person: [Name : " & lvPerson.fGetName() & ", Gender: " & lvPerson.fGetGender() & ", Marital Status: " & lvPerson.fGetMaritalStatus() & "]")
+    end
+end
+
+declare lpMain
+    declare laPersons = []
+
+    laPersons.push(new lcPerson("Robert", "MALE", "SINGLE"))
+    laPersons.push(new lcPerson("John", "MALE", "MARRIED"))
+    laPersons.push(new lcPerson("Laura", "FEMALE", "MARRIED"))
+    laPersons.push(new lcPerson("Diana", "FEMALE", "SINGLE"))
+    laPersons.push(new lcPerson("Mike", "MALE", "SINGLE"))
+    laPersons.push(new lcPerson("Bobby", "MALE", "SINGLE"))
+
+    declare loMale = new lcCriteriaMale()
+    declare loFemale = new lcCriteriaFemale()
+    declare loSingle = new lcCriteriaSingle()
+    declare loSingleMale = new lcAndCriteria(loSingle, loMale)
+    declare loSingleOrFemale = new lcOrCriteria(loSingle, loFemale)
+
+    println("Males: ")
+    lpPrintPersons(loMale.fMeetCriteria(laPersons))
+
+    println("\nFemales: ")
+    lpPrintPersons(loFemale.fMeetCriteria(laPersons))
+
+    println("\nSingle Males: ")
+    lpPrintPersons(loSingleMale.fMeetCriteria(laPersons))
+
+    println("\nSingle Or Females: ")
+    lpPrintPersons(loSingleOrFemale.fMeetCriteria(laPersons))
+end
+
+lpMain()
+
+"""
+Output
+
+Person : [ Name : Robert, Gender : Male, Marital Status : Single ]
+Person : [ Name : John, Gender : Male, Marital Status : Married ]
+Person : [ Name : Mike, Gender : Male, Marital Status : Single ]
+Person : [ Name : Bobby, Gender : Male, Marital Status : Single ]
+
+Females: 
+Person : [ Name : Laura, Gender : Female, Marital Status : Married ]
+Person : [ Name : Diana, Gender : Female, Marital Status : Single ]
+
+Single Males: 
+Person : [ Name : Robert, Gender : Male, Marital Status : Single ]
+Person : [ Name : Mike, Gender : Male, Marital Status : Single ]
+Person : [ Name : Bobby, Gender : Male, Marital Status : Single ]
+
+Single Or Females: 
+Person : [ Name : Robert, Gender : Male, Marital Status : Single ]
+Person : [ Name : Diana, Gender : Female, Marital Status : Single ]
+Person : [ Name : Mike, Gender : Male, Marital Status : Single ]
+Person : [ Name : Bobby, Gender : Male, Marital Status : Single ]
+Person : [ Name : Laura, Gender : Female, Marital Status : Married ]
+
+"""

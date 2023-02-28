@@ -5,7 +5,7 @@
     faced during software development. These solutions were obtained by trial and error by 
     numerous software developers over quite a substantial period of time.
 
-    Pattern: Abstract Factory
+    Pattern: Singleton
     Description:
         Singleton pattern is one of the simplest design patterns in Java. This type of design pattern 
         comes under creational pattern as this pattern provides one of the best ways to create an object.
@@ -14,7 +14,7 @@
         that only single object gets created. This class provides a way to access its only object which 
         can be accessed directly without need to instantiate the object of the class. 
     
-    Hugaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
     Date: 2023-02-28
 """
 

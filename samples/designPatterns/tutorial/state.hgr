@@ -1,0 +1,79 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: State
+    Description:
+        In State pattern a class behavior changes based on its state. This type of design 
+        pattern comes under behavior pattern.
+
+        In State pattern, we create objects which represent various states and a context object 
+        whose behavior varies as its state object changes.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcState
+    pDoAction(poContext)
+    end
+end
+
+declare lcStartState as lcState
+    pDoAction(poContext)
+        println("Player is in start state")
+        poContext.pSetState(poThis)
+    end
+
+    fToString()
+        return "Start State"
+    end
+end
+
+declare lcStopState as lcState
+    pDoAction(poContext)
+        println("Player is in stop state")
+        poContext.pSetState(poThis)
+    end
+
+    fToString()
+        return "Stop State"
+    end
+end
+
+declare lcContext
+    oState = null
+
+    pSetState(poState)
+        oState = poState
+    end
+
+    fGetState
+        return oState
+    end
+end
+
+declare lpMain
+    declare loContext = new lcContext()
+
+    declare loStartState = new lcStartState()
+    loStartState.pDoAction(loContext)
+
+    println(loContext.fGetState().fToString())
+
+    declare loStopState = new lcStopState()
+    loStopState.pDoAction(loContext)
+
+    println(loContext.fGetState().fToString())
+end
+
+lpMain()
+
+# Output
+# Player is in start state
+# Start State
+# Player is in stop state
+# Stop State

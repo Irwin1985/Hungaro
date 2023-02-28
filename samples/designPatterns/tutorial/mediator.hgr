@@ -1,0 +1,59 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Mediator
+    Description:
+        Mediator pattern is used to reduce communication complexity between multiple 
+        objects or classes. This pattern provides a mediator class which normally handles 
+        all the communications between different classes and supports easy maintenance of 
+        the code by loose coupling. Mediator pattern falls under behavioral pattern category.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcChatRoom
+    pShowMessage(poUser, psMessage)
+        println("date: " & date() & " [" & poUser.fGetName() & "]: " & psMessage)
+    end
+end
+
+declare loChatRoom = new lcChatRoom()
+
+declare lcUser
+    sName = ""
+
+    pInit(psName)
+        sName = psName
+    end
+
+    fGetName
+        return sName
+    end
+
+    pSetName(psName)
+        sName = psName
+    end
+
+    pSendMessage(psMessage)
+        loChatRoom.pShowMessage(poThis, psMessage)
+    end
+end
+
+declare lpMain
+    declare loRobert = new lcUser("Robert")
+    declare loJohn = new lcUser("John")
+
+    loRobert.pSendMessage("Hi! John!")
+    loJohn.pSendMessage("Hello! Robert!")
+end
+
+lpMain()
+
+# Output
+# 2023-02-28 [Robert]: Hi! John!
+# 2023-02-28 [John]: Hello! Robert!

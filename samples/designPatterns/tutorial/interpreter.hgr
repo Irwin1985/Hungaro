@@ -1,0 +1,91 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Interpreter
+    Description:
+        Interpreter pattern provides a way to evaluate language grammar or expression. 
+        This type of pattern comes under behavioral pattern. This pattern involves 
+        implementing an expression interface which tells to interpret a particular context. 
+        This pattern is used in SQL parsing, symbol processing engine etc.
+        
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcExpression
+    fInterpret(psContext)
+    end
+end
+
+declare lcTerminalExpression as lcExpression
+    sData = ""
+
+    pInit(psData)
+        sData = psData
+    end
+
+    fInterpret(psContext)
+        return psContext.contains(sData)
+    end
+end
+
+declare lcOrExpression as lcExpression
+    oExpr1 = null
+    oExpr2 = null
+
+    pInit(poExpr1, poExpr2)
+        oExpr1 = poExpr1
+        oExpr2 = poExpr2
+    end
+
+    fInterpret(psContext)
+        return oExpr1.fInterpret(psContext) or oExpr2.fInterpret(psContext)
+    end
+end
+
+declare lcAndExpression as lcExpression
+    oExpr1 = null
+    oExpr2 = null
+
+    pInit(poExpr1, poExpr2)
+        oExpr1 = poExpr1
+        oExpr2 = poExpr2
+    end
+
+    fInterpret(psContext)
+        return oExpr1.fInterpret(psContext) and oExpr2.fInterpret(psContext)
+    end
+end
+
+declare lpMain
+    # Rule: Robert and John are male
+    declare lfGetMaleExpression
+        declare loRobert = new lcTerminalExpression("Robert")
+        declare loJohn = new lcTerminalExpression("John")
+        return new lcOrExpression(loRobert, loJohn)
+    end
+
+    # Rule: Julie is a married women
+    declare lfGetMarriedWomanExpression
+        declare loJulie = new lcTerminalExpression("Julie")
+        declare loMarried = new lcTerminalExpression("Married")
+        return new lcAndExpression(loJulie, loMarried)
+    end
+
+    declare loIsMale = lfGetMaleExpression()
+    declare loIsMarriedWoman = lfGetMarriedWomanExpression()
+
+    println("John is male? " & loIsMale.fInterpret("John"))
+    println("Julie is a married women? " & loIsMarriedWoman.fInterpret("Married Julie"))
+end
+
+lpMain()
+
+# Output
+# John is male? true
+# Julie is a married women? true

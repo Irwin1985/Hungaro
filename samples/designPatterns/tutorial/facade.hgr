@@ -1,0 +1,79 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Facade
+    Description:
+        Facade pattern hides the complexities of the system and provides an interface to 
+        the client using which the client can access the system. This type of design pattern 
+        comes under structural pattern as this pattern adds an interface to existing 
+        system to hide its complexities.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcShape
+    pDraw
+    end
+end
+
+declare lcRectangle as lcShape
+    pDraw
+        println("Rectangle::draw()")
+    end
+end
+
+declare lcSquare as lcShape
+    pDraw
+        println("Square::draw()")
+    end
+end
+
+declare lcCircle as lcShape
+    pDraw
+        println("Circle::draw()")
+    end
+end
+
+declare lcShapeMaker
+    oCircle = null
+    oRectangle = null
+    oSquare = null
+
+    pInit
+        oCircle = new lcCircle()
+        oRectangle = new lcRectangle()
+        oSquare = new lcSquare()
+    end
+
+    pDrawCircle
+        lcCircle.pDraw()
+    end
+
+    pDrawRectangle
+        lcRectangle.pDraw()
+    end
+
+    pDrawSquare
+        lcSquare.pDraw()
+    end
+end
+
+declare lpMain
+    declare loShapeMaker = new lcShapeMaker()
+
+    loShapeMaker.pDrawCircle()
+    loShapeMaker.pDrawRectangle()
+    loShapeMaker.pDrawSquare()
+end
+
+lpMain()
+
+# Output
+# Circle::draw()
+# Rectangle::draw()
+# Square::draw()

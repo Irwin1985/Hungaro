@@ -13,7 +13,7 @@
         In Factory pattern, we create object without exposing the creation logic to the client and refer 
         to newly created object using a common interface.    
 
-    Hugaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
     Date: 2023-02-28
 """
 

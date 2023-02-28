@@ -1,0 +1,109 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Chain of Responsibility
+    Description:
+        Chain of responsibility is used to achieve loose coupling in software design where a 
+        request from the client is passed to a chain of objects to process them. Then the 
+        object in the chain will decide themselves who will be processing the request and 
+        whether the request is required to be sent to the next object in the chain or not.
+        
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcAbstractLogger
+    nInfo = 1
+    nDebug = 2
+    nError = 3
+    nLevel = 0
+
+    # next element in chain or responsibility
+    oNextLogger = null
+
+    pSetNextLogger(poNextLogger)
+        oNextLogger = poNextLogger
+    end
+
+    pLogMessage(pnLevel, psMessage)        
+        if nLevel <= pnLevel
+            poThis.pWrite(psMessage) # we need to use poThis to avoid calling ourselves.
+        end
+        if oNextLogger != null            
+            oNextLogger.pLogMessage(pnLevel, psMessage)
+        end
+    end
+
+    pWrite(psMessage)  
+        # abstract method
+    end
+end
+
+declare lcConsoleLogger as lcAbstractLogger    
+
+    pInit(pnLevel)
+        nLevel = pnLevel
+    end
+
+    pWrite(psMessage)
+        println("Standard Console::Logger: " & psMessage)
+    end
+end
+
+declare lcErrorLogger as lcAbstractLogger
+
+    pInit(pnLevel)
+        nLevel = pnLevel
+    end
+
+    pWrite(psMessage)
+        println("Error Console::Logger: " & psMessage)
+    end
+end
+
+declare lcFileLogger as lcAbstractLogger
+
+    pInit(pnLevel)
+        nLevel = pnLevel
+    end
+
+    pWrite(psMessage)
+        println("File::Logger: " & psMessage)
+    end
+end
+
+declare lpMain
+    declare loAbstractLogger = new lcAbstractLogger()
+
+    declare lfGetChainOfLoggers
+        declare loErrorLogger = new lcErrorLogger(loAbstractLogger.nError)
+        declare loFileLogger = new lcFileLogger(loAbstractLogger.nDebug)
+        declare loConsoleLogger = new lcConsoleLogger(loAbstractLogger.nInfo)
+
+        loErrorLogger.pSetNextLogger(loFileLogger)
+        loFileLogger.pSetNextLogger(loConsoleLogger)
+
+        return loErrorLogger
+    end
+
+    declare loLoggerChain = lfGetChainOfLoggers()        
+
+    loLoggerChain.pLogMessage(loAbstractLogger.nInfo, "This is an information.")
+    loLoggerChain.pLogMessage(loAbstractLogger.nDebug, "This is an debug level information.")
+    loLoggerChain.pLogMessage(loAbstractLogger.nError, "This is an error information.")
+end
+
+lpMain()
+
+# Output:
+# Standard Console::Logger: This is an information.
+# File::Logger: This is an debug level information.
+# Standard Console::Logger: This is an debug level information.
+# Error Console::Logger: This is an error information.
+# File::Logger: This is an error information.
+# Standard Console::Logger: This is an error information.

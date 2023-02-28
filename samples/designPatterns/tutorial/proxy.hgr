@@ -1,0 +1,72 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Proxy
+    Description:
+        In proxy pattern, a class represents functionality of another class. 
+        This type of design pattern comes under structural pattern.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcImage
+    pDisplay
+    end
+end
+
+declare lcRealImage as lcImage
+    sFileName = ""
+
+    pInit(psFileName)
+        sFileName = psFileName
+        pLoadFromDisk()        
+    end
+
+    pDisplay
+        println("Displaying " & sFileName)
+    end
+
+    pLoadFromDisk
+        println("Loading " & sFileName)
+    end
+end
+
+declare lcProxyImage as lcImage
+    oRealImage = null
+    sFileName = ""
+
+    pInit(psFileName)
+        sFileName = psFileName
+    end
+
+    pDisplay
+        if oRealImage == null
+            oRealImage = new lcRealImage(sFileName)
+        end
+        oRealImage.pDisplay()
+    end
+end
+
+declare lpMain
+    declare loImage = new lcProxyImage("test_10mb.jpg")
+
+    # Image will be loaded from disk
+    loImage.pDisplay()
+    println("")
+
+    # Image will not be loaded from disk
+    loImage.pDisplay()
+end
+
+lpMain()
+
+# Output:
+# Loading test_10mb.jpg
+# Displaying test_10mb.jpg
+#
+# Displaying test_10mb.jpg

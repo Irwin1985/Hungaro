@@ -1,0 +1,89 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Visitor
+    Description:
+        In Visitor pattern, we use a visitor class which changes the executing algorithm of an element 
+        class. By this way, execution algorithm of element can vary as and when visitor varies. 
+        This pattern comes under behavior pattern category. As per the pattern, element object has 
+        to accept the visitor object so that visitor object handles the operation on the element object.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcComputerPart
+    pAccept(poComputerPartVisitor)
+    end
+
+    pDisplay
+    end
+end
+
+declare lcKeyboard as lcComputerPart
+    pAccept(poComputerPartVisitor)
+        poComputerPartVisitor.pVisit(poThis)
+    end
+
+    pDisplay
+        println("Displaying Keyboard.")
+    end
+end
+
+declare lcMonitor as lcComputerPart
+    pAccept(poComputerPartVisitor)
+        poComputerPartVisitor.pVisit(poThis)
+    end
+
+    pDisplay
+        println("Displaying Monitor.")
+    end
+end
+
+declare lcMouse as lcComputerPart
+    pAccept(poComputerPartVisitor)
+        poComputerPartVisitor.pVisit(poThis)
+    end
+
+    pDisplay
+        println("Displaying Mouse.")
+    end
+end
+
+declare lcComputer as lcComputerPart
+    aParts = [new lcMouse(), new lcKeyboard(), new lcMonitor()]
+
+    
+    pAccept(poComputerPartVisitor)
+        for each lvPart in aParts
+            lvPart.pAccept(poComputerPartVisitor)
+        end
+        poComputerPartVisitor.pVisit(poThis)
+    end
+
+    pDisplay
+        println("Displaying Computer.")
+    end
+end
+
+declare lcComputerPartVisitor
+    pVisit(poComputerPart)
+    end
+end
+
+declare lcComputerPartDisplayVisitor as lcComputerPartVisitor
+    pVisit(poComputerPart)
+        poComputerPart.pDisplay()
+    end
+end
+
+declare lpMain
+    declare loComputer = new lcComputer()
+    loComputer.pAccept(new lcComputerPartDisplayVisitor())
+end
+
+lpMain()

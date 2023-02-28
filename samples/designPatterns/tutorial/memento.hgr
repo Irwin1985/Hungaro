@@ -1,0 +1,88 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Memento
+    Description:
+        Memento pattern uses three actor classes. Memento contains state of an object 
+        to be restored. Originator creates and stores states in Memento objects and Caretaker 
+        object is responsible to restore object state from Memento. We have created 
+        classes Memento, Originator and CareTaker.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcMememto
+    sState = ""
+
+    pInit(psState)
+        sState = psState
+    end
+
+    fGetState()
+        return sState
+    end
+end
+
+declare lcOriginator
+    sState = ""
+
+    pSetState(psState)
+        sState = psState
+    end
+
+    fGetState()
+        return sState
+    end
+
+    fSaveStateToMemento()
+        return new lcMememto(sState)
+    end
+
+    pGetStateFromMemento(poMemento)
+        sState = poMemento.fGetState()
+    end
+end
+
+declare lcCareTaker
+    aMementoList = []
+
+    pAdd(poState)
+        aMementoList.push(poState)
+    end
+
+    fGet(pnIndex)
+        return aMementoList[pnIndex]
+    end
+end
+
+declare lpMain
+    declare loOriginator = new lcOriginator()
+    declare loCareTaker = new lcCareTaker()
+
+    loOriginator.pSetState("State #1")
+    loOriginator.pSetState("State #2")
+    loCareTaker.pAdd(loOriginator.fSaveStateToMemento())
+
+    loOriginator.pSetState("State #3")
+    loCareTaker.pAdd(loOriginator.fSaveStateToMemento())
+
+    loOriginator.pSetState("State #4")
+    println("Current State: " & loOriginator.fGetState())
+
+    loOriginator.pGetStateFromMemento(loCareTaker.fGet(0))
+    println("First saved State: " & loOriginator.fGetState())
+    loOriginator.pGetStateFromMemento(loCareTaker.fGet(1))
+    println("Second saved State: " & loOriginator.fGetState())
+end
+
+lpMain()
+
+# Output
+# Current State: State #4
+# First saved State: State #2
+# Second saved State: State #3

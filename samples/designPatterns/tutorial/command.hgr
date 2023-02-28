@@ -1,0 +1,96 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Command
+    Description:
+        Command pattern is a data driven design pattern and falls under behavioral 
+        pattern category. A request is wrapped under an object as command and passed to 
+        invoker object. Invoker object looks for the appropriate object which can handle 
+        this command and passes the command to the corresponding object which executes 
+        the command.
+        
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+# lcOrder class (acts as an interface)
+declare lcOder
+    pExecute
+    end
+end
+
+# lcStock class: a request class
+declare lcStock
+    sName = "ABC"
+    nQuantity = 10
+
+    pBuy
+        println("Stock [Name: " & sName & ", Quantity: " & nQuantity & "] bought")
+    end
+
+    pSell
+        println("Stock [Name: " & sName & ", Quantity: " & nQuantity & "] sold")
+    end
+end
+
+# lcBuyStock class: a concrete command class
+declare lcBuyStock as lcOder
+    oAbcStock = null
+
+    pInit(poAbcStock)
+        oAbcStock = poAbcStock
+    end
+
+    pExecute
+        oAbcStock.pBuy()
+    end
+end
+
+# lcSellStock class: a concrete command class
+declare lcSellStock as lcOder
+    oAbcStock = null
+
+    pInit(poAbcStock)
+        oAbcStock = poAbcStock
+    end
+
+    pExecute
+        oAbcStock.pSell()
+    end
+end
+
+# lcBroker class: a invoker class
+declare lcBroker
+    aOrderList = []
+
+    pTakeOrder(poOrder)
+        aOrderList.push(poOrder)
+    end
+
+    pPlaceOrders
+        for each lvOrder in aOrderList
+            lvOrder.pExecute()
+        end
+        aOrderList.clear()
+    end
+end
+
+# lpMain procedure
+declare lpMain
+    declare loAbcStock = new lcStock()
+    declare loBuyStockOrder = new lcBuyStock(loAbcStock)
+    declare loSellStockOrder = new lcSellStock(loAbcStock)
+
+    declare loBroker = new lcBroker()
+    loBroker.pTakeOrder(loBuyStockOrder)
+    loBroker.pTakeOrder(loSellStockOrder)
+
+    loBroker.pPlaceOrders()
+end
+
+lpMain()

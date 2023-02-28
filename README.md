@@ -31,6 +31,7 @@ A hungarian notation based programming language.
 - [x] String builtins
 - [x] Function builtins
 - [x] Native builtins
+- [ ] Class reflection
 
 ### Syntax
 

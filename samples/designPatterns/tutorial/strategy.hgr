@@ -1,0 +1,67 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Strategy
+    Description:
+        In Strategy pattern, a class behavior or its algorithm can be changed at run time. 
+        This type of design pattern comes under behavior pattern.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcStrategy
+    fDoOperation(pnNum1, pnNum2)
+    end
+end
+
+declare lcOperationAdd as lcStrategy
+    fDoOperation(pnNum1, pnNum2)
+        return pnNum1 + pnNum2
+    end
+end
+
+declare lcOperationSubstract as lcStrategy
+    fDoOperation(pnNum1, pnNum2)
+        return pnNum1 - pnNum2
+    end
+end
+
+declare lcOperationMultiply as lcStrategy
+    fDoOperation(pnNum1, pnNum2)
+        return pnNum1 * pnNum2
+    end
+end
+
+declare lcContext as lcStrategy
+    oStrategy = null
+    pInit(poStrategy)
+        oStrategy = poStrategy
+    end
+
+    fExecuteStrategy(pnNum1, pnNum2)
+        return oStrategy.fDoOperation(pnNum1, pnNum2)
+    end
+end
+
+declare lpMain
+    declare loContext = new lcContext(new lcOperationAdd())
+    println("10 + 5 = " & loContext.fExecuteStrategy(10, 5))
+
+    loContext = new lcContext(new lcOperationSubstract())
+    println("10 - 5 = " & loContext.fExecuteStrategy(10, 5))
+
+    loContext = new lcContext(new lcOperationMultiply())
+    println("10 * 5 = " & loContext.fExecuteStrategy(10, 5))
+end
+
+lpMain()
+
+# Output
+# 10 + 5 = 15
+# 10 - 5 = 5
+# 10 * 5 = 50

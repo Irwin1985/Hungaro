@@ -1,0 +1,128 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Prototype
+    Description:
+        Prototype pattern refers to creating duplicate object while keeping performance in 
+        mind. This type of design pattern comes under creational pattern as this pattern 
+        provides one of the best ways to create an object.
+
+        This pattern involves implementing a prototype interface which tells to create 
+        a clone of the current object. This pattern is used when creation of object directly 
+        is costly. For example, an object is to be created after a costly database operation. 
+        We can cache the object, returns its clone on next request and update the database 
+        as and when needed thus reducing database calls.
+    
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcShape
+    sID = ""
+    sType = ""
+
+    pDraw
+    end
+
+    fGetType
+        return sType
+    end
+
+    fGetID
+        return sID
+    end
+
+    pSetID(psID)
+        sID = psID
+    end
+
+    fClone
+        declare loClone = null
+        try
+            loClone = new lcShape()
+            loClone.sID = sID
+            loClone.sType = sType            
+        catch
+            println("CATCH ERROR: " & loEx.message)
+        end
+        return loClone
+    end
+end
+
+declare lcRectangle as lcShape
+    pInit
+        sType = "Rectangle"
+    end
+
+    pDraw
+        println("Inside Rectangle::draw() method.")
+    end
+end
+
+declare lcSquare as lcShape
+    pInit
+        sType = "Square"
+    end
+
+    pDraw
+        println("Inside Square::draw() method.")
+    end
+end
+
+declare lcCircle as lcShape
+    pInit
+        sType = "Circle"
+    end
+
+    pDraw
+        println("Inside Circle::draw() method.")
+    end
+end
+
+declare lcShapeCache
+    mShapeMap = {}
+    
+    fGetShape(psShapeId)
+        declare loCachedShape = mShapeMap[psShapeId]
+        return loCachedShape.fClone()
+    end
+
+    pLoadCache
+        declare loCircle = new lcCircle()
+        loCircle.pSetID("1")
+        mShapeMap[loCircle.fGetID()] = loCircle
+
+        declare loSquare = new lcSquare()
+        loSquare.pSetID("2")
+        mShapeMap[loSquare.fGetID()] = loSquare
+
+        declare loRectangle = new lcRectangle()
+        loRectangle.pSetID("3")
+        mShapeMap[loRectangle.fGetID()] = loRectangle
+    end
+end
+
+declare lpMain
+    declare loShapeCache = new lcShapeCache()
+    loShapeCache.pLoadCache()
+
+    declare loClonedShape1 = loShapeCache.fGetShape("1")
+    println("Shape : " & loClonedShape1.fGetType())
+
+    declare loClonedShape2 = loShapeCache.fGetShape("2")
+    println("Shape : " & loClonedShape2.fGetType())
+
+    declare loClonedShape3 = loShapeCache.fGetShape("3")
+    println("Shape : " & loClonedShape3.fGetType())
+end
+
+lpMain()
+
+# Output
+# Shape : Circle
+# Shape : Square
+# Shape : Rectangle

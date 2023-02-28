@@ -1,0 +1,121 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Flyweight
+    Description:
+        Flyweight is a structural design pattern that lets you fit more objects into the 
+        available amount of RAM by sharing common parts of state between multiple objects 
+        instead of keeping all of the data in each object.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcShape
+    pDraw
+    end
+end
+
+declare lcCircle as lcShape
+    sColor = ""
+    nX = 0
+    nY = 0
+    nRadius = 0
+    
+    pInit(psColor)
+        sColor = psColor
+    end
+
+    pSetX(pnX)
+        nX = pnX
+    end
+
+    pSetY(pnY)
+        nY = pnY
+    end
+
+    pSetRadius(pnRadius)
+        nRadius = pnRadius
+    end
+
+    pDraw
+        println("Circle: Draw() [Color : " & sColor & ", x : " & nX & ", y :" & nY & ", radius :" & nRadius & "]")
+    end
+end
+
+declare lcShapeFactory
+    mCircleMap = {}
+
+    fGetCircle(psColor)
+        declare loCircle = mCircleMap.get(psColor)
+        if loCircle == null
+            loCircle = new lcCircle(psColor)
+            mCircleMap.put(psColor, loCircle)
+            println("Creating circle of color : " & psColor)
+        end
+        return loCircle
+    end
+end
+
+declare lpMain
+    declare laColors = ["Red", "Green", "Blue", "White", "Black"]
+    declare loShapeFactory = new lcShapeFactory()
+
+    # Internal function
+    declare lfGetRandomColor        
+        return laColors[int(rand(0, 4))]
+    end
+
+    # Internal function
+    declare lfGetRandomX
+        return int(rand(1, 100))
+    end
+
+    # Internal function
+    declare lfGetRandomY
+        return int(rand(1, 100))
+    end
+
+    for lnI = 0 to 19
+        declare loCircle = loShapeFactory.fGetCircle(lfGetRandomColor())
+        loCircle.pSetX(lfGetRandomX())
+        loCircle.pSetY(lfGetRandomY())
+        loCircle.pSetRadius(100)
+        loCircle.pDraw()
+    end
+end
+
+lpMain()
+
+"""
+Output
+Creating circle of color : Black
+Circle: Draw() [Color : Black, x : 36, y :71, radius :100
+Creating circle of color : Green
+Circle: Draw() [Color : Green, x : 27, y :27, radius :100
+Creating circle of color : White
+Circle: Draw() [Color : White, x : 64, y :10, radius :100
+Creating circle of color : Red
+Circle: Draw() [Color : Red, x : 15, y :44, radius :100
+Circle: Draw() [Color : Green, x : 19, y :10, radius :100
+Circle: Draw() [Color : Green, x : 94, y :32, radius :100
+Circle: Draw() [Color : White, x : 69, y :98, radius :100
+Creating circle of color : Blue
+Circle: Draw() [Color : Blue, x : 13, y :4, radius :100
+Circle: Draw() [Color : Green, x : 21, y :21, radius :100
+Circle: Draw() [Color : Blue, x : 55, y :86, radius :100
+Circle: Draw() [Color : White, x : 90, y :70, radius :100
+Circle: Draw() [Color : Green, x : 78, y :3, radius :100
+Circle: Draw() [Color : Green, x : 64, y :89, radius :100
+Circle: Draw() [Color : Blue, x : 3, y :91, radius :100
+Circle: Draw() [Color : Blue, x : 62, y :82, radius :100
+Circle: Draw() [Color : Green, x : 97, y :61, radius :100
+Circle: Draw() [Color : Green, x : 86, y :12, radius :100
+Circle: Draw() [Color : Green, x : 38, y :93, radius :100
+Circle: Draw() [Color : Red, x : 76, y :82, radius :100
+Circle: Draw() [Color : Blue, x : 95, y :82, radius :100
+"""

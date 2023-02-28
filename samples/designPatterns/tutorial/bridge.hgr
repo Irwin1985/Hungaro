@@ -1,0 +1,82 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Bridge
+    Description:
+        Bridge is used when we need to decouple an abstraction from its implementation so 
+        that the two can vary independently. 
+        This type of design pattern comes under structural pattern as this pattern decouples 
+        implementation class and 
+        abstract class by providing a bridge structure between them.
+
+        This pattern involves an interface which acts as a bridge which makes the 
+        functionality of concrete classes 
+        independent from interface implementer classes. Both types of classes can be 
+        altered structurally without affecting each other.    
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcDrawAPI
+    pDrawCircle(pnRadius, pnX, pnY)
+    end
+end
+
+declare lcRedCircle as lcDrawAPI
+    pDrawCircle(pnRadius, pnX, pnY)
+        println("Drawing Circle[ color: red, radius: " & pnRadius & ", x: " & pnX & ", " & pnY & "]")
+    end
+end
+
+declare lcGreenCircle as lcDrawAPI
+    pDrawCircle(pnRadius, pnX, pnY)
+        println("Drawing Circle[ color: green, radius: " & pnRadius & ", x: " & pnX & ", " & pnY & "]")
+    end
+end
+
+declare lcShape
+    oDrawAPI = null
+
+    pInit(poDrawAPI)
+        oDrawAPI = poDrawAPI
+    end
+
+    pDraw()
+    end
+end
+
+declare lcCircle as lcShape
+    nX = 0
+    nY = 0
+    nRadius = 0
+
+    pInit(pnX, pnY, pnRadius, poDrawAPI)
+        super(poDrawAPI)
+        nX = pnX
+        nY = pnY
+        nRadius = pnRadius
+    end
+
+    pDraw
+        oDrawAPI.pDrawCircle(nRadius, nX, nY)
+    end
+end
+
+declare lpMain
+    declare loRedCircle = new lcCircle(100, 100, 10, new lcRedCircle())
+    declare loGreenCircle = new lcCircle(100, 100, 10, new lcGreenCircle())
+
+    loRedCircle.pDraw()
+    loGreenCircle.pDraw()
+end
+
+lpMain()
+
+# Output
+# Drawing Circle[ color: red, radius: 10, x: 100, 100]
+# Drawing Circle[ color: green, radius: 10, x: 100, 100]

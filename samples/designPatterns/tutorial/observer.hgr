@@ -1,0 +1,106 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Observer
+    Description:
+        Observer pattern is used when there is one-to-many relationship between objects 
+        such as if one object is modified, its depenedent objects are to be notified 
+        automatically. Observer pattern falls under behavioral pattern category.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcSubject
+    aObservers = []
+    nState = 0
+
+    fGetState
+        return nState
+    end
+
+    pSetState(pnState)
+        nState = pnState
+        pNotifyAllObservers()
+    end
+
+    pAttach(poObserver)
+        aObservers.push(poObserver)
+    end
+
+    pNotifyAllObservers
+        for each lvObserver in aObservers
+            lvObserver.pUpdate()
+        end
+    end
+end
+
+declare lcObserver
+    oSubject = null
+
+    pUpdate
+    end
+end
+
+declare lcBinaryObserver as lcObserver
+    pInit(poSubject)
+        oSubject = poSubject
+        oSubject.pAttach(poThis)
+    end
+
+    pUpdate
+        println("Binary String: " & oSubject.fGetState())
+    end
+end
+
+declare lcOctalObserver as lcObserver
+    pInit(poSubject)
+        oSubject = poSubject
+        oSubject.pAttach(poThis)
+    end
+
+    pUpdate
+        println("Octal String: " & oSubject.fGetState())
+    end
+end
+
+declare lcHexaObserver as lcObserver
+    pInit(poSubject)
+        oSubject = poSubject
+        oSubject.pAttach(poThis)
+    end
+
+    pUpdate
+        println("Hex String: " & oSubject.fGetState())
+    end
+end
+
+declare lpMain
+    declare loSubject = new lcSubject()
+
+    new lcHexaObserver(loSubject)
+    new lcOctalObserver(loSubject)
+    new lcBinaryObserver(loSubject)
+
+    println("First state change: 15")
+    loSubject.pSetState(15)
+    println("Second state change: 10")
+    loSubject.pSetState(10)
+end
+
+lpMain()
+
+# Output
+# First state change: 15
+# Hex String: 15
+# Octal String: 17
+# Binary String: 1111
+# Second state change: 10
+# Hex String: 10
+
+# Octal String: 12
+# Binary String: 1010

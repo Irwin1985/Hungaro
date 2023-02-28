@@ -1,0 +1,82 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Template
+    Description:
+        In Template pattern, an abstract class exposes defined way(s)/template(s) to execute 
+        its methods. Its subclasses can override the method implementation as per need but 
+        the invocation is to be in the same way as defined by an abstract class. This pattern 
+        comes under behavior pattern category.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcGame
+    pInitialize
+    end
+
+    pStartPlay
+    end
+
+    pEndPlay
+    end
+
+    pPlay
+        # call method with 'poThis' to avoid calling the method of the current class
+        poThis.pInitialize()
+        poThis.pStartPlay()
+        poThis.pEndPlay()
+    end
+end
+
+declare lcCricket as lcGame
+    pInitialize
+        println("Cricket Game Initialized! Start playing.")
+    end
+
+    pStartPlay
+        println("Cricket Game Started. Enjoy the game!")
+    end
+
+    pEndPlay
+        println("Cricket Game Finished!")
+    end
+end
+
+declare lcFootball as lcGame
+    pInitialize
+        println("Football Game Initialized! Start playing.")
+    end
+
+    pStartPlay
+        println("Football Game Started. Enjoy the game!")
+    end
+
+    pEndPlay
+        println("Football Game Finished!")
+    end
+end
+
+declare lpMain
+    declare loGame = new lcCricket()
+    loGame.pPlay()
+    println()
+    loGame = new lcFootball()
+    loGame.pPlay()
+end
+
+lpMain()
+
+# Output
+# Cricket Game Initialized! Start playing.
+# Cricket Game Started. Enjoy the game!
+# Cricket Game Finished!
+#
+# Football Game Initialized! Start playing.
+# Football Game Started. Enjoy the game!
+# Football Game Finished!

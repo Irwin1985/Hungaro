@@ -15,7 +15,7 @@
         objects without explicitly specifying their classes. Each generated factory can give the 
         objects as per the Factory pattern. 
            
-    Hugaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
     Date: 2023-02-28
 """
 

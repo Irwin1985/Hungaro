@@ -1,0 +1,121 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Adapter
+    Description:
+        Adapter pattern works as a bridge between two incompatible interfaces. This type of 
+        design pattern comes under structural pattern as this pattern combines the 
+        capability of two independent interfaces.
+
+        This pattern involves a single class which is responsible to join functionalities 
+        of independent or incompatible interfaces. A real life example could be a case of 
+        card reader which acts as an adapter between memory card and a laptop. You plugin 
+        the memory card into card reader and card reader into the laptop so that memory 
+        card can be read via laptop.
+
+        We are demonstrating use of Adapter pattern via following example in which an audio 
+        player device can play mp3 files only and wants to use an advanced audio player 
+        capable of playing vlc and mp4 files.        
+    
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcMediaPlayer
+    pPlay(psAudioType, psFileName)
+    end
+end
+
+declare lcAdvancedMediaPlayer
+    pPlayVlc(psFileName)
+    end
+
+    pPlayMp4(psFileName)
+    end
+end
+
+declare lcVlcPlayer
+    pPlayVlc(psFileName)
+        println("Playing vlc file. Name: " & psFileName)
+    end
+
+    pPlayMp4(psFileName)
+        # do nothing
+    end
+end
+
+declare lcMp4Player
+    pPlayVlc(psFileName)
+        # do nothing
+    end
+
+    pPlayMp4(psFileName)
+        println("Playing mp4 file. Name: " & psFileName)
+    end
+end
+
+declare lcMediaAdapter
+    oAdvancedMusicPlayer = null
+
+    pInit(psAudioType)
+        if psAudioType == "vlc"
+            oAdvancedMusicPlayer = new lcVlcPlayer()
+        else
+            if psAudioType == "mp4"
+                oAdvancedMusicPlayer = new lcMp4Player()
+            end
+        end
+    end
+
+
+    pPlay(psAudioType, psFileName)
+        if psAudioType == "vlc"            
+            oAdvancedMusicPlayer.pPlayVlc(psFileName)
+        else
+            if psAudioType == "mp4"
+                oAdvancedMusicPlayer.pPlayMp4(psFileName)
+            else
+                println("Invalid media. " & psAudioType & " format not supported")
+            end
+        end
+    end
+end
+
+declare lcAudioPlayer
+    oMediaAdapter = null
+
+    pPlay(psAudioType, psFileName)
+        # inbuilt support to play mp3 music files
+        if psAudioType == "mp3"
+            println("Playing mp3 file. Name: " & psFileName)
+        else
+            if psAudioType == "vlc" or psAudioType == "mp4"
+                # mediaAdapter is providing support to play other file formats
+                oMediaAdapter = new lcMediaAdapter(psAudioType)
+                oMediaAdapter.pPlay(psAudioType, psFileName)
+            else
+                println("Invalid media. " & psAudioType & " format not supported")
+            end
+        end
+    end
+end
+
+declare lpMain
+    declare loAudioPlayer = new lcAudioPlayer()
+    loAudioPlayer.pPlay("mp3", "beyond the horizon.mp3")
+    loAudioPlayer.pPlay("mp4", "alone.mp4")
+    loAudioPlayer.pPlay("vlc", "far far away.vlc")
+    loAudioPlayer.pPlay("avi", "mind me.avi")    
+end
+
+lpMain()
+
+# Output
+# Playing mp3 file. Name: beyond the horizon.mp3
+# Playing mp4 file. Name: alone.mp4
+# Playing vlc file. Name: far far away.vlc
+# Invalid media. avi format not supported

@@ -1,0 +1,94 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Decorator
+    Description:
+        Decorator pattern allows a user to add new functionality to an existing object without 
+        altering its structure. This type of design pattern comes under structural pattern as 
+        this pattern acts as a wrapper to existing class.
+
+        This pattern creates a decorator class which wraps the original class and provides 
+        additional functionality keeping class methods signature intact.
+        We are demonstrating the use of decorator pattern via following example in which we 
+        will decorate a shape with some color without alter shape class.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcShape
+    pDraw
+    end
+end
+
+declare lcRectangle as lcShape
+    pDraw
+        println("Shape::Rectangle")
+    end
+end
+
+declare lcCircle as lcShape
+    pDraw
+        println("Shape::Circle")
+    end
+end
+
+declare lcShapeDecorator as lcShape
+    oDecoratedShape = null
+
+    pInit(poDecoratedShape)
+        oDecoratedShape = poDecoratedShape
+    end
+
+    pDraw
+        oDecoratedShape.pDraw()        
+    end
+end
+
+declare lcRedShapeDecorator as lcShapeDecorator
+    pInit(poDecoratedShape)
+        super(poDecoratedShape)
+    end
+
+    pDraw
+        oDecoratedShape.pDraw()
+        pSetRedBorder(oDecoratedShape)
+    end
+
+    pSetRedBorder(poDecoratedShape)
+        println("Border Color: Red")
+    end
+end
+
+declare lpMain
+    declare loCircle = new lcCircle()
+    declare loRedCircle = new lcRedShapeDecorator(new lcCircle())
+
+    declare loRedRectangle = new lcRedShapeDecorator(new lcRectangle())
+    println("Circle with normal border")
+    loCircle.pDraw()
+
+    println("\nCircle of red border")
+    loRedCircle.pDraw()
+
+    println("\nRectangle of red border")
+    loRedRectangle.pDraw()
+end
+
+lpMain()
+
+# Output
+# Circle with normal border
+# Shape::Circle
+
+# Circle of red border
+# Shape::Circle
+# Border Color: Red
+
+# Rectangle of red border
+# Shape::Rectangle
+# Border Color: Red

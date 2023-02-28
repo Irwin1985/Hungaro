@@ -1,8 +1,19 @@
 """
- Composite
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
 
- Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
- Date: 2023-02-28
+    Pattern: Composite
+    Description:
+        Composite pattern is used where we need to treat a group of objects in similar way 
+        as a single object. Composite pattern composes objects in term of a tree structure 
+        to represent part as well as whole hierarchy. This type of design pattern comes 
+        under structural pattern as this pattern creates a tree structure of group of objects.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
 """
 
 # Employee class

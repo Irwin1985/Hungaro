@@ -1,0 +1,172 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Builder
+    Description:
+        Builder pattern builds a complex object using simple objects and using a step by step
+        approach. This type of design pattern comes under creational pattern as this pattern 
+        provides one of the best ways to create an object.
+
+        A Builder class builds the final object step by step. This builder is independent of 
+        other objects. 
+    
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcItem
+    fName
+    end
+
+    fPacking
+    end
+
+    fPrice
+    end
+end
+
+declare lcPacking
+    fPack
+    end
+end
+
+declare lcWrapper as lcPacking
+    fPack
+        return "Wrapper"
+    end
+end
+
+declare lcBottle as lcPacking
+    fPack
+        return "Bottle"
+    end
+end
+
+declare lcBurger as lcItem
+    fPacking
+        return new lcWrapper()
+    end
+
+    fPrice
+    end
+end
+
+declare lcColdDrink as lcItem
+    fPacking
+        return new lcBottle()
+    end
+
+    fPrice
+    end
+end
+
+declare lcVegBurger as lcBurger
+    fName
+        return "Veg Burger"
+    end
+
+    fPrice
+        return 25.0
+    end
+end
+
+declare lcChickenBurger as lcBurger
+    fName
+        return "Chicken Burger"
+    end
+
+    fPrice
+        return 50.5
+    end
+end
+
+declare lcCoke as lcColdDrink
+    fName
+        return "Coke"
+    end
+
+    fPrice
+        return 30.0
+    end
+end
+
+declare lcPepsi as lcColdDrink
+    fName
+        return "Pepsi"
+    end
+
+    fPrice
+        return 35.0
+    end
+end
+
+declare lcMeal
+    aItems = []
+
+    pAddItem(poItem)
+        aItems.push(poItem)
+    end
+
+    fGetCost
+        declare lnCost = 0.0
+        for each lvItem in aItems
+            lnCost += lvItem.fPrice()
+        end
+        return lnCost
+    end
+
+    pShowItems
+        for each lvItem in aItems
+            print("Item: " & lvItem.fName())
+            print(", Packing: " & lvItem.fPacking().fPack())
+            print(", Price: " & lvItem.fPrice())
+        end
+    end
+end
+
+declare lcMealBuilder
+    fPrepareVegMeal
+        declare loMeal = new lcMeal()
+        loMeal.pAddItem(new lcVegBurger())
+        loMeal.pAddItem(new lcCoke())
+        return loMeal
+    end
+
+    fPrepareNonVegMeal
+        declare loMeal = new lcMeal()
+        loMeal.pAddItem(new lcChickenBurger())
+        loMeal.pAddItem(new lcPepsi())
+        return loMeal
+    end
+end
+
+declare lpMain
+    declare loMealBuilder = new lcMealBuilder()
+
+    declare loVegMeal = loMealBuilder.fPrepareVegMeal()
+    println("Veg Meal")
+    loVegMeal.pShowItems()
+    println("Total Cost: " & loVegMeal.fGetCost())
+
+    declare loNonVegMeal = loMealBuilder.fPrepareNonVegMeal()
+    println("\n\nNon-Veg Meal")
+    loNonVegMeal.pShowItems()
+    println("Total Cost: " & loNonVegMeal.fGetCost())
+end
+
+lpMain()
+
+# Output
+# Veg Meal
+# Item: Veg Burger, Packing: Wrapper, Price: 25
+# Item: Coke, Packing: Bottle, Price: 30
+# Total Cost: 55
+#
+# Non-Veg Meal
+# Item: Chicken Burger, Packing: Wrapper, Price: 50.5
+# Item: Pepsi, Packing: Bottle, Price: 35
+# Total Cost: 85.5

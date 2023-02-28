@@ -1,0 +1,78 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Iterator
+    Description:
+        Iterator pattern is very commonly used design pattern in Java and .Net programming 
+        environment. This pattern is used to get a way to access the elements of a collection 
+        object in sequential manner without any need to know its underlying representation.
+
+        Iterator pattern falls under behavioral pattern category.
+        
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-02-28
+"""
+
+declare lcIterator
+    fHasNext
+    end
+
+    fNext
+    end
+end
+
+declare lcContainer
+    fGetIterator
+    end
+end
+
+declare lcNameIterator as lcIterator
+    nIndex = 0
+    aNames = []
+    
+    pInit(paNames)
+        aNames = paNames
+    end
+
+    fHasNext
+        return nIndex < aNames.len()
+    end
+
+    fNext
+        if fHasNext()
+            nIndex += 1
+            return aNames[nIndex - 1]
+        end
+        return null
+    end
+end
+
+declare lcNameRepository as lcContainer
+    aNames = ["Robert", "John", "Julie", "Lora"]
+    
+    fGetIterator
+        return new lcNameIterator(aNames)
+    end
+end
+
+declare lpMain
+    declare loNamesRepository = new lcNameRepository()
+
+    declare loIter = loNamesRepository.fGetIterator()
+    while loIter.fHasNext()
+        println("Name: " & loIter.fNext())
+    end
+end
+
+lpMain()
+
+# Output
+# Name: Robert
+# Name: John
+# Name: Julie
+# Name: Lora
