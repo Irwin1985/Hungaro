@@ -1,0 +1,132 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Service Locator
+    Description:
+        The service locator design pattern is used when we want to locate various services using 
+        JNDI lookup. Considering high cost of looking up JNDI for a service, Service Locator pattern 
+        makes use of caching technique. For the first time a service is required, Service Locator 
+        looks up in JNDI and caches the service object. Further lookup or same service via Service 
+        Locator is done in its cache which improves the performance of application to great extent. 
+        Following are the entities of this type of design pattern.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-03-01
+"""
+
+declare lcService
+    fGetName
+    end
+
+    pExecute
+    end
+end
+
+declare lcService1 as lcService
+    pExecute
+        println("Executing Service1")
+    end
+
+    fGetName
+        return "Service1"
+    end
+end
+
+declare lcService2 as lcService
+    pExecute
+        println("Executing Service2")
+    end
+
+    fGetName
+        return "Service2"
+    end
+end
+
+declare lcInitialContext
+    fLookup(psJndiName)
+        if psJndiName == "SERVICE1"
+            println("Looking up and creating a new Service1 object")
+            return new lcService1()
+        end
+        if psJndiName == "SERVICE2"
+            println("Looking up and creating a new Service2 object")
+            return new lcService2()
+        end
+        return null
+    end
+end
+
+declare lcCache
+    aServices = []
+
+    fGetService(psServiceName)
+        for each lvService in aServices
+            if lvService.fGetName() == psServiceName
+                println("Returning cached  " & psServiceName & " object")
+                return lvService
+            end
+        end
+        return null
+    end
+
+    pAddService(poNewService)
+        declare lbExists = false
+        
+        for each lvService in aServices
+            if lvService.fGetName() == poNewService.fGetName()
+                lbExists = true
+            end
+        end
+        if not lbExists            
+            aServices.push(poNewService)
+        end
+    end
+end
+
+declare lcServiceLocator
+    oCache = new lcCache()
+    
+    fGetService(psJndiName)
+        declare loService = oCache.fGetService(psJndiName)
+        if loService != null
+            return loService
+        end
+
+        declare loInitialContext = new lcInitialContext()
+        declare loService1 = loInitialContext.fLookup(psJndiName)
+        oCache.pAddService(loService1)
+        return loService1
+    end
+end
+
+declare lpMain
+    declare loServiceLocator = new lcServiceLocator()
+
+    declare loService = loServiceLocator.fGetService("SERVICE1")
+    loService.pExecute()
+
+    loService = loServiceLocator.fGetService("SERVICE2")
+    loService.pExecute()
+
+    loService = loServiceLocator.fGetService("SERVICE1")
+    loService.pExecute()
+
+    loService = loServiceLocator.fGetService("SERVICE2")
+    loService.pExecute()
+end
+
+lpMain()
+
+# Output
+# Looking up and creating a new Service1 object
+# Executing Service1
+# Looking up and creating a new Service2 object
+# Executing Service2
+# Returning cached  Service1 object
+# Executing Service1
+# Returning cached  Service2 object
+# Executing Service2

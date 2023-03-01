@@ -1,0 +1,108 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Intercepting Filter
+    Description:
+        The intercepting filter design pattern is used when we want to do some 
+        pre-processing / post-processing with request or response of the application. 
+        Filters are defined and applied on the request before passing the request to actual 
+        target application. Filters can do the authentication/ authorization/ logging or tracking 
+        of request and then pass the requests to corresponding handlers. Following are the 
+        entities of this type of design pattern.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-03-01
+"""
+
+declare lcFilter
+    pExecute(psRequest)
+    end
+end
+
+declare lcAuthenticationFilter as lcFilter
+    pExecute(psRequest)
+        println("Authenticating request: " & psRequest)
+    end
+end
+
+declare lcDebugFilter as lcFilter
+    pExecute(psRequest)
+        println("request log: " & psRequest)
+    end
+end
+
+declare lcTarget
+    pExecute(psRequest)
+        println("Executing request: " & psRequest)
+    end
+end
+
+declare lcFilterChain
+    aFilters = []
+    oTarget = null
+
+    pAddFilter(poFilter)
+        aFilters.push(poFilter)
+    end
+
+    pExecute(psRequest)
+        for each lvFilter in aFilters
+            lvFilter.pExecute(psRequest)
+        end        
+        oTarget.pExecute(psRequest)
+    end
+
+    pSetTarget(poTarget)
+        oTarget = poTarget
+    end
+end
+
+declare lcFilterManager
+    oFilterChain = null
+
+    pInit(poTarget)
+        oFilterChain = new lcFilterChain()
+        oFilterChain.pSetTarget(poTarget)
+    end
+
+    pSetFilter(poFilter)
+        oFilterChain.pAddFilter(poFilter)
+    end
+
+    pFilterRequest(psRequest)
+        oFilterChain.pExecute(psRequest)
+    end
+end
+
+declare lcClient
+    oFilterManager = null
+
+    pSetFilterManager(poFilterManager)
+        oFilterManager = poFilterManager
+    end
+
+    pSendRequest(psRequest)
+        oFilterManager.pFilterRequest(psRequest)
+    end
+end
+
+declare lpMain
+    declare loFilterManager = new lcFilterManager(new lcTarget())
+    loFilterManager.pSetFilter(new lcAuthenticationFilter())
+    loFilterManager.pSetFilter(new lcDebugFilter())
+
+    declare loClient = new lcClient()
+    loClient.pSetFilterManager(loFilterManager)
+    loClient.pSendRequest("HOME")
+end
+
+lpMain()
+
+# Output
+# Authenticating request: HOME
+# request log: HOME
+# Executing request: HOME

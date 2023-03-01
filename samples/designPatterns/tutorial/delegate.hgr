@@ -1,0 +1,88 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Delegate
+    Description:
+        Business Delegate Pattern is used to decouple presentation tier and business tier. 
+        It is basically use to reduce communication or remote lookup functionality to business 
+        tier code in presentation tier code. In business tier we have following entities.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-03-01
+"""
+
+declare lcBusinessService
+    pDoProcessing
+    end
+end
+
+declare lcEJBService as lcBusinessService
+    pDoProcessing
+        println("Processing task by invoking EJB Service")
+    end
+end
+
+declare lcJMSService as lcBusinessService
+    pDoProcessing
+        println("Processing task by invoking JMS Service")
+    end
+end
+
+declare lcBusinessLookUp
+    fGetBussinessService(psServiceType)
+        if psServiceType == "EJB"
+            return new lcEJBService()
+        else
+            return new lcJMSService()
+        end
+    end
+end
+
+declare lcBussinessDelegate
+    oLookupService = new lcBusinessLookUp()
+    oBusinessService = null
+    sServiceType = ""
+
+    pSetServiceType(psServiceType)
+        sServiceType = psServiceType
+    end
+
+    pDoTask
+        oBusinessService = oLookupService.fGetBussinessService(sServiceType)
+        oBusinessService.pDoProcessing()
+    end
+    
+end
+
+declare lcClient
+    oBusinessService = null
+
+    pInit(poBusinessService)
+        oBusinessService = poBusinessService
+    end
+
+    pDoTask
+        oBusinessService.pDoTask()
+    end
+end
+
+declare lpMain
+    declare loBusinessDelegate = new lcBussinessDelegate()
+    loBusinessDelegate.pSetServiceType("EJB")
+
+    declare loClient = new lcClient(loBusinessDelegate)
+    loClient.pDoTask()
+
+    loBusinessDelegate.pSetServiceType("JMS")
+    loClient.pDoTask()
+end
+
+lpMain()
+
+# Output
+# Processing task by invoking EJB Service
+# Processing task by invoking JMS Service

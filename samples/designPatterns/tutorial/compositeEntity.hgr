@@ -1,0 +1,97 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Composite Entity
+    Description:
+        Composite Entity pattern is used in EJB persistence mechanism. A Composite entity is an EJB 
+        entity bean which represents a graph of objects. When a composite entity is updated, 
+        internally dependent objects beans get updated automatically as being managed by EJB 
+        entity bean. Following are the participants in Composite Entity Bean.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-03-01
+"""
+
+declare lcDependentObject1
+    sData = ""
+
+    pSetData(psData)
+        sData = psData
+    end
+
+    fGetData
+        return sData
+    end
+end
+
+declare lcDependentObject2
+    sData = ""
+
+    pSetData(psData)
+        sData = psData
+    end
+
+    fGetData
+        return sData
+    end
+end
+
+declare lcCoarseGrainedObject
+    oDependentObject1 = new lcDependentObject1()
+    oDependentObject2 = new lcDependentObject2()
+
+    pSetData(psData1, psData2)
+        oDependentObject1.pSetData(psData1)
+        oDependentObject2.pSetData(psData2)
+    end
+
+    fGetData
+        return [oDependentObject1.fGetData(), oDependentObject2.fGetData()]
+    end
+end
+
+declare lcCompositeEntity
+    oCoarseGrainedObject = new lcCoarseGrainedObject()
+
+    pSetData(psData1, psData2)
+        oCoarseGrainedObject.pSetData(psData1, psData2)
+    end
+
+    fGetData
+        return oCoarseGrainedObject.fGetData()
+    end
+end
+
+declare lcClient
+    oCompositeEntity = new lcCompositeEntity()
+
+    pPrintData()
+        for lnI = 0 to oCompositeEntity.fGetData().len() - 1
+            println("Data: " & oCompositeEntity.fGetData()[lnI])
+        end
+    end
+
+    pSetData(psData1, psData2)
+        oCompositeEntity.pSetData(psData1, psData2)
+    end
+end
+
+declare lpMain
+    declare loClient = new lcClient()
+    loClient.pSetData("Test", "Data")
+    loClient.pPrintData()
+    loClient.pSetData("Second Test", "Data1")
+    loClient.pPrintData()
+end
+
+lpMain()
+
+# Output
+# Data: Test
+# Data: Data
+# Data: Second Test
+# Data: Data1

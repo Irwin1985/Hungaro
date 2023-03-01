@@ -1,0 +1,81 @@
+"""
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Front Controller
+    Description:
+        The front controller design pattern is used to provide a centralized request handling 
+        mechanism so that all requests will be handled by a single handler. This handler can do 
+        the authentication/ authorization/ logging or tracking of request and then pass the requests 
+        to corresponding handlers. Following are the entities of this type of design pattern.
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-03-01
+"""
+
+declare lcHomeView
+    pShow
+        println("Displaying Home Page")
+    end
+end
+
+declare lcStudentView
+    pShow
+        println("Displaying Student Page")
+    end
+end
+
+declare lcDispatcher
+    oStudentView = new lcStudentView()
+    oHomeView = new lcHomeView()
+
+    
+    pDispatch(psRequest)
+        if psRequest == "STUDENT"
+            oStudentView.pShow()
+        else
+            oHomeView.pShow()
+        end
+    end
+end
+
+declare lcFrontController
+    oDispatcher = new lcDispatcher()
+
+    fIsAuthenticUser
+        println("User is authenticated successfully.")
+        return true
+    end
+
+    pTrackRequest(psRequest)
+        println("Page requested: " & psRequest)
+    end
+
+    pDispatchRequest(psRequest)
+        pTrackRequest(psRequest)
+        if fIsAuthenticUser()
+            oDispatcher.pDispatch(psRequest)
+        end
+    end
+end
+
+declare lpMain
+    declare loFrontController = new lcFrontController()
+    loFrontController.pDispatchRequest("HOME")
+    loFrontController.pDispatchRequest("STUDENT")
+end
+
+lpMain()
+
+# Output
+#
+# Page requested: HOME
+# User is authenticated successfully.
+# Displaying Home Page
+# Page requested: STUDENT
+# User is authenticated successfully.
+# Displaying Student Page
+

@@ -16,7 +16,7 @@
         Client can create its own transfer object and pass it to server to update values in 
         database in one shot. Following are the entities of this type of design pattern.
 
-    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Hungaro code writer: Irwin RodrÃ­guez <rodriguez.irwin@gmail.com>
     Date: 2023-03-01
 """
 
