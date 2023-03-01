@@ -8,8 +8,29 @@ declare llMath
 end
 """
 
-declare lcMath
-    PI = 3.15
+declare llMath
+    PI = 3.14159265
+
+    fAbs(pnValue)
+        if pnValue < 0
+            return -pnValue
+        end
+        return pnValue
+    end
+
+    fSquare(pnX)
+        return pnX ^ 2
+    end
+
+    fAdd(pnX, pnY)
+        return pnX + pnY
+    end
+
 end
 
-println(lcMath.PI)
+declare lfExternalData(poModule, pnX, pnY)
+    return poModule.fAdd(pnX, pnY)
+end
+
+
+println(lfExternalData(llMath, 1, 2)) # 3

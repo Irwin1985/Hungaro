@@ -315,9 +315,43 @@ public class Parser {
         return new Stmt.Class(keyword, identifier, superClass, properties, new Stmt.Block(statements));
     }
 
-    private Stmt moduleDeclaration(Token keyword, Token identifier) {
-        final Stmt.Block body = block();
-        return new Stmt.Module(keyword, identifier, body);
+    private Stmt moduleDeclaration(Token keyword, Token identifier) {        
+        final List<Stmt> statements = new ArrayList<Stmt>();
+        final List<Expr.Set> properties = new ArrayList<Expr.Set>();
+                
+        match(TokenType.SEMICOLON); // optional semicolon
+
+        // parse module properties
+        validateStack.push(ValidateTypes.PROPERTY);
+        while (check(Category.CLASS_PROPERTY) || check(Category.LOCAL_CONSTANT)) {
+            // only allow set property: eg: a = 10
+            Stmt.Expression exp = (Stmt.Expression)expressionStmt();
+            if (!(exp.expression instanceof Expr.Set)) {
+                error(exp.token, "Invalid property.");
+            }
+            properties.add((Expr.Set)exp.expression);
+            match(TokenType.SEMICOLON); // optional semicolon
+        }
+        validateStack.pop();
+
+        // parse module methods
+        String name = "";
+
+        while (match(Category.CLASS_FUNCTION, Category.CLASS_PROCEDURE)) {
+            name = "module procedure";
+            if (previous().category == Category.CLASS_FUNCTION) {
+                name = "module function";
+            }            
+            statements.add((Stmt.Function) functionDeclaration(keyword, previous(), name, true));            
+        }        
+        match(TokenType.SEMICOLON); // optional semicolon
+        consume(TokenType.END, "Expect `end` after module declaration.");
+
+        if (!check(TokenType.COMMA) && !check(TokenType.END)) {
+            consume(TokenType.SEMICOLON, "Expect new line after `end` keyword.");
+        }
+
+        return new Stmt.Module(keyword, identifier, properties, new Stmt.Block(statements));
     }
 
     private Stmt statement() {

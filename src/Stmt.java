@@ -89,11 +89,13 @@ public abstract class Stmt {
     */
     public static class Module extends Stmt {
         final Token name;
+        final List<Expr.Set> properties;
         final Block body;
 
-        public Module(Token keyword, Token name, Block body) {
+        public Module(Token keyword, Token name, List<Expr.Set> properties, Block body) {
             super(keyword);
             this.name = name;
+            this.properties = properties;
             this.body = body;
         }
 

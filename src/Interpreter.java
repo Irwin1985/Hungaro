@@ -1235,7 +1235,22 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitModuleStmt(Stmt.Module stmt) {
         // create a new environment for the module
-        Environment moduleEnv = new Environment(environment, "Module");        
+        Environment moduleEnv = new Environment(environment, "Module");
+        
+        // register the module properties
+        if (stmt.properties != null) {
+            for (Expr.Set property : stmt.properties) {
+                Object value = evaluate(property.value);
+                
+                // local constants in module no need to check their values type.
+                if (property.target.token.category != Category.LOCAL_CONSTANT) {
+                    checkVariableType(property.target.token, value, "Property");
+                }
+    
+                moduleEnv.define(((Expr.Variable)property.target).name.lexeme, value);
+            }
+        }
+
         // execute the module block
         executeBlock(stmt.body.statements, moduleEnv);
         if (stmt.name.category == Category.GLOBAL_MODULE) {            
@@ -1243,7 +1258,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         } else {
             environment.define(stmt.name.lexeme, moduleEnv);
         }
-        
+
         return null;     
     }
 }
