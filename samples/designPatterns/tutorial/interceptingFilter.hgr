@@ -19,8 +19,7 @@
 """
 
 declare lcFilter
-    pExecute(psRequest)
-    end
+    -pExecute(psRequest)    
 end
 
 declare lcAuthenticationFilter as lcFilter

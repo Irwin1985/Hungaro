@@ -69,10 +69,10 @@ public class Parser {
                 return variableDeclaration(keyword, identifier);
             case LOCAL_FUNCTION:
             case GLOBAL_FUNCTION:
-                return functionDeclaration(keyword, identifier, "function");
+                return functionDeclaration(keyword, identifier, "function", true);
             case LOCAL_PROCEDURE:
             case GLOBAL_PROCEDURE:
-                return functionDeclaration(keyword, identifier, "procedure");
+                return functionDeclaration(keyword, identifier, "procedure", true);
             case LOCAL_CLASS:
             case GLOBAL_CLASS:
                 return classDeclaration(keyword, identifier);
@@ -142,18 +142,21 @@ public class Parser {
         return new Stmt.Var(keyword, identifier, value);
     }
 
-    private Stmt functionDeclaration(Token keyword, Token identifier, String name) {
+    private Stmt functionDeclaration(Token keyword, Token identifier, String name, boolean parseBody) {
         List<Expr.Param> parameters = new ArrayList<Expr.Param>();
-        boolean mustReturnValue = true;
-        ValidateTypes validateType = ValidateTypes.PARAMETER;
+        Stmt.Block body = new Stmt.Block(new ArrayList<Stmt>());
 
-        if (name.equals("class function") || name.equals("class procedure")) {
-            validateType = ValidateTypes.PROPERTY;
-        }
+        boolean mustReturnValue = name.endsWith("function");
+        // ValidateTypes validateType = ValidateTypes.PARAMETER;
+        final ValidateTypes validateType = (name.startsWith("class")) ? ValidateTypes.PROPERTY : ValidateTypes.PARAMETER;
+
+        // if (name.equals("class function") || name.equals("class procedure")) {
+        //     validateType = ValidateTypes.PROPERTY;
+        // }
+
         // we always pass 'poThis' as first parameter
         parameters.add(new Expr.Param(new Token(TokenType.PARAMETER, "poThis")));
-
-        validateStack.push(validateType);
+        
         Token param = null;
         Expr paramDefaultValue = null;
         List<Integer> optionalParamIndexes = new ArrayList<Integer>();
@@ -211,13 +214,20 @@ public class Parser {
             previousIndex = index;            
         }
 
-        functionStack.push(identifier.lexeme); // fName | gfName | lfName | pName | gpName | lpName
-        if (name.equals("procedure") || name.equals("class procedure")) {
-            mustReturnValue = false;
-        }            
-        final Stmt.Block body = block();
-        functionStack.pop();
-        validateStack.pop();
+        if (parseBody) {
+            validateStack.push(validateType);
+            functionStack.push(identifier.lexeme); // fName | gfName | lfName | pName | gpName | lpName
+            // if (name.equals("procedure") || name.equals("class procedure")) {
+            //     mustReturnValue = false;
+            // }
+            // final Stmt.Block body = block();
+            body = block();
+            functionStack.pop();
+            validateStack.pop();        
+        } else {
+            // the new line is mandatory
+            consume(TokenType.SEMICOLON, "Expect new line after abstract method declaration.");
+        }
 
         return new Stmt.Function(mustReturnValue, identifier, parameters, body, isVariadic, optionalParamIndexes.size());
     }
@@ -259,6 +269,7 @@ public class Parser {
         // parse class properties
         validateStack.push(ValidateTypes.PROPERTY);
         while (check(Category.CLASS_PROPERTY)) {
+            // only allow set property: eg: a = 10
             Stmt.Expression exp = (Stmt.Expression)expressionStmt();
             if (!(exp.expression instanceof Expr.Set)) {
                 error(exp.token, "Invalid class property.");
@@ -270,13 +281,22 @@ public class Parser {
 
         // parse class methods
         String name = "";
-        while (match(Category.CLASS_FUNCTION, Category.CLASS_PROCEDURE)) {
-            if (previous().category == Category.CLASS_FUNCTION)
+        boolean parseBody = true;
+
+        while (match(Category.MINUS, Category.CLASS_FUNCTION, Category.CLASS_PROCEDURE)) {
+            if (previous().category == Category.CLASS_FUNCTION) {
                 name = "class function";
+            }
             else if (previous().category == Category.CLASS_PROCEDURE) {
                 name = "class procedure";
             }
-            statements.add((Stmt.Function) functionDeclaration(keyword, previous(), name));
+            else if (previous().category == Category.MINUS) { // eg: -fName([args]) or -pName([args])
+                // abstract methods does not implement the body. just name and parameters
+                parseBody = false;
+                continue;
+            }
+            statements.add((Stmt.Function) functionDeclaration(keyword, previous(), name, parseBody));
+            parseBody = true; // reset the flag
         }        
         match(TokenType.SEMICOLON); // optional semicolon
         consume(TokenType.END, "Expect `end` after class declaration.");

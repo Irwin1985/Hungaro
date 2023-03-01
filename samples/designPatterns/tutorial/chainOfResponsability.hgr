@@ -39,9 +39,7 @@ declare lcAbstractLogger
         end
     end
 
-    pWrite(psMessage)  
-        # abstract method
-    end
+    -pWrite(psMessage)
 end
 
 declare lcConsoleLogger as lcAbstractLogger    

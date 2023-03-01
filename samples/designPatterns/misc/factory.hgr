@@ -10,9 +10,7 @@
 #-----------------------------------------#
 declare lcCafe
     oProduct = null
-    pMakeCoffee
-        # code
-    end
+    -pMakeCoffee()
 end
 
 declare lcMyCafe as lcCafe
@@ -33,9 +31,7 @@ end
 declare lcCoffee
     sName = ""
 
-    pPrepare
-        # code
-    end
+    -pPrepare()
 
     pServe
         println("Here\'s your cup of " & sName & ". Enjoy!")

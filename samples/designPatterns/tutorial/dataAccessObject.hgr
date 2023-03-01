@@ -44,17 +44,10 @@ end
 declare lcStudentDao
     aStudents = []    
 
-    fGetAllStudents        
-    end
-
-    fGetStudent     
-    end
-
-    pUpdateStudent(poStudent)
-    end
-
-    pDeleteStudent(poStudent)        
-    end
+    -fGetAllStudents()
+    -fGetStudent()
+    -pUpdateStudent(poStudent)
+    -pDeleteStudent(poStudent)
 end
 
 declare lcStudentDaoImpl

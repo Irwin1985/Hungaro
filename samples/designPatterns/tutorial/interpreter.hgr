@@ -18,8 +18,7 @@
 """
 
 declare lcExpression
-    fInterpret(psContext)
-    end
+    -fInterpret(psContext)    
 end
 
 declare lcTerminalExpression as lcExpression

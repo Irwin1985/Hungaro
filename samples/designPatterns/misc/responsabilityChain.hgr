@@ -23,8 +23,7 @@ declare lcMiddleware
     end
 
     # Subclasses will implement this method with concrete checks.
-    fCheck(psEmail, psPassword)        
-    end
+    -fCheck(psEmail, psPassword)
 
     # Runs check on the next object in chain or ends traversing if we're in
     # last object in chain.

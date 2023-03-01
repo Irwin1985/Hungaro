@@ -23,8 +23,7 @@
 """
 
 declare lcDrawAPI
-    pDrawCircle(pnRadius, pnX, pnY)
-    end
+    -pDrawCircle(pnRadius, pnX, pnY)    
 end
 
 declare lcRedCircle as lcDrawAPI
@@ -46,8 +45,7 @@ declare lcShape
         oDrawAPI = poDrawAPI
     end
 
-    pDraw()
-    end
+    -pDraw()    
 end
 
 declare lcCircle as lcShape

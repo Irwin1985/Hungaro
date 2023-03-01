@@ -27,8 +27,7 @@ end
 # Button
 #-----------------------------------------------------#
 declare lcButton
-    pPaint()        
-    end
+    -pPaint()
 end
 
 #-----------------------------------------------------#
@@ -53,8 +52,7 @@ end
 # Checkbox
 #-----------------------------------------------------#
 declare lcCheckbox
-    pPaint()
-    end
+    -pPaint()
 end
 
 #-----------------------------------------------------#
@@ -79,11 +77,8 @@ end
 # Factory
 #-----------------------------------------------------#
 declare lcGUIFactory
-    fCreateButton
-    end
-
-    fCreateCheckbox
-    end
+    -fCreateButton()
+    -fCreateCheckbox()
 end
 
 #-----------------------------------------------------#

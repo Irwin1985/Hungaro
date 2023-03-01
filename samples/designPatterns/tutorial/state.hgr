@@ -18,8 +18,7 @@
 """
 
 declare lcState
-    pDoAction(poContext)
-    end
+    -pDoAction(poContext)
 end
 
 declare lcStartState as lcState

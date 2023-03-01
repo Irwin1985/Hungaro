@@ -17,16 +17,10 @@
 """
 
 declare lcGame
-    pInitialize
-    end
-
-    pStartPlay
-    end
-
-    pEndPlay
-    end
-
-    pPlay        
+    -pInitialize()
+    -pStartPlay()
+    -pEndPlay()
+    pPlay
         pInitialize()
         pStartPlay()
         pEndPlay()

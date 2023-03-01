@@ -20,8 +20,7 @@
 """
 
 declare lcShape
-    pDraw
-    end
+    -pDraw()
 end
 
 declare lcRoundedRectangle as lcShape
@@ -49,8 +48,7 @@ declare lcSquare as lcShape
 end
 
 declare lcAbstractFactory
-    fGetShape(psShapeType)    
-    end
+    -fGetShape(psShapeType)    
 end
 
 declare lcShapeFactory as lcAbstractFactory

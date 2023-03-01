@@ -16,8 +16,7 @@
 """
 
 declare lcShape
-    pDraw
-    end
+    -pDraw()
 end
 
 declare lcCircle as lcShape

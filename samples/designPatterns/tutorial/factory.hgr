@@ -18,8 +18,7 @@
 """
 
 declare lcShape
-    pDraw
-    end
+    -pDraw()
 end
 
 declare lcRectangle as lcShape

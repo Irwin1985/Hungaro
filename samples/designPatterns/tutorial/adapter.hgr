@@ -26,16 +26,12 @@
 """
 
 declare lcMediaPlayer
-    pPlay(psAudioType, psFileName)
-    end
+    -pPlay(psAudioType, psFileName)
 end
 
 declare lcAdvancedMediaPlayer
-    pPlayVlc(psFileName)
-    end
-
-    pPlayMp4(psFileName)
-    end
+    -pPlayVlc(psFileName)    
+    -pPlayMp4(psFileName)    
 end
 
 declare lcVlcPlayer
@@ -43,16 +39,11 @@ declare lcVlcPlayer
         println("Playing vlc file. Name: " & psFileName)
     end
 
-    pPlayMp4(psFileName)
-        # do nothing
-    end
+    -pPlayMp4(psFileName)
 end
 
 declare lcMp4Player
-    pPlayVlc(psFileName)
-        # do nothing
-    end
-
+    -pPlayVlc(psFileName)
     pPlayMp4(psFileName)
         println("Playing mp4 file. Name: " & psFileName)
     end

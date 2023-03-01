@@ -15,8 +15,7 @@
 """
 
 declare lcStrategy
-    fDoOperation(pnNum1, pnNum2)
-    end
+    -fDoOperation(pnNum1, pnNum2)
 end
 
 declare lcOperationAdd as lcStrategy

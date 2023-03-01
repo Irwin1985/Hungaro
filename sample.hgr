@@ -1,52 +1,100 @@
 """
-    Abstract class
+    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
+    Design patterns represent the best practices used by experienced object-oriented software 
+    developers. Design patterns are solutions to general problems that software developers
+    faced during software development. These solutions were obtained by trial and error by 
+    numerous software developers over quite a substantial period of time.
+
+    Pattern: Data Access Object (DAO)
+    Description:
+        Data Access Object Pattern or DAO pattern is used to separate low level data accessing 
+        API or operations from high level business services. Following are the participants in 
+        Data Access Object Pattern
+
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
     Date: 2023-03-01
 """
 
-declare lcPerson
+declare lcStudent
     sName = ""
-    nAge = 0
+    nRollNo = 0
 
-    pThink()
-        println("Thinking...")
-        pWalk()
-        println("Thinking...")
-        pTalk()
-    end
-    
-    pWalk() 
-        println("Walking in the abstract class lcPerson")
-    end
-    
-    pTalk() 
-        println("Talking in the abstract class lcPerson")
-    end
-    
-    fGetName() 
-    end
-    
-    fGetAge() 
-    end
-end
-
-declare lcPerson1 as lcPerson
-    pInit(psName, pnAge)
+    pInit(psName, pnRollNo)
         sName = psName
-        nAge = pnAge
+        nRollNo = pnRollNo
     end
-    
-    pWalk
-        println("Walking in the instance of lcPerson1")
-    end
-
-    pTalk
-        println("Talking in the instance of lcPerson1")
-    end    
 
     fGetName
         return sName
     end
+
+    pSetName(psName)
+        sName = psName
+    end
+
+    fGetRollNo
+        return nRollNo
+    end
+
+    pSetRollNo(pnRollNo)
+        nRollNo = pnRollNo
+    end
 end
 
-declare loPerson1 = new lcPerson1("John", 20)
-loPerson1.pThink()
+declare lcStudentDao
+    aStudents = []    
+
+    -fGetAllStudents()
+    -fGetStudent()
+    -pUpdateStudent(poStudent)
+    -pDeleteStudent(poStudent)
+end
+
+declare lcStudentDaoImpl
+    # List is working as a database
+    aStudents = [new lcStudent("Robert", 0), new lcStudent("John", 1)]
+
+    fGetAllStudents
+        return aStudents.clone() # we dont want to return the reference of the original list
+    end
+
+    fGetStudent(pnRollNo)
+        return aStudents[pnRollNo]
+    end
+
+    pUpdateStudent(poStudent)
+        aStudents[poStudent.fGetRollNo()].pSetName(poStudent.fGetName())
+        println("Student: Roll No " & poStudent.fGetRollNo() & ", updated in the database")
+    end
+
+    pDeleteStudent(poStudent)
+        aStudents.remove(poStudent.fGetRollNo())
+        println("Student: Roll No " & poStudent.fGetRollNo() & ", deleted from database")
+    end
+end
+
+declare lpMain
+    declare loStudentDao = new lcStudentDaoImpl()
+
+    # Print all students
+    for each lvStudent in loStudentDao.fGetAllStudents()
+        println("Student: [RollNo : " & lvStudent.fGetRollNo() & ", Name : " & lvStudent.fGetName() & "]")
+    end
+
+    # Update student
+    declare loStudent = loStudentDao.fGetAllStudents().get(0)
+    loStudent.pSetName("Michael")
+    loStudentDao.pUpdateStudent(loStudent)
+
+    # Get the student
+    loStudentDao.fGetStudent(0)
+    println("Student: [RollNo : " & loStudent.fGetRollNo() & ", Name : " & loStudent.fGetName() & "]")
+end
+
+lpMain()
+
+# Output
+# Student: [RollNo : 0, Name : Robert]
+# Student: [RollNo : 1, Name : John]
+# Student: Roll No 0, updated in the database
+# Student: [RollNo : 0, Name : Michael]

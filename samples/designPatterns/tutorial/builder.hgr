@@ -19,19 +19,13 @@
 """
 
 declare lcItem
-    fName
-    end
-
-    fPacking
-    end
-
-    fPrice
-    end
+    -fName()
+    -fPacking()    
+    -fPrice()    
 end
 
 declare lcPacking
-    fPack
-    end
+    -fPack()    
 end
 
 declare lcWrapper as lcPacking
@@ -51,8 +45,7 @@ declare lcBurger as lcItem
         return new lcWrapper()
     end
 
-    fPrice
-    end
+    -fPrice()
 end
 
 declare lcColdDrink as lcItem
@@ -60,8 +53,7 @@ declare lcColdDrink as lcItem
         return new lcBottle()
     end
 
-    fPrice
-    end
+    -fPrice()
 end
 
 declare lcVegBurger as lcBurger

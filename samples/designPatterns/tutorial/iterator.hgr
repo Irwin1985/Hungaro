@@ -19,16 +19,12 @@
 """
 
 declare lcIterator
-    fHasNext
-    end
-
-    fNext
-    end
+    -fHasNext()
+    -fNext()
 end
 
 declare lcContainer
-    fGetIterator
-    end
+    -fGetIterator()
 end
 
 declare lcNameIterator as lcIterator

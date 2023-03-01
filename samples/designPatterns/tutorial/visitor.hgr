@@ -17,11 +17,8 @@
 """
 
 declare lcComputerPart
-    pAccept(poComputerPartVisitor)
-    end
-
-    pDisplay
-    end
+    -pAccept(poComputerPartVisitor)
+    -pDisplay()
 end
 
 declare lcKeyboard as lcComputerPart

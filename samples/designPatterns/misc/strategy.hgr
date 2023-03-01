@@ -26,8 +26,7 @@ end
 
 # Interface class
 declare lcCalculateInterest
-    fCalculateInterest        
-    end
+    -fCalculateInterest()
 end
 
 # Implementation classes (Concrete Strategies)

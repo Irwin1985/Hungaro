@@ -19,11 +19,8 @@
 declare lcAbstractCustomer
     sName = ""
     
-    fIsNill
-    end
-
-    fGetName
-    end
+    -fIsNill()
+    -fGetName()
 end
 
 declare lcRealCustomer as lcAbstractCustomer

@@ -20,8 +20,7 @@
 
 # lcOrder class (acts as an interface)
 declare lcOder
-    pExecute
-    end
+    -pExecute()
 end
 
 # lcStock class: a request class

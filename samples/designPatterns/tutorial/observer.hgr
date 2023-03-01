@@ -42,8 +42,7 @@ end
 declare lcObserver
     oSubject = null
 
-    pUpdate
-    end
+    -pUpdate()
 end
 
 declare lcBinaryObserver as lcObserver

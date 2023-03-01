@@ -19,11 +19,8 @@
 """
 
 declare lcService
-    fGetName
-    end
-
-    pExecute
-    end
+    -fGetName()
+    -pExecute()    
 end
 
 declare lcService1 as lcService

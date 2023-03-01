@@ -15,8 +15,7 @@
 """
 
 declare lcImage
-    pDisplay
-    end
+    -pDisplay()
 end
 
 declare lcRealImage as lcImage

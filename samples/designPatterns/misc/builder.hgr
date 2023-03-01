@@ -7,23 +7,12 @@
 
 # Builder interface defines all possible ways to configure a product.
 declare lcBuilder
-    pSetCarType(poType)
-    end
-    
-    pSetSeats(pnSeats)
-    end
-    
-    pSetEngine(poEngine)
-    end
-    
-    pSetTransmission(psTransmission)
-    end
-    
-    pSetTripComputer(poTripComputer)
-    end
-
-    pSetGPSNavigator(poGPSNavigator)
-    end    
+    -pSetCarType(poType)
+    -pSetSeats(pnSeats)
+    -pSetEngine(poEngine)
+    -pSetTransmission(psTransmission)
+    -pSetTripComputer(poTripComputer)
+    -pSetGPSNavigator(poGPSNavigator)
 end
 
 # Car Type constants.

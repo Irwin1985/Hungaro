@@ -7,29 +7,14 @@
 
 # Devices
 declare lcDevice
-    fIsEnabled
-    end
-    
-    pEnable
-    end
-    
-    pDisable
-    end
-    
-    fGetVolume
-    end
-    
-    pSetVolume(pnPercent)
-    end
-    
-    fGetChannel
-    end
-    
-    pSetChannel(pnChannel)
-    end
-
-    pPrintStatus
-    end
+    -fIsEnabled()
+    -pEnable()
+    -pDisable()    
+    -fGetVolume()
+    -pSetVolume(pnPercent)        
+    -fGetChannel()    
+    -pSetChannel(pnChannel)
+    -pPrintStatus()
 end
 
 # Radio
@@ -138,20 +123,11 @@ end
 
 # Remote
 declare lcRemote
-    pPower
-    end
-    
-    pVolumeDown
-    end
-    
-    pVolumeUp
-    end
-    
-    pChannelDown
-    end
-
-    pChannelUp
-    end
+    -pPower()    
+    -pVolumeDown()
+    -pVolumeUp()    
+    -pChannelDown()
+    -pChannelUp()
 end
 
 # Basic remote
