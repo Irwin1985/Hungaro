@@ -157,6 +157,11 @@ public class Scanner {
         // Global class
         new Spec(Pattern.compile("^gc([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_CLASS),
 
+        // Local library
+        new Spec(Pattern.compile("^ll([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_MODULE),
+        // Global library
+        new Spec(Pattern.compile("^gl([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_MODULE),
+
         // Local constants
         new Spec(Pattern.compile("^[A-Z][A-Z_0-9]*"), TokenType.IDENTIFIER, Category.LOCAL_CONSTANT),
         // Global constants

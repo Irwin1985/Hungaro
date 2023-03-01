@@ -37,7 +37,7 @@ A hungarian notation based programming language.
 
 #### Expressions
 
-```hungarian
+```xBase
 # Strings
 "Hello World"
 

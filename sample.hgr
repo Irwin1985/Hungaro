@@ -1,24 +1,15 @@
-declare lcPerson
-    sName = ""
-    nAge = 0
+"""
+declare llMath
+    declare PI = 3.15
 
-    pInit(psName, pnAge)
-        sName = psName
-        nAge = pnAge
-    end
-
-    pWalk
-        println("Walking")
+    declare lfAdd(pnX, pnY)
+        return pnX + pnY
     end
 end
+"""
 
-declare lcGerente as lcPerson
-    pInit(psName, pnAge, pnSalary)
-        super(psName, pnAge)
-        nSalary = pnSalary
-    end
-
+declare lcMath
+    PI = 3.15
 end
 
-declare loPerson = new lcGerente("John", 20, 1500)
-println(loPerson.properties)
+println(lcMath.PI)

@@ -315,4 +315,10 @@ public class TypeChecker implements Expr.Visitor<Type>, Stmt.Visitor<Void> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'visitEmptyStmt'");
     }
+
+    @Override
+    public Void visitModuleStmt(Stmt.Module stmt) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'visitModuleStmt'");
+    }
 }

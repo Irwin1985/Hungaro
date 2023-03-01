@@ -18,6 +18,7 @@ public abstract class Stmt {
         R visitGuardStmt(Guard stmt);
         R visitIfStmt(If stmt);
         R visitLoopStmt(Loop stmt);
+        R visitModuleStmt(Module stmt);
         R visitPrintStmt(Print stmt);
         R visitRepeatStmt(Repeat stmt);
         R visitReturnStmt(Return stmt);
@@ -80,6 +81,25 @@ public abstract class Stmt {
         @Override
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitLoopStmt(this);
+        }
+    }
+
+    /*
+    * module statement: module Foo { ... }
+    */
+    public static class Module extends Stmt {
+        final Token name;
+        final Block body;
+
+        public Module(Token keyword, Token name, Block body) {
+            super(keyword);
+            this.name = name;
+            this.body = body;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitModuleStmt(this);
         }
     }
 

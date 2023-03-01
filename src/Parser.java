@@ -76,6 +76,9 @@ public class Parser {
             case LOCAL_CLASS:
             case GLOBAL_CLASS:
                 return classDeclaration(keyword, identifier);
+            case LOCAL_MODULE:
+            case GLOBAL_MODULE:
+                return moduleDeclaration(keyword, identifier);
             default:
                 error(identifier, "Invalid name: please check the following naming rules:\nSCOPE:the first letter indicates the variable scope.\n`l` for locals\n`g` for globals\n`p` for parameters\nOTHER RULES:\n*You can omite the scoping suffix (first letter) if you are declaring a constant (all uppercase).\n*All identifiers must follow the camel case naming convention. e.g: lnPersonAge\n*All identifiers must start with a lowercase letter.\n*All identifiers must be at least 3 characters long.\n*All identifiers must be unique within the scope.\n*All identifiers must be unique within the program.\n*All identifiers must be unique within the class.\n");
         }
@@ -268,7 +271,7 @@ public class Parser {
 
         // parse class properties
         validateStack.push(ValidateTypes.PROPERTY);
-        while (check(Category.CLASS_PROPERTY)) {
+        while (check(Category.CLASS_PROPERTY) || check(Category.LOCAL_CONSTANT)) {
             // only allow set property: eg: a = 10
             Stmt.Expression exp = (Stmt.Expression)expressionStmt();
             if (!(exp.expression instanceof Expr.Set)) {
@@ -310,6 +313,11 @@ public class Parser {
         }
 
         return new Stmt.Class(keyword, identifier, superClass, properties, new Stmt.Block(statements));
+    }
+
+    private Stmt moduleDeclaration(Token keyword, Token identifier) {
+        final Stmt.Block body = block();
+        return new Stmt.Module(keyword, identifier, body);
     }
 
     private Stmt statement() {
@@ -594,7 +602,10 @@ public class Parser {
                 validateTypes((Expr.Variable) target); // validate left side of assignment                
                 Category targetCategory = ((Expr.Variable) target).name.category;
                 if (targetCategory == Category.GLOBAL_CONSTANT || targetCategory == Category.LOCAL_CONSTANT) {
-                    error(target.token, "Cannot assign to constant.");
+                    // if validateStack is not empty then we allow constant assignment
+                    if (validateStack.isEmpty()) {
+                        error(target.token, "Cannot assign to constant.");
+                    }
                 }
                 return new Expr.Set(equals, target, value, false);
             } else if (target instanceof Expr.Prop) {
