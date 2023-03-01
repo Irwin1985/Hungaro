@@ -26,11 +26,10 @@ declare lcGame
     pEndPlay
     end
 
-    pPlay
-        # call method with 'poThis' to avoid calling the method of the current class
-        poThis.pInitialize()
-        poThis.pStartPlay()
-        poThis.pEndPlay()
+    pPlay        
+        pInitialize()
+        pStartPlay()
+        pEndPlay()
     end
 end
 

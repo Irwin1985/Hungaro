@@ -153,17 +153,6 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Object visitCallExpr(Expr.Call expr) {
         Object callee = evaluate(expr.callee);
         List<Object> arguments = new ArrayList<Object>();        
-        // int firstArg = 0;
-        // for (Expr argument : expr.arguments) {            
-        //     Object evaluatedArgument = evaluate(argument);
-        //     // if the first argument is an instance of RuntimeFunction then 
-        //     // we need to create an object with the functionEnv as the environment            
-        //     if (firstArg == 0 && evaluatedArgument instanceof RuntimeFunction) {
-        //         evaluatedArgument = makeObject(evaluatedArgument, functionEnv, "Function");
-        //     }
-        //     firstArg++;
-        //     arguments.add(evaluatedArgument);
-        // }
         if (!(callee instanceof CallableObject)) {
             throw new RuntimeError(expr.paren, "Can only call functions, classes and objects.");
         }        
@@ -176,18 +165,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             // evaluate and add the rest of the arguments
             for (int i = 1; i < expr.arguments.size(); i++) {
                 arguments.add(evaluate(expr.arguments.get(i)));
-            }
-            // int firstArg = 0;
-            // for (Expr argument : expr.arguments) {            
-            //     Object evaluatedArgument = evaluate(argument);
-            //     // if the first argument is an instance of RuntimeFunction then 
-            //     // we need to create an object with the functionEnv as the environment            
-            //     if (firstArg == 0 && evaluatedArgument instanceof RuntimeFunction) {
-            //         evaluatedArgument = makeObject(evaluatedArgument, functionEnv, "Function");
-            //     }
-            //     firstArg++;
-            //     arguments.add(evaluatedArgument);
-            // }        
+            }      
         } else {
             // we evaluate just the first argument which is the poThis object            
             Object evaluatedArgument = evaluate(expr.arguments.get(0));

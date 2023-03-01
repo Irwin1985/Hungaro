@@ -1,95 +1,52 @@
 """
-    Original code: https://www.tutorialspoint.com/design_pattern/index.htm
-    Design patterns represent the best practices used by experienced object-oriented software 
-    developers. Design patterns are solutions to general problems that software developers
-    faced during software development. These solutions were obtained by trial and error by 
-    numerous software developers over quite a substantial period of time.
-
-    Pattern: Transfer Object
-    Description:
-        The Transfer Object pattern is used when we want to pass data with multiple attributes 
-        in one shot from client to server. Transfer object is also known as Value Object. 
-        Transfer Object is a simple POJO class having getter/setter methods and is serializable 
-        so that it can be transferred over the network. It does not have any behavior. 
-        Server Side business class normally fetches data from the database and fills the POJO 
-        and send it to the client or pass it by value. For client, transfer object is read-only. 
-        Client can create its own transfer object and pass it to server to update values in 
-        database in one shot. Following are the entities of this type of design pattern.
-
-    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Abstract class
     Date: 2023-03-01
 """
 
-declare lcStudentVO
+declare lcPerson
     sName = ""
-    nRollNo = 0
-    
-    pInit(psName, pnRollNo)
-        sName = psName
-        nRollNo = pnRollNo
+    nAge = 0
+
+    pThink()
+        println("Thinking...")
+        pWalk()
+        println("Thinking...")
+        pTalk()
     end
+    
+    pWalk() 
+        println("Walking in the abstract class lcPerson")
+    end
+    
+    pTalk() 
+        println("Talking in the abstract class lcPerson")
+    end
+    
+    fGetName() 
+    end
+    
+    fGetAge() 
+    end
+end
+
+declare lcPerson1 as lcPerson
+    pInit(psName, pnAge)
+        sName = psName
+        nAge = pnAge
+    end
+    
+    pWalk
+        println("Walking in the instance of lcPerson1")
+    end
+
+    pTalk
+        println("Talking in the instance of lcPerson1")
+    end    
 
     fGetName
         return sName
     end
-
-    pSetName(psName)
-        sName = psName
-    end
-
-    fGetRollNo
-        return nRollNo
-    end
-
-    pSetRollNo(pnRollNo)
-        nRollNo = pnRollNo
-    end
 end
 
-declare lcStudentBO
-    aStudents = []
-
-    pInit
-        aStudents.push(new lcStudentVO("Robert", 0))
-        aStudents.push(new lcStudentVO("John", 1))
-    end
-
-    pDeleteStudent(poStudent)
-        aStudents.remove(poStudent)
-        println("Student: Roll No " & poStudent.fGetRollNo() & ", deleted from database")
-    end
-
-    fGetAllStudents
-        return aStudents.clone() # we dont want to return the original array
-    end
-
-    pUpdateStudent(poStudent)
-        aStudents[poStudent.fGetRollNo()].pSetName(poStudent.fGetName())
-        println("Student: Roll No " & poStudent.fGetRollNo() & ", updated in the database")
-    end
-end
-
-declare lpMain
-    declare loStudentBusinessObject = new lcStudentBO()
-
-    for each lvStudent in loStudentBusinessObject.fGetAllStudents()
-        println("Student: [RollNo : " & lvStudent.fGetRollNo() & ", Name : " & lvStudent.fGetName() & "]")
-    end
-
-    # update student
-    declare loStudent = loStudentBusinessObject.fGetAllStudents()[0]
-    loStudent.pSetName("Michael")
-    loStudentBusinessObject.pUpdateStudent(loStudent)
-
-    # get the student
-    loStudent = loStudentBusinessObject.fGetAllStudents()[0]
-    println("Student: [RollNo : " & loStudent.fGetRollNo() & ", Name : " & loStudent.fGetName() & "]")
-end
-
-lpMain()
-
-# Output
-# Student: [RollNo : 0, Name : Robert]
-# Student: [RollNo : 1, Name : John]
-# Student: Roll No 0, updated in the database
-# Student: [RollNo : 0, Name : Michael]
+declare loPerson1 = new lcPerson1("John", 20)
+loPerson1.pThink()

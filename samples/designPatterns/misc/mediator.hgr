@@ -17,7 +17,7 @@ declare lcMediator
     end
 
     pChangeState(poColleague)
-        poThis.fUpdateColleagues(poColleague.sName)
+        fUpdateColleagues(poColleague.sName)
     end
 
     fUpdateColleagues(psColleagueName)
@@ -75,12 +75,12 @@ declare lcOptionButton as lcColleague
     bSelected = false
     pInit(psName)
         sName = psName
-        poThis.pRegister()
+        pRegister()
     end
 
     pClick
         if not bSelected
-            poThis.pSetState(true)
+            pSetState(true)
             oMediator.pChangeState(poThis)
         end
     end

@@ -715,7 +715,7 @@ public class Parser {
                 Token keyword = previous();
                 Token propIdent = consume(TokenType.IDENTIFIER, "Invalid property name.");
                 Expr property = new Expr.Variable(propIdent);
-                left = new Expr.Prop(keyword, left, property, false);                
+                left = new Expr.Prop(keyword, left, property, false);
             }
             else if (match(TokenType.LBRACKET)) {
                 Token keyword = previous();
@@ -769,8 +769,14 @@ public class Parser {
         else if (callee instanceof Expr.Variable) {            
             final Token name = ((Expr.Variable)callee).name;
             if (name.category == Category.CLASS_FUNCTION || name.category == Category.CLASS_PROCEDURE) {
-                final Token token = new Token(TokenType.IDENTIFIER, "poThis");
-                arguments.add(new Expr.Variable(token));
+                final Token poThisToken = new Token(TokenType.IDENTIFIER, "poThis");
+                arguments.add(new Expr.Variable(poThisToken));
+                // calee must change to a Prop expression. eg: pWalk() => poThis.pWalk()                
+                callee = new Expr.Prop(
+                        new Token(TokenType.DOT), 
+                        new Expr.Variable(poThisToken), 
+                        new Expr.Variable(name), 
+                        false);
             } else {
                 arguments.add(callee);
             }

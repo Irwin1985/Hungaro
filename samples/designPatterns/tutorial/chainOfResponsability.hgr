@@ -32,7 +32,7 @@ declare lcAbstractLogger
 
     pLogMessage(pnLevel, psMessage)        
         if nLevel <= pnLevel
-            poThis.pWrite(psMessage) # we need to use poThis to avoid calling ourselves.
+            pWrite(psMessage)
         end
         if oNextLogger != null            
             oNextLogger.pLogMessage(pnLevel, psMessage)
