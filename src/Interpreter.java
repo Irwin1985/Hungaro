@@ -13,8 +13,10 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public static String currentForeColor = Hungaro.ANSI_RESET;
     public static String currentBackColor = Hungaro.ANSI_RESET;
     
+    public Environment environment = globals;
+
     // Objects inheritance chain
-    final Environment objectEnv = new Environment("Object");
+    final Environment objectEnv = new Environment(environment, "Object");
     final Environment arrayEnv = new Environment(objectEnv, "Array");
     final Environment mapEnv = new Environment(objectEnv, "Map");
     final Environment functionEnv = new Environment(objectEnv, "Function");
@@ -23,10 +25,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment booleanEnv = new Environment(objectEnv, "Boolean");
     final Environment dateEnv = new Environment(objectEnv, "Date");
     final Environment wrapperEnv = new Environment(objectEnv, "Wrapper");
+    final Environment classEnv = new Environment(objectEnv, "Class");
 
     // final Stack<Boolean> variableStack = new Stack<Boolean>();
-
-    public Environment environment = globals;
 
     public Interpreter() {        
         Builtins.defineGlobals(this);        
@@ -634,7 +635,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
             superclass = (Environment)result;
         } else {
-            superclass = environment;
+            // superclass = environment;
+            superclass = classEnv;
         }
         // create a new environment for the class and provide the superclass
         final Environment classEnvironment = new Environment(superclass, "Class " + stmt.name.lexeme);

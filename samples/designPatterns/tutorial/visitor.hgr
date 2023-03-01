@@ -18,16 +18,11 @@
 
 declare lcComputerPart
     -pAccept(poComputerPartVisitor)
-    -pDisplay()
 end
 
 declare lcKeyboard as lcComputerPart
     pAccept(poComputerPartVisitor)
         poComputerPartVisitor.pVisit(poThis)
-    end
-
-    pDisplay
-        println("Displaying Keyboard.")
     end
 end
 
@@ -35,19 +30,11 @@ declare lcMonitor as lcComputerPart
     pAccept(poComputerPartVisitor)
         poComputerPartVisitor.pVisit(poThis)
     end
-
-    pDisplay
-        println("Displaying Monitor.")
-    end
 end
 
 declare lcMouse as lcComputerPart
     pAccept(poComputerPartVisitor)
         poComputerPartVisitor.pVisit(poThis)
-    end
-
-    pDisplay
-        println("Displaying Mouse.")
     end
 end
 
@@ -61,20 +48,26 @@ declare lcComputer as lcComputerPart
         end
         poComputerPartVisitor.pVisit(poThis)
     end
-
-    pDisplay
-        println("Displaying Computer.")
-    end
 end
 
 declare lcComputerPartVisitor
-    pVisit(poComputerPart)
-    end
+    -pVisit(poComputerPart)    
 end
 
 declare lcComputerPartDisplayVisitor as lcComputerPartVisitor
     pVisit(poComputerPart)
-        poComputerPart.pDisplay()
+        if poComputerPart.instanceOf("lcMouse")
+            println("Displaying Mouse.")
+        end
+        if poComputerPart.instanceOf("lcKeyboard")
+            println("Displaying Keyboard.")
+        end
+        if poComputerPart.instanceOf("lcMonitor")
+            println("Displaying Monitor.")
+        end
+        if poComputerPart.instanceOf("lcComputer")
+            println("Displaying Computer.")
+        end
     end
 end
 
