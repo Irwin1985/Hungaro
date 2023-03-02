@@ -22,11 +22,15 @@ public class Parser {
 
     private static class ParseError extends RuntimeException {}
 
-
+    /*******************************************************************************************
+    * Constructor
+    ********************************************************************************************/
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
     }
-
+    /*******************************************************************************************
+    * Parse the source code and return a list of statements
+    ********************************************************************************************/
     public List<Stmt> parse() {
         List<Stmt> statements = new ArrayList<>();
         while (!isAtEnd()) {
@@ -34,7 +38,9 @@ public class Parser {
         }
         return statements;
     }
-
+    /*******************************************************************************************
+    * Declaration handler
+    ********************************************************************************************/
     private Stmt declaration() {
         try {
             if (match(TokenType.DECLARE)) return genericDeclaration();
@@ -44,7 +50,9 @@ public class Parser {
             return null;
         }
     }
-
+    /*******************************************************************************************
+    * Declare statement handler
+    ********************************************************************************************/
     private Stmt genericDeclaration() {
         final Token keyword = previous();
         final List<Stmt> statements = new ArrayList<Stmt>();
@@ -57,7 +65,9 @@ public class Parser {
 
         return new Stmt.Declare(keyword, statements);
     }
-
+    /*******************************************************************************************
+    * parseDeclareStatement
+    ********************************************************************************************/
     private Stmt parseDeclareStatement(Token keyword) {
         final Token identifier = consume(TokenType.IDENTIFIER, "Expect identifier after `declare`.");
         switch (identifier.category) {
@@ -96,7 +106,9 @@ public class Parser {
 
         return new Stmt.Constant(keyword, identifier, value);
     }
-
+    /*******************************************************************************************
+    * variableDeclaration
+    ********************************************************************************************/
     private Stmt variableDeclaration(Token keyword, Token identifier) {
         Expr value = null;
         if (match(TokenType.SIMPLE_ASSIGN)) {            
@@ -144,18 +156,15 @@ public class Parser {
         
         return new Stmt.Var(keyword, identifier, value);
     }
-
+    /*******************************************************************************************
+    * functionDeclaration
+    ********************************************************************************************/
     private Stmt functionDeclaration(Token keyword, Token identifier, String name, boolean parseBody) {
         List<Expr.Param> parameters = new ArrayList<Expr.Param>();
         Stmt.Block body = new Stmt.Block(new ArrayList<Stmt>());
 
         boolean mustReturnValue = name.endsWith("function");
-        // ValidateTypes validateType = ValidateTypes.PARAMETER;
         final ValidateTypes validateType = (name.startsWith("class")) ? ValidateTypes.PROPERTY : ValidateTypes.PARAMETER;
-
-        // if (name.equals("class function") || name.equals("class procedure")) {
-        //     validateType = ValidateTypes.PROPERTY;
-        // }
 
         // we always pass 'poThis' as first parameter
         parameters.add(new Expr.Param(new Token(TokenType.PARAMETER, "poThis")));
@@ -220,10 +229,6 @@ public class Parser {
         if (parseBody) {
             validateStack.push(validateType);
             functionStack.push(identifier.lexeme); // fName | gfName | lfName | pName | gpName | lpName
-            // if (name.equals("procedure") || name.equals("class procedure")) {
-            //     mustReturnValue = false;
-            // }
-            // final Stmt.Block body = block();
             body = block();
             functionStack.pop();
             validateStack.pop();        
@@ -234,7 +239,9 @@ public class Parser {
 
         return new Stmt.Function(mustReturnValue, identifier, parameters, body, isVariadic, optionalParamIndexes.size());
     }
-
+    /*******************************************************************************************
+    * Block
+    ********************************************************************************************/
     private Stmt.Block block() {
         List<Stmt> statements = new ArrayList<Stmt>();
         consume(TokenType.SEMICOLON, "Expect new line before block declaration.");
@@ -250,7 +257,9 @@ public class Parser {
 
         return new Stmt.Block(statements);
     }
-
+    /*******************************************************************************************
+    * Class
+    ********************************************************************************************/
     private Stmt classDeclaration(Token keyword, Token identifier) {        
         Expr.Variable superClass = null;        
         final List<Stmt> statements = new ArrayList<Stmt>();
@@ -314,7 +323,9 @@ public class Parser {
 
         return new Stmt.Class(keyword, identifier, superClass, properties, new Stmt.Block(statements));
     }
-
+    /*******************************************************************************************
+    * Module
+    ********************************************************************************************/
     private Stmt moduleDeclaration(Token keyword, Token identifier) {        
         final List<Stmt> statements = new ArrayList<Stmt>();
         final List<Expr.Set> properties = new ArrayList<Expr.Set>();
@@ -353,7 +364,9 @@ public class Parser {
 
         return new Stmt.Module(keyword, identifier, properties, new Stmt.Block(statements));
     }
-
+    /*******************************************************************************************
+    * Statement handler
+    ********************************************************************************************/
     private Stmt statement() {
         // if (match(TokenType.PRINT, TokenType.ECHO)) return printStatement();
         if (match(TokenType.RETURN)) return returnStatement();
@@ -369,7 +382,9 @@ public class Parser {
         if (match(TokenType.SEMICOLON)) return new Stmt.Empty(previous());
         return expressionStmt();
     }
-
+    /*******************************************************************************************
+    * Return statement
+    ********************************************************************************************/
     private Stmt returnStatement() {
         // cannot return from top-level code
         if (functionStack.isEmpty()) {
@@ -394,7 +409,9 @@ public class Parser {
         consume(TokenType.SEMICOLON, "Expect new line after return statement.");
         return new Stmt.Return(keyword, value);
     }
-
+    /*******************************************************************************************
+    * If statement
+    ********************************************************************************************/
     private Stmt ifStatement() {
         final Expr condition = expression();
         consume(TokenType.SEMICOLON, "Expect new line before `if` block.");
@@ -405,9 +422,6 @@ public class Parser {
         while (!check(TokenType.ELSE) && !check(TokenType.END) && !isAtEnd()) {
             thenStmt.add(declaration());
         }
-        // do {
-        //     thenStmt.add(declaration());
-        // } while (!check(TokenType.ELSE) && !check(TokenType.END) && !isAtEnd());
         Stmt.Block thenBranch = new Stmt.Block(thenStmt);
         
         // else branch
@@ -420,7 +434,9 @@ public class Parser {
 
         return new Stmt.If(condition, thenBranch, elseBranch);
     }
-
+    /*******************************************************************************************
+    * For statement handler
+    ********************************************************************************************/
     private Stmt parseForStatement() {
         loopStack.push(true); // push true to indicate that we are in a for loop
         // for i = 1 to 10 | for each i in array
@@ -434,7 +450,9 @@ public class Parser {
         loopStack.pop(); // pop the for loop
         return forStmt;
     }
-
+    /*******************************************************************************************
+    * For each statement
+    ********************************************************************************************/
     private Stmt foreachStatement(Token keyword) {
         Expr.Variable variable = null;
         Expr iterable = null;
@@ -453,7 +471,9 @@ public class Parser {
 
         return new Stmt.Foreach(keyword, variable, iterable, body);
     }
-
+    /*******************************************************************************************
+    * For statement
+    ********************************************************************************************/
     private Stmt forStatement(Token keyword) {        
         Token counter = null;
         Expr start = null;
@@ -479,7 +499,9 @@ public class Parser {
 
         return new Stmt.For(keyword, counter, start, stop, step, body);
     }
-
+    /*******************************************************************************************
+    * Loop
+    ********************************************************************************************/
     private Stmt loopStatement() {
         // throw error if we are not in a loop
         if (loopStack.isEmpty()) {
@@ -489,7 +511,9 @@ public class Parser {
         consume(TokenType.SEMICOLON, "Expect new line after `loop` keyword.");
         return new Stmt.Loop(previous());
     }
-
+    /*******************************************************************************************
+    * Exit
+    ********************************************************************************************/
     private Stmt exitStatement() {
         // throw error if we are not either in a loop or a procedure
         if (loopStack.isEmpty() && functionStack.isEmpty()) {
@@ -504,7 +528,9 @@ public class Parser {
         consume(TokenType.SEMICOLON, "Expect new line after `exit` keyword.");
         return new Stmt.Exit(previous());
     }
-
+    /*******************************************************************************************
+    * Repeat
+    ********************************************************************************************/
     private Stmt repeatStatement() {
         loopStack.push(true); // push true to indicate that we are in a repeat loop
         Token keyword = previous();
@@ -522,7 +548,9 @@ public class Parser {
         loopStack.pop(); // pop the repeat loop
         return new Stmt.Repeat(keyword, body, condition);
     }
-
+    /*******************************************************************************************
+    * While
+    ********************************************************************************************/
     private Stmt whileStatement() {
         loopStack.push(true); // push true to indicate that we are in a while loop
         Token keyword = previous();
@@ -536,7 +564,9 @@ public class Parser {
         loopStack.pop(); // pop the while loop
         return new Stmt.While(keyword, condition, body);
     }
-
+    /*******************************************************************************************
+    * Defer
+    ********************************************************************************************/
     private Stmt deferStatement() {
         // defer are found in function and procedures
         if (functionStack.isEmpty()) {
@@ -555,7 +585,9 @@ public class Parser {
         deferStack.pop();
         return new Stmt.Defer(keyword, body);
     }
-
+    /*******************************************************************************************
+    * Guard
+    ********************************************************************************************/
     private Stmt guardStatement() {
         // guard are found in function and procedures
         if (functionStack.isEmpty()) {
@@ -574,7 +606,9 @@ public class Parser {
 
         return new Stmt.Guard(keyword, condition, body);
     }
-
+    /*******************************************************************************************
+    * Try Catch Finally
+    ********************************************************************************************/
     private Stmt tryCatchStatement() {
         final Token keyword = previous();
         match(TokenType.SEMICOLON); // eat new line
@@ -607,17 +641,23 @@ public class Parser {
 
         return new Stmt.TryCatch(keyword, new Stmt.Block(tryStatements), new Stmt.Block(catchStatements), finallyBlock);
     }    
-
+    /*******************************************************************************************
+    * Expression Statement
+    ********************************************************************************************/
     private Stmt expressionStmt() {
         Expr expr = expression();
         consume(TokenType.SEMICOLON, "Expect new line after expression.");
         return new Stmt.Expression(expr);
     }
-
+    /*******************************************************************************************
+    * Expression
+    ********************************************************************************************/
     private Expr expression() {
         return assignment();
     }
-
+    /*******************************************************************************************
+    * Assignment
+    ********************************************************************************************/
     private Expr assignment() {
         Expr target = logicalOr();        
         if (peek().type == TokenType.SIMPLE_ASSIGN || peek().type == TokenType.COMPLEX_ASSIGN) {
@@ -651,7 +691,9 @@ public class Parser {
 
         return target;
     }
-
+    /*******************************************************************************************
+    * validateTypes
+    ********************************************************************************************/
     private void validateTypes(Expr.Variable variable) {
         if (variable.name.category == Category.PARAMETER || variable.name.category == Category.VARIADIC) {
             checkType(variable.name, "parameters", "function or procedure");
@@ -663,13 +705,17 @@ public class Parser {
             }
         }
     }    
-
+    /*******************************************************************************************
+    * checkType
+    ********************************************************************************************/
     private void checkType(Token token, String typeName, String scope) {
         if (validateStack.isEmpty()) {
             error(token, "Cannot use `" + typeName + "` outside of a " + scope + ".");
         }
     }
-
+    /*******************************************************************************************
+    * Logical Or
+    ********************************************************************************************/
     private Expr logicalOr() {
         Expr expr = logicalAnd();
 
@@ -681,7 +727,9 @@ public class Parser {
 
         return expr;
     }
-
+    /*******************************************************************************************
+    * Logical And
+    ********************************************************************************************/
     private Expr logicalAnd() {
         Expr expr = equality();
 
@@ -693,7 +741,9 @@ public class Parser {
 
         return expr;
     }
-
+    /*******************************************************************************************
+    * Equality
+    ********************************************************************************************/
     private Expr equality() {
         Expr expr = comparison();
 
@@ -705,7 +755,9 @@ public class Parser {
 
         return expr;
     }
-
+    /*******************************************************************************************
+    * Comparison
+    ********************************************************************************************/
     private Expr comparison() {
         Expr expr = term();
 
@@ -717,7 +769,9 @@ public class Parser {
 
         return expr;
     }
-
+    /*******************************************************************************************
+    * Term
+    ********************************************************************************************/
     private Expr term() {
         Expr expr = factor();
 
@@ -734,7 +788,9 @@ public class Parser {
 
         return expr;
     }
-
+    /*******************************************************************************************
+    * Factor
+    ********************************************************************************************/
     private Expr factor() {
         Expr expr = exponent();
 
@@ -746,7 +802,9 @@ public class Parser {
 
         return expr;
     }
-
+    /*******************************************************************************************
+    * Exponent
+    ********************************************************************************************/
     private Expr exponent() {
         Expr expr = unary();
 
@@ -758,7 +816,9 @@ public class Parser {
 
         return expr;
     }
-
+    /*******************************************************************************************
+    * Unary
+    ********************************************************************************************/
     private Expr unary() {
         if (match(TokenType.LOGICAL_NOT, TokenType.TERM)) {
             Token operator = previous();
@@ -768,7 +828,9 @@ public class Parser {
 
         return call();
     }
-
+    /*******************************************************************************************
+    * Call
+    ********************************************************************************************/
     private Expr call() {
         Expr left = primary();
 
@@ -817,7 +879,9 @@ public class Parser {
 
         return left;
     }
-
+    /*******************************************************************************************
+    * This method is called when we have a function call. It parses the arguments and returns
+    ********************************************************************************************/
     private Expr finishCall(Expr callee) {  
         Token paren = previous();      
         final List<Expr> arguments = new ArrayList<Expr>();
@@ -860,7 +924,9 @@ public class Parser {
 
         return new Expr.Call(callee, paren, arguments);
     }
-
+    /*******************************************************************************************
+    * Parse a map expression.
+    ********************************************************************************************/
     private Expr primary() {
         if (peek().category == Category.LITERAL) {
             return new Expr.Literal(advance());
@@ -888,7 +954,9 @@ public class Parser {
 
         throw error(peek(), "Expect expression.");
     }
-
+    /*******************************************************************************************
+    * Parse a map expression.
+    ********************************************************************************************/
     private Expr array() {
         Token keyword = previous();
         List<Expr> elements = new ArrayList<Expr>();
@@ -925,7 +993,9 @@ public class Parser {
         consume(TokenType.RBRACKET, "Expect ']' after array elements.");
         return new Expr.Array(keyword, elements, null, null);
     }
-
+    /*******************************************************************************************
+    * Map literal
+    ********************************************************************************************/
     private Expr map() {
         Token keyword = previous();
         List<String> keys = new ArrayList<String>();
@@ -956,7 +1026,9 @@ public class Parser {
         consume(TokenType.RBRACE, "Expect '}' after map elements.");
         return new Expr.Map(keyword, keys, values);
     }
-
+    /*******************************************************************************************
+    * newExpr() parses the following grammar:
+    ********************************************************************************************/
     private Expr newExpr() {
         // the 'new' keyword
         Token keyword = previous();
@@ -995,7 +1067,9 @@ public class Parser {
 
         return new Expr.New(keyword, className, arguments);
     }
-
+    /*******************************************************************************************
+    * Parses the super expression.
+    ********************************************************************************************/
     private Expr superExpr() {
         Token keyword = previous();
         if (functionStack.isEmpty() || classStack.isEmpty()) {
@@ -1008,8 +1082,9 @@ public class Parser {
 
         return new Expr.Super(keyword, className, method);
     }
-
-
+    /*******************************************************************************************
+    * Checks if the current token is of the given type.
+    ********************************************************************************************/
     private boolean match(TokenType... types) {
         for (TokenType type : types) {
             if (check(type)) {
@@ -1020,7 +1095,9 @@ public class Parser {
 
         return false;
     }
-
+    /*******************************************************************************************
+    * Checks if the current token is of the given type.
+    ********************************************************************************************/
     private boolean match(Category... categories) {
         for (Category category : categories) {
             if (check(category)) {
@@ -1031,36 +1108,50 @@ public class Parser {
 
         return false;
     }
-
+    /*******************************************************************************************
+    * Returns the current token.
+    ********************************************************************************************/
     private Token consume(TokenType type, String message) {
         if (check(type)) return advance();
 
         throw error(peek(), message);
     }
-
+    /*******************************************************************************************
+    * Checks if the current token is of the given type.
+    ********************************************************************************************/
     private boolean check(TokenType type) {
         if (isAtEnd()) return false;
         return peek().type == type;
     }
-
+    /*******************************************************************************************
+    * Checks if the current token is of the given category.
+    ********************************************************************************************/
     private boolean check(Category category) {
         if (isAtEnd()) return false;
         return peek().category == category;
     }
-
+    /*******************************************************************************************
+    * Returns the current token and advances the current token.
+    ********************************************************************************************/
     private Token advance() {
         if (!isAtEnd()) current++;
         return previous();
     }
-
+    /*******************************************************************************************
+    * Checks if the current token is the end of the file.
+    ********************************************************************************************/
     private boolean isAtEnd() {
         return peek().type == TokenType.EOF;
     }
-
+    /*******************************************************************************************
+    * Returns the current token.
+    ********************************************************************************************/
     private Token peek() {
         return tokens.get(current);
     }
-
+    /*******************************************************************************************
+    * Returns the token at the given offset from the current token.
+    ********************************************************************************************/
     private Token peek(int offset) {
         // check if the offset is out of bounds, if so, return EOF
         if (current + offset >= tokens.size()) {
@@ -1068,16 +1159,22 @@ public class Parser {
         }
         return tokens.get(current + offset);
     }
-
+    /*******************************************************************************************
+    * Returns the previous token.
+    ********************************************************************************************/
     private Token previous() {
         return tokens.get(current - 1);
     }
-
+    /*******************************************************************************************
+    * Error handling
+    ********************************************************************************************/
     private ParseError error(Token token, String message) {
         Hungaro.error(token, message);
         return new ParseError();
     }
-    
+    /*******************************************************************************************
+    * Synchronize the parser after an error.
+    ********************************************************************************************/    
     private void synchronize() {
         advance();
 
