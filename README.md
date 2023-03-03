@@ -216,8 +216,14 @@ def cPerson
 end
 ```
 
-# More Examples
+## More Examples
 
 1. [Mathematical examples](https://github.com/Irwin1985/Hungaro/tree/master/examples/misc)
 2. [Object Oriented Programming Examples](https://github.com/Irwin1985/Hungaro/tree/master/examples/designPatterns)
 3. [Benchmark examples](https://github.com/Irwin1985/Hungaro/tree/master/examples/benchmark)
+
+## License
+
+MIT
+
+**Free Software, Hell Yeah!**
