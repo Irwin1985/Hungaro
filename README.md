@@ -194,24 +194,24 @@ def cPerson
     nAge = 0
 
     def pInit(psName, pnAge)
-        poThis.sName = psName
-        poThis.nAge = pnAge
+        @sName = psName
+        @nAge = pnAge
     end
 
     def fGetName
-        return poThis.sName
+        return @sName
     end
 
     def pSetName(psName)
-        poThis.sName = psName
+        @sName = psName
     end
 
     def fGetAge
-        return poThis.nAge
+        return @nAge
     end
 
     def pSetAge(pnAge)
-        poThis.nAge = pnAge
+        @nAge = pnAge
     end
 end
 ```
