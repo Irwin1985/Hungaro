@@ -7,21 +7,21 @@
 
 def cTree
     pInit(pnDepth)
-        poThis.nDepth = pnDepth
-        if poThis.nDepth > 0
-            poThis.oA = new cTree(poThis.nDepth - 1)
-            poThis.oB = new cTree(poThis.nDepth - 1)
-            poThis.oC = new cTree(poThis.nDepth - 1)
-            poThis.oD = new cTree(poThis.nDepth - 1)
-            poThis.oE = new cTree(poThis.nDepth - 1)
+        @nDepth = pnDepth
+        if @nDepth > 0
+            @oA = new cTree(@nDepth - 1)
+            @oB = new cTree(@nDepth - 1)
+            @oC = new cTree(@nDepth - 1)
+            @oD = new cTree(@nDepth - 1)
+            @oE = new cTree(@nDepth - 1)
         end
     end
 
     fWalk
-        if poThis.nDepth == 0
+        if @nDepth == 0
             return 0
         end
-        return poThis.nDepth + poThis.oA.fWalk() + poThis.oB.fWalk() + poThis.oC.fWalk() + poThis.oD.fWalk() + poThis.oE.fWalk()
+        return @nDepth + @oA.fWalk() + @oB.fWalk() + @oC.fWalk() + @oD.fWalk() + @oE.fWalk()
     end
 end
 

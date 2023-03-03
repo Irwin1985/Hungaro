@@ -7,13 +7,13 @@
 
 def cAnimal
     pInit(psName, psType)
-        poThis.sName = psName
-        poThis.sType = psType
-        poThis.pWhatIs()
+        @sName = psName
+        @sType = psType
+        @pWhatIs()
     end
 
     pWhatIs
-        println(poThis.sName & " is a " & poThis.sType)
+        println(@sName & " is a " & @sType)
     end
 end
 

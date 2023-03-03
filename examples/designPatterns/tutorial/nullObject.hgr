@@ -25,11 +25,11 @@ end
 
 def cRealCustomer as cAbstractCustomer
     pInit(psName)
-        poThis.sName = psName
+        @sName = psName
     end
 
     fGetName
-        return poThis.sName
+        return @sName
     end
 
     fIsNill
@@ -51,8 +51,8 @@ def cCustomerFactory
     aNames = ["Rob", "Joe", "Julie"]
 
     fGetCustomer(psName)
-        for nI = 0 to poThis.aNames.len()-1
-            if poThis.aNames.get(nI) == psName
+        for nI = 0 to @aNames.len()-1
+            if @aNames.get(nI) == psName
                 return new cRealCustomer(psName)
             end
         end

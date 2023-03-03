@@ -27,15 +27,15 @@ def cAbstractLogger
     oNextLogger = null
 
     pSetNextLogger(poNextLogger)
-        poThis.oNextLogger = poNextLogger
+        @oNextLogger = poNextLogger
     end
 
     pLogMessage(pnLevel, psMessage)        
-        if poThis.nLevel <= pnLevel
+        if @nLevel <= pnLevel
             pWrite(psMessage)
         end
-        if poThis.oNextLogger != null            
-            poThis.oNextLogger.pLogMessage(pnLevel, psMessage)
+        if @oNextLogger != null            
+            @oNextLogger.pLogMessage(pnLevel, psMessage)
         end
     end
 
@@ -45,7 +45,7 @@ end
 def cConsoleLogger as cAbstractLogger    
 
     pInit(pnLevel)
-        poThis.nLevel = pnLevel
+        @nLevel = pnLevel
     end
 
     pWrite(psMessage)
@@ -56,7 +56,7 @@ end
 def cErrorLogger as cAbstractLogger
 
     pInit(pnLevel)
-        poThis.nLevel = pnLevel
+        @nLevel = pnLevel
     end
 
     pWrite(psMessage)
@@ -67,7 +67,7 @@ end
 def cFileLogger as cAbstractLogger
 
     pInit(pnLevel)
-        poThis.nLevel = pnLevel
+        @nLevel = pnLevel
     end
 
     pWrite(psMessage)

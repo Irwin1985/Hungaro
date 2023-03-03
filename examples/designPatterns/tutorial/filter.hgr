@@ -22,21 +22,21 @@ def cPerson
     sMaritalStatus = ""
 
     pInit(psName, psGender, psMaritalStatus)
-        poThis.sName = psName
-        poThis.sGender = psGender
-        poThis.sMaritalStatus = psMaritalStatus
+        @sName = psName
+        @sGender = psGender
+        @sMaritalStatus = psMaritalStatus
     end
 
     fGetName
-        return poThis.sName
+        return @sName
     end
 
     fGetGender
-        return poThis.sGender
+        return @sGender
     end
 
     fGetMaritalStatus
-        return poThis.sMaritalStatus
+        return @sMaritalStatus
     end
 end
 
@@ -90,13 +90,13 @@ def cAndCriteria as cCriteria
     oOtherCriteria = null
     
     pInit(poCriteria, poOtherCriteria)
-        poThis.oCriteria = poCriteria
-        poThis.oOtherCriteria = poOtherCriteria
+        @oCriteria = poCriteria
+        @oOtherCriteria = poOtherCriteria
     end
 
     fMeetCriteria(paPersons)
-        let aFirstCriteriaPersons = poThis.oCriteria.fMeetCriteria(paPersons)
-        return poThis.oOtherCriteria.fMeetCriteria(aFirstCriteriaPersons)
+        let aFirstCriteriaPersons = @oCriteria.fMeetCriteria(paPersons)
+        return @oOtherCriteria.fMeetCriteria(aFirstCriteriaPersons)
     end
 end
 
@@ -105,13 +105,13 @@ def cOrCriteria as cCriteria
     oOtherCriteria = null
     
     pInit(poCriteria, poOtherCriteria)
-        poThis.oCriteria = poCriteria
-        poThis.oOtherCriteria = poOtherCriteria
+        @oCriteria = poCriteria
+        @oOtherCriteria = poOtherCriteria
     end
 
     fMeetCriteria(paPersons)
-        let aFirstCriteriaItems = poThis.oCriteria.fMeetCriteria(paPersons)
-        let aOtherCriteriaItems = poThis.oOtherCriteria.fMeetCriteria(paPersons)
+        let aFirstCriteriaItems = @oCriteria.fMeetCriteria(paPersons)
+        let aOtherCriteriaItems = @oOtherCriteria.fMeetCriteria(paPersons)
 
         for each vPerson in aOtherCriteriaItems
             if !aFirstCriteriaItems.contains(vPerson)

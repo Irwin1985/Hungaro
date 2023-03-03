@@ -39,11 +39,11 @@ end
 def cContext as cStrategy
     oStrategy = null
     pInit(poStrategy)
-        poThis.oStrategy = poStrategy
+        @oStrategy = poStrategy
     end
 
     fExecuteStrategy(pnNum1, pnNum2)
-        return poThis.oStrategy.fDoOperation(pnNum1, pnNum2)
+        return @oStrategy.fDoOperation(pnNum1, pnNum2)
     end
 end
 

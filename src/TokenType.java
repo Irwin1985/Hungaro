@@ -52,6 +52,7 @@ public enum TokenType {
     NUMBER,
     STRING,
     IDENTIFIER,
+    THIS,
 
     // Operators
     SIMPLE_ASSIGN,

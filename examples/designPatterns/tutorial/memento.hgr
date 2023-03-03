@@ -20,11 +20,11 @@ def cMememto
     sState = ""
 
     pInit(psState)
-        poThis.sState = psState
+        @sState = psState
     end
 
     fGetState()
-        return poThis.sState
+        return @sState
     end
 end
 
@@ -32,19 +32,19 @@ def cOriginator
     sState = ""
 
     pSetState(psState)
-        poThis.sState = psState
+        @sState = psState
     end
 
     fGetState()
-        return poThis.sState
+        return @sState
     end
 
     fSaveStateToMemento()
-        return new cMememto(poThis.sState)
+        return new cMememto(@sState)
     end
 
     pGetStateFromMemento(poMemento)
-        poThis.sState = poMemento.fGetState()
+        @sState = poMemento.fGetState()
     end
 end
 
@@ -52,11 +52,11 @@ def cCareTaker
     aMementoList = []
 
     pAdd(poState)
-        poThis.aMementoList.push(poState)
+        @aMementoList.push(poState)
     end
 
     fGet(pnIndex)
-        return poThis.aMementoList[pnIndex]
+        return @aMementoList[pnIndex]
     end
 end
 

@@ -28,23 +28,23 @@ def cShape
     -pDraw()
 
     fGetType
-        return poThis.sType
+        return @sType
     end
 
     fGetID
-        return poThis.sID
+        return @sID
     end
 
     pSetID(psID)
-        poThis.sID = psID
+        @sID = psID
     end
 
     fClone
         let oClone = null
         try
             oClone = new cShape()
-            oClone.sID = poThis.sID
-            oClone.sType = poThis.sType            
+            oClone.sID = @sID
+            oClone.sType = @sType            
         catch
             println("CATCH ERROR: " & oEx.message)
         end
@@ -54,7 +54,7 @@ end
 
 def cRectangle as cShape
     pInit
-        poThis.sType = "Rectangle"
+        @sType = "Rectangle"
     end
 
     pDraw
@@ -64,7 +64,7 @@ end
 
 def cSquare as cShape
     pInit
-        poThis.sType = "Square"
+        @sType = "Square"
     end
 
     pDraw
@@ -74,7 +74,7 @@ end
 
 def cCircle as cShape
     pInit
-        poThis.sType = "Circle"
+        @sType = "Circle"
     end
 
     pDraw
@@ -86,22 +86,22 @@ def cShapeCache
     mShapeMap = {}
     
     fGetShape(psShapeId)
-        let oCachedShape = poThis.mShapeMap[psShapeId]
+        let oCachedShape = @mShapeMap[psShapeId]
         return oCachedShape.fClone()
     end
 
     pLoadCache
         let oCircle = new cCircle()
         oCircle.pSetID("1")
-        poThis.mShapeMap[oCircle.fGetID()] = oCircle
+        @mShapeMap[oCircle.fGetID()] = oCircle
 
         let oSquare = new cSquare()
         oSquare.pSetID("2")
-        poThis.mShapeMap[oSquare.fGetID()] = oSquare
+        @mShapeMap[oSquare.fGetID()] = oSquare
 
         let oRectangle = new cRectangle()
         oRectangle.pSetID("3")
-        poThis.mShapeMap[oRectangle.fGetID()] = oRectangle
+        @mShapeMap[oRectangle.fGetID()] = oRectangle
     end
 end
 

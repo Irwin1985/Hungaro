@@ -100,19 +100,19 @@ def cMeal
     aItems = []
 
     pAddItem(poItem)
-        poThis.aItems.push(poItem)
+        @aItems.push(poItem)
     end
 
     fGetCost
         let nCost = 0.0
-        for each vItem in poThis.aItems
+        for each vItem in @aItems
             nCost += vItem.fPrice()
         end
         return nCost
     end
 
     pShowItems
-        for each vItem in poThis.aItems
+        for each vItem in @aItems
             print("Item: " & vItem.fName())
             print(", Packing: " & vItem.fPacking().fPack())
             print(", Price: " & vItem.fPrice())

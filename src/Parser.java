@@ -923,6 +923,9 @@ public class Parser {
         else if (match(TokenType.IDENTIFIER, TokenType.PARAMETER)) {
             return new Expr.Variable(previous());
         }
+        else if (match(TokenType.THIS)) {
+            return thisExpr();
+        }
         else if (match(TokenType.LPAREN)) {
             Expr expr = expression();
             consume(TokenType.RPAREN, "Expect ')' after expression.");
@@ -942,6 +945,19 @@ public class Parser {
         }
 
         throw error(peek(), "Expect expression.");
+    }
+
+    private Expr thisExpr() {
+        if (classStack.isEmpty()) {
+            throw error(previous(), "Cannot refer variable instance outside of a class.");
+        }
+        final Token dotToken = new Token(TokenType.DOT);
+        final Expr.Variable property = new Expr.Variable(previous());
+        final Token poThisToken = new Token(TokenType.PARAMETER, "poThis", Category.PARAMETER);
+        final Expr.Variable poThis = new Expr.Variable(poThisToken);
+        final Expr.Prop prop = new Expr.Prop(dotToken, poThis, property, false);
+
+        return prop;
     }
     /*******************************************************************************************
     * Parse a map expression.

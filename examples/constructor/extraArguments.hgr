@@ -7,8 +7,8 @@
 
 def cFoo
     pInit(pnA, pnB)
-        poThis.nA = pnA
-        poThis.nB = pnB
+        @nA = pnA
+        @nB = pnB
     end
 end
 

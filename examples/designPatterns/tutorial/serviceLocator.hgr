@@ -61,7 +61,7 @@ def cCache
     aServices = []
 
     fGetService(psServiceName)
-        for each vService in poThis.aServices
+        for each vService in @aServices
             if vService.fGetName() == psServiceName
                 println("Returning cached  " & psServiceName & " object")
                 return vService
@@ -73,13 +73,13 @@ def cCache
     pAddService(poNewService)
         let bExists = false
         
-        for each vService in poThis.aServices
+        for each vService in @aServices
             if vService.fGetName() == poNewService.fGetName()
                 bExists = true
             end
         end
         if not bExists            
-            poThis.aServices.push(poNewService)
+            @aServices.push(poNewService)
         end
     end
 end
@@ -88,14 +88,14 @@ def cServiceLocator
     oCache = new cCache()
     
     fGetService(psJndiName)
-        let oService = poThis.oCache.fGetService(psJndiName)
+        let oService = @oCache.fGetService(psJndiName)
         if oService != null
             return oService
         end
 
         let oInitialContext = new cInitialContext()
         let oService1 = oInitialContext.fLookup(psJndiName)
-        poThis.oCache.pAddService(oService1)
+        @oCache.pAddService(oService1)
         return oService1
     end
 end

@@ -7,136 +7,136 @@
 
 def cFoo
     pInit
-        poThis.nField0 = 1  | poThis.nField1 = 1    | poThis.nField2 = 1  |
-        poThis.nField3 = 1  | poThis.nField4 = 1    | poThis.nField5 = 1  |
-        poThis.nField6 = 1  | poThis.nField7 = 1    | poThis.nField8 = 1  |
-        poThis.nField9 = 1  | poThis.nField10 = 1   | poThis.nField11 = 1 |
-        poThis.nField12 = 1 | poThis.nField13 = 1   | poThis.nField14 = 1 |
-        poThis.nField15 = 1 | poThis.nField16 = 1   | poThis.nField17 = 1 |
-        poThis.nField18 = 1 | poThis.nField19 = 1   | poThis.nField20 = 1 |
-        poThis.nField21 = 1 | poThis.nField22 = 1   | poThis.nField23 = 1 | 
-        poThis.nField24 = 1 | poThis.nField25 = 1   | poThis.nField26 = 1 | 
-        poThis.nField27 = 1 | poThis.nField28 = 1   | poThis.nField29 = 1 |
+        @nField0 = 1  | @nField1 = 1    | @nField2 = 1  |
+        @nField3 = 1  | @nField4 = 1    | @nField5 = 1  |
+        @nField6 = 1  | @nField7 = 1    | @nField8 = 1  |
+        @nField9 = 1  | @nField10 = 1   | @nField11 = 1 |
+        @nField12 = 1 | @nField13 = 1   | @nField14 = 1 |
+        @nField15 = 1 | @nField16 = 1   | @nField17 = 1 |
+        @nField18 = 1 | @nField19 = 1   | @nField20 = 1 |
+        @nField21 = 1 | @nField22 = 1   | @nField23 = 1 | 
+        @nField24 = 1 | @nField25 = 1   | @nField26 = 1 | 
+        @nField27 = 1 | @nField28 = 1   | @nField29 = 1 |
     end
 
     fMethod0
-        return poThis.nField0
+        return @nField0
     end
 
     fMethod1
-        return poThis.nField1
+        return @nField1
     end
 
     fMethod2
-        return poThis.nField2
+        return @nField2
     end
 
     fMethod3
-        return poThis.nField3
+        return @nField3
     end
 
     fMethod4
-        return poThis.nField4
+        return @nField4
     end
 
     fMethod5
-        return poThis.nField5
+        return @nField5
     end
 
     fMethod6
-        return poThis.nField6
+        return @nField6
     end
 
     fMethod7
-        return poThis.nField7
+        return @nField7
     end
 
     fMethod8
-        return poThis.nField8
+        return @nField8
     end
 
     fMethod9
-        return poThis.nField9
+        return @nField9
     end
 
     fMethod10
-        return poThis.nField10
+        return @nField10
     end
 
     fMethod11
-        return poThis.nField11
+        return @nField11
     end
 
     fMethod12
-        return poThis.nField12
+        return @nField12
     end
 
     fMethod13
-        return poThis.nField13
+        return @nField13
     end
 
     fMethod14
-        return poThis.nField14
+        return @nField14
     end
 
     fMethod15
-        return poThis.nField15
+        return @nField15
     end
 
     fMethod16
-        return poThis.nField16
+        return @nField16
     end
 
     fMethod17
-        return poThis.nField17
+        return @nField17
     end
 
     fMethod18
-        return poThis.nField18
+        return @nField18
     end
 
     fMethod19
-        return poThis.nField19
+        return @nField19
     end
 
     fMethod20
-        return poThis.nField20
+        return @nField20
     end
 
     fMethod21
-        return poThis.nField21
+        return @nField21
     end
 
     fMethod22
-        return poThis.nField22
+        return @nField22
     end
 
     fMethod23
-        return poThis.nField23
+        return @nField23
     end
 
     fMethod24
-        return poThis.nField24
+        return @nField24
     end
 
     fMethod25
-        return poThis.nField25
+        return @nField25
     end
 
     fMethod26
-        return poThis.nField26
+        return @nField26
     end
 
     fMethod27
-        return poThis.nField27
+        return @nField27
     end
 
     fMethod28
-        return poThis.nField28
+        return @nField28
     end
 
     fMethod29
-        return poThis.nField29
+        return @nField29
     end    
 end
 

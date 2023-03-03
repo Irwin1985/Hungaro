@@ -25,25 +25,25 @@ def cEmployee
 
     # Constructor
     pInit(psName, psDept, pnSalary)
-        poThis.sName = psName
-        poThis.sDept = psDept
-        poThis.nSalary = pnSalary
+        @sName = psName
+        @sDept = psDept
+        @nSalary = pnSalary
     end
 
     pAdd(poEmployee)
-        poThis.aSubordinates.push(poEmployee)
+        @aSubordinates.push(poEmployee)
     end
 
     pRemove(poEmployee)
-        poThis.aSubordinates.remove(poEmployee)
+        @aSubordinates.remove(poEmployee)
     end
 
     fGetSubordinates
-        return poThis.aSubordinates.clone() # Return a copy of the array
+        return @aSubordinates.clone() # Return a copy of the array
     end
 
     fToString
-        return "Employee :[ Name : " & poThis.sName & ", dept : " & poThis.sDept & ", salary :" & poThis.nSalary & " ]"
+        return "Employee :[ Name : " & @sName & ", dept : " & @sDept & ", salary :" & @nSalary & " ]"
     end
 end
 

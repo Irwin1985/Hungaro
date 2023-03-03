@@ -28,10 +28,10 @@ def cMiddleware
     # Runs check on the next object in chain or ends traversing if we're in
     # last object in chain.
     fCheckNext(psEmail, psPassword)
-        if poThis.oNext == null
+        if @oNext == null
             return true
         end
-        return poThis.oNext.fCheck(psEmail, psPassword)
+        return @oNext.fCheck(psEmail, psPassword)
     end
 end
 
@@ -58,8 +58,8 @@ def cThrottlingMiddleware as cMiddleware
     nCurrentTime = 0
 
     pInit(pnRequestPerMinute)
-        poThis.nRequestPerMinute = pnRequestPerMinute
-        poThis.nCurrentTime = seconds()
+        @nRequestPerMinute = pnRequestPerMinute
+        @nCurrentTime = seconds()
     end
 
     """
@@ -71,12 +71,12 @@ def cThrottlingMiddleware as cMiddleware
         checks by running its check after all other checks.
     """
     fCheck(psEmail, psPassword)
-        if seconds() > poThis.nCurrentTime + 60000
-            poThis.nRequest = 0
-            poThis.nCurrentTime = seconds()
+        if seconds() > @nCurrentTime + 60000
+            @nRequest = 0
+            @nCurrentTime = seconds()
         end
-        poThis.nRequest += 1
-        if poThis.nRequest > poThis.nRequestPerMinute
+        @nRequest += 1
+        if @nRequest > @nRequestPerMinute
             println("Request limit exceeded!")
             return false
         end
@@ -90,15 +90,15 @@ end
 def cUserExistsMiddleware as cMiddleware
     oServer = null
     pInit(poServer)
-        poThis.oServer = poServer    
+        @oServer = poServer    
     end
 
     fCheck(psEmail, psPassword)
-        if not poThis.oServer.fHasEmail(psEmail)
+        if not @oServer.fHasEmail(psEmail)
             println("This email is not registered!")
             return false
         end
-        if not poThis.oServer.fIsValidPassword(psEmail, psPassword)
+        if not @oServer.fIsValidPassword(psEmail, psPassword)
             println("Wrong password!")
             return false
         end
@@ -116,13 +116,13 @@ def cServer
     # Client passes a chain of object to server. This improves flexibility and
     # makes testing the server class easier.
     pSetMiddleware(poMiddleware)
-        poThis.oMiddleware = poMiddleware
+        @oMiddleware = poMiddleware
     end
 
     # Server gets email and password from client and sends the authorization
     # request to the chain.
     fLogin(psEmail, psPassword)
-        if poThis.oMiddleware.fCheck(psEmail, psPassword)
+        if @oMiddleware.fCheck(psEmail, psPassword)
             println("Authorization have been successful!")
             # Do something useful here for authorized users.
             return true
@@ -131,15 +131,15 @@ def cServer
     end
 
     pRegister(psEmail, psPassword)
-        poThis.mUsers.put(psEmail, psPassword)
+        @mUsers.put(psEmail, psPassword)
     end
 
     fHasEmail(psEmail)
-        return poThis.mUsers.contains(psEmail)
+        return @mUsers.contains(psEmail)
     end
 
     fIsValidPassword(psEmail, psPassword)
-        return poThis.mUsers.get(psEmail) == psPassword
+        return @mUsers.get(psEmail) == psPassword
     end
 end
 

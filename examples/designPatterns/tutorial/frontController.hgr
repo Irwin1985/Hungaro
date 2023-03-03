@@ -35,9 +35,9 @@ def cDispatcher
     
     pDispatch(psRequest)
         if psRequest == "STUDENT"
-            poThis.oStudentView.pShow()
+            @oStudentView.pShow()
         else
-            poThis.oHomeView.pShow()
+            @oHomeView.pShow()
         end
     end
 end
@@ -57,7 +57,7 @@ def cFrontController
     pDispatchRequest(psRequest)
         pTrackRequest(psRequest)
         if fIsAuthenticUser()
-            poThis.oDispatcher.pDispatch(psRequest)
+            @oDispatcher.pDispatch(psRequest)
         end
     end
 end

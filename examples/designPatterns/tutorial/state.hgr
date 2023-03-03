@@ -47,11 +47,11 @@ def cContext
     oState = null
 
     pSetState(poState)
-        poThis.oState = poState
+        @oState = poState
     end
 
     fGetState
-        return poThis.oState
+        return @oState
     end
 end
 

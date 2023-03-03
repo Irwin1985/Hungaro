@@ -40,11 +40,11 @@ def cShapeDecorator as cShape
     oDecoratedShape = null
 
     pInit(poDecoratedShape)
-        poThis.oDecoratedShape = poDecoratedShape
+        @oDecoratedShape = poDecoratedShape
     end
 
     pDraw
-        poThis.oDecoratedShape.pDraw()        
+        @oDecoratedShape.pDraw()        
     end
 end
 
@@ -54,8 +54,8 @@ def cRedShapeDecorator as cShapeDecorator
     end
 
     pDraw
-        poThis.oDecoratedShape.pDraw()
-        pSetRedBorder(poThis.oDecoratedShape)
+        @oDecoratedShape.pDraw()
+        pSetRedBorder(@oDecoratedShape)
     end
 
     pSetRedBorder(poDecoratedShape)

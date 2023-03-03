@@ -20,20 +20,20 @@ def cSubject
     nState = 0
 
     fGetState
-        return poThis.nState
+        return @nState
     end
 
     pSetState(pnState)
-        poThis.nState = pnState
+        @nState = pnState
         pNotifyAllObservers()
     end
 
     pAttach(poObserver)
-        poThis.aObservers.push(poObserver)
+        @aObservers.push(poObserver)
     end
 
     pNotifyAllObservers
-        for each vObserver in poThis.aObservers
+        for each vObserver in @aObservers
             vObserver.pUpdate()
         end
     end
@@ -47,34 +47,34 @@ end
 
 def cBinaryObserver as cObserver
     pInit(poSubject)
-        poThis.oSubject = poSubject
-        poThis.oSubject.pAttach(poThis)
+        @oSubject = poSubject
+        @oSubject.pAttach(poThis)
     end
 
     pUpdate
-        println("Binary String: " & poThis.oSubject.fGetState())
+        println("Binary String: " & @oSubject.fGetState())
     end
 end
 
 def cOctalObserver as cObserver
     pInit(poSubject)
-        poThis.oSubject = poSubject
-        poThis.oSubject.pAttach(poThis)
+        @oSubject = poSubject
+        @oSubject.pAttach(poThis)
     end
 
     pUpdate
-        println("Octal String: " & poThis.oSubject.fGetState())
+        println("Octal String: " & @oSubject.fGetState())
     end
 end
 
 def cHexaObserver as cObserver
     pInit(poSubject)
-        poThis.oSubject = poSubject
-        poThis.oSubject.pAttach(poThis)
+        @oSubject = poSubject
+        @oSubject.pAttach(poThis)
     end
 
     pUpdate
-        println("Hex String: " & poThis.oSubject.fGetState())
+        println("Hex String: " & @oSubject.fGetState())
     end
 end
 

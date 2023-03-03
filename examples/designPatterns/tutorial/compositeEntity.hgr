@@ -20,11 +20,11 @@ def cDependentObject1
     sData = ""
 
     pSetData(psData)
-        poThis.sData = psData
+        @sData = psData
     end
 
     fGetData
-        return poThis.sData
+        return @sData
     end
 end
 
@@ -32,11 +32,11 @@ def cDependentObject2
     sData = ""
 
     pSetData(psData)
-        poThis.sData = psData
+        @sData = psData
     end
 
     fGetData
-        return poThis.sData
+        return @sData
     end
 end
 
@@ -45,12 +45,12 @@ def cCoarseGrainedObject
     oDependentObject2 = new cDependentObject2()
 
     pSetData(psData1, psData2)
-        poThis.oDependentObject1.pSetData(psData1)
-        poThis.oDependentObject2.pSetData(psData2)
+        @oDependentObject1.pSetData(psData1)
+        @oDependentObject2.pSetData(psData2)
     end
 
     fGetData
-        return [poThis.oDependentObject1.fGetData(), poThis.oDependentObject2.fGetData()]
+        return [@oDependentObject1.fGetData(), @oDependentObject2.fGetData()]
     end
 end
 
@@ -58,11 +58,11 @@ def cCompositeEntity
     oCoarseGrainedObject = new cCoarseGrainedObject()
 
     pSetData(psData1, psData2)
-        poThis.oCoarseGrainedObject.pSetData(psData1, psData2)
+        @oCoarseGrainedObject.pSetData(psData1, psData2)
     end
 
     fGetData
-        return poThis.oCoarseGrainedObject.fGetData()
+        return @oCoarseGrainedObject.fGetData()
     end
 end
 
@@ -70,13 +70,13 @@ def cClient
     oCompositeEntity = new cCompositeEntity()
 
     pPrintData()
-        for nI = 0 to poThis.oCompositeEntity.fGetData().len() - 1
-            println("Data: " & poThis.oCompositeEntity.fGetData()[nI])
+        for nI = 0 to @oCompositeEntity.fGetData().len() - 1
+            println("Data: " & @oCompositeEntity.fGetData()[nI])
         end
     end
 
     pSetData(psData1, psData2)
-        poThis.oCompositeEntity.pSetData(psData1, psData2)
+        @oCompositeEntity.pSetData(psData1, psData2)
     end
 end
 

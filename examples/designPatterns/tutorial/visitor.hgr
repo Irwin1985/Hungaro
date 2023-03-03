@@ -43,7 +43,7 @@ def cComputer as cComputerPart
 
     
     pAccept(poComputerPartVisitor)
-        for each vPart in poThis.aParts
+        for each vPart in @aParts
             vPart.pAccept(poComputerPartVisitor)
         end
         poComputerPartVisitor.pVisit(poThis)

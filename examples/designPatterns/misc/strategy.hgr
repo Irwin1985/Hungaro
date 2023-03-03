@@ -15,8 +15,8 @@ def cFinancialCalculator
     sType = ""
 
     fGetInterestAmount
-        let oStrategy = new object("c" & poThis.sType)
-        return oStrategy.fCalculateInterest(poThis.nBalance, poThis.nRate, poThis.nPeriod)
+        let oStrategy = new object("c" & @sType)
+        return oStrategy.fCalculateInterest(@nBalance, @nRate, @nPeriod)
     end
 end
 

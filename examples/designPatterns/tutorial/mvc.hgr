@@ -25,19 +25,19 @@ def cStudent
     sName = ""
 
     fGetRollNo
-        return poThis.sRollNo
+        return @sRollNo
     end
 
     pSetRollNo(psRollNo)
-        poThis.sRollNo = psRollNo
+        @sRollNo = psRollNo
     end
 
     fGetName
-        return poThis.sName
+        return @sName
     end
 
     pSetName(psName)
-        poThis.sName = psName
+        @sName = psName
     end
 end
 
@@ -54,28 +54,28 @@ def cStudentController
     oView = null
 
     pInit(poModel, poView)
-        poThis.oModel = poModel
-        poThis.oView = poView
+        @oModel = poModel
+        @oView = poView
     end
 
     pSetStudentName(psName)
-        poThis.oModel.pSetName(psName)
+        @oModel.pSetName(psName)
     end
 
     fGetStudentName
-        return poThis.oModel.fGetName()
+        return @oModel.fGetName()
     end
 
     pSetStudentRollNo(psRollNo)
-        poThis.oModel.pSetRollNo(psRollNo)
+        @oModel.pSetRollNo(psRollNo)
     end
 
     fGetStudentRollNo
-        return poThis.oModel.fGetRollNo()
+        return @oModel.fGetRollNo()
     end
 
     pUpdateView
-        poThis.oView.pPrintStudentDetails(poThis.oModel.fGetName(), poThis.oModel.fGetRollNo())
+        @oView.pPrintStudentDetails(@oModel.fGetName(), @oModel.fGetRollNo())
     end
 end
 

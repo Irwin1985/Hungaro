@@ -44,21 +44,21 @@ def cShapeMaker
     oSquare = null
 
     pInit
-        poThis.oCircle = new cCircle()
-        poThis.oRectangle = new cRectangle()
-        poThis.oSquare = new cSquare()
+        @oCircle = new cCircle()
+        @oRectangle = new cRectangle()
+        @oSquare = new cSquare()
     end
 
     pDrawCircle
-        poThis.oCircle.pDraw()
+        @oCircle.pDraw()
     end
 
     pDrawRectangle
-        poThis.oRectangle.pDraw()
+        @oRectangle.pDraw()
     end
 
     pDrawSquare
-        poThis.oSquare.pDraw()
+        @oSquare.pDraw()
     end
 end
 

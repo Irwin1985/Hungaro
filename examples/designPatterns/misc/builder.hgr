@@ -37,31 +37,31 @@ def cCarBuilder as cBuilder
     oGPSNavigator = null
 
     pSetCarType(psType)
-        poThis.sCarType = psType
+        @sCarType = psType
     end
 
     pSetSeats(pnSeats)
-        poThis.nSeats = pnSeats
+        @nSeats = pnSeats
     end
 
     pSetEngine(poEngine)
-        poThis.oEngine = poEngine
+        @oEngine = poEngine
     end
 
     pSetTransmission(psTransmission)
-        poThis.sTransmission = psTransmission
+        @sTransmission = psTransmission
     end
 
     pSetTripComputer(poTripComputer)
-        poThis.oTripComputer = poTripComputer
+        @oTripComputer = poTripComputer
     end
 
     pSetGPSNavigator(poGPSNavigator)
-        poThis.oGPSNavigator = poGPSNavigator
+        @oGPSNavigator = poGPSNavigator
     end
 
     fGetResult
-        return new cCar(poThis.sCarType, poThis.nSeats, poThis.oEngine, poThis.sTransmission, poThis.oTripComputer, poThis.oGPSNavigator)
+        return new cCar(@sCarType, @nSeats, @oEngine, @sTransmission, @oTripComputer, @oGPSNavigator)
     end
 end
 
@@ -83,31 +83,31 @@ def cCarManualBuilder as cBuilder
     oGPSNavigator = null
 
     pSetCarType(psType)
-        poThis.sCarType = psType
+        @sCarType = psType
     end
 
     pSetSeats(pnSeats)
-        poThis.nSeats = pnSeats
+        @nSeats = pnSeats
     end
 
     pSetEngine(poEngine)
-        poThis.oEngine = poEngine
+        @oEngine = poEngine
     end
 
     pSetTransmission(psTransmission)
-        poThis.sTransmission = psTransmission
+        @sTransmission = psTransmission
     end
 
     pSetTripComputer(poTripComputer)
-        poThis.oTripComputer = poTripComputer
+        @oTripComputer = poTripComputer
     end
 
     pSetGPSNavigator(poGPSNavigator)
-        poThis.oGPSNavigator = poGPSNavigator
+        @oGPSNavigator = poGPSNavigator
     end
 
     fGetResult
-        return new cManual(poThis.sCarType, poThis.nSeats, poThis.oEngine, poThis.sTransmission, poThis.oTripComputer, poThis.oGPSNavigator)
+        return new cManual(@sCarType, @nSeats, @oEngine, @sTransmission, @oTripComputer, @oGPSNavigator)
     end
 end
 
@@ -122,47 +122,47 @@ def cCar
     nFuel = 0
 
     pInit(psCarType, pnSeats, poEngine, psTransmission, poTripComputer, poGPSNavigator)
-        poThis.sCarType = psCarType
-        poThis.nSeats = pnSeats
-        poThis.oEngine = poEngine
-        poThis.sTransmission = psTransmission
-        poThis.oTripComputer = poTripComputer
-        if poThis.oTripComputer != null
-            poThis.oTripComputer.pSetCar(poThis)
+        @sCarType = psCarType
+        @nSeats = pnSeats
+        @oEngine = poEngine
+        @sTransmission = psTransmission
+        @oTripComputer = poTripComputer
+        if @oTripComputer != null
+            @oTripComputer.pSetCar(poThis)
         end
-        poThis.oGPSNavigator = poGPSNavigator
+        @oGPSNavigator = poGPSNavigator
     end
 
     fGetCarType
-        return poThis.sCarType
+        return @sCarType
     end
 
     fGetFuel
-        return poThis.nFuel
+        return @nFuel
     end
 
     pSetFuel(pnFuel)
-        poThis.nFuel = pnFuel
+        @nFuel = pnFuel
     end
 
     fGetSeats
-        return poThis.nSeats
+        return @nSeats
     end
 
     fGetEngine
-        return poThis.oEngine
+        return @oEngine
     end
 
     fGetTransmission
-        return poThis.sTransmission
+        return @sTransmission
     end
 
     fGetTripComputer
-        return poThis.oTripComputer
+        return @oTripComputer
     end
 
     fGetGPSNavigator
-        return poThis.oGPSNavigator
+        return @oGPSNavigator
     end
 end
 
@@ -178,26 +178,26 @@ def cManual
     oGPSNavigator = null
 
     pInit(psCarType, pnSeats, poEngine, psTransmission, poTripComputer, poGPSNavigator)
-        poThis.sCarType = psCarType
-        poThis.nSeats = pnSeats
-        poThis.oEngine = poEngine
-        poThis.sTransmission = psTransmission
-        poThis.oTripComputer = poTripComputer
-        poThis.oGPSNavigator = poGPSNavigator
+        @sCarType = psCarType
+        @nSeats = pnSeats
+        @oEngine = poEngine
+        @sTransmission = psTransmission
+        @oTripComputer = poTripComputer
+        @oGPSNavigator = poGPSNavigator
     end
 
     fPrint        
         let sInfo = ""
-        sInfo &= "Type of car: " & poThis.sCarType & "\n"
-        sInfo &= "Count of seats: " & poThis.nSeats & "\n"
-        sInfo &= "Engine: volume - " & poThis.oEngine.fGetVolume() & "; mileage - " & poThis.oEngine.fGetMileage() & "\n"
-        sInfo &= "Transmission: " & poThis.sTransmission & "\n"
-        if poThis.oTripComputer != null
+        sInfo &= "Type of car: " & @sCarType & "\n"
+        sInfo &= "Count of seats: " & @nSeats & "\n"
+        sInfo &= "Engine: volume - " & @oEngine.fGetVolume() & "; mileage - " & @oEngine.fGetMileage() & "\n"
+        sInfo &= "Transmission: " & @sTransmission & "\n"
+        if @oTripComputer != null
             sInfo &= "Trip Computer: Functional" & "\n"
         else
             sInfo &= "Trip Computer: N/A" & "\n"
         end
-        if poThis.oGPSNavigator != null
+        if @oGPSNavigator != null
             sInfo &= "GPS Navigator: Functional" & "\n"
         else
             sInfo &= "GPS Navigator: N/A" & "\n"
@@ -213,36 +213,36 @@ def cEngine
     bStarted = false
 
     pInit(pnVolume, pnMileage)
-        poThis.nVolume = pnVolume
-        poThis.nMileage = pnMileage
+        @nVolume = pnVolume
+        @nMileage = pnMileage
     end
 
     pOn
-        poThis.bStarted = true
+        @bStarted = true
     end
 
     pOff
-        poThis.bStarted = false
+        @bStarted = false
     end
 
     fIsStarted
-        return poThis.bStarted
+        return @bStarted
     end
 
     pGo(pnMileage)
-        if poThis.bStarted
-            poThis.nMileage += pnMileage
+        if @bStarted
+            @nMileage += pnMileage
         else
             println("Cannot go(), you must start engine first!")
         end
     end     
 
     fGetVolume
-        return poThis.nVolume
+        return @nVolume
     end
 
     fGetMileage
-        return poThis.nMileage
+        return @nMileage
     end
 end
 
@@ -252,12 +252,12 @@ def cGPSNavigator
 
     pInit(psManualRoute)
         if psManualRoute.len() > 0
-            poThis.sRoute = psManualRoute        
+            @sRoute = psManualRoute        
         end
     end
 
     fGetRoute
-        return poThis.sRoute
+        return @sRoute
     end
 end
 
@@ -266,15 +266,15 @@ def cTripComputer
     oCar = null
 
     pSetCar(poCar)
-        poThis.oCar = poCar
+        @oCar = poCar
     end
 
     pShowFuelLevel
-        println("Fuel level: " & poThis.oCar.fGetFuel())
+        println("Fuel level: " & @oCar.fGetFuel())
     end
 
     pShowStatus
-        if poThis.oCar.fGetEngine().fIsStarted()
+        if @oCar.fGetEngine().fIsStarted()
             println("Car is started")
         else
             println("Car isn\'t started")

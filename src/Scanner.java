@@ -162,9 +162,16 @@ public class Scanner {
         new Spec(Pattern.compile("^p[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.PARAMETER, Category.PARAMETER),
         // Variadic Parameters eg: ...paName
         new Spec(Pattern.compile("^...pa([A-Z]([a-z0-9]+)?)+"), TokenType.PARAMETER, Category.VARIADIC),
+
+        // Variable instance: @sName
+        new Spec(Pattern.compile("^@[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.THIS, Category.IDENTIFIER),
+
+        // Method instance: @fGetAge()
+        new Spec(Pattern.compile("^@[fp]([A-Z]([a-z0-9]+)?)+"), TokenType.THIS, Category.IDENTIFIER),
         
         // Identifier eg: foo, bar, baz
         new Spec(Pattern.compile("^\\w+"), TokenType.IDENTIFIER, Category.IDENTIFIER),
+
 
         // Symbols and delimiters
         new Spec(Pattern.compile("^\\("), TokenType.LPAREN, Category.GENERIC),
@@ -176,7 +183,6 @@ public class Scanner {
         new Spec(Pattern.compile("^\\."), TokenType.DOT, Category.GENERIC),
         new Spec(Pattern.compile("^,"), TokenType.COMMA, Category.GENERIC),
         new Spec(Pattern.compile("^\\:"), TokenType.COLON, Category.GENERIC),
-        // new Spec(Pattern.compile("^\\?"), TokenType.PRINT, Category.KEYWORD),        
     };
 
     public Scanner(String source) {
@@ -242,6 +248,10 @@ public class Scanner {
             Scope scope = Scope.NONE;
 
             switch (spec.type) {
+                case THIS:
+                    lexeme = lexeme.substring(1);
+                    value = lexeme;
+                    break;
                 case NUMBER:
                     lexeme = lexeme.replaceAll("_", "");
                     value = Double.parseDouble(lexeme);

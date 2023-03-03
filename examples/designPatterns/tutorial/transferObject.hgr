@@ -25,24 +25,24 @@ def cStudentVO
     nRollNo = 0
     
     pInit(psName, pnRollNo)
-        poThis.sName = psName
-        poThis.nRollNo = pnRollNo
+        @sName = psName
+        @nRollNo = pnRollNo
     end
 
     fGetName
-        return poThis.sName
+        return @sName
     end
 
     pSetName(psName)
-        poThis.sName = psName
+        @sName = psName
     end
 
     fGetRollNo
-        return poThis.nRollNo
+        return @nRollNo
     end
 
     pSetRollNo(pnRollNo)
-        poThis.nRollNo = pnRollNo
+        @nRollNo = pnRollNo
     end
 end
 
@@ -50,21 +50,21 @@ def cStudentBO
     aStudents = []
 
     pInit
-        poThis.aStudents.push(new cStudentVO("Robert", 0))
-        poThis.aStudents.push(new cStudentVO("John", 1))
+        @aStudents.push(new cStudentVO("Robert", 0))
+        @aStudents.push(new cStudentVO("John", 1))
     end
 
     pDeleteStudent(poStudent)
-        poThis.aStudents.remove(poStudent)
+        @aStudents.remove(poStudent)
         println("Student: Roll No " & poStudent.fGetRollNo() & ", deleted from database")
     end
 
     fGetAllStudents
-        return poThis.aStudents.clone() # we dont want to return the original array
+        return @aStudents.clone() # we dont want to return the original array
     end
 
     pUpdateStudent(poStudent)
-        poThis.aStudents[poStudent.fGetRollNo()].pSetName(poStudent.fGetName())
+        @aStudents[poStudent.fGetRollNo()].pSetName(poStudent.fGetName())
         println("Student: Roll No " & poStudent.fGetRollNo() & ", updated in the database")
     end
 end

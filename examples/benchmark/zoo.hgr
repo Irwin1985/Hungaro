@@ -7,36 +7,36 @@
 
 def cZoo
     pInit
-        poThis.nAarvark = 1
-        poThis.nBaboon = 1
-        poThis.nCat = 1
-        poThis.nDonkey = 1
-        poThis.nElephant = 1
-        poThis.nFox = 1
+        @nAarvark = 1
+        @nBaboon = 1
+        @nCat = 1
+        @nDonkey = 1
+        @nElephant = 1
+        @nFox = 1
     end
 
     fAnt
-        return poThis.nAarvark
+        return @nAarvark
     end
 
     fBanana
-        return poThis.nBaboon
+        return @nBaboon
     end
 
     fTuna
-        return poThis.nCat
+        return @nCat
     end
 
     fHay
-        return poThis.nDonkey
+        return @nDonkey
     end
 
     fGrass
-        return poThis.nElephant
+        return @nElephant
     end
 
     fMouse
-        return poThis.nFox
+        return @nFox
     end
 end
 

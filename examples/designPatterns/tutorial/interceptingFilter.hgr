@@ -45,18 +45,18 @@ def cFilterChain
     oTarget = null
 
     pAddFilter(poFilter)
-        poThis.aFilters.push(poFilter)
+        @aFilters.push(poFilter)
     end
 
     pExecute(psRequest)
-        for each vFilter in poThis.aFilters
+        for each vFilter in @aFilters
             vFilter.pExecute(psRequest)
         end        
-        poThis.oTarget.pExecute(psRequest)
+        @oTarget.pExecute(psRequest)
     end
 
     pSetTarget(poTarget)
-        poThis.oTarget = poTarget
+        @oTarget = poTarget
     end
 end
 
@@ -64,16 +64,16 @@ def cFilterManager
     oFilterChain = null
 
     pInit(poTarget)
-        poThis.oFilterChain = new cFilterChain()
-        poThis.oFilterChain.pSetTarget(poTarget)
+        @oFilterChain = new cFilterChain()
+        @oFilterChain.pSetTarget(poTarget)
     end
 
     pSetFilter(poFilter)
-        poThis.oFilterChain.pAddFilter(poFilter)
+        @oFilterChain.pAddFilter(poFilter)
     end
 
     pFilterRequest(psRequest)
-        poThis.oFilterChain.pExecute(psRequest)
+        @oFilterChain.pExecute(psRequest)
     end
 end
 
@@ -81,11 +81,11 @@ def cClient
     oFilterManager = null
 
     pSetFilterManager(poFilterManager)
-        poThis.oFilterManager = poFilterManager
+        @oFilterManager = poFilterManager
     end
 
     pSendRequest(psRequest)
-        poThis.oFilterManager.pFilterRequest(psRequest)
+        @oFilterManager.pFilterRequest(psRequest)
     end
 end
 

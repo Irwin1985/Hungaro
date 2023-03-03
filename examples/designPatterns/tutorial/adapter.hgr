@@ -54,10 +54,10 @@ def cMediaAdapter
 
     pInit(psAudioType)
         if psAudioType == "vlc"
-            poThis.oAdvancedMusicPlayer = new cVlcPlayer()
+            @oAdvancedMusicPlayer = new cVlcPlayer()
         else
             if psAudioType == "mp4"
-                poThis.oAdvancedMusicPlayer = new cMp4Player()
+                @oAdvancedMusicPlayer = new cMp4Player()
             end
         end
     end
@@ -65,10 +65,10 @@ def cMediaAdapter
 
     pPlay(psAudioType, psFileName)
         if psAudioType == "vlc"            
-            poThis.oAdvancedMusicPlayer.pPlayVlc(psFileName)
+            @oAdvancedMusicPlayer.pPlayVlc(psFileName)
         else
             if psAudioType == "mp4"
-                poThis.oAdvancedMusicPlayer.pPlayMp4(psFileName)
+                @oAdvancedMusicPlayer.pPlayMp4(psFileName)
             else
                 println("Invalid media. " & psAudioType & " format not supported")
             end
@@ -86,8 +86,8 @@ def cAudioPlayer
         else
             if psAudioType == "vlc" or psAudioType == "mp4"
                 # mediaAdapter is providing support to play other file formats
-                poThis.oMediaAdapter = new cMediaAdapter(psAudioType)
-                poThis.oMediaAdapter.pPlay(psAudioType, psFileName)
+                @oMediaAdapter = new cMediaAdapter(psAudioType)
+                @oMediaAdapter.pPlay(psAudioType, psFileName)
             else
                 println("Invalid media. " & psAudioType & " format not supported")
             end

@@ -20,24 +20,24 @@ def cStudent
     nRollNo = 0
 
     pInit(psName, pnRollNo)
-        poThis.sName = psName
-        poThis.nRollNo = pnRollNo
+        @sName = psName
+        @nRollNo = pnRollNo
     end
 
     fGetName
-        return poThis.sName
+        return @sName
     end
 
     pSetName(psName)
-        poThis.sName = psName
+        @sName = psName
     end
 
     fGetRollNo
-        return poThis.nRollNo
+        return @nRollNo
     end
 
     pSetRollNo(pnRollNo)
-        poThis.nRollNo = pnRollNo
+        @nRollNo = pnRollNo
     end
 end
 
@@ -55,20 +55,20 @@ def cStudentDaoImpl
     aStudents = [new cStudent("Robert", 0), new cStudent("John", 1)]
 
     fGetAllStudents
-        return poThis.aStudents.clone() # we dont want to return the reference of the original list
+        return @aStudents.clone() # we dont want to return the reference of the original list
     end
 
     fGetStudent(pnRollNo)
-        return poThis.aStudents[pnRollNo]
+        return @aStudents[pnRollNo]
     end
 
     pUpdateStudent(poStudent)
-        poThis.aStudents[poStudent.fGetRollNo()].pSetName(poStudent.fGetName())
+        @aStudents[poStudent.fGetRollNo()].pSetName(poStudent.fGetName())
         println("Student: Roll No " & poStudent.fGetRollNo() & ", updated in the database")
     end
 
     pDeleteStudent(poStudent)
-        poThis.aStudents.remove(poStudent.fGetRollNo())
+        @aStudents.remove(poStudent.fGetRollNo())
         println("Student: Roll No " & poStudent.fGetRollNo() & ", deleted from database")
     end
 end

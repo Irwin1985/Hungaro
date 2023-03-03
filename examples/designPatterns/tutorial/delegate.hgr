@@ -47,12 +47,12 @@ def cBussinessDelegate
     sServiceType = ""
 
     pSetServiceType(psServiceType)
-        poThis.sServiceType = psServiceType
+        @sServiceType = psServiceType
     end
 
     pDoTask
-        poThis.oBusinessService = poThis.oLookupService.fGetBussinessService(poThis.sServiceType)
-        poThis.oBusinessService.pDoProcessing()
+        @oBusinessService = @oLookupService.fGetBussinessService(@sServiceType)
+        @oBusinessService.pDoProcessing()
     end
     
 end
@@ -61,11 +61,11 @@ def cClient
     oBusinessService = null
 
     pInit(poBusinessService)
-        poThis.oBusinessService = poBusinessService
+        @oBusinessService = poBusinessService
     end
 
     pDoTask
-        poThis.oBusinessService.pDoTask()
+        @oBusinessService.pDoTask()
     end
 end
 

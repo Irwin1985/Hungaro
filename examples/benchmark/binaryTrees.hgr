@@ -11,22 +11,22 @@ def cTree
     nItem = 0
 
     pInit(pnItem, pnDepth)
-        poThis.nItem = pnItem
-        poThis.nDepth = pnDepth
+        @nItem = pnItem
+        @nDepth = pnDepth
 
         if pnDepth > 0
             let nItem2 = pnItem + pnItem
             pnDepth -= 1
-            poThis.oLeft = new cTree(nItem2-1, pnDepth)
-            poThis.oRight = new cTree(nItem2, pnDepth)
+            @oLeft = new cTree(nItem2-1, pnDepth)
+            @oRight = new cTree(nItem2, pnDepth)
         end
     end
 
     fCheck
-        if poThis.oLeft == null
-            return poThis.nItem        
+        if @oLeft == null
+            return @nItem        
         end
-        return poThis.nItem + poThis.oLeft.fCheck() - poThis.oRight.fCheck()
+        return @nItem + @oLeft.fCheck() - @oRight.fCheck()
     end
 end
 

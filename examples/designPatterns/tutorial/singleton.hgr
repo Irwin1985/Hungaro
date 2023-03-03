@@ -23,11 +23,11 @@ def cSingleObject
     oInstance = null
 
     pInit(psClassName, psName, pnAge)
-        poThis.oInstance = new object(psClassName, psName, pnAge)
+        @oInstance = new object(psClassName, psName, pnAge)
     end
 
     fGetInstance
-        return poThis.oInstance
+        return @oInstance
     end
 end
 
@@ -37,8 +37,8 @@ def cPerson
     nAge = 0
 
     pInit(psName, pnAge)
-        poThis.sName = psName
-        poThis.nAge = pnAge
+        @sName = psName
+        @nAge = pnAge
     end
 
     pShowMessage

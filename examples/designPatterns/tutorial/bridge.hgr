@@ -42,7 +42,7 @@ def cShape
     oDrawAPI = null
 
     pInit(poDrawAPI)
-        poThis.oDrawAPI = poDrawAPI
+        @oDrawAPI = poDrawAPI
     end
 
     -pDraw()    
@@ -55,13 +55,13 @@ def cCircle as cShape
 
     pInit(pnX, pnY, pnRadius, poDrawAPI)
         super(poDrawAPI)
-        poThis.nX = pnX
-        poThis.nY = pnY
-        poThis.nRadius = pnRadius
+        @nX = pnX
+        @nY = pnY
+        @nRadius = pnRadius
     end
 
     pDraw
-        poThis.oDrawAPI.pDrawCircle(poThis.nRadius, poThis.nX, poThis.nY)
+        @oDrawAPI.pDrawCircle(@nRadius, @nX, @nY)
     end
 end
 

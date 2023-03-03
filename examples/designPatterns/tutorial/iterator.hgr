@@ -32,17 +32,17 @@ def cNameIterator as cIterator
     aNames = []
     
     pInit(paNames)
-        poThis.aNames = paNames
+        @aNames = paNames
     end
 
     fHasNext
-        return poThis.nIndex < poThis.aNames.len()
+        return @nIndex < @aNames.len()
     end
 
     fNext
         if fHasNext()
-            poThis.nIndex += 1
-            return poThis.aNames[poThis.nIndex - 1]
+            @nIndex += 1
+            return @aNames[@nIndex - 1]
         end
         return null
     end
@@ -52,7 +52,7 @@ def cNameRepository as cContainer
     aNames = ["Robert", "John", "Julie", "Lora"]
     
     fGetIterator
-        return new cNameIterator(poThis.aNames)
+        return new cNameIterator(@aNames)
     end
 end
 

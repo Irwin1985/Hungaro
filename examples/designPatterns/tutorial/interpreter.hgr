@@ -25,11 +25,11 @@ def cTerminalExpression as cExpression
     sData = ""
 
     pInit(psData)
-        poThis.sData = psData
+        @sData = psData
     end
 
     fInterpret(psContext)
-        return psContext.contains(poThis.sData)
+        return psContext.contains(@sData)
     end
 end
 
@@ -38,12 +38,12 @@ def cOrExpression as cExpression
     oExpr2 = null
 
     pInit(poExpr1, poExpr2)
-        poThis.oExpr1 = poExpr1
-        poThis.oExpr2 = poExpr2
+        @oExpr1 = poExpr1
+        @oExpr2 = poExpr2
     end
 
     fInterpret(psContext)
-        return poThis.oExpr1.fInterpret(psContext) or poThis.oExpr2.fInterpret(psContext)
+        return @oExpr1.fInterpret(psContext) or @oExpr2.fInterpret(psContext)
     end
 end
 
@@ -52,12 +52,12 @@ def cAndExpression as cExpression
     oExpr2 = null
 
     pInit(poExpr1, poExpr2)
-        poThis.oExpr1 = poExpr1
-        poThis.oExpr2 = poExpr2
+        @oExpr1 = poExpr1
+        @oExpr2 = poExpr2
     end
 
     fInterpret(psContext)
-        return poThis.oExpr1.fInterpret(psContext) and poThis.oExpr2.fInterpret(psContext)
+        return @oExpr1.fInterpret(psContext) and @oExpr2.fInterpret(psContext)
     end
 end
 

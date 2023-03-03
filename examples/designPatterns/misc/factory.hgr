@@ -14,7 +14,7 @@ def cCoffee
     -pPrepare()
 
     pServe
-        println("Here\'s your cup of " & poThis.sName & ". Enjoy!")
+        println("Here\'s your cup of " & @sName & ". Enjoy!")
     end
 end
 
@@ -51,9 +51,9 @@ end
 
 def cMyCafe as cCafe
     pMakeCoffee(psType)
-        poThis.oProduct = fGetCoffee(psType)
-        poThis.oProduct.pPrepare()
-        poThis.oProduct.pServe()
+        @oProduct = fGetCoffee(psType)
+        @oProduct.pPrepare()
+        @oProduct.pServe()
     end
 
     fGetCoffee(psType)

@@ -13,7 +13,7 @@ def cMediator
     mColleagues = {}
     
     pAddColleague(poColleague)
-        poThis.mColleagues[poColleague.sName] = poColleague
+        @mColleagues[poColleague.sName] = poColleague
     end
 
     pChangeState(poColleague)
@@ -21,9 +21,9 @@ def cMediator
     end
 
     fUpdateColleagues(psColleagueName)
-        for each vKey in poThis.mColleagues.keys()
-            if poThis.mColleagues[lvKey].sName != psColleagueName
-                poThis.mColleagues[vKey].pSetState(false)
+        for each vKey in @mColleagues.keys()
+            if @mColleagues[lvKey].sName != psColleagueName
+                @mColleagues[vKey].pSetState(false)
             end
         end
     end
@@ -36,15 +36,15 @@ def cOptionGroup as cMediator
     sName = "OptionGroup"
     
     pShowState
-        let sMsg = "There are " & poThis.mColleagues.len() & " buttons.\n"
-        for each vKey in poThis.mColleagues.keys()
-            sMsg &= poThis.mColleagues[vKey].sName & " " & iif(poThis.mColleagues[vKey].bSelected, "is", "is not") & " selected.\n"
+        let sMsg = "There are " & @mColleagues.len() & " buttons.\n"
+        for each vKey in @mColleagues.keys()
+            sMsg &= @mColleagues[vKey].sName & " " & iif(@mColleagues[vKey].bSelected, "is", "is not") & " selected.\n"
         end
         println(sMsg)
     end
 
     pSetState(pbState)
-        poThis.bState = pbState
+        @bState = pbState
     end
 end
 
@@ -56,11 +56,11 @@ def cColleague
     oMediator = null
 
     pInit
-        poThis.oMediator = goMediator
+        @oMediator = goMediator
     end
 
     pRegister
-        poThis.oMediator.pAddColleague(poThis)
+        @oMediator.pAddColleague(poThis)
     end
 
     pSetState(pbState)
@@ -74,19 +74,19 @@ end
 def cOptionButton as cColleague
     bSelected = false
     pInit(psName)
-        poThis.sName = psName
+        @sName = psName
         pRegister()
     end
 
     pClick
-        if not poThis.bSelected
+        if not @bSelected
             pSetState(true)
-            poThis.oMediator.pChangeState(poThis)
+            @oMediator.pChangeState(poThis)
         end
     end
 
     pSetState(pbState)
-        poThis.bSelected = pbState
+        @bSelected = pbState
     end
 end
 

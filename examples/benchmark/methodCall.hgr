@@ -7,15 +7,15 @@
 
 def cToggle
     pInit(pbStartState)
-        poThis.bState = pbStartState
+        @bState = pbStartState
     end
 
     fValue
-        return poThis.bState
+        return @bState
     end
 
     fActivate
-        poThis.bState = !poThis.bState
+        @bState = !@bState
         return poThis
     end
 end
@@ -23,15 +23,15 @@ end
 def cNthToggle as cToggle
     pInit(pbStartState, pnMaxCounter)
         super(pbStartState)
-        poThis.nCountMax = pnMaxCounter
-        poThis.nCount = 0
+        @nCountMax = pnMaxCounter
+        @nCount = 0
     end
 
     fActivate
-        poThis.nCount += 1
-        if poThis.nCount >= poThis.nCountMax
+        @nCount += 1
+        if @nCount >= @nCountMax
             super()
-            poThis.nCount = 0
+            @nCount = 0
         end
 
         return poThis

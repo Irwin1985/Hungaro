@@ -29,11 +29,11 @@ def cStock
     nQuantity = 10
 
     pBuy
-        println("Stock [Name: " & poThis.sName & ", Quantity: " & poThis.nQuantity & "] bought")
+        println("Stock [Name: " & @sName & ", Quantity: " & @nQuantity & "] bought")
     end
 
     pSell
-        println("Stock [Name: " & poThis.sName & ", Quantity: " & poThis.nQuantity & "] sold")
+        println("Stock [Name: " & @sName & ", Quantity: " & @nQuantity & "] sold")
     end
 end
 
@@ -42,11 +42,11 @@ def cBuyStock as cOder
     oAbcStock = null
 
     pInit(poAbcStock)
-        poThis.oAbcStock = poAbcStock
+        @oAbcStock = poAbcStock
     end
 
     pExecute
-        poThis.oAbcStock.pBuy()
+        @oAbcStock.pBuy()
     end
 end
 
@@ -55,11 +55,11 @@ def cSellStock as cOder
     oAbcStock = null
 
     pInit(poAbcStock)
-        poThis.oAbcStock = poAbcStock
+        @oAbcStock = poAbcStock
     end
 
     pExecute
-        poThis.oAbcStock.pSell()
+        @oAbcStock.pSell()
     end
 end
 
@@ -68,14 +68,14 @@ def cBroker
     aOrderList = []
 
     pTakeOrder(poOrder)
-        poThis.aOrderList.push(poOrder)
+        @aOrderList.push(poOrder)
     end
 
     pPlaceOrders
-        for each vOrder in poThis.aOrderList
+        for each vOrder in @aOrderList
             vOrder.pExecute()
         end
-        poThis.aOrderList.clear()
+        @aOrderList.clear()
     end
 end
 

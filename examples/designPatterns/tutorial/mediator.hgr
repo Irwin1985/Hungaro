@@ -28,15 +28,15 @@ def cUser
     sName = ""
 
     pInit(psName)
-        poThis.sName = psName
+        @sName = psName
     end
 
     fGetName
-        return poThis.sName
+        return @sName
     end
 
     pSetName(psName)
-        poThis.sName = psName
+        @sName = psName
     end
 
     pSendMessage(psMessage)

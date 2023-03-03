@@ -22,16 +22,16 @@ def cRealImage as cImage
     sFileName = ""
 
     pInit(psFileName)
-        poThis.sFileName = psFileName
+        @sFileName = psFileName
         pLoadFromDisk()        
     end
 
     pDisplay
-        println("Displaying " & poThis.sFileName)
+        println("Displaying " & @sFileName)
     end
 
     pLoadFromDisk
-        println("Loading " & poThis.sFileName)
+        println("Loading " & @sFileName)
     end
 end
 
@@ -40,14 +40,14 @@ def cProxyImage as cImage
     sFileName = ""
 
     pInit(psFileName)
-        poThis.sFileName = psFileName
+        @sFileName = psFileName
     end
 
     pDisplay
-        if poThis.oRealImage == null
-            poThis.oRealImage = new cRealImage(poThis.sFileName)
+        if @oRealImage == null
+            @oRealImage = new cRealImage(@sFileName)
         end
-        poThis.oRealImage.pDisplay()
+        @oRealImage.pDisplay()
     end
 end
 

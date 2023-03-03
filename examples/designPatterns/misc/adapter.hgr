@@ -10,13 +10,13 @@ def cSquarePegAdapter
     oPeg = null
 
     pInit(poPeg)
-        poThis.oPeg = poPeg
+        @oPeg = poPeg
     end
 
     fGetRadius
         let nResult = 0.0
         # Calculate a minimun circle radius, which can fit this peg.
-        nResult = (sqrt(pow((poThis.oPeg.fGetWidth() / 2), 2) * 2))
+        nResult = (sqrt(pow((@oPeg.fGetWidth() / 2), 2) * 2))
         return nResult
     end
 end
@@ -25,11 +25,11 @@ end
 def cRoundHole
     nRadius = 0.0
     pInit(pnRadius)
-        poThis.nRadius = pnRadius
+        @nRadius = pnRadius
     end
 
     fGetRadius
-        return poThis.nRadius
+        return @nRadius
     end
 
     fFits(poPeg)
@@ -44,11 +44,11 @@ def cRoundPeg
     nRadius = 0.0
     
     pInit(pnRadius)
-        poThis.nRadius = pnRadius
+        @nRadius = pnRadius
     end
 
     fGetRadius
-        return poThis.nRadius
+        return @nRadius
     end
 end
 
@@ -58,16 +58,16 @@ def cSquarePeg
     nWidth = 0.0
 
     pInit(pnWidth)
-        poThis.nWidth = pnWidth
+        @nWidth = pnWidth
     end
 
     fGetWidth
-        return poThis.nWidth
+        return @nWidth
     end
 
     fGetSquare
         let nResult = 0.0
-        nResult = pow(poThis.nWidth, 2)
+        nResult = pow(@nWidth, 2)
         return nResult
     end
 end

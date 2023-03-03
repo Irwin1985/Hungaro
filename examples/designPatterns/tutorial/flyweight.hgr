@@ -26,23 +26,23 @@ def cCircle as cShape
     nRadius = 0
     
     pInit(psColor)
-        poThis.sColor = psColor
+        @sColor = psColor
     end
 
     pSetX(pnX)
-        poThis.nX = pnX
+        @nX = pnX
     end
 
     pSetY(pnY)
-        poThis.nY = pnY
+        @nY = pnY
     end
 
     pSetRadius(pnRadius)
-        poThis.nRadius = pnRadius
+        @nRadius = pnRadius
     end
 
     pDraw
-        println("Circle: Draw() [Color : " & poThis.sColor & ", x : " & poThis.nX & ", y :" & poThis.nY & ", radius :" & poThis.nRadius & "]")
+        println("Circle: Draw() [Color : " & @sColor & ", x : " & @nX & ", y :" & @nY & ", radius :" & @nRadius & "]")
     end
 end
 
@@ -50,10 +50,10 @@ def cShapeFactory
     mCircleMap = {}
 
     fGetCircle(psColor)
-        let oCircle = poThis.mCircleMap.get(psColor)
+        let oCircle = @mCircleMap.get(psColor)
         if oCircle == null
             oCircle = new cCircle(psColor)
-            poThis.mCircleMap.put(psColor, oCircle)
+            @mCircleMap.put(psColor, oCircle)
             println("Creating circle of color : " & psColor)
         end
         return oCircle

@@ -12,13 +12,13 @@ def cApplication
     oCheckbox = null
 
     pInit(poFactory)
-        poThis.oButton = poFactory.fCreateButton()
-        poThis.oCheckbox = poFactory.fCreateCheckbox()    
+        @oButton = poFactory.fCreateButton()
+        @oCheckbox = poFactory.fCreateCheckbox()    
     end
 
     pPaint()
-        poThis.oButton.pPaint()
-        poThis.oCheckbox.pPaint()
+        @oButton.pPaint()
+        @oCheckbox.pPaint()
     end
 
 end
