@@ -136,7 +136,7 @@ Both variables and constants are declared with the reserved word let. The rules 
 
 ### Expressions
 
-```Python
+```Ruby
 # Strings
 "Hello World"
 
@@ -174,7 +174,7 @@ let _CAPITAL = 1000 # _CAPITAL is a global constant
 
 ## Examples
 
-```Python
+```Ruby
 # this function add two numbers
 
 def fSum(pnA, pnB)
@@ -215,3 +215,9 @@ def cPerson
     end
 end
 ```
+
+# More Examples
+
+1. [Mathematical examples](https://github.com/Irwin1985/Hungaro/tree/master/examples/misc)
+2. [Object Oriented Programming Examples](https://github.com/Irwin1985/Hungaro/tree/master/examples/designPatterns)
+3. [Benchmark examples](https://github.com/Irwin1985/Hungaro/tree/master/examples/benchmark)
