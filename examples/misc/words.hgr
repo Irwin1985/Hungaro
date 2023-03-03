@@ -7,65 +7,65 @@
 
 println("Print out aA 10 times")
 
-declare lsX = "a", lsY = "A", lsAns = ""
+let sX = "a", sY = "A", sAns = ""
 
-for lnI = 1 to 10
-    declare lsTheaA = lsX & lsY
-    lsAns = lsAns & lsTheaA
+for nI = 1 to 10
+    let sTheaA = sX & sY
+    sAns = sAns & sTheaA
 end
 
-println(lsAns)
+println(sAns)
 
 println("=========Print alphabet backwards=========")
-declare lsX = "abcdefghijklmnopqrstuvwxyz"
+let sX = "abcdefghijklmnopqrstuvwxyz"
 
-for lnI = 25 to 0 step -1
-    print(lsX.charAt(lnI))
+for nI = 25 to 0 step -1
+    print(sX.charAt(nI))
 end
 
 println(" ")
 
 println("=========Print alphabet in a diagonal line=========")
-for lnI = 0 to 25
-    for lnJ = 0 to lnI
+for nI = 0 to 25
+    for nJ = 0 to nI
         print(" ")
     end
-    println(lsX.charAt(lnI))
+    println(sX.charAt(nI))
 end
 
 println("=========Write a word backwards=========")
-declare lsX = "Hello", lnLength = 5
+let sX = "Hello", nLength = 5
 
-for lnI = lnLength-1 to 0 step -1
-    print(lsX.charAt(lnI))
+for nI = nLength-1 to 0 step -1
+    print(sX.charAt(nI))
 end
 println()
 
 println("=========Code and Decode a secret message=========")
-declare lsX = "abcdefghijklmnopqrstuvwxyz"
-declare lsCode = "yzabcdefghijklmnopqrstuvwx"
+let sX = "abcdefghijklmnopqrstuvwxyz"
+let sCode = "yzabcdefghijklmnopqrstuvwx"
 
 # encode
-declare lsSecret = ""
-declare lsWord = "hello"
+let sSecret = ""
+let sWord = "hello"
 
-for lnK = 0 to 4
-    for lnI = 0 to 25
-        if lsWord.charAt(lnK) == lsX.charAt(lnI)
-            lsSecret = lsSecret & lsCode.charAt(lnI)
+for nK = 0 to 4
+    for nI = 0 to 25
+        if sWord.charAt(nK) == sX.charAt(nI)
+            sSecret = sSecret & sCode.charAt(nI)
         end
     end
 end
-println("Secret: " & lsSecret)
+println("Secret: " & sSecret)
 
 # decode
-declare lsDecoded = ""
+let sDecoded = ""
 
-for lnK = 0 to 4
-    for lnI = 0 to 25
-        if lsSecret.charAt(lnK) == lsCode.charAt(lnI)
-            lsDecoded = lsDecoded & lsX.charAt(lnI)
+for nK = 0 to 4
+    for nI = 0 to 25
+        if sSecret.charAt(nK) == sCode.charAt(nI)
+            sDecoded = sDecoded & sX.charAt(nI)
         end
     end
 end
-println("Decoded: " & lsDecoded)
+println("Decoded: " & sDecoded)

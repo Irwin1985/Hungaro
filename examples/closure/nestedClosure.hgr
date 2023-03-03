@@ -5,25 +5,25 @@
  Date: 2023-02-26
 """
 
-declare loF
+let oF
 
-declare lpF1
-    declare lsA = "a"
-    declare lpF2
-        declare lsB = "b"
-        declare lpF3
-            declare lsC = "c"
-            declare lpF4
-                println(lsA)
-                println(lsB)
-                println(lsC)
+def pF1
+    let sA = "a"
+    def pF2
+        let sB = "b"
+        def pF3
+            let sC = "c"
+            def pF4
+                println(sA)
+                println(sB)
+                println(sC)
             end
-            loF = lpF4
+            oF = pF4
         end
-        lpF3()
+        pF3()
     end
-    lpF2()
+    pF2()
 end
 
-lpF1()
-loF()
+pF1()
+oF()

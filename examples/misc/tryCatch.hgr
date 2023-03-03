@@ -5,17 +5,17 @@
  Date: 2023-02-26
 """
 
-declare lfTest
+def fTest
     try        
-        declare lnA = 10, lnB = 20
-        lnC = lnA + lnB # lnC is not defined
+        let nA = 10, nB = 20
+        nC = nA + nB # nC is not defined
         return "try"
     catch
-        println("ERROR MESSAGE: " & loEx.get("message"))
+        println("ERROR MESSAGE: " & oEx.message)
     finally
         println("finally block should be used to close resources")
     end
     return "end"
 end
 
-println(lfTest())
+println(fTest())

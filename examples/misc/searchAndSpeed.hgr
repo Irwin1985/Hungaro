@@ -5,12 +5,12 @@
  Date: 2023-02-24
 """
 
-declare lsStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-declare lsSubStr = "JKL"
-declare lnStart = tick()
+let sStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+let sSubStr = "JKL"
+let nStart = tick()
 
-for lnI = 1 to 100000
-    declare lnX = lsStr.find(lsSubStr)
+for nI = 1 to 100000
+    let nX = sStr.find(sSubStr)
 end
 
-println("Time: " & tack(lnStart))
+println("Time: " & tack(nStart))

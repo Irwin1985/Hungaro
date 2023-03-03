@@ -5,20 +5,20 @@
  Date: 2023-02-23
 """
 
-declare lnVo = 0.5, lnK1 = 0.1, lnK2 = 0.14
+let nVo = 0.5, nK1 = 0.1, nK2 = 0.14
 
-declare lfOde(paX, paDf)
-    paDf[0] = lnVo - lnK1 * paX[0]
-    paDf[1] = lnK1 * paX[0] - lnK2 * paX[1]
+def fOde(paX, paDf)
+    paDf[0] = nVo - nK1 * paX[0]
+    paDf[1] = nK1 * paX[0] - nK2 * paX[1]
     return paDf
 end
 
-declare lnHstep = 0.1, laX = [0, 0], laDf = [0, 0], lnT = 0
+let nHstep = 0.1, aX = [0, 0], aDf = [0, 0], nT = 0
 
-for lnI = 0 to 80
-    lfOde(laX, laDf)
-    laX[0] = laX[0] + lnHstep * laDf[0]
-    laX[1] = laX[1] + lnHstep * laDf[1]
-    lnT = lnT + lnHstep
-    println(lnT, laX[0], laX[1])
+for nI = 0 to 80
+    fOde(aX, aDf)
+    aX[0] = aX[0] + nHstep * aDf[0]
+    aX[1] = aX[1] + nHstep * aDf[1]
+    nT = nT + nHstep
+    println(nT, aX[0], aX[1])
 end

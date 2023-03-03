@@ -5,14 +5,14 @@
  Date: 2023-02-26
 """
 
-declare lpTest
+def pTest
     defer
         println("Defered text")
     end
 
-    for lnI = 1 to 10
-        println("Sample text # " & lnI)
+    for nI = 1 to 10
+        println("Sample text # " & nI)
     end
 end
 
-lpTest()
+pTest()

@@ -6,28 +6,28 @@
 """
 
 # version 1 using reverse()
-declare lfIsPalindrome(psString)
+def fIsPalindrome(psString)
     return psString == psString.reverse()
 end
 
 # version 2
-declare lfIsPalindrome2
-    declare lnReversedN = 0
-    declare lnN = val(readln("Enter a number: "))
-    println("Number entered: " & lnN)
-    declare lnOriginalN = lnN
+def fIsPalindrome2
+    let nReversedN = 0
+    let nN = val(readln("Enter a number: "))
+    println("Number entered: " & nN)
+    let nOriginalN = nN
 
-    # reversed integer is stored in lnReversedN
-    while (lnN != 0)
-        declare lnRemainder = lnN % 10
-        lnReversedN = lnReversedN * 10 + lnRemainder
-        lnN = int(lnN / 10)
+    # reversed integer is stored in nReversedN
+    while nN != 0
+        let nRemainder = nN % 10
+        nReversedN = nReversedN * 10 + nRemainder
+        nN = int(nN / 10)
     end
 
-    # palindrome if lnOrignalN and lnReversedN are equal
-    println("Reversed number: " & lnReversedN)
-    println("Original number: " & lnOriginalN)
-    if (lnOriginalN == lnReversedN)
+    # palindrome if nOrignalN and nReversedN are equal
+    println("Reversed number: " & nReversedN)
+    println("Original number: " & nOriginalN)
+    if nOriginalN == nReversedN
         return true
     else
         return false
@@ -35,8 +35,8 @@ declare lfIsPalindrome2
 end
 
 # Drive test code
-assert(lfIsPalindrome("abba"), "abba is a palindrome")
-if lfIsPalindrome2()
+assert(fIsPalindrome("abba"), "abba is a palindrome")
+if fIsPalindrome2()
     print("Palindrome")
 else
     print("Not a palindrome")

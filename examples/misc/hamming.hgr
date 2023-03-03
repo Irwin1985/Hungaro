@@ -5,41 +5,41 @@
  Date: 2023-02-23
 """
 
-declare lfHamming(pnLimit)
-    declare laH = []
+def fHamming(pnLimit)
+    let aH = []
     # Initialize the array
-    for lnI=1 to pnLimit
-        laH.push(0)
+    for nI=1 to pnLimit
+        aH.push(0)
     end
 
     # Calculate the Hamming Code
-    laH[0] = 1
-    declare 
-        lnX2 = 2, 
-        lnX3 = 3, 
-        lnX5 = 5,
-        lnI = 0,
-        lnJ = 0,
-        lnK = 0    
+    aH[0] = 1
+    let 
+        nX2 = 2, 
+        nX3 = 3, 
+        nX5 = 5,
+        nI = 0,
+        nJ = 0,
+        nK = 0    
 
-    for lnN = 1 to pnLimit
-        laH[lnN] = min(lnX2, min(lnX3, lnX5))
-        if lnX2 == laH[lnN]
-            lnI += 1
-            lnX2 = 2 * laH[lnI]
+    for nN = 1 to pnLimit
+        aH[nN] = min(nX2, min(nX3, nX5))
+        if nX2 == aH[nN]
+            nI += 1
+            nX2 = 2 * aH[nI]
         end
-        if lnX3 == laH[lnN]
-            lnJ += 1
-            lnX3 = 3 * laH[lnJ]
+        if nX3 == aH[nN]
+            nJ += 1
+            nX3 = 3 * aH[nJ]
         end
-        if lnX5 == laH[lnN]
-            lnK += 1
-            lnX5 = 5 * laH[lnK]
+        if nX5 == aH[nN]
+            nK += 1
+            nX5 = 5 * aH[nK]
         end
     end
-    return laH[pnLimit-1]
+    return aH[pnLimit-1]
 end
 
-for lnI = 1 to 20
-    println(lfHamming(lnI))
+for nI = 1 to 20
+    println(fHamming(nI))
 end

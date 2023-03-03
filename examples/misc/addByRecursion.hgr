@@ -4,13 +4,13 @@
  Date: 2023-02-22
 """
 
-declare lfAddNumbers(pnNumber)
+def fAddNumbers(pnNumber)
     if pnNumber != 0
-        return pnNumber + lfAddNumbers(pnNumber - 1)
+        return pnNumber + fAddNumbers(pnNumber - 1)
     else
         return pnNumber    
     end
 end
 
-declare lnNumber = val(readln("Enter a number: "))
-println("Sum of numbers from 1 to " & lnNumber & " is " & lfAddNumbers(lnNumber))
+let nNumber = val(readln("Enter a number: "))
+println("Sum of numbers from 1 to " & nNumber & " is " & fAddNumbers(nNumber))

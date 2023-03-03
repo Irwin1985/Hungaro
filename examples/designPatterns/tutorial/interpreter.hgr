@@ -17,73 +17,73 @@
     Date: 2023-02-28
 """
 
-declare lcExpression
+def cExpression
     -fInterpret(psContext)    
 end
 
-declare lcTerminalExpression as lcExpression
+def cTerminalExpression as cExpression
     sData = ""
 
     pInit(psData)
-        sData = psData
+        poThis.sData = psData
     end
 
     fInterpret(psContext)
-        return psContext.contains(sData)
+        return psContext.contains(poThis.sData)
     end
 end
 
-declare lcOrExpression as lcExpression
+def cOrExpression as cExpression
     oExpr1 = null
     oExpr2 = null
 
     pInit(poExpr1, poExpr2)
-        oExpr1 = poExpr1
-        oExpr2 = poExpr2
+        poThis.oExpr1 = poExpr1
+        poThis.oExpr2 = poExpr2
     end
 
     fInterpret(psContext)
-        return oExpr1.fInterpret(psContext) or oExpr2.fInterpret(psContext)
+        return poThis.oExpr1.fInterpret(psContext) or poThis.oExpr2.fInterpret(psContext)
     end
 end
 
-declare lcAndExpression as lcExpression
+def cAndExpression as cExpression
     oExpr1 = null
     oExpr2 = null
 
     pInit(poExpr1, poExpr2)
-        oExpr1 = poExpr1
-        oExpr2 = poExpr2
+        poThis.oExpr1 = poExpr1
+        poThis.oExpr2 = poExpr2
     end
 
     fInterpret(psContext)
-        return oExpr1.fInterpret(psContext) and oExpr2.fInterpret(psContext)
+        return poThis.oExpr1.fInterpret(psContext) and poThis.oExpr2.fInterpret(psContext)
     end
 end
 
-declare lpMain
+def pMain
     # Rule: Robert and John are male
-    declare lfGetMaleExpression
-        declare loRobert = new lcTerminalExpression("Robert")
-        declare loJohn = new lcTerminalExpression("John")
-        return new lcOrExpression(loRobert, loJohn)
+    def fGetMaleExpression
+        let oRobert = new cTerminalExpression("Robert")
+        let oJohn = new cTerminalExpression("John")
+        return new cOrExpression(oRobert, oJohn)
     end
 
     # Rule: Julie is a married women
-    declare lfGetMarriedWomanExpression
-        declare loJulie = new lcTerminalExpression("Julie")
-        declare loMarried = new lcTerminalExpression("Married")
-        return new lcAndExpression(loJulie, loMarried)
+    def fGetMarriedWomanExpression
+        let oJulie = new cTerminalExpression("Julie")
+        let oMarried = new cTerminalExpression("Married")
+        return new cAndExpression(oJulie, oMarried)
     end
 
-    declare loIsMale = lfGetMaleExpression()
-    declare loIsMarriedWoman = lfGetMarriedWomanExpression()
+    let oIsMale = fGetMaleExpression()
+    let oIsMarriedWoman = fGetMarriedWomanExpression()
 
-    println("John is male? " & loIsMale.fInterpret("John"))
-    println("Julie is a married women? " & loIsMarriedWoman.fInterpret("Married Julie"))
+    println("John is male? " & oIsMale.fInterpret("John"))
+    println("Julie is a married women? " & oIsMarriedWoman.fInterpret("Married Julie"))
 end
 
-lpMain()
+pMain()
 
 # Output
 # John is male? true

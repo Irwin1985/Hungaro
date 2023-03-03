@@ -5,18 +5,18 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
+def cFoo
     pInit(psArg)
-        println("lcFoo.pInit(\'" & psArg & "\')")
-        sField = "init"
+        println("cFoo.pInit(\'" & psArg & "\')")
+        poThis.sField = "init"
     end
 end
 
-declare loFoo = new lcFoo("one") # prints "lcFoo.pInit('one')"
-loFoo.sField = "field"
+let oFoo = new cFoo("one") # prints "cFoo.pInit('one')"
+oFoo.sField = "field"
 
-declare loFoo2 = loFoo.pInit("two") # prints "lcFoo.pInit('two')"
-println(loFoo2)
+let oFoo2 = oFoo.pInit("two") # prints "lcFoo.pInit('two')"
+println(oFoo2)
 
 # make sure pInit() doesn't create a fresh instance
-println(loFoo.sField) # prints "init"
+println(oFoo.sField) # prints "init"

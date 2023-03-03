@@ -20,42 +20,42 @@
     Date: 2023-02-28
 """
 
-declare lcShape
+def cShape
     -pDraw()
 end
 
-declare lcRectangle as lcShape
+def cRectangle as cShape
     pDraw
         println("Shape::Rectangle")
     end
 end
 
-declare lcCircle as lcShape
+def cCircle as cShape
     pDraw
         println("Shape::Circle")
     end
 end
 
-declare lcShapeDecorator as lcShape
+def cShapeDecorator as cShape
     oDecoratedShape = null
 
     pInit(poDecoratedShape)
-        oDecoratedShape = poDecoratedShape
+        poThis.oDecoratedShape = poDecoratedShape
     end
 
     pDraw
-        oDecoratedShape.pDraw()        
+        poThis.oDecoratedShape.pDraw()        
     end
 end
 
-declare lcRedShapeDecorator as lcShapeDecorator
+def cRedShapeDecorator as cShapeDecorator
     pInit(poDecoratedShape)
         super(poDecoratedShape)
     end
 
     pDraw
-        oDecoratedShape.pDraw()
-        pSetRedBorder(oDecoratedShape)
+        poThis.oDecoratedShape.pDraw()
+        pSetRedBorder(poThis.oDecoratedShape)
     end
 
     pSetRedBorder(poDecoratedShape)
@@ -63,22 +63,22 @@ declare lcRedShapeDecorator as lcShapeDecorator
     end
 end
 
-declare lpMain
-    declare loCircle = new lcCircle()
-    declare loRedCircle = new lcRedShapeDecorator(new lcCircle())
+def pMain
+    let oCircle = new cCircle()
+    let oRedCircle = new cRedShapeDecorator(new cCircle())
 
-    declare loRedRectangle = new lcRedShapeDecorator(new lcRectangle())
+    let oRedRectangle = new cRedShapeDecorator(new cRectangle())
     println("Circle with normal border")
-    loCircle.pDraw()
+    oCircle.pDraw()
 
     println("\nCircle of red border")
-    loRedCircle.pDraw()
+    oRedCircle.pDraw()
 
     println("\nRectangle of red border")
-    loRedRectangle.pDraw()
+    oRedRectangle.pDraw()
 end
 
-lpMain()
+pMain()
 
 # Output
 # Circle with normal border

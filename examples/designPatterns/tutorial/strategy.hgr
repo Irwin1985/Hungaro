@@ -14,51 +14,51 @@
     Date: 2023-02-28
 """
 
-declare lcStrategy
+def cStrategy
     -fDoOperation(pnNum1, pnNum2)
 end
 
-declare lcOperationAdd as lcStrategy
+def cOperationAdd as cStrategy
     fDoOperation(pnNum1, pnNum2)
         return pnNum1 + pnNum2
     end
 end
 
-declare lcOperationSubstract as lcStrategy
+def cOperationSubstract as cStrategy
     fDoOperation(pnNum1, pnNum2)
         return pnNum1 - pnNum2
     end
 end
 
-declare lcOperationMultiply as lcStrategy
+def cOperationMultiply as cStrategy
     fDoOperation(pnNum1, pnNum2)
         return pnNum1 * pnNum2
     end
 end
 
-declare lcContext as lcStrategy
+def cContext as cStrategy
     oStrategy = null
     pInit(poStrategy)
-        oStrategy = poStrategy
+        poThis.oStrategy = poStrategy
     end
 
     fExecuteStrategy(pnNum1, pnNum2)
-        return oStrategy.fDoOperation(pnNum1, pnNum2)
+        return poThis.oStrategy.fDoOperation(pnNum1, pnNum2)
     end
 end
 
-declare lpMain
-    declare loContext = new lcContext(new lcOperationAdd())
-    println("10 + 5 = " & loContext.fExecuteStrategy(10, 5))
+def pMain
+    let oContext = new cContext(new cOperationAdd())
+    println("10 + 5 = " & oContext.fExecuteStrategy(10, 5))
 
-    loContext = new lcContext(new lcOperationSubstract())
-    println("10 - 5 = " & loContext.fExecuteStrategy(10, 5))
+    oContext = new cContext(new cOperationSubstract())
+    println("10 - 5 = " & oContext.fExecuteStrategy(10, 5))
 
-    loContext = new lcContext(new lcOperationMultiply())
-    println("10 * 5 = " & loContext.fExecuteStrategy(10, 5))
+    oContext = new cContext(new cOperationMultiply())
+    println("10 * 5 = " & oContext.fExecuteStrategy(10, 5))
 end
 
-lpMain()
+pMain()
 
 # Output
 # 10 + 5 = 15

@@ -16,20 +16,20 @@
     Date: 2023-02-28
 """
 
-declare lcAbstractCustomer
+def cAbstractCustomer
     sName = ""
     
     -fIsNill()
     -fGetName()
 end
 
-declare lcRealCustomer as lcAbstractCustomer
+def cRealCustomer as cAbstractCustomer
     pInit(psName)
-        sName = psName
+        poThis.sName = psName
     end
 
     fGetName
-        return sName
+        return poThis.sName
     end
 
     fIsNill
@@ -37,7 +37,7 @@ declare lcRealCustomer as lcAbstractCustomer
     end
 end
 
-declare lcNullCustomer as lcAbstractCustomer
+def cNullCustomer as cAbstractCustomer
     fGetName
         return "Not Available in Customer Database"
     end
@@ -47,35 +47,35 @@ declare lcNullCustomer as lcAbstractCustomer
     end
 end
 
-declare lcCustomerFactory
+def cCustomerFactory
     aNames = ["Rob", "Joe", "Julie"]
 
     fGetCustomer(psName)
-        for lnI = 0 to aNames.len()-1
-            if aNames.get(lnI) == psName
-                return new lcRealCustomer(psName)
+        for nI = 0 to poThis.aNames.len()-1
+            if poThis.aNames.get(nI) == psName
+                return new cRealCustomer(psName)
             end
         end
-        return new lcNullCustomer()
+        return new cNullCustomer()
     end
 end
 
-declare lpMain
-    declare loCustomerFactory = new lcCustomerFactory()
+def pMain
+    let oCustomerFactory = new cCustomerFactory()
 
-    declare loCustomer1 = loCustomerFactory.fGetCustomer("Rob")
-    declare loCustomer2 = loCustomerFactory.fGetCustomer("Bob")
-    declare loCustomer3 = loCustomerFactory.fGetCustomer("Julie")
-    declare loCustomer4 = loCustomerFactory.fGetCustomer("Laura")
+    let oCustomer1 = oCustomerFactory.fGetCustomer("Rob")
+    let oCustomer2 = oCustomerFactory.fGetCustomer("Bob")
+    let oCustomer3 = oCustomerFactory.fGetCustomer("Julie")
+    let oCustomer4 = oCustomerFactory.fGetCustomer("Laura")
 
     println("Customers")
-    println(loCustomer1.fGetName())
-    println(loCustomer2.fGetName())
-    println(loCustomer3.fGetName())
-    println(loCustomer4.fGetName())
+    println(oCustomer1.fGetName())
+    println(oCustomer2.fGetName())
+    println(oCustomer3.fGetName())
+    println(oCustomer4.fGetName())
 end
 
-lpMain()
+pMain()
 
 # Output
 

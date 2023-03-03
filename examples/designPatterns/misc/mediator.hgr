@@ -8,12 +8,12 @@
 #-------------------------------------------#
 # Abstraction mediator class
 #-------------------------------------------#
-declare lcMediator
+def cMediator
     sName = ""
     mColleagues = {}
     
     pAddColleague(poColleague)
-        mColleagues[poColleague.sName] = poColleague
+        poThis.mColleagues[poColleague.sName] = poColleague
     end
 
     pChangeState(poColleague)
@@ -21,9 +21,9 @@ declare lcMediator
     end
 
     fUpdateColleagues(psColleagueName)
-        for each lvKey in mColleagues.keys()
-            if mColleagues[lvKey].sName != psColleagueName
-                mColleagues[lvKey].pSetState(false)
+        for each vKey in poThis.mColleagues.keys()
+            if poThis.mColleagues[lvKey].sName != psColleagueName
+                poThis.mColleagues[vKey].pSetState(false)
             end
         end
     end
@@ -32,35 +32,35 @@ end
 #-------------------------------------------#
 # Concrete colleague class
 #-------------------------------------------#
-declare lcOptionGroup as lcMediator
+def cOptionGroup as cMediator
     sName = "OptionGroup"
     
     pShowState
-        declare lsMsg = "There are " & mColleagues.len() & " buttons.\n"
-        for each lvKey in mColleagues.keys()
-            lsMsg &= mColleagues[lvKey].sName & " " & iif(mColleagues[lvKey].bSelected, "is", "is not") & " selected.\n"
+        let sMsg = "There are " & poThis.mColleagues.len() & " buttons.\n"
+        for each vKey in poThis.mColleagues.keys()
+            sMsg &= poThis.mColleagues[vKey].sName & " " & iif(poThis.mColleagues[vKey].bSelected, "is", "is not") & " selected.\n"
         end
-        println(lsMsg)
+        println(sMsg)
     end
 
     pSetState(pbState)
-        bState = pbState
+        poThis.bState = pbState
     end
 end
 
 #-------------------------------------------#
 # Abstract Colleague class
 #-------------------------------------------#
-declare lcColleague
+def cColleague
     sName = ""
     oMediator = null
 
     pInit
-        oMediator = goMediator
+        poThis.oMediator = goMediator
     end
 
     pRegister
-        oMediator.pAddColleague(poThis)
+        poThis.oMediator.pAddColleague(poThis)
     end
 
     pSetState(pbState)
@@ -71,22 +71,22 @@ end
 #-------------------------------------------#
 # Concrete Colleague class
 #-------------------------------------------#
-declare lcOptionButton as lcColleague
+def cOptionButton as cColleague
     bSelected = false
     pInit(psName)
-        sName = psName
+        poThis.sName = psName
         pRegister()
     end
 
     pClick
-        if not bSelected
+        if not poThis.bSelected
             pSetState(true)
-            oMediator.pChangeState(poThis)
+            poThis.oMediator.pChangeState(poThis)
         end
     end
 
     pSetState(pbState)
-        bSelected = pbState
+        poThis.bSelected = pbState
     end
 end
 
@@ -94,12 +94,12 @@ end
 #-------------------------------------------#
 # Main
 #-------------------------------------------#
-declare goMediator = new lcOptionGroup()
+let goMediator = new cOptionGroup()
 # add 4 buttons
-declare goButton1 = new lcOptionButton("Button1")
-declare goButton2 = new lcOptionButton("Button2")
-declare goButton3 = new lcOptionButton("Button3")
-declare goButton4 = new lcOptionButton("Button4")
+let goButton1 = new cOptionButton("Button1")
+let goButton2 = new cOptionButton("Button2")
+let goButton3 = new cOptionButton("Button3")
+let goButton4 = new cOptionButton("Button4")
 
 goMediator.pShowState() # no button is selected
 

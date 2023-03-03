@@ -5,11 +5,11 @@
  Date: 2023-02-24
 """
 
-declare lnT1 = tick()
-declare lsA = "12345"
+let nT1 = tick()
+let sA = "12345"
 
-for lnI = 1 to 10000
-    declare lsB = lsA, lsC = lsB, lsD = lsA & lsB & lsC
+for nI = 1 to 10000
+    let sB = sA, sC = sB, sD = sA & sB & sC
 end
 
-println("Time: " & tack(lnT1) & " ms")
+println("Time: " & tack(nT1) & " ms")

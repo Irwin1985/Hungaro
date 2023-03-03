@@ -5,22 +5,22 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
+def cFoo
     pTest
         println("foo")
     end
 end
 
-declare lcBar
+def cBar
     pTest
         println("bar")
     end
 end
 
 # store the class name in a variable
-declare lsClassName = "lcFoo"
+let sClassName = "cFoo"
 
 # create a new dinamic class
-declare loClass = new object(lsClassName)
+let oClass = new object(sClassName)
 
-loClass.pTest()
+oClass.pTest()

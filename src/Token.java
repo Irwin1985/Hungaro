@@ -47,6 +47,16 @@ public class Token {
         this.scope = Scope.NONE;
     }
 
+    public Token(TokenType type, String lexeme, Category category) {
+        this.type = type;
+        this.lexeme = lexeme;
+        this.category = category;
+        this.literal = lexeme;
+        this.line = 0;
+        this.col = 0;
+        this.scope = Scope.NONE;
+    }
+
     @Override
     public String toString() {
         return String.format("(type:%s, cat: %s)[%d:%d]<lexeme: '%s'>", type, category, line, col, lexeme);

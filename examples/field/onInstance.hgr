@@ -5,13 +5,13 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
+def cFoo
 end
 
-declare loFoo = new lcFoo()
+let oFoo = new cFoo()
 
-println(loFoo.sBar = "bar value")
-println(loFoo.sBaz = "baz value")
+println(oFoo.sBar = "bar value")
+println(oFoo.sBaz = "baz value")
 
-println(loFoo.sBar)
-println(loFoo.sBaz)
+println(oFoo.sBar)
+println(oFoo.sBaz)

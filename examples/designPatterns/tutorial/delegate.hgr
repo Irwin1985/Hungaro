@@ -15,72 +15,72 @@
     Date: 2023-03-01
 """
 
-declare lcBusinessService
+def cBusinessService
     -pDoProcessing()
 end
 
-declare lcEJBService as lcBusinessService
+def cEJBService as cBusinessService
     pDoProcessing
         println("Processing task by invoking EJB Service")
     end
 end
 
-declare lcJMSService as lcBusinessService
+def cJMSService as cBusinessService
     pDoProcessing
         println("Processing task by invoking JMS Service")
     end
 end
 
-declare lcBusinessLookUp
+def cBusinessLookUp
     fGetBussinessService(psServiceType)
         if psServiceType == "EJB"
-            return new lcEJBService()
+            return new cEJBService()
         else
-            return new lcJMSService()
+            return new cJMSService()
         end
     end
 end
 
-declare lcBussinessDelegate
-    oLookupService = new lcBusinessLookUp()
+def cBussinessDelegate
+    oLookupService = new cBusinessLookUp()
     oBusinessService = null
     sServiceType = ""
 
     pSetServiceType(psServiceType)
-        sServiceType = psServiceType
+        poThis.sServiceType = psServiceType
     end
 
     pDoTask
-        oBusinessService = oLookupService.fGetBussinessService(sServiceType)
-        oBusinessService.pDoProcessing()
+        poThis.oBusinessService = poThis.oLookupService.fGetBussinessService(poThis.sServiceType)
+        poThis.oBusinessService.pDoProcessing()
     end
     
 end
 
-declare lcClient
+def cClient
     oBusinessService = null
 
     pInit(poBusinessService)
-        oBusinessService = poBusinessService
+        poThis.oBusinessService = poBusinessService
     end
 
     pDoTask
-        oBusinessService.pDoTask()
+        poThis.oBusinessService.pDoTask()
     end
 end
 
-declare lpMain
-    declare loBusinessDelegate = new lcBussinessDelegate()
-    loBusinessDelegate.pSetServiceType("EJB")
+def pMain
+    let oBusinessDelegate = new cBussinessDelegate()
+    oBusinessDelegate.pSetServiceType("EJB")
 
-    declare loClient = new lcClient(loBusinessDelegate)
-    loClient.pDoTask()
+    let oClient = new cClient(oBusinessDelegate)
+    oClient.pDoTask()
 
-    loBusinessDelegate.pSetServiceType("JMS")
-    loClient.pDoTask()
+    oBusinessDelegate.pSetServiceType("JMS")
+    oClient.pDoTask()
 end
 
-lpMain()
+pMain()
 
 # Output
 # Processing task by invoking EJB Service

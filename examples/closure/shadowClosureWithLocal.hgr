@@ -5,18 +5,18 @@
  Date: 2023-02-26
 """
 
-declare lpBlockA
-    declare lsFoo = "closure"
-    declare lpF
-        declare lpInnerF
-            println(lsFoo) # closure
-            declare lsFoo = "shadow"
-            println(lsFoo) # shadow
+def pBlockA
+    let sFoo = "closure"
+    def pF
+        def pInnerF
+            println(sFoo) # closure
+            let sFoo = "shadow"
+            println(sFoo) # shadow
         end
-        lpInnerF()
-        println(lsFoo) # closure
+        pInnerF()
+        println(sFoo) # closure
     end
-    lpF()
+    pF()
 end
 
-lpBlockA()
+pBlockA()

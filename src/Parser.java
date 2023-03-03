@@ -5,20 +5,17 @@ import java.util.Stack;
 public class Parser {
     // parser constants
     private static final String INVALID_PARAMETER_NAME = "Invalid parameter name: parameters must follow the following rule: first letter `p` match the parameter and second letter match the type: \n1. `s` for string.\n2. `n` for number.\n3. `b` for boolean.\n4. `a` for array.\n5. `m` for map.\n6. `o` for object.\n";
-    // static enum for parameters and properties validation
-    static enum ValidateTypes {
-        PARAMETER,
-        PROPERTY,
-    } 
 
     private int current = 0;
     private List<Token> tokens;
-    private final Stack<String> functionStack = new Stack<String>();
-    private final Stack<Boolean> finallyStack = new Stack<Boolean>();
-    private final Stack<ValidateTypes> validateStack = new Stack<ValidateTypes>();    
-    private final Stack<Token> classStack = new Stack<Token>();
-    private final Stack<Boolean> deferStack = new Stack<Boolean>();
-    private final Stack<Boolean> loopStack = new Stack<Boolean>();
+    
+    // stacks for semantic validation
+    private final Stack<Token> functionStack = new Stack<Token>();      // for function keyword
+    private final Stack<Boolean> finallyStack = new Stack<Boolean>();   // for finally keyword    
+    private final Stack<Token> superStack = new Stack<Token>();         // for super keyword
+    private final Stack<Token> classStack = new Stack<Token>();         // for class keyword
+    private final Stack<Boolean> deferStack = new Stack<Boolean>();     // for defer keyword
+    private final Stack<Boolean> loopStack = new Stack<Boolean>();      // for loop keyword
 
     private static class ParseError extends RuntimeException {}
 
@@ -43,7 +40,8 @@ public class Parser {
     ********************************************************************************************/
     private Stmt declaration() {
         try {
-            if (match(TokenType.DECLARE)) return genericDeclaration();
+            if (match(TokenType.DEF)) return defStatement();
+            if (match(TokenType.LET)) return letStatement();
             return statement();
         } catch (ParseError error) {
             synchronize();
@@ -51,48 +49,66 @@ public class Parser {
         }
     }
     /*******************************************************************************************
-    * Declare statement handler
+    * Parse def statement
     ********************************************************************************************/
-    private Stmt genericDeclaration() {
+    private Stmt defStatement() {
         final Token keyword = previous();
-        final List<Stmt> statements = new ArrayList<Stmt>();
+        final Token identifier = consume(TokenType.IDENTIFIER, "Expect variable name.");
 
-        do {
-            match(TokenType.SEMICOLON); // consume optional semicolon
-            if (check(TokenType.END)) break;
-            statements.add(parseDeclareStatement(keyword));            
-        } while (match(TokenType.COMMA) && !isAtEnd());
-
-        return new Stmt.Declare(keyword, statements);
-    }
-    /*******************************************************************************************
-    * parseDeclareStatement
-    ********************************************************************************************/
-    private Stmt parseDeclareStatement(Token keyword) {
-        final Token identifier = consume(TokenType.IDENTIFIER, "Expect identifier after `declare`.");
         switch (identifier.category) {
-            case GLOBAL_CONSTANT:
-            case LOCAL_CONSTANT:
-                return constantDeclaration(keyword, identifier);
-            case GLOBAL_VARIABLE:
-            case LOCAL_VARIABLE:
-                return variableDeclaration(keyword, identifier);
+            // Function declaration
             case LOCAL_FUNCTION:
             case GLOBAL_FUNCTION:
                 return functionDeclaration(keyword, identifier, "function", true);
+
+            // Procedure declaration
             case LOCAL_PROCEDURE:
             case GLOBAL_PROCEDURE:
                 return functionDeclaration(keyword, identifier, "procedure", true);
+
+            // Class declaration
             case LOCAL_CLASS:
             case GLOBAL_CLASS:
                 return classDeclaration(keyword, identifier);
+            
+            // Module declaration
             case LOCAL_MODULE:
             case GLOBAL_MODULE:
                 return moduleDeclaration(keyword, identifier);
+            
             default:
-                error(identifier, "Invalid name: please check the following naming rules:\nSCOPE:the first letter indicates the variable scope.\n`l` for locals\n`g` for globals\n`p` for parameters\nOTHER RULES:\n*You can omite the scoping suffix (first letter) if you are declaring a constant (all uppercase).\n*All identifiers must follow the camel case naming convention. e.g: lnPersonAge\n*All identifiers must start with a lowercase letter.\n*All identifiers must be at least 3 characters long.\n*All identifiers must be unique within the scope.\n*All identifiers must be unique within the program.\n*All identifiers must be unique within the class.\n");
+                error(identifier, "Invalid declarator name: are you trying to define a variable? if so please use `let` instead of `def`.\nAlso please check the following naming rules:\nGLOBAL SCOPE: your identifier must start with a `g` letter followed by it's name.\nOTHER RULES:\n*All identifiers must follow the camel case naming convention. e.g: pSetAge\n*All identifiers must start with a lowercase letter.\n*All identifiers must be at least 2 characters long.\n*All identifiers must be unique within the scope.\n*All identifiers must be unique within the program.\n*All identifiers must be unique within the class.\n");
         }
+
         return null;
+    }
+    /*******************************************************************************************
+    * letStatement
+    ********************************************************************************************/
+    private Stmt letStatement() {
+        final Token keyword = previous();
+        final List<Stmt> statements = new ArrayList<Stmt>();
+        Token identifier = null;
+        do {
+            match(TokenType.SEMICOLON); // optional semi colon
+            identifier = consume(TokenType.IDENTIFIER, "Expect variable name.");
+            if (check(TokenType.END)) break;
+
+            switch (identifier.category) {
+                case GLOBAL_CONSTANT:
+                case LOCAL_CONSTANT:
+                    statements.add(constantDeclaration(keyword, identifier));
+                    break;
+                case GLOBAL_VARIABLE:
+                case LOCAL_VARIABLE:
+                    statements.add(variableDeclaration(keyword, identifier));
+                    break;
+                default:
+                    error(identifier, "Invalid name: please check the following naming rules:\nGLOBAL SCOPE:the first letter must be `g`.\nOTHER RULES:\n*You can omite the scoping suffix (first letter) if you are declaring a constant (all uppercase).\n*All identifiers must follow the camel case naming convention. e.g: pnPersonAge\n*All identifiers must start with a lowercase letter.\n*All identifiers must be at least 2 characters long.\n*All identifiers must be unique within the scope.\n*All identifiers must be unique within the program.\n*All identifiers must be unique within the class.\n");
+            }
+        } while (match(TokenType.COMMA) && !isAtEnd());
+        
+        return new Stmt.Declare(keyword, statements);
     }
 
     private Stmt constantDeclaration(Token keyword, Token identifier) {
@@ -118,7 +134,7 @@ public class Parser {
             if (identifier.category == Category.GLOBAL_CONSTANT || identifier.category == Category.LOCAL_CONSTANT) {
                 error(identifier, "Constants must be initialized.");
             }
-            switch (identifier.lexeme.charAt(1)) {
+            switch (identifier.lexeme.charAt(0)) {
                 case 'd': // date
                     value = null;
                     break;
@@ -162,12 +178,10 @@ public class Parser {
     private Stmt functionDeclaration(Token keyword, Token identifier, String name, boolean parseBody) {
         List<Expr.Param> parameters = new ArrayList<Expr.Param>();
         Stmt.Block body = new Stmt.Block(new ArrayList<Stmt>());
-
-        boolean mustReturnValue = name.endsWith("function");
-        final ValidateTypes validateType = (name.startsWith("class")) ? ValidateTypes.PROPERTY : ValidateTypes.PARAMETER;
+        boolean mustReturnValue = identifier.category == Category.GLOBAL_FUNCTION || identifier.category == Category.LOCAL_FUNCTION;
 
         // we always pass 'poThis' as first parameter
-        parameters.add(new Expr.Param(new Token(TokenType.PARAMETER, "poThis")));
+        parameters.add(new Expr.Param(new Token(TokenType.PARAMETER, "poThis", Category.PARAMETER)));
         
         Token param = null;
         Expr paramDefaultValue = null;
@@ -226,12 +240,10 @@ public class Parser {
             previousIndex = index;            
         }
 
-        if (parseBody) {
-            validateStack.push(validateType);
-            functionStack.push(identifier.lexeme); // fName | gfName | lfName | pName | gpName | lpName
+        if (parseBody) {            
+            functionStack.push(identifier); // fName | gfName | lfName | pName | gpName | lpName
             body = block();
             functionStack.pop();
-            validateStack.pop();        
         } else {
             // the new line is mandatory
             consume(TokenType.SEMICOLON, "Expect new line after abstract method declaration.");
@@ -265,6 +277,7 @@ public class Parser {
         final List<Stmt> statements = new ArrayList<Stmt>();
         final List<Expr.Set> properties = new ArrayList<Expr.Set>();
         
+        classStack.push(identifier); // entering in parsing class
         
         // check if class is extending another class
         if (match(TokenType.AS)) {
@@ -273,15 +286,14 @@ public class Parser {
             if (superClassName.lexeme.equals(identifier.lexeme)) {
                 error(superClassName, "A class cannot inherit from itself.");
             }
-            classStack.push(superClassName); // push the inherited class token
+            superStack.push(superClassName); // push the inherited class token
             superClass = new Expr.Variable(superClassName);
         }
         match(TokenType.SEMICOLON); // optional semicolon
 
-        // parse class properties
-        validateStack.push(ValidateTypes.PROPERTY);
-        while (check(Category.CLASS_PROPERTY) || check(Category.LOCAL_CONSTANT)) {
-            // only allow set property: eg: a = 10
+        // parse class properties (global variables are not allowed. Use the constructor instead)        
+        while (check(Category.LOCAL_VARIABLE) || check(Category.LOCAL_CONSTANT)) {
+            // only allow set property: eg: nAge = 10
             Stmt.Expression exp = (Stmt.Expression)expressionStmt();
             if (!(exp.expression instanceof Expr.Set)) {
                 error(exp.token, "Invalid class property.");
@@ -289,17 +301,17 @@ public class Parser {
             properties.add((Expr.Set)exp.expression);
             match(TokenType.SEMICOLON); // optional semicolon
         }
-        validateStack.pop();
 
-        // parse class methods
+        // parse class methods: 'def' keyword is omitted but global functions 
+        // or procedures are not allowed. Use the constructor instead
         String name = "";
         boolean parseBody = true;
 
-        while (match(Category.MINUS, Category.CLASS_FUNCTION, Category.CLASS_PROCEDURE)) {
-            if (previous().category == Category.CLASS_FUNCTION) {
+        while (match(Category.MINUS, Category.LOCAL_FUNCTION, Category.LOCAL_PROCEDURE)) {
+            if (previous().category == Category.LOCAL_FUNCTION) {
                 name = "class function";
             }
-            else if (previous().category == Category.CLASS_PROCEDURE) {
+            else if (previous().category == Category.LOCAL_PROCEDURE) {
                 name = "class procedure";
             }
             else if (previous().category == Category.MINUS) { // eg: -fName([args]) or -pName([args])
@@ -307,7 +319,7 @@ public class Parser {
                 parseBody = false;
                 continue;
             }
-            statements.add((Stmt.Function) functionDeclaration(keyword, previous(), name, parseBody));
+            statements.add((Stmt.Function) functionDeclaration(new Token(TokenType.DEF, "def"), previous(), name, parseBody));
             parseBody = true; // reset the flag
         }        
         match(TokenType.SEMICOLON); // optional semicolon
@@ -318,8 +330,10 @@ public class Parser {
         }
         
         if (superClass != null) {
-            classStack.pop(); // pop the class name
+            superStack.pop(); // pop the class name
         }
+        
+        classStack.pop(); // exiting from parsing class
 
         return new Stmt.Class(keyword, identifier, superClass, properties, new Stmt.Block(statements));
     }
@@ -332,9 +346,8 @@ public class Parser {
                 
         match(TokenType.SEMICOLON); // optional semicolon
 
-        // parse module properties
-        validateStack.push(ValidateTypes.PROPERTY);
-        while (check(Category.CLASS_PROPERTY) || check(Category.LOCAL_CONSTANT)) {
+        // parse module properties (locals and globals are allowed)
+        while (check(Category.LOCAL_VARIABLE) || check(Category.GLOBAL_VARIABLE) || check(Category.LOCAL_CONSTANT) || check(Category.GLOBAL_CONSTANT)) {
             // only allow set property: eg: a = 10
             Stmt.Expression exp = (Stmt.Expression)expressionStmt();
             if (!(exp.expression instanceof Expr.Set)) {
@@ -343,17 +356,16 @@ public class Parser {
             properties.add((Expr.Set)exp.expression);
             match(TokenType.SEMICOLON); // optional semicolon
         }
-        validateStack.pop();
 
         // parse module methods
         String name = "";
 
-        while (match(Category.CLASS_FUNCTION, Category.CLASS_PROCEDURE)) {
+        while (match(Category.LOCAL_FUNCTION, Category.LOCAL_PROCEDURE)) {
             name = "module procedure";
-            if (previous().category == Category.CLASS_FUNCTION) {
+            if (previous().category == Category.LOCAL_FUNCTION) {
                 name = "module function";
             }            
-            statements.add((Stmt.Function) functionDeclaration(keyword, previous(), name, true));            
+            statements.add((Stmt.Function) functionDeclaration(new Token(TokenType.DEF, "def"), previous(), name, true));
         }        
         match(TokenType.SEMICOLON); // optional semicolon
         consume(TokenType.END, "Expect `end` after module declaration.");
@@ -368,7 +380,6 @@ public class Parser {
     * Statement handler
     ********************************************************************************************/
     private Stmt statement() {
-        // if (match(TokenType.PRINT, TokenType.ECHO)) return printStatement();
         if (match(TokenType.RETURN)) return returnStatement();
         if (match(TokenType.IF)) return ifStatement();
         if (match(TokenType.FOR)) return parseForStatement();
@@ -391,8 +402,8 @@ public class Parser {
             error(previous(), "Cannot return from top-level code.");
         }
 
-        // cannot return from a procedure: procedure name must start with p or gp or lp
-        if (functionStack.peek().charAt(0) == 'p' || functionStack.peek().startsWith("gp") || functionStack.peek().startsWith("lp")) {
+        // cannot return from a procedures
+        if (functionStack.peek().category == Category.LOCAL_PROCEDURE || functionStack.peek().category == Category.GLOBAL_PROCEDURE) {
             error(previous(), "`return` statement is not allowed in procedures. Please use `exit` statement instead.");
         }
 
@@ -459,9 +470,10 @@ public class Parser {
         Stmt.Block body = null;        
         
         Token token = consume(TokenType.IDENTIFIER, "Expect variable name after `for each`.");
+        final char firstLetter = token.lexeme.charAt(0);
         // variable lexeme must start with 'l' and followed by 'v' for variant or 'o' for object
-        if (!token.lexeme.startsWith("lv") && !token.lexeme.startsWith("lo")) {
-            error(token, "Invalid variable name in `for each` statement.\nPlease use either `lv` for variant or `lo` for object.");
+        if (firstLetter != 'v' && firstLetter != 'o') {
+            error(token, "Invalid variable name in `for each` statement.\nPlease use either `v` for variant or `o` for object.");
         }
         
         variable = new Expr.Variable(token);
@@ -482,8 +494,9 @@ public class Parser {
         Stmt.Block body = null;        
         
         counter = consume(TokenType.IDENTIFIER, "Expect variable name after `for`.");
+        final char firstLetter = counter.lexeme.charAt(0);
         // variable lexeme must start with 'ln' for local number or 'lv' for local variant
-        if (!counter.lexeme.startsWith("ln") && !counter.lexeme.startsWith("lv")) {
+        if (firstLetter != 'n' && firstLetter != 'v') {
             error(counter, "Invalid variable name in `for` statement.\nPlease use either `ln` for number or `lv` for variant.");
         }
         consume(TokenType.SIMPLE_ASSIGN, "Expect `=` after `for` counter.");
@@ -515,13 +528,16 @@ public class Parser {
     * Exit
     ********************************************************************************************/
     private Stmt exitStatement() {
-        // throw error if we are not either in a loop or a procedure
+        // only loop and procedures can use exit
         if (loopStack.isEmpty() && functionStack.isEmpty()) {
-            error(previous(), "Cannot use `exit` outside of a loop or a procedure.");
+            error(previous(), "Cannot use `exit` outside of a loop or procedure.");
         }
-        // if functionStack is a function name (starts with 'f'), then we throw error
-        if (!functionStack.isEmpty() && (functionStack.peek().charAt(0) == 'f' && functionStack.peek().startsWith("gf") || functionStack.peek().startsWith("lf"))) {
-            error(previous(), "Cannot use `exit` inside a function.\nPlease use `return` statement instead.\nExit is only for loops and procedures.");
+
+        // if functionStack is a function, throw error
+        if (!functionStack.isEmpty() && (functionStack.peek().category == Category.LOCAL_FUNCTION || functionStack.peek().category == Category.GLOBAL_FUNCTION)) {
+            if (loopStack.isEmpty()) {
+                error(previous(), "Cannot use `exit` in a function.");
+            }            
         }
         
         // eat new line
@@ -663,21 +679,16 @@ public class Parser {
         if (peek().type == TokenType.SIMPLE_ASSIGN || peek().type == TokenType.COMPLEX_ASSIGN) {
             Token equals = advance();
             Expr value = assignment();
-            // validate value
-            if (value instanceof Expr.Variable) {
-                validateTypes((Expr.Variable) value); // validate right side of assignment
-            }
 
             if (target instanceof Expr.Variable) {
                 // check if variable is 'poThis' which results in an error
                 if (((Expr.Variable) target).name.lexeme.equals("poThis")) {
                     error(target.token, "Cannot assign to `poThis`.");
-                }
-                validateTypes((Expr.Variable) target); // validate left side of assignment                
+                }                
                 Category targetCategory = ((Expr.Variable) target).name.category;
                 if (targetCategory == Category.GLOBAL_CONSTANT || targetCategory == Category.LOCAL_CONSTANT) {
-                    // if validateStack is not empty then we allow constant assignment
-                    if (validateStack.isEmpty()) {
+                    // constant assignment is not allowed outside of function/procedure
+                    if (functionStack.isEmpty()) {
                         error(target.token, "Cannot assign to constant.");
                     }
                 }
@@ -690,28 +701,6 @@ public class Parser {
         }
 
         return target;
-    }
-    /*******************************************************************************************
-    * validateTypes
-    ********************************************************************************************/
-    private void validateTypes(Expr.Variable variable) {
-        if (variable.name.category == Category.PARAMETER || variable.name.category == Category.VARIADIC) {
-            checkType(variable.name, "parameters", "function or procedure");
-        } else if (variable.name.category == Category.CLASS_PROPERTY) {
-            checkType(variable.name, "properties", "class");
-            // is stack is not empty then we check if we are inside a class
-            if (validateStack.peek() != ValidateTypes.PROPERTY) {
-                error(variable.name, "Cannot use `property` outside of a class.");
-            }
-        }
-    }    
-    /*******************************************************************************************
-    * checkType
-    ********************************************************************************************/
-    private void checkType(Token token, String typeName, String scope) {
-        if (validateStack.isEmpty()) {
-            error(token, "Cannot use `" + typeName + "` outside of a " + scope + ".");
-        }
     }
     /*******************************************************************************************
     * Logical Or
@@ -880,7 +869,7 @@ public class Parser {
         return left;
     }
     /*******************************************************************************************
-    * This method is called when we have a function call. It parses the arguments and returns
+    * Finish Call
     ********************************************************************************************/
     private Expr finishCall(Expr callee) {  
         Token paren = previous();      
@@ -888,17 +877,19 @@ public class Parser {
         
         // check if the calle is a Prop expression.
         if (callee instanceof Expr.Prop) {
-            // add the target as the first argument. eg: foo.bar(1,2,3) => bar(foo, 1, 2, 3)            
+            // add the target as the first argument. eg: foo.bar(1,2,3) -> bar(foo, 1, 2, 3)            
             arguments.add(((Expr.Prop)callee).target);
         } else if (callee instanceof Expr.Super) {
             // add 'poThis' pointer as the first argument. eg: super(poThis)
-            final Token token = new Token(TokenType.IDENTIFIER, "poThis");
+            final Token token = new Token(TokenType.PARAMETER, "poThis", Category.PARAMETER);
             arguments.add(new Expr.Variable(token));            
-        } // if the target is a variable then we add the function name itself as the first argument
-        else if (callee instanceof Expr.Variable) {            
-            final Token name = ((Expr.Variable)callee).name;
-            if (name.category == Category.CLASS_FUNCTION || name.category == Category.CLASS_PROCEDURE) {
-                final Token poThisToken = new Token(TokenType.IDENTIFIER, "poThis");
+        }
+        else if (callee instanceof Expr.Variable) {
+            if (classStack.isEmpty()) { // eg: pWalk(1, 2) -> pWalk(pWalk, 1, 2)
+                arguments.add(callee);
+            } else { // eg: pWalk(1, 2) -> pWalk(poThis, 1, 2)
+                final Token poThisToken = new Token(TokenType.PARAMETER, "poThis", Category.PARAMETER);
+                final Token name = ((Expr.Variable)callee).name;
                 arguments.add(new Expr.Variable(poThisToken));
                 // calee must change to a Prop expression. eg: pWalk() => poThis.pWalk()                
                 callee = new Expr.Prop(
@@ -906,8 +897,6 @@ public class Parser {
                         new Expr.Variable(poThisToken), 
                         new Expr.Variable(name), 
                         false);
-            } else {
-                arguments.add(callee);
             }
         }
         
@@ -1072,13 +1061,13 @@ public class Parser {
     ********************************************************************************************/
     private Expr superExpr() {
         Token keyword = previous();
-        if (functionStack.isEmpty() || classStack.isEmpty()) {
+        if (functionStack.isEmpty() || superStack.isEmpty()) {
             error(keyword, "Cannot use `super` outside of a class.");
         }    
 
-        final String methodName = functionStack.peek();
+        final String methodName = functionStack.peek().lexeme;
         final Expr.Variable method = new Expr.Variable(new Token(TokenType.IDENTIFIER, methodName));
-        final Token className = classStack.peek();
+        final Token className = superStack.peek();
 
         return new Expr.Super(keyword, className, method);
     }
@@ -1187,7 +1176,8 @@ public class Parser {
                 case FOR:
                 case REPEAT:
                 case WHILE:
-                case DECLARE:
+                case DEF:
+                case LET:
                     return;
             }
 

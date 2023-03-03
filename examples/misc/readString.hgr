@@ -5,8 +5,8 @@
  Date: 2023-02-24
 """
 
-declare lsAns = readln("Do you want a drink? (y/n): ")
-if lsAns == "y"
+let sAns = readln("Do you want a drink? (y/n): ")
+if sAns == "y"
     print("Here is your drink")
 else
     print("Ok, no drink for you")

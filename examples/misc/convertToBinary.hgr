@@ -6,18 +6,18 @@
 
 println("Convert number to binary")
 
-declare lnNumber = 176
+let nNumber = 176
 
 # array to store binary number
-declare laBinary = []
+let aBinary = []
 
-while lnNumber > 0
+while nNumber > 0
     # storing remainder in binary array
-    laBinary.push(lnNumber % 2)
-    lnNumber = int(lnNumber / 2)
+    aBinary.push(nNumber % 2)
+    nNumber = int(nNumber / 2)
 end
 
 # printing binary array in reverse order
-laBinary.reverse()
+aBinary.reverse()
 
-print("Binary number: " & laBinary)
+print("Binary number: " & aBinary)

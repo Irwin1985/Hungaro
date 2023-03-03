@@ -17,70 +17,70 @@
     Date: 2023-02-28
 """
 
-declare lcShape
+def cShape
     -pDraw()
 end
 
-declare lcRectangle as lcShape
+def cRectangle as cShape
     pDraw
         println("Inside Rectangle::draw() method.")
     end
 end
 
-declare lcSquare as lcShape
+def cSquare as cShape
     pDraw
         println("Inside Square::draw() method.")
     end
 end
 
-declare lcCircle as lcShape
+def cCircle as cShape
     pDraw
         println("Inside Circle::draw() method.")
     end
 end
 
-declare lcShapeFactory
+def cShapeFactory
     # use fGetShape method to get object of type shape
     fGetShape(psShapeType)
         if psShapeType == "CIRCLE"
-            return new lcCircle()
+            return new cCircle()
         end
         
         if psShapeType == "RECTANGLE"
-            return new lcRectangle()
+            return new cRectangle()
         end
 
         if psShapeType == "SQUARE"
-            return new lcSquare()
+            return new cSquare()
         end
 
         return null
     end
 end
 
-declare lpMain
-    declare loShapeFactory = new lcShapeFactory()
+def pMain
+    let oShapeFactory = new cShapeFactory()
 
     # get an object of Circle and call its draw method.
-    declare loShape1 = loShapeFactory.fGetShape("CIRCLE")
+    let oShape1 = oShapeFactory.fGetShape("CIRCLE")
 
     # call draw method of Circle
-    loShape1.pDraw()
+    oShape1.pDraw()
 
     # get an object of Rectangle and call its draw method.
-    declare loShape2 = loShapeFactory.fGetShape("RECTANGLE")
+    let oShape2 = oShapeFactory.fGetShape("RECTANGLE")
 
     # call draw method of Rectangle
-    loShape2.pDraw()
+    oShape2.pDraw()
 
     # get an object of Square and call its draw method.
-    declare loShape3 = loShapeFactory.fGetShape("SQUARE")
+    let oShape3 = oShapeFactory.fGetShape("SQUARE")
 
     # call draw method of square
-    loShape3.pDraw()
+    oShape3.pDraw()
 end
 
-lpMain()
+pMain()
 
 # Output
 # Inside Circle::draw() method.

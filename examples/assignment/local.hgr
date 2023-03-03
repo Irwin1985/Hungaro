@@ -5,11 +5,11 @@
  Date: 2023-02-25
 """
 
-declare lsA = "external A"
+let sA = "external A"
 
-for lnI = 1 to 3
-    declare lsA = "internal A"
-    println(lsA)
+for nI = 1 to 3
+    let sA = "internal A"
+    println(sA)
 end
 
-println(lsA) # external A
+println(sA) # external A

@@ -5,149 +5,153 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
+def cFoo
     pInit
-        nField0 = 1  | nField1 = 1  | nField2 = 1  | nField3 = 1  | nField4 = 1  |
-        nField5 = 1  | nField6 = 1  | nField7 = 1  | nField8 = 1  | nField9 = 1  |
-        nField10 = 1 | nField11 = 1 | nField12 = 1 | nField13 = 1 | nField14 = 1 |
-        nField15 = 1 | nField16 = 1 | nField17 = 1 | nField18 = 1 | nField19 = 1 |
-        nField20 = 1 | nField21 = 1 | nField22 = 1 | nField23 = 1 | nField24 = 1 |
-        nField25 = 1 | nField26 = 1 | nField27 = 1 | nField28 = 1 | nField29 = 1 |
+        poThis.nField0 = 1  | poThis.nField1 = 1    | poThis.nField2 = 1  |
+        poThis.nField3 = 1  | poThis.nField4 = 1    | poThis.nField5 = 1  |
+        poThis.nField6 = 1  | poThis.nField7 = 1    | poThis.nField8 = 1  |
+        poThis.nField9 = 1  | poThis.nField10 = 1   | poThis.nField11 = 1 |
+        poThis.nField12 = 1 | poThis.nField13 = 1   | poThis.nField14 = 1 |
+        poThis.nField15 = 1 | poThis.nField16 = 1   | poThis.nField17 = 1 |
+        poThis.nField18 = 1 | poThis.nField19 = 1   | poThis.nField20 = 1 |
+        poThis.nField21 = 1 | poThis.nField22 = 1   | poThis.nField23 = 1 | 
+        poThis.nField24 = 1 | poThis.nField25 = 1   | poThis.nField26 = 1 | 
+        poThis.nField27 = 1 | poThis.nField28 = 1   | poThis.nField29 = 1 |
     end
 
     fMethod0
-        return nField0
+        return poThis.nField0
     end
 
     fMethod1
-        return nField1
+        return poThis.nField1
     end
 
     fMethod2
-        return nField2
+        return poThis.nField2
     end
 
     fMethod3
-        return nField3
+        return poThis.nField3
     end
 
     fMethod4
-        return nField4
+        return poThis.nField4
     end
 
     fMethod5
-        return nField5
+        return poThis.nField5
     end
 
     fMethod6
-        return nField6
+        return poThis.nField6
     end
 
     fMethod7
-        return nField7
+        return poThis.nField7
     end
 
     fMethod8
-        return nField8
+        return poThis.nField8
     end
 
     fMethod9
-        return nField9
+        return poThis.nField9
     end
 
     fMethod10
-        return nField10
+        return poThis.nField10
     end
 
     fMethod11
-        return nField11
+        return poThis.nField11
     end
 
     fMethod12
-        return nField12
+        return poThis.nField12
     end
 
     fMethod13
-        return nField13
+        return poThis.nField13
     end
 
     fMethod14
-        return nField14
+        return poThis.nField14
     end
 
     fMethod15
-        return nField15
+        return poThis.nField15
     end
 
     fMethod16
-        return nField16
+        return poThis.nField16
     end
 
     fMethod17
-        return nField17
+        return poThis.nField17
     end
 
     fMethod18
-        return nField18
+        return poThis.nField18
     end
 
     fMethod19
-        return nField19
+        return poThis.nField19
     end
 
     fMethod20
-        return nField20
+        return poThis.nField20
     end
 
     fMethod21
-        return nField21
+        return poThis.nField21
     end
 
     fMethod22
-        return nField22
+        return poThis.nField22
     end
 
     fMethod23
-        return nField23
+        return poThis.nField23
     end
 
     fMethod24
-        return nField24
+        return poThis.nField24
     end
 
     fMethod25
-        return nField25
+        return poThis.nField25
     end
 
     fMethod26
-        return nField26
+        return poThis.nField26
     end
 
     fMethod27
-        return nField27
+        return poThis.nField27
     end
 
     fMethod28
-        return nField28
+        return poThis.nField28
     end
 
     fMethod29
-        return nField29
+        return poThis.nField29
     end    
 end
 
-declare loFoo = new lcFoo()
-declare lnStart = tick()
-declare lnI = 0
+let oFoo = new cFoo()
+let nStart = tick()
+let nI = 0
 
-while lnI < 500000
-    loFoo.fMethod0()  | loFoo.fMethod1()  | loFoo.fMethod2()  | loFoo.fMethod3()  | loFoo.fMethod4()  |
-    loFoo.fMethod5()  | loFoo.fMethod6()  | loFoo.fMethod7()  | loFoo.fMethod8()  | loFoo.fMethod9()  |
-    loFoo.fMethod10() | loFoo.fMethod11() | loFoo.fMethod12() | loFoo.fMethod13() | loFoo.fMethod14() |
-    loFoo.fMethod15() | loFoo.fMethod16() | loFoo.fMethod17() | loFoo.fMethod18() | loFoo.fMethod19() |
-    loFoo.fMethod20() | loFoo.fMethod21() | loFoo.fMethod22() | loFoo.fMethod23() | loFoo.fMethod24() |
-    loFoo.fMethod25() | loFoo.fMethod26() | loFoo.fMethod27() | loFoo.fMethod28() | loFoo.fMethod29() |
-    lnI += 1
+while nI < 500000
+    oFoo.fMethod0()  | oFoo.fMethod1()  | oFoo.fMethod2()  | oFoo.fMethod3()  | oFoo.fMethod4()  |
+    oFoo.fMethod5()  | oFoo.fMethod6()  | oFoo.fMethod7()  | oFoo.fMethod8()  | oFoo.fMethod9()  |
+    oFoo.fMethod10() | oFoo.fMethod11() | oFoo.fMethod12() | oFoo.fMethod13() | oFoo.fMethod14() |
+    oFoo.fMethod15() | oFoo.fMethod16() | oFoo.fMethod17() | oFoo.fMethod18() | oFoo.fMethod19() |
+    oFoo.fMethod20() | oFoo.fMethod21() | oFoo.fMethod22() | oFoo.fMethod23() | oFoo.fMethod24() |
+    oFoo.fMethod25() | oFoo.fMethod26() | oFoo.fMethod27() | oFoo.fMethod28() | oFoo.fMethod29() |
+    nI += 1
 end
 
-println("Elapsed time: " & tack(lnStart) & " ms")
+println("Elapsed time: " & tack(nStart) & " ms")

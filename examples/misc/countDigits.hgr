@@ -4,12 +4,12 @@
  Date: 2023-02-22
 """
 
-declare lnNumber = val(readln("Enter a number: "))
-declare lnCount = 0
+let nNumber = val(readln("Enter a number: "))
+let nCount = 0
 
-while lnNumber != 0
-    lnNumber = int(lnNumber / 10)
-    lnCount += 1    
+while nNumber != 0
+    nNumber = int(nNumber / 10)
+    nCount += 1    
 end
 
-print("The number of digits is: " & lnCount)
+print("The number of digits is: " & nCount)

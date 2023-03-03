@@ -5,11 +5,11 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
+def cFoo
     pInit(pnA, pnB)
-        nA = pnA
-        nB = pnB
+        poThis.nA = pnA
+        poThis.nB = pnB
     end
 end
 
-declare loFoo = new lcFoo(1, 2, 3, 4) # Error: Too many arguments
+let oFoo = new cFoo(1, 2, 3, 4) # Error: Too many arguments

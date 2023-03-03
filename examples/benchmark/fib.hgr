@@ -5,13 +5,13 @@
  Date: 2023-02-26
 """
 
-declare lfFib(pnSerie)
+def fFib(pnSerie)
     if pnSerie < 2
         return pnSerie
     end
-    return lfFib(pnSerie - 1) + lfFib(pnSerie - 2)
+    return fFib(pnSerie - 1) + fFib(pnSerie - 2)
 end
 
-declare lnStart = tick()
-assert(lfFib(35) == 9227465, "Fibbonacci sequence failed")
-println(tack(lnStart))
+let nStart = tick()
+assert(fFib(35) == 9227465, "Fibbonacci sequence failed")
+println(tack(nStart))

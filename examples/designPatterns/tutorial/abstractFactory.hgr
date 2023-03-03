@@ -19,113 +19,113 @@
     Date: 2023-02-28
 """
 
-declare lcShape
+def cShape
     -pDraw()
 end
 
-declare lcRoundedRectangle as lcShape
+def cRoundedRectangle as cShape
     pDraw
         println("Inside RoundedRectangle::draw() method.")
     end
 end
 
-declare lcRoundedSquare as lcShape
+def cRoundedSquare as cShape
     pDraw
         println("Inside RoundedSquare::draw() method.")
     end
 end
 
-declare lcRectangle as lcShape
+def cRectangle as cShape
     pDraw
         println("Inside Rectangle::draw() method.")
     end
 end
 
-declare lcSquare as lcShape
+def cSquare as cShape
     pDraw
         println("Inside Square::draw() method.")
     end
 end
 
-declare lcAbstractFactory
+def cAbstractFactory
     -fGetShape(psShapeType)    
 end
 
-declare lcShapeFactory as lcAbstractFactory
+def cShapeFactory as cAbstractFactory
     fGetShape(psShapeType)
         if psShapeType == "RECTANGLE"
-            return new lcRectangle()
+            return new cRectangle()
         end
 
         if psShapeType == "SQUARE"
-            return new lcSquare()
+            return new cSquare()
         end
 
         return null
     end
 end
 
-declare lcRoundedShapeFactory as lcAbstractFactory
+def cRoundedShapeFactory as cAbstractFactory
     fGetShape(psShapeType)
         if psShapeType == "RECTANGLE"
-            return new lcRoundedRectangle()
+            return new cRoundedRectangle()
         end
 
         if psShapeType == "SQUARE"
-            return new lcRoundedSquare()
+            return new cRoundedSquare()
         end
 
         return null
     end
 end
 
-declare lcFactoryProducer
+def cFactoryProducer
     fGetFactory(pbRounded)
         if pbRounded
-            return new lcRoundedShapeFactory()
+            return new cRoundedShapeFactory()
         end
 
-        return new lcShapeFactory()
+        return new cShapeFactory()
     end
 end
 
-declare lpMain
-    # create an instance of lcFactoryProducer
-    declare loFactoryProducer = new lcFactoryProducer()
+def pMain
+    # create an instance of cFactoryProducer
+    let oFactoryProducer = new cFactoryProducer()
     
     # get shape factory
-    declare loShapeFactory = loFactoryProducer.fGetFactory(false)
+    let oShapeFactory = oFactoryProducer.fGetFactory(false)
 
     # get an object of Shape Rectangle
-    declare loShape1 = loShapeFactory.fGetShape("RECTANGLE")
+    let oShape1 = oShapeFactory.fGetShape("RECTANGLE")
 
     # call draw method of Shape Rectangle
-    loShape1.pDraw()
+    oShape1.pDraw()
 
     # get an object of Shape Square
-    declare loShape2 = loShapeFactory.fGetShape("SQUARE")
+    let oShape2 = oShapeFactory.fGetShape("SQUARE")
 
     # call draw method of Shape Square
-    loShape2.pDraw()
+    oShape2.pDraw()
 
     # get shape factory
-    declare loRoundedShapeFactory = loFactoryProducer.fGetFactory(true)
+    let oRoundedShapeFactory = oFactoryProducer.fGetFactory(true)
 
     # get an object of Shape Rectangle
-    declare loShape3 = loRoundedShapeFactory.fGetShape("RECTANGLE")
+    let oShape3 = oRoundedShapeFactory.fGetShape("RECTANGLE")
 
     # call draw method of Shape Rectangle
-    loShape3.pDraw()
+    oShape3.pDraw()
 
     # get an object of Shape Square
-    declare loShape4 = loRoundedShapeFactory.fGetShape("SQUARE")
+    let oShape4 = oRoundedShapeFactory.fGetShape("SQUARE")
 
     # call draw method of Shape Square
-    loShape4.pDraw()
+    oShape4.pDraw()
 
 end
 
-lpMain()
+pMain()
 
 # Output
 # Inside Rectangle::draw() method.

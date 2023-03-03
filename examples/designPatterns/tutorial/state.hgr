@@ -17,11 +17,11 @@
     Date: 2023-02-28
 """
 
-declare lcState
+def cState
     -pDoAction(poContext)
 end
 
-declare lcStartState as lcState
+def cStartState as cState
     pDoAction(poContext)
         println("Player is in start state")
         poContext.pSetState(poThis)
@@ -32,7 +32,7 @@ declare lcStartState as lcState
     end
 end
 
-declare lcStopState as lcState
+def cStopState as cState
     pDoAction(poContext)
         println("Player is in stop state")
         poContext.pSetState(poThis)
@@ -43,33 +43,33 @@ declare lcStopState as lcState
     end
 end
 
-declare lcContext
+def cContext
     oState = null
 
     pSetState(poState)
-        oState = poState
+        poThis.oState = poState
     end
 
     fGetState
-        return oState
+        return poThis.oState
     end
 end
 
-declare lpMain
-    declare loContext = new lcContext()
+def pMain
+    let oContext = new cContext()
 
-    declare loStartState = new lcStartState()
-    loStartState.pDoAction(loContext)
+    let oStartState = new cStartState()
+    oStartState.pDoAction(oContext)
 
-    println(loContext.fGetState().fToString())
+    println(oContext.fGetState().fToString())
 
-    declare loStopState = new lcStopState()
-    loStopState.pDoAction(loContext)
+    let oStopState = new cStopState()
+    oStopState.pDoAction(oContext)
 
-    println(loContext.fGetState().fToString())
+    println(oContext.fGetState().fToString())
 end
 
-lpMain()
+pMain()
 
 # Output
 # Player is in start state

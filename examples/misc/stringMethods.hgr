@@ -4,10 +4,10 @@
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
  Date: 2023-02-24
 """
-declare lsString = "1234567890"
+let sString = "1234567890"
 
-assert(lsString.len() == 10, "String length")
-assert(lsString.slice(0, 5) == "12345", "Substring")
+assert(sString.len() == 10, "String length")
+assert(sString.slice(0, 5) == "12345", "Substring")
 assert("abc".toUpper() == "ABC", "To upper")
 assert("ABC".toLower() == "abc", "To lower")
 assert("Hungaro".find("gar") == 3, "Find")
@@ -28,7 +28,7 @@ assert("Hungaro is a new programming language".occurs("a") == 5, "Occurs")
 assert("Hungaro".indexOf("a") == 4, "Index of")
 assert("Hungaro Programming language".lastIndexOf("a") == 25, "Last index of")
 assert("Hungaro".isAlpha(), "Is alpha")
-assert(lsString.isNumeric(), "Is digit")
+assert(sString.isNumeric(), "Is digit")
 assert("Hungaro123".isAlphaNum(), "Is alpha numeric")
 assert("hungaro".isLower(), "Is lower")
 assert("HUNGARO".isUpper(), "Is upper")

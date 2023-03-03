@@ -5,28 +5,28 @@
  Date: 2023-02-24
 """
 
-declare lfCheckPrime(pnNumber)
-    declare lbIsPrime = true
-    for lnI = 2 to int(pnNumber/2)
-        if pnNumber % lnI == 0
-            lbIsPrime = false
+def fCheckPrime(pnNumber)
+    let bIsPrime = true
+    for nI = 2 to int(pnNumber/2)
+        if pnNumber % nI == 0
+            bIsPrime = false
             exit
         end
     end
-    return lbIsPrime
+    return bIsPrime
 end
 
-declare lbFlag = false
-declare lnNumber = val(readln("Enter a positive integer: "))
+let bFlag = false
+let nNumber = val(readln("Enter a positive integer: "))
 
-for lnI = 2 to int(lnNumber/2)
-    # condition for lnI to be a prime number
-    if lfCheckPrime(lnI) and lfCheckPrime(lnNumber - lnI)
-        println(format("%s = %s + %s", lnNumber, lnI, lnNumber - lnI))
-        lbFlag = true
+for nI = 2 to int(nNumber/2)
+    # condition for nI to be a prime number
+    if fCheckPrime(nI) and fCheckPrime(nNumber - nI)
+        println(format("%s = %s + %s", nNumber, nI, nNumber - nI))
+        bFlag = true
     end
 end
 
-if not lbFlag
-    println(format("%s cannot be expressed as the sum of two prime numbers.", lnNumber))
+if not bFlag
+    println(format("%s cannot be expressed as the sum of two prime numbers.", nNumber))
 end

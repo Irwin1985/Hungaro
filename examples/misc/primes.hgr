@@ -5,19 +5,19 @@
  Date: 2023-02-24
 """
 
-declare lnUpper = 50
+let nUpper = 50
 
-for lnNum = 0 to lnUpper
+for nNum = 0 to nUpper
     # all prime numbers are greater than 1
-    if lnNum > 1
-        for lnI = 2 to lnNum
-            println("lnI = " & lnI)
-            if lnNum % lnI == 0
+    if nNum > 1
+        for nI = 2 to nNum
+            println("nI = " & nI)
+            if nNum % nI == 0
                 exit
             end
         end
-        println(lnNum)
+        println(nNum)
     else
-        println(lnNum)
+        println(nNum)
     end
 end

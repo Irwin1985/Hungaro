@@ -20,28 +20,28 @@
     Date: 2023-02-28
 """
 
-declare lcStudent
+def cStudent
     sRollNo = ""
     sName = ""
 
     fGetRollNo
-        return sRollNo
+        return poThis.sRollNo
     end
 
     pSetRollNo(psRollNo)
-        sRollNo = psRollNo
+        poThis.sRollNo = psRollNo
     end
 
     fGetName
-        return sName
+        return poThis.sName
     end
 
     pSetName(psName)
-        sName = psName
+        poThis.sName = psName
     end
 end
 
-declare lcStudentView
+def cStudentView
     pPrintStudentDetails(psStudentName, psStudentRollNo)
         println("Student: ")
         println("Name: " & psStudentName)
@@ -49,56 +49,56 @@ declare lcStudentView
     end
 end
 
-declare lcStudentController
+def cStudentController
     oModel = null
     oView = null
 
     pInit(poModel, poView)
-        oModel = poModel
-        oView = poView
+        poThis.oModel = poModel
+        poThis.oView = poView
     end
 
     pSetStudentName(psName)
-        oModel.pSetName(psName)
+        poThis.oModel.pSetName(psName)
     end
 
     fGetStudentName
-        return oModel.fGetName()
+        return poThis.oModel.fGetName()
     end
 
     pSetStudentRollNo(psRollNo)
-        oModel.pSetRollNo(psRollNo)
+        poThis.oModel.pSetRollNo(psRollNo)
     end
 
     fGetStudentRollNo
-        return oModel.fGetRollNo()
+        return poThis.oModel.fGetRollNo()
     end
 
     pUpdateView
-        oView.pPrintStudentDetails(oModel.fGetName(), oModel.fGetRollNo())
+        poThis.oView.pPrintStudentDetails(poThis.oModel.fGetName(), poThis.oModel.fGetRollNo())
     end
 end
 
-declare lpMain
-    declare lfRetrieveStudentFromDatabase
-        declare loStudent = new lcStudent()
-        loStudent.pSetName("Robert")
-        loStudent.pSetRollNo("10")
-        return loStudent
+def pMain
+    def fRetrieveStudentFromDatabase
+        let oStudent = new cStudent()
+        oStudent.pSetName("Robert")
+        oStudent.pSetRollNo("10")
+        return oStudent
     end
 
-    declare loStudent = lfRetrieveStudentFromDatabase()
-    declare loView = new lcStudentView()
-    declare loController = new lcStudentController(loStudent, loView)
+    let oStudent = fRetrieveStudentFromDatabase()
+    let oView = new cStudentView()
+    let oController = new cStudentController(oStudent, oView)
 
-    loController.pUpdateView()
+    oController.pUpdateView()
 
-    loController.pSetStudentName("John")
+    oController.pSetStudentName("John")
 
-    loController.pUpdateView()
+    oController.pUpdateView()
 end
 
-lpMain()
+pMain()
 
 # Output
 # Student:

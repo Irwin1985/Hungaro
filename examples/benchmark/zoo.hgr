@@ -5,53 +5,53 @@
  Date: 2023-02-26
 """
 
-declare lcZoo
+def cZoo
     pInit
-        nAarvark = 1
-        nBaboon = 1
-        nCat = 1
-        nDonkey = 1
-        nElephant = 1
-        nFox = 1
+        poThis.nAarvark = 1
+        poThis.nBaboon = 1
+        poThis.nCat = 1
+        poThis.nDonkey = 1
+        poThis.nElephant = 1
+        poThis.nFox = 1
     end
 
     fAnt
-        return nAarvark
+        return poThis.nAarvark
     end
 
     fBanana
-        return nBaboon
+        return poThis.nBaboon
     end
 
     fTuna
-        return nCat
+        return poThis.nCat
     end
 
     fHay
-        return nDonkey
+        return poThis.nDonkey
     end
 
     fGrass
-        return nElephant
+        return poThis.nElephant
     end
 
     fMouse
-        return nFox
+        return poThis.nFox
     end
 end
 
-declare loZoo = new lcZoo()
-declare lnSum = 0
-declare lnStart = tick()
+let oZoo = new cZoo()
+let nSum = 0
+let nStart = tick()
 
-while lnSum < 10000000
-    lnSum += loZoo.fAnt()    + ;
-             loZoo.fBanana() + ;
-             loZoo.fTuna()   + ;
-             loZoo.fHay()    + ;
-             loZoo.fGrass()  + ;
-             loZoo.fMouse()
+while nSum < 10000000
+    nSum += oZoo.fAnt()    + ;
+            oZoo.fBanana() + ;
+            oZoo.fTuna()   + ;
+            oZoo.fHay()    + ;
+            oZoo.fGrass()  + ;
+            oZoo.fMouse()
 end
 
-println("Sum: " & lnSum)
-println("Time: " & tick(lnStart) & "ms")
+println("Sum: " & nSum)
+println("Time: " & tick(nStart) & "ms")

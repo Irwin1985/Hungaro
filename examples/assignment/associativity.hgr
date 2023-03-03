@@ -5,11 +5,11 @@
  Date: 2023-02-25
 """
 
-declare lsA = "a", lsB = "b", lsC = "c"
+let sA = "a", sB = "b", sC = "c"
 
 # Assignment is right associative
-lsA = lsB = lsC
+sA = sB = sC
 
-assert(lsA == "c", "lsA is not equal to \'c\'")
-assert(lsB == "c", "lsB is not equal to \'c\'")
-assert(lsC == "c", "lsC is not equal to \'c\'")
+assert(sA == "c", "sA is not equal to 'c'")
+assert(sB == "c", "sB is not equal to 'c'")
+assert(sC == "c", "sC is not equal to 'c'")

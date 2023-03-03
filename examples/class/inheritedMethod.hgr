@@ -5,25 +5,25 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
+def cFoo
     pInFoo
         println("in foo")
     end
 end
 
-declare lcBar as lcFoo
+def cBar as cFoo
     pInBar
         println("in bar")
     end
 end
 
-declare lcBaz as lcBar
+def cBaz as cBar
     pInBaz
         println("in baz")
     end
 end
 
-declare loBaz = new lcBaz()
-loBaz.pInFoo() # in foo
-loBaz.pInBar() # in bar
-loBaz.pInBaz() # in baz
+let oBaz = new cBaz()
+oBaz.pInFoo() # in foo
+oBaz.pInBar() # in bar
+oBaz.pInBaz() # in baz

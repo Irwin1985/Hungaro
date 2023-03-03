@@ -5,13 +5,13 @@
  Date: 2023-02-25
 """
 
-declare lsA = "before"
-println(lsA) # before
+let gsA = "before"
+println(gsA) # before
 
-lsA = "after"
-println(lsA) # after
+gsA = "after"
+println(gsA) # after
 
 # Global variables can be accessed from anywhere in the program
 # and can be modified from anywhere in the program.
-println(lsA = "arg") # arg
-println(lsA) # arg
+assert((gsA = "arg") == "arg", "is not equal") # arg
+println(gsA) # arg

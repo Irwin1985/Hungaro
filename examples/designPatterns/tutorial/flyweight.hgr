@@ -15,80 +15,80 @@
     Date: 2023-02-28
 """
 
-declare lcShape
+def cShape
     -pDraw()
 end
 
-declare lcCircle as lcShape
+def cCircle as cShape
     sColor = ""
     nX = 0
     nY = 0
     nRadius = 0
     
     pInit(psColor)
-        sColor = psColor
+        poThis.sColor = psColor
     end
 
     pSetX(pnX)
-        nX = pnX
+        poThis.nX = pnX
     end
 
     pSetY(pnY)
-        nY = pnY
+        poThis.nY = pnY
     end
 
     pSetRadius(pnRadius)
-        nRadius = pnRadius
+        poThis.nRadius = pnRadius
     end
 
     pDraw
-        println("Circle: Draw() [Color : " & sColor & ", x : " & nX & ", y :" & nY & ", radius :" & nRadius & "]")
+        println("Circle: Draw() [Color : " & poThis.sColor & ", x : " & poThis.nX & ", y :" & poThis.nY & ", radius :" & poThis.nRadius & "]")
     end
 end
 
-declare lcShapeFactory
+def cShapeFactory
     mCircleMap = {}
 
     fGetCircle(psColor)
-        declare loCircle = mCircleMap.get(psColor)
-        if loCircle == null
-            loCircle = new lcCircle(psColor)
-            mCircleMap.put(psColor, loCircle)
+        let oCircle = poThis.mCircleMap.get(psColor)
+        if oCircle == null
+            oCircle = new cCircle(psColor)
+            poThis.mCircleMap.put(psColor, oCircle)
             println("Creating circle of color : " & psColor)
         end
-        return loCircle
+        return oCircle
     end
 end
 
-declare lpMain
-    declare laColors = ["Red", "Green", "Blue", "White", "Black"]
-    declare loShapeFactory = new lcShapeFactory()
+def pMain
+    let aColors = ["Red", "Green", "Blue", "White", "Black"]
+    let oShapeFactory = new cShapeFactory()
 
     # Internal function
-    declare lfGetRandomColor        
-        return laColors[int(rand(0, 4))]
+    def fGetRandomColor        
+        return aColors[int(rand(0, 4))]
     end
 
     # Internal function
-    declare lfGetRandomX
+    def fGetRandomX
         return int(rand(1, 100))
     end
 
     # Internal function
-    declare lfGetRandomY
+    def fGetRandomY
         return int(rand(1, 100))
     end
 
-    for lnI = 0 to 19
-        declare loCircle = loShapeFactory.fGetCircle(lfGetRandomColor())
-        loCircle.pSetX(lfGetRandomX())
-        loCircle.pSetY(lfGetRandomY())
-        loCircle.pSetRadius(100)
-        loCircle.pDraw()
+    for nI = 0 to 19
+        let oCircle = oShapeFactory.fGetCircle(fGetRandomColor())
+        oCircle.pSetX(fGetRandomX())
+        oCircle.pSetY(fGetRandomY())
+        oCircle.pSetRadius(100)
+        oCircle.pDraw()
     end
 end
 
-lpMain()
+pMain()
 
 """
 Output

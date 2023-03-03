@@ -8,16 +8,16 @@
 #-------------------------------------------------#
 # Base middleware class
 #-------------------------------------------------#
-declare lcMiddleware
+def cMiddleware
     oNext = null
 
     # Builds chains of middleware objects
     fLink(poFirst, ...paChain)
-        declare loHead = poFirst
+        let oHead = poFirst
 
-        for each lvNextInChain in paChain
-            loHead.oNext = lvNextInChain
-            loHead = lvNextInChain
+        for each vNextInChain in paChain
+            oHead.oNext = vNextInChain
+            oHead = vNextInChain
         end
         return poFirst
     end
@@ -28,17 +28,17 @@ declare lcMiddleware
     # Runs check on the next object in chain or ends traversing if we're in
     # last object in chain.
     fCheckNext(psEmail, psPassword)
-        if oNext == null
+        if poThis.oNext == null
             return true
         end
-        return oNext.fCheck(psEmail, psPassword)
+        return poThis.oNext.fCheck(psEmail, psPassword)
     end
 end
 
 #-------------------------------------------------#
 # ConcreteHandler. Checks a user's role
 #-------------------------------------------------#
-declare lcRoleCheckMiddleware as lcMiddleware
+def cRoleCheckMiddleware as cMiddleware
     fCheck(psEmail, psPassword)
         if psEmail == "admin@example.com"
             println("Hello, admin!")
@@ -52,14 +52,14 @@ end
 #---------------------------------------------------------------------------#
 # ConcreteHandler. Checks whether there are too many failed login requests.
 #---------------------------------------------------------------------------#
-declare lcThrottlingMiddleware as lcMiddleware
+def cThrottlingMiddleware as cMiddleware
     nRequestPerMinute = 0
     nRequest = 0
     nCurrentTime = 0
 
     pInit(pnRequestPerMinute)
-        nRequestPerMinute = pnRequestPerMinute
-        nCurrentTime = seconds()
+        poThis.nRequestPerMinute = pnRequestPerMinute
+        poThis.nCurrentTime = seconds()
     end
 
     """
@@ -71,12 +71,12 @@ declare lcThrottlingMiddleware as lcMiddleware
         checks by running its check after all other checks.
     """
     fCheck(psEmail, psPassword)
-        if seconds() > nCurrentTime + 60000
-            nRequest = 0
-            nCurrentTime = seconds()
+        if seconds() > poThis.nCurrentTime + 60000
+            poThis.nRequest = 0
+            poThis.nCurrentTime = seconds()
         end
-        nRequest += 1
-        if nRequest > nRequestPerMinute
+        poThis.nRequest += 1
+        if poThis.nRequest > poThis.nRequestPerMinute
             println("Request limit exceeded!")
             return false
         end
@@ -87,18 +87,18 @@ end
 #---------------------------------------------------------------------------#
 # ConcreteHandler. Checks whether a user with the given credentials exists.
 #---------------------------------------------------------------------------#
-declare lcUserExistsMiddleware as lcMiddleware
+def cUserExistsMiddleware as cMiddleware
     oServer = null
     pInit(poServer)
-        oServer = poServer    
+        poThis.oServer = poServer    
     end
 
     fCheck(psEmail, psPassword)
-        if not oServer.fHasEmail(psEmail)
+        if not poThis.oServer.fHasEmail(psEmail)
             println("This email is not registered!")
             return false
         end
-        if not oServer.fIsValidPassword(psEmail, psPassword)
+        if not poThis.oServer.fIsValidPassword(psEmail, psPassword)
             println("Wrong password!")
             return false
         end
@@ -109,20 +109,20 @@ end
 #-------------------------------------------------#
 # Server class
 #-------------------------------------------------#
-declare lcServer
+def cServer
     mUsers = {}
     oMiddleware = null
 
     # Client passes a chain of object to server. This improves flexibility and
     # makes testing the server class easier.
     pSetMiddleware(poMiddleware)
-        oMiddleware = poMiddleware
+        poThis.oMiddleware = poMiddleware
     end
 
     # Server gets email and password from client and sends the authorization
     # request to the chain.
     fLogin(psEmail, psPassword)
-        if oMiddleware.fCheck(psEmail, psPassword)
+        if poThis.oMiddleware.fCheck(psEmail, psPassword)
             println("Authorization have been successful!")
             # Do something useful here for authorized users.
             return true
@@ -131,53 +131,52 @@ declare lcServer
     end
 
     pRegister(psEmail, psPassword)
-        mUsers.put(psEmail, psPassword)
+        poThis.mUsers.put(psEmail, psPassword)
     end
 
     fHasEmail(psEmail)
-        return mUsers.contains(psEmail)
+        return poThis.mUsers.contains(psEmail)
     end
 
     fIsValidPassword(psEmail, psPassword)
-        return mUsers.get(psEmail) == psPassword
+        return poThis.mUsers.get(psEmail) == psPassword
     end
 end
 
 #-------------------------------------------------#
 # Client code
 #-------------------------------------------------#
-declare lfInit
-    declare loServer = new lcServer()
-    loServer.pRegister("admin@example.com", "admin_pass")
-    loServer.pRegister("user@example.com", "user_pass")
+def fInit
+    let oServer = new cServer()
+    oServer.pRegister("admin@example.com", "admin_pass")
+    oServer.pRegister("user@example.com", "user_pass")
 
     # All checks are linked. Client can build various chains using the same
     # components.
-    declare loMiddleware = new lcMiddleware().fLink(
-        new lcThrottlingMiddleware(2),
-        new lcUserExistsMiddleware(loServer),
-        new lcRoleCheckMiddleware()
+    let oMiddleware = new cMiddleware().fLink(
+        new cThrottlingMiddleware(2),
+        new cUserExistsMiddleware(oServer),
+        new cRoleCheckMiddleware()
     )
 
     # Server gets a chain from client code.
-    loServer.pSetMiddleware(loMiddleware)
+    oServer.pSetMiddleware(oMiddleware)
 
-    return loServer
+    return oServer
 end
 
 #-------------------------------------------------#
 # Main procedure
 #-------------------------------------------------#
-declare lpMain
-    declare loServer = lfInit()
-
-    declare lbSuccess = false;
+def pMain
+    let oServer = fInit()
+    let bSuccess = false
 
     repeat
-        declare lsEmail = readln("Enter email: ")
-        declare lsPassword = readln("Input password: ")
-        lbSuccess = loServer.fLogin(lsEmail, lsPassword)
-    until not lbSuccess
+        let sEmail = readln("Enter email: ")
+        let sPassword = readln("Input password: ")
+        bSuccess = oServer.fLogin(sEmail, sPassword)
+    until not bSuccess
 end
 
-lpMain()
+pMain()

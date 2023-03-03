@@ -5,18 +5,18 @@
 """
 
 # Arithmetic operations
-declare lnX = 5, lnY = 7, lnZ
+let nX = 5, nY = 7, nZ
 
-lnZ = lnX + lnY
-lnZ = lnX - lnY
-lnZ = lnX * lnY
-lnZ = lnX / lnY
-lnZ = lnX ^ lnY 
-lnZ = lnX % lnY
+nZ = nX + nY
+nZ = nX - nY
+nZ = nX * nY
+nZ = nX / nY
+nZ = nX ^ nY 
+nZ = nX % nY
 
 # String operations (we dont use the + operator, we use the & operator)
-declare lsSay1 = "Say", lsSay2 = " ", lsSay3 = "Hello"
+let sSay1 = "Say", sSay2 = " ", sSay3 = "Hello"
 
-declare lsSay4 = lsSay1 & lsSay2 & lsSay3
+let sSay4 = sSay1 & sSay2 & sSay3
 
-print(lsSay4) # Say Hello
+print(sSay4) # Say Hello

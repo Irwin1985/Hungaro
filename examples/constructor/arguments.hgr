@@ -5,13 +5,13 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
+def cFoo
     pInit(pnA, pnB)
-        nA = pnA
-        nB = pnB
+        poThis.nA = pnA
+        poThis.nB = pnB
     end
 end
 
-declare loFoo = new lcFoo(1, 2)
-println(loFoo.nA) # 1
-println(loFoo.nB) # 2
+let oFoo = new cFoo(1, 2)
+println(oFoo.nA) # 1
+println(oFoo.nB) # 2

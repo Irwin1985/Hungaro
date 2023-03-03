@@ -16,34 +16,34 @@
     Date: 2023-03-01
 """
 
-declare lcHomeView
+def cHomeView
     pShow
         println("Displaying Home Page")
     end
 end
 
-declare lcStudentView
+def cStudentView
     pShow
         println("Displaying Student Page")
     end
 end
 
-declare lcDispatcher
-    oStudentView = new lcStudentView()
-    oHomeView = new lcHomeView()
+def cDispatcher
+    oStudentView = new cStudentView()
+    oHomeView = new cHomeView()
 
     
     pDispatch(psRequest)
         if psRequest == "STUDENT"
-            oStudentView.pShow()
+            poThis.oStudentView.pShow()
         else
-            oHomeView.pShow()
+            poThis.oHomeView.pShow()
         end
     end
 end
 
-declare lcFrontController
-    oDispatcher = new lcDispatcher()
+def cFrontController
+    oDispatcher = new cDispatcher()
 
     fIsAuthenticUser
         println("User is authenticated successfully.")
@@ -57,18 +57,18 @@ declare lcFrontController
     pDispatchRequest(psRequest)
         pTrackRequest(psRequest)
         if fIsAuthenticUser()
-            oDispatcher.pDispatch(psRequest)
+            poThis.oDispatcher.pDispatch(psRequest)
         end
     end
 end
 
-declare lpMain
-    declare loFrontController = new lcFrontController()
-    loFrontController.pDispatchRequest("HOME")
-    loFrontController.pDispatchRequest("STUDENT")
+def pMain
+    let oFrontController = new cFrontController()
+    oFrontController.pDispatchRequest("HOME")
+    oFrontController.pDispatchRequest("STUDENT")
 end
 
-lpMain()
+pMain()
 
 # Output
 #

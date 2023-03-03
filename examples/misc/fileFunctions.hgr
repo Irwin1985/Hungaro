@@ -4,10 +4,10 @@
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
  Date: 2023-02-24
 """
-declare lsFileName = curdir() & "\file.txt"
+let sFileName = curdir() & "\file.txt"
 
-if !file(lsFileName)
-    declare lsContent = `
+if !file(sFileName)
+    let sContent = `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     Mauris auctor, nisl eget ultricies tincidunt, nisl nisl
     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -46,12 +46,12 @@ if !file(lsFileName)
     Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
     1985-04-12T23:20:50.52Z
     `    
-    strtofile(lsContent, lsFileName)
+    strtofile(sContent, sFileName)
     
-    declare lsAns = readln("File created, do you want to see the content? (y/n)")
-    if lsAns == "y"
-        println("File content: " & filetostr(lsFileName))
+    let sAns = readln("File created, do you want to see the content? (y/n)")
+    if sAns == "y"
+        println("File content: " & filetostr(sFileName))
     end
 else
-    println("File content: " & filetostr(lsFileName))
+    println("File content: " & filetostr(sFileName))
 end

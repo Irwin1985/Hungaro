@@ -6,7 +6,7 @@
 """
 
 # Devices
-declare lcDevice
+def cDevice
     -fIsEnabled()
     -pEnable()
     -pDisable()    
@@ -18,111 +18,111 @@ declare lcDevice
 end
 
 # Radio
-declare lcRadio as lcDevice
+def cRadio as cDevice
     bOn = false
     nVolume = 30
     nChannel = 1
 
     fIsEnabled
-        return bOn
+        return poThis.bOn
     end
     
     pEnable
-        bOn = true    
+        poThis.bOn = true    
     end
     
     pDisable
-        bOn = false
+        poThis.bOn = false
     end    
     
     fGetVolume
-        return nVolume
+        return poThis.nVolume
     end    
     
     pSetVolume(pnPercent)
-        if nVolume > 100
-            nVolume = 100
+        if poThis.nVolume > 100
+            poThis.nVolume = 100
         end
-        if nVolume < 0
-            nVolume = 0
+        if poThis.nVolume < 0
+            poThis.nVolume = 0
         else
-            nVolume = pnPercent
+            poThis.nVolume = pnPercent
         end
     end
         
     fGetChannel
-        return nChannel
+        return poThis.nChannel
     end
     
     
     pSetChannel(pnChannel)
-        nChannel = pnChannel
+        poThis.nChannel = pnChannel
     end    
 
     pPrintStatus
         println("------------------------------------")
         println("| I\'m radio.")
-        println("| I\'m " & iif(bOn, "enabled", "disabled"))
-        println("| Current volume is " & nVolume & "%")
-        println("| Current channel is " & nChannel)
+        println("| I\'m " & iif(poThis.bOn, "enabled", "disabled"))
+        println("| Current volume is " & poThis.nVolume & "%")
+        println("| Current channel is " & poThis.nChannel)
         println("------------------------------------\n")
     end
 end
 
 # TV
-declare lcTV as lcDevice
+def cTV as cDevice
     bOn = false
     nVolume = 30
     nChannel = 1
 
     fIsEnabled
-        return bOn
+        return poThis.bOn
     end
     
     pEnable
-        bOn = true    
+        poThis.bOn = true    
     end
     
     pDisable
-        bOn = false
+        poThis.bOn = false
     end    
     
     fGetVolume
-        return nVolume
+        return poThis.nVolume
     end    
     
     pSetVolume(pnPercent)
-        if nVolume > 100
-            nVolume = 100
+        if poThis.nVolume > 100
+            poThis.nVolume = 100
         end
-        if nVolume < 0
-            nVolume = 0
+        if poThis.nVolume < 0
+            poThis.nVolume = 0
         else
-            nVolume = pnPercent
+            poThis.nVolume = pnPercent
         end
     end
         
     fGetChannel
-        return nChannel
+        return poThis.nChannel
     end
     
     
     pSetChannel(pnChannel)
-        nChannel = pnChannel
+        poThis.nChannel = pnChannel
     end    
 
     pPrintStatus
         println("------------------------------------")
         println("| I\'m TV set.")
-        println("| I\'m " & iif(bOn, "enabled", "disabled"))
-        println("| Current volume is " & nVolume & "%")
-        println("| Current channel is " & nChannel)
+        println("| I\'m " & iif(poThis.bOn, "enabled", "disabled"))
+        println("| Current volume is " & poThis.nVolume & "%")
+        println("| Current channel is " & poThis.nChannel)
         println("------------------------------------\n")
     end
 end
 
 # Remote
-declare lcRemote
+def cRemote
     -pPower()    
     -pVolumeDown()
     -pVolumeUp()    
@@ -131,73 +131,73 @@ declare lcRemote
 end
 
 # Basic remote
-declare lcBasicRemote as lcRemote
+def cBasicRemote as cRemote
     oDevice = null
 
     pInit(poDevice)
-        oDevice = poDevice
+        poThis.oDevice = poDevice
     end
 
     pPower
         println("Remote: power toggle")
-        if oDevice.fIsEnabled()
-            oDevice.pDisable()
+        if poThis.oDevice.fIsEnabled()
+            poThis.oDevice.pDisable()
         else
-            oDevice.pEnable()
+            poThis.oDevice.pEnable()
         end
     end
     
     pVolumeDown
         println("Remote: volume down")
-        oDevice.pSetVolume(oDevice.fGetVolume() - 10)
+        poThis.oDevice.pSetVolume(poThis.oDevice.fGetVolume() - 10)
     end
     
     pVolumeUp
         println("Remote: volume up")
-        oDevice.pSetVolume(oDevice.fGetVolume() + 10)
+        poThis.oDevice.pSetVolume(poThis.oDevice.fGetVolume() + 10)
     end
     
     pChannelDown
         println("Remote: channel down")
-        oDevice.pSetChannel(oDevice.fGetChannel() - 1)
+        poThis.oDevice.pSetChannel(poThis.oDevice.fGetChannel() - 1)
     end
 
     pChannelUp
         println("Remote: channel up")
-        oDevice.pSetChannel(oDevice.fGetChannel() + 1)
+        poThis.oDevice.pSetChannel(poThis.oDevice.fGetChannel() + 1)
     end
 end
 
 # Advanced remote
-declare lcAdvancedRemote as lcBasicRemote
+def cAdvancedRemote as cBasicRemote
     pInit(poDevice)
         super(poDevice)
     end
 
     pMute
         println("Remote: mute")
-        oDevice.pSetVolume(0)
+        poThis.oDevice.pSetVolume(0)
     end
 end
 
 # Main
-declare lpTestDevice(poDevice)
+def pTestDevice(poDevice)
     println("Tests with basic remote.")
-    declare loBasicRemote = new lcBasicRemote(poDevice)
-    loBasicRemote.pPower()
+    let oBasicRemote = new cBasicRemote(poDevice)
+    oBasicRemote.pPower()
     poDevice.pPrintStatus()
 
     println("Tests with advanced remote.")
-    declare loAdvancedRemote = new lcAdvancedRemote(poDevice)
-    loAdvancedRemote.pPower()
-    loAdvancedRemote.pMute()
+    let oAdvancedRemote = new cAdvancedRemote(poDevice)
+    oAdvancedRemote.pPower()
+    oAdvancedRemote.pMute()
     poDevice.pPrintStatus()
 end
 
 # Remote
-declare lpMain
-    lpTestDevice(new lcTV())
-    lpTestDevice(new lcRadio())
+def pMain
+    pTestDevice(new cTV())
+    pTestDevice(new cRadio())
 end
 
-lpMain()
+pMain()

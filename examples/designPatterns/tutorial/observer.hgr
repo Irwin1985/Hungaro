@@ -15,83 +15,83 @@
     Date: 2023-02-28
 """
 
-declare lcSubject
+def cSubject
     aObservers = []
     nState = 0
 
     fGetState
-        return nState
+        return poThis.nState
     end
 
     pSetState(pnState)
-        nState = pnState
+        poThis.nState = pnState
         pNotifyAllObservers()
     end
 
     pAttach(poObserver)
-        aObservers.push(poObserver)
+        poThis.aObservers.push(poObserver)
     end
 
     pNotifyAllObservers
-        for each lvObserver in aObservers
-            lvObserver.pUpdate()
+        for each vObserver in poThis.aObservers
+            vObserver.pUpdate()
         end
     end
 end
 
-declare lcObserver
+def cObserver
     oSubject = null
 
     -pUpdate()
 end
 
-declare lcBinaryObserver as lcObserver
+def cBinaryObserver as cObserver
     pInit(poSubject)
-        oSubject = poSubject
-        oSubject.pAttach(poThis)
+        poThis.oSubject = poSubject
+        poThis.oSubject.pAttach(poThis)
     end
 
     pUpdate
-        println("Binary String: " & oSubject.fGetState())
+        println("Binary String: " & poThis.oSubject.fGetState())
     end
 end
 
-declare lcOctalObserver as lcObserver
+def cOctalObserver as cObserver
     pInit(poSubject)
-        oSubject = poSubject
-        oSubject.pAttach(poThis)
+        poThis.oSubject = poSubject
+        poThis.oSubject.pAttach(poThis)
     end
 
     pUpdate
-        println("Octal String: " & oSubject.fGetState())
+        println("Octal String: " & poThis.oSubject.fGetState())
     end
 end
 
-declare lcHexaObserver as lcObserver
+def cHexaObserver as cObserver
     pInit(poSubject)
-        oSubject = poSubject
-        oSubject.pAttach(poThis)
+        poThis.oSubject = poSubject
+        poThis.oSubject.pAttach(poThis)
     end
 
     pUpdate
-        println("Hex String: " & oSubject.fGetState())
+        println("Hex String: " & poThis.oSubject.fGetState())
     end
 end
 
-declare lpMain
-    declare loSubject = new lcSubject()
+def pMain
+    let oSubject = new cSubject()
 
-    new lcHexaObserver(loSubject)
-    new lcOctalObserver(loSubject)
-    new lcBinaryObserver(loSubject)
+    new cHexaObserver(oSubject)
+    new cOctalObserver(oSubject)
+    new cBinaryObserver(oSubject)
 
     println("First state change: 15")
-    loSubject.pSetState(15)
+    oSubject.pSetState(15)
     println("Second state change: 10")
-    loSubject.pSetState(10)
+    oSubject.pSetState(10)
 end
 
-lpMain()
+pMain()
 
 # Output
 # First state change: 15

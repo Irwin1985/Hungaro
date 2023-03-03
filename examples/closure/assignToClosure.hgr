@@ -6,26 +6,26 @@
 """
 
 
-declare loF, loG
+let oF, oG
 
-declare lpTest
-    declare lsLocal = "local"
-    declare lpF
-        println(lsLocal)
-        lsLocal = "after lpF"
-        println(lsLocal)
+def pMain
+    let sLocal = "local"
+    def pF
+        println(sLocal)
+        sLocal = "after lpF"
+        println(sLocal)
     end
-    loF = lpF
+    oF = pF
 
-    declare lpG
-        println(lsLocal)
-        lsLocal = "after lpG"
-        println(lsLocal)
+    def pG
+        println(sLocal)
+        sLocal = "after lpG"
+        println(sLocal)
     end
-    loG = lpG
+    oG = pG
 
-    loF()
-    loG()
+    oF()
+    oG()
 end
 
-lpTest()
+pMain()

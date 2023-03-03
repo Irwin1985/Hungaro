@@ -5,21 +5,21 @@
  Date: 2023-02-23
 """
 
-declare laNumbers = []
+let aNumbers = []
 
-for lnI = 0 to 30
-    laNumbers.push(rand(1, 31))
+for nI = 0 to 30
+    aNumbers.push(rand(1, 31))
 end
 
-println("The array is: " & laNumbers)
+println("The array is: " & aNumbers)
 
 # Find the largest number in the array
-declare lnLargest = laNumbers[0]
+let nLargest = aNumbers[0]
 
-for lnI = 0 to laNumbers.len()-1
-    if laNumbers[lnI] > lnLargest
-        lnLargest = laNumbers[lnI]
+for nI = 0 to aNumbers.len()-1
+    if aNumbers[nI] > nLargest
+        nLargest = aNumbers[nI]
     end
 end
 
-println("The largest number is: " & lnLargest)
+println("The largest number is: " & nLargest)

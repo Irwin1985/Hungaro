@@ -5,38 +5,38 @@
  Date: 2023-02-24
 """
 
-declare
-    lnYMin = -0.2,
-    lnYMax = 0.1,
-    lnXMin = -1.5,
-    lnXMax = -1.1
+let
+    nYMin = -0.2,
+    nYMax = 0.1,
+    nXMin = -1.5,
+    nXMax = -1.1
 
-for lnYPixel = 0 to 24
-    declare lnY = (lnYPixel / 24) * (lnYMax - lnYMin) + lnYMin
-    for lnXPixel = 0 to 79
-        declare lnX = (lnXPixel / 79) * (lnXMax - lnXMin) + lnXMin
-        declare lsPixel = " "
-        declare lnX0 = lnX
-        declare lnY0 = lnY
-        for lnIter = 0 to 79
-            declare lnX1 = lnX0 * lnX0 - lnY0 * lnY0 + lnX
-            declare lnY1 = 2 * lnX0 * lnY0 + lnY
+for nYPixel = 0 to 24
+    let nY = (nYPixel / 24) * (nYMax - nYMin) + nYMin
+    for nXPixel = 0 to 79
+        let nX = (nXPixel / 79) * (nXMax - nXMin) + nXMin
+        let sPixel = " "
+        let nX0 = nX
+        let nY0 = nY
+        for nIter = 0 to 79
+            let nX1 = nX0 * nX0 - nY0 * nY0 + nX
+            let nY1 = 2 * nX0 * nY0 + nY
 
             # Add the seed
-            declare lnX1 = lnX1 + lnX
-            declare lnY1 = lnY1 + lnY
+            let nX1 = nX1 + nX
+            let nY1 = nY1 + nY
 
-            declare lnX0 = lnX1
-            declare lnY0 = lnY1
+            let nX0 = nX1
+            let nY0 = nY1
 
             # Stop if the point escape
-            declare lnD = lnX0 * lnX0 + lnY0 * lnY0
-            if lnD > 4
-                lsPixel = " .:;+=xX$&".charAt(int(lnIter / 8))
+            let nD = nX0 * nX0 + nY0 * nY0
+            if nD > 4
+                sPixel = " .:;+=xX$&".charAt(int(nIter / 8))
                 exit
             end
         end
-        print(lsPixel)
+        print(sPixel)
     end
     println()
 end

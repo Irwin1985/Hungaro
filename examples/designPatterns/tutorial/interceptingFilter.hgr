@@ -18,88 +18,88 @@
     Date: 2023-03-01
 """
 
-declare lcFilter
+def cFilter
     -pExecute(psRequest)    
 end
 
-declare lcAuthenticationFilter as lcFilter
+def cAuthenticationFilter as cFilter
     pExecute(psRequest)
         println("Authenticating request: " & psRequest)
     end
 end
 
-declare lcDebugFilter as lcFilter
+def cDebugFilter as cFilter
     pExecute(psRequest)
         println("request log: " & psRequest)
     end
 end
 
-declare lcTarget
+def cTarget
     pExecute(psRequest)
         println("Executing request: " & psRequest)
     end
 end
 
-declare lcFilterChain
+def cFilterChain
     aFilters = []
     oTarget = null
 
     pAddFilter(poFilter)
-        aFilters.push(poFilter)
+        poThis.aFilters.push(poFilter)
     end
 
     pExecute(psRequest)
-        for each lvFilter in aFilters
-            lvFilter.pExecute(psRequest)
+        for each vFilter in poThis.aFilters
+            vFilter.pExecute(psRequest)
         end        
-        oTarget.pExecute(psRequest)
+        poThis.oTarget.pExecute(psRequest)
     end
 
     pSetTarget(poTarget)
-        oTarget = poTarget
+        poThis.oTarget = poTarget
     end
 end
 
-declare lcFilterManager
+def cFilterManager
     oFilterChain = null
 
     pInit(poTarget)
-        oFilterChain = new lcFilterChain()
-        oFilterChain.pSetTarget(poTarget)
+        poThis.oFilterChain = new cFilterChain()
+        poThis.oFilterChain.pSetTarget(poTarget)
     end
 
     pSetFilter(poFilter)
-        oFilterChain.pAddFilter(poFilter)
+        poThis.oFilterChain.pAddFilter(poFilter)
     end
 
     pFilterRequest(psRequest)
-        oFilterChain.pExecute(psRequest)
+        poThis.oFilterChain.pExecute(psRequest)
     end
 end
 
-declare lcClient
+def cClient
     oFilterManager = null
 
     pSetFilterManager(poFilterManager)
-        oFilterManager = poFilterManager
+        poThis.oFilterManager = poFilterManager
     end
 
     pSendRequest(psRequest)
-        oFilterManager.pFilterRequest(psRequest)
+        poThis.oFilterManager.pFilterRequest(psRequest)
     end
 end
 
-declare lpMain
-    declare loFilterManager = new lcFilterManager(new lcTarget())
-    loFilterManager.pSetFilter(new lcAuthenticationFilter())
-    loFilterManager.pSetFilter(new lcDebugFilter())
+def pMain
+    let oFilterManager = new cFilterManager(new cTarget())
+    oFilterManager.pSetFilter(new cAuthenticationFilter())
+    oFilterManager.pSetFilter(new cDebugFilter())
 
-    declare loClient = new lcClient()
-    loClient.pSetFilterManager(loFilterManager)
-    loClient.pSendRequest("HOME")
+    let oClient = new cClient()
+    oClient.pSetFilterManager(oFilterManager)
+    oClient.pSendRequest("HOME")
 end
 
-lpMain()
+pMain()
 
 # Output
 # Authenticating request: HOME

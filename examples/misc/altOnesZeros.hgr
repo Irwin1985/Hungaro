@@ -4,14 +4,14 @@
  Date: 2023-02-22
 """
 
-declare lnRows = val(readln("Please Enter the total Number of Rows: "))
-declare lnColumns = val(readln("Please Enter the total Number of Columns: "))
+let nRows = val(readln("Please Enter the total Number of Rows: "))
+let nColumns = val(readln("Please Enter the total Number of Columns: "))
 
 println("Print Number Pattern - 1 and 0 in alternative Columns")
 
-for lnI = 1 to lnRows
-    for lnJ = 1 to lnColumns
-        if lnJ % 2 == 0
+for nI = 1 to nRows
+    for nJ = 1 to nColumns
+        if nJ % 2 == 0
             print("0 ")
         else
             print("1 ")

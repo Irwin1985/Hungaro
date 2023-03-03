@@ -5,10 +5,10 @@
  Date: 2023-02-25
 """
 
-for lnT = 1 to 20
-    declare lnAns = 0
-    for lnG = 1 to lnT
-        lnAns += lnG
+for nT = 1 to 20
+    let nAns = 0
+    for nG = 1 to nT
+        nAns += nG
     end
-    println(lnAns)
+    println(nAns)
 end

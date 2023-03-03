@@ -5,10 +5,10 @@
  Date: 2023-02-24
 """
 
-declare lpQuickSort(paNumbers, pnLeft, pnRight)
-    declare lnLeftPtr = pnLeft, lnRightPtr = pnRight, lnPivot = paNumbers[pnLeft]
+def pQuickSort(paNumbers, pnLeft, pnRight)
+    let nLeftPtr = pnLeft, nRightPtr = pnRight, nPivot = paNumbers[pnLeft]
     while pnLeft < pnRight
-        while paNumbers[pnRight] >= lnPivot and pnLeft < pnRight
+        while paNumbers[pnRight] >= nPivot and pnLeft < pnRight
             pnRight -= 1
         end
 
@@ -17,7 +17,7 @@ declare lpQuickSort(paNumbers, pnLeft, pnRight)
             pnLeft += 1
         end
 
-        while paNumbers[pnLeft] <= lnPivot and pnLeft < pnRight
+        while paNumbers[pnLeft] <= nPivot and pnLeft < pnRight
             pnLeft += 1
         end
 
@@ -27,29 +27,29 @@ declare lpQuickSort(paNumbers, pnLeft, pnRight)
         end            
     end
 
-    paNumbers[pnLeft] = lnPivot
-    lnPivot = pnLeft
-    pnLeft = lnLeftPtr
-    pnRight = lnRightPtr
+    paNumbers[pnLeft] = nPivot
+    nPivot = pnLeft
+    pnLeft = nLeftPtr
+    pnRight = nRightPtr
 
-    if pnLeft < lnPivot
-        lpQuickSort(paNumbers, pnLeft, lnPivot - 1)
+    if pnLeft < nPivot
+        pQuickSort(paNumbers, pnLeft, nPivot - 1)
     end
 
-    if pnRight > lnPivot
-        lpQuickSort(paNumbers, lnPivot + 1, pnRight)
+    if pnRight > nPivot
+        pQuickSort(paNumbers, nPivot + 1, pnRight)
     end
 end
 
 # Driver code to test above
-declare laNumbers = [12, 7, 13, 5, 6]
-lpQuickSort(laNumbers, 0, 4)
-assert(laNumbers == [5, 6, 7, 12, 13], "Quick sort algorithm failed")
+let aNumbers = [12, 7, 13, 5, 6]
+pQuickSort(aNumbers, 0, 4)
+assert(aNumbers == [5, 6, 7, 12, 13], "Quick sort algorithm failed")
 
 # Bigger example
-declare laNumbers = [] * rand(1, 100) = 0
-for lnIndex = 0 to laNumbers.len() - 1
-    laNumbers[lnIndex] = rand(1, 100)
+let aNumbers = [] * rand(1, 100) = 0
+for nIndex = 0 to aNumbers.len() - 1
+    aNumbers[nIndex] = rand(1, 100)
 end
-lpQuickSort(laNumbers, 0, laNumbers.len() - 1)
-println("Larger example: " & laNumbers)
+pQuickSort(aNumbers, 0, aNumbers.len() - 1)
+println("Larger example: " & aNumbers)

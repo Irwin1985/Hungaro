@@ -5,18 +5,18 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
+def cFoo
     oBar = null
 end
 
 # the following procedure takes the Function prototype as poThis
-declare lpBar(pnA, pnB)
+def pBar(pnA, pnB)
     println("bar")
     println(pnA)
     println(pnB)
 end
 
-declare loFoo = new lcFoo()
-loFoo.oBar = lpBar # this changes the Function prototype of lpBar from Function to instance of lcFoo
+let oFoo = new cFoo()
+oFoo.oBar = pBar # this changes the Function prototype of pBar from Function to instance of cFoo
 
-loFoo.oBar(1, 2) # here lpBar is owned by loFoo, so it is called as a method of loFoo
+oFoo.oBar(1, 2) # here pBar is owned by oFoo, so it is called as a method of oFoo

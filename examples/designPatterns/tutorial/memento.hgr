@@ -16,71 +16,71 @@
     Date: 2023-02-28
 """
 
-declare lcMememto
+def cMememto
     sState = ""
 
     pInit(psState)
-        sState = psState
+        poThis.sState = psState
     end
 
     fGetState()
-        return sState
+        return poThis.sState
     end
 end
 
-declare lcOriginator
+def cOriginator
     sState = ""
 
     pSetState(psState)
-        sState = psState
+        poThis.sState = psState
     end
 
     fGetState()
-        return sState
+        return poThis.sState
     end
 
     fSaveStateToMemento()
-        return new lcMememto(sState)
+        return new cMememto(poThis.sState)
     end
 
     pGetStateFromMemento(poMemento)
-        sState = poMemento.fGetState()
+        poThis.sState = poMemento.fGetState()
     end
 end
 
-declare lcCareTaker
+def cCareTaker
     aMementoList = []
 
     pAdd(poState)
-        aMementoList.push(poState)
+        poThis.aMementoList.push(poState)
     end
 
     fGet(pnIndex)
-        return aMementoList[pnIndex]
+        return poThis.aMementoList[pnIndex]
     end
 end
 
-declare lpMain
-    declare loOriginator = new lcOriginator()
-    declare loCareTaker = new lcCareTaker()
+def pMain
+    let oOriginator = new cOriginator()
+    let oCareTaker = new cCareTaker()
 
-    loOriginator.pSetState("State #1")
-    loOriginator.pSetState("State #2")
-    loCareTaker.pAdd(loOriginator.fSaveStateToMemento())
+    oOriginator.pSetState("State #1")
+    oOriginator.pSetState("State #2")
+    oCareTaker.pAdd(oOriginator.fSaveStateToMemento())
 
-    loOriginator.pSetState("State #3")
-    loCareTaker.pAdd(loOriginator.fSaveStateToMemento())
+    oOriginator.pSetState("State #3")
+    oCareTaker.pAdd(oOriginator.fSaveStateToMemento())
 
-    loOriginator.pSetState("State #4")
-    println("Current State: " & loOriginator.fGetState())
+    oOriginator.pSetState("State #4")
+    println("Current State: " & oOriginator.fGetState())
 
-    loOriginator.pGetStateFromMemento(loCareTaker.fGet(0))
-    println("First saved State: " & loOriginator.fGetState())
-    loOriginator.pGetStateFromMemento(loCareTaker.fGet(1))
-    println("Second saved State: " & loOriginator.fGetState())
+    oOriginator.pGetStateFromMemento(oCareTaker.fGet(0))
+    println("First saved State: " & oOriginator.fGetState())
+    oOriginator.pGetStateFromMemento(oCareTaker.fGet(1))
+    println("Second saved State: " & oOriginator.fGetState())
 end
 
-lpMain()
+pMain()
 
 # Output
 # Current State: State #4

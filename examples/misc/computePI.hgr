@@ -4,19 +4,19 @@
  Date: 2023-02-22
 """
 
-declare PI = 3.14159265
+let PI = 3.14159265
 
 # Nilakantha series to compute PI
 # https://en.wikipedia.org/wiki/Nilakantha_series
 
-declare lnAns = 3.0, lnJ = 2.0
+let nAns = 3.0, nJ = 2.0
 
-for lnI = 1 to 20
-    if lnI%2 == 1
-        lnAns = lnAns + 4.0/(lnJ*(lnJ+1)*(lnJ+2))
+for nI = 1 to 20
+    if nI%2 == 1
+        nAns = nAns + 4.0/(nJ*(nJ+1)*(nJ+2))
     else
-        lnAns = lnAns - 4.0/(lnJ*(lnJ+1)*(lnJ+2))
+        nAns = nAns - 4.0/(nJ*(nJ+1)*(nJ+2))
     end
-    lnJ += 2
-    println(lnI, space(2), lnAns)
+    nJ += 2
+    println(nI, space(2), nAns)
 end

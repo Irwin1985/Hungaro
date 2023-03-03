@@ -7,18 +7,18 @@
 #-----------------------------------------------------#
 # Abstract Factory
 #-----------------------------------------------------#
-declare lcApplication
+def cApplication
     oButton = null
     oCheckbox = null
 
     pInit(poFactory)
-        oButton = poFactory.fCreateButton()
-        oCheckbox = poFactory.fCreateCheckbox()    
+        poThis.oButton = poFactory.fCreateButton()
+        poThis.oCheckbox = poFactory.fCreateCheckbox()    
     end
 
     pPaint()
-        oButton.pPaint()
-        oCheckbox.pPaint()
+        poThis.oButton.pPaint()
+        poThis.oCheckbox.pPaint()
     end
 
 end
@@ -26,14 +26,14 @@ end
 #-----------------------------------------------------#
 # Button
 #-----------------------------------------------------#
-declare lcButton
+def cButton
     -pPaint()
 end
 
 #-----------------------------------------------------#
 # MacOS Button
 #-----------------------------------------------------#
-declare lcMacOSButton as lcButton
+def cMacOSButton as cButton
     pPaint()
         println("You have created MacOSButton.")
     end
@@ -42,7 +42,7 @@ end
 #-----------------------------------------------------#
 # Windows Button
 #-----------------------------------------------------#
-declare lcWindowsButton as lcButton
+def cWindowsButton as cButton
     pPaint()
         println("You have created WindowsButton.")
     end
@@ -51,14 +51,14 @@ end
 #-----------------------------------------------------#
 # Checkbox
 #-----------------------------------------------------#
-declare lcCheckbox
+def cCheckbox
     -pPaint()
 end
 
 #-----------------------------------------------------#
 # MacOS Checkbox
 #-----------------------------------------------------#
-declare lcMacOSCheckbox as lcCheckbox
+def cMacOSCheckbox as cCheckbox
     pPaint()
         println("You have created MacOSCheckbox.")
     end
@@ -67,7 +67,7 @@ end
 #-----------------------------------------------------#
 # Windows Checkbox
 #-----------------------------------------------------#
-declare lcWindowsCheckbox as lcCheckbox
+def cWindowsCheckbox as cCheckbox
     pPaint()
         println("You have created WindowsCheckbox.")
     end
@@ -76,7 +76,7 @@ end
 #-----------------------------------------------------#
 # Factory
 #-----------------------------------------------------#
-declare lcGUIFactory
+def cGUIFactory
     -fCreateButton()
     -fCreateCheckbox()
 end
@@ -84,45 +84,45 @@ end
 #-----------------------------------------------------#
 # MacOS Factory
 #-----------------------------------------------------#
-declare lcMacOSFactory as lcGUIFactory
+def cMacOSFactory as cGUIFactory
     fCreateButton()
-        return new lcMacOSButton()
+        return new cMacOSButton()
     end
 
     fCreateCheckbox()
-        return new lcMacOSCheckbox()
+        return new cMacOSCheckbox()
     end
 end
 
 #-----------------------------------------------------#
 # Windows Factory
 #-----------------------------------------------------#
-declare lcWindowsFactory as lcGUIFactory
+def cWindowsFactory as cGUIFactory
     fCreateButton()
-        return new lcWindowsButton()
+        return new cWindowsButton()
     end
 
     fCreateCheckbox()
-        return new lcWindowsCheckbox()
+        return new cWindowsCheckbox()
     end
 end
 
 #-----------------------------------------------------#
 # Main
 #-----------------------------------------------------#
-declare lfConfigureApplication
-    declare loApplication = null, loFactory = null    
-    declare lsName = readln("Enter the name of OS you are using (MacOS or Windows): ")
+def fConfigureApplication
+    let oApplication = null, oFactory = null    
+    let sName = readln("Enter the name of OS you are using (MacOS or Windows): ")
 
-    if lsName == "MacOS"
-        loFactory = new lcMacOSFactory()
+    if sName == "MacOS"
+        oFactory = new cMacOSFactory()
     else
-        loFactory = new lcWindowsFactory()
+        oFactory = new cWindowsFactory()
     end
-    loApplication = new lcApplication(loFactory)
+    oApplication = new cApplication(oFactory)
 
-    return loApplication
+    return oApplication
 end
 
-declare loApp = lfConfigureApplication()
-loApp.pPaint()
+let oApp = fConfigureApplication()
+oApp.pPaint()

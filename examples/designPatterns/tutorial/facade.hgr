@@ -16,61 +16,61 @@
     Date: 2023-02-28
 """
 
-declare lcShape
+def cShape
     -pDraw()
 end
 
-declare lcRectangle as lcShape
+def cRectangle as cShape
     pDraw
         println("Rectangle::draw()")
     end
 end
 
-declare lcSquare as lcShape
+def cSquare as cShape
     pDraw
         println("Square::draw()")
     end
 end
 
-declare lcCircle as lcShape
+def cCircle as cShape
     pDraw
         println("Circle::draw()")
     end
 end
 
-declare lcShapeMaker
+def cShapeMaker
     oCircle = null
     oRectangle = null
     oSquare = null
 
     pInit
-        oCircle = new lcCircle()
-        oRectangle = new lcRectangle()
-        oSquare = new lcSquare()
+        poThis.oCircle = new cCircle()
+        poThis.oRectangle = new cRectangle()
+        poThis.oSquare = new cSquare()
     end
 
     pDrawCircle
-        lcCircle.pDraw()
+        poThis.oCircle.pDraw()
     end
 
     pDrawRectangle
-        lcRectangle.pDraw()
+        poThis.oRectangle.pDraw()
     end
 
     pDrawSquare
-        lcSquare.pDraw()
+        poThis.oSquare.pDraw()
     end
 end
 
-declare lpMain
-    declare loShapeMaker = new lcShapeMaker()
+def pMain
+    let oShapeMaker = new cShapeMaker()
 
-    loShapeMaker.pDrawCircle()
-    loShapeMaker.pDrawRectangle()
-    loShapeMaker.pDrawSquare()
+    oShapeMaker.pDrawCircle()
+    oShapeMaker.pDrawRectangle()
+    oShapeMaker.pDrawSquare()
 end
 
-lpMain()
+pMain()
 
 # Output
 # Circle::draw()

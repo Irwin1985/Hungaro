@@ -5,43 +5,43 @@
  Date: 2023-02-23
 """
 
-declare lfMean(paX)
-    declare lnSum = 0
-    for lnI = 0 to paX.len() - 1
-        lnSum += paX[lnI]
+def fMean(paX)
+    let nSum = 0
+    for nI = 0 to paX.len() - 1
+        nSum += paX[nI]
     end
-    return int(lnSum / paX.len())
+    return int(nSum / paX.len())
 end
 
-declare laX = [] * 10 = 0
+let aX = [] * 10 = 0
 
-for lnI = 0 to 9
-    laX[lnI] = lnI
+for nI = 0 to 9
+    aX[nI] = nI
 end
 
-declare laY = [] * 10 = 0
-for lnI = 0 to 9
-    laY[lnI] = lnI * 2
+let aY = [] * 10 = 0
+for nI = 0 to 9
+    aY[nI] = nI * 2
 end
 
-# mean laX and laY
-declare lnMeanX = lfMean(laX)
-declare lnMeanY = lfMean(laY)
+# mean aX and aY
+let nMeanX = fMean(aX)
+let nMeanY = fMean(aY)
 
 # total number of values
-declare lnN = laX.len()
+let nN = aX.len()
 
-# using the formula to calculate lnB0 and lnB1
-declare lnNum = 0
-declare lnDen = 0
-for lnI = 0 to lnN - 1
-    lnNum += (laX[lnI] - lnMeanX) * (laY[lnI] - lnMeanY)
-    lnDen += (laX[lnI] - lnMeanX) ^ 2
+# using the formua to calcuate nB0 and nB1
+let nNum = 0
+let nDen = 0
+for nI = 0 to nN - 1
+    nNum += (aX[nI] - nMeanX) * (aY[nI] - nMeanY)
+    nDen += (aX[nI] - nMeanX) ^ 2
 end
 
-declare lnB1 = lnNum / lnDen
-declare lnB0 = lnMeanY - (lnB1 * lnMeanX)
+let nB1 = nNum / nDen
+let nB0 = nMeanY - (nB1 * nMeanX)
 
 # print coefficients
-print("b1 = " & lnB1)
-print("b0 = " & lnB0)
+print("b1 = " & nB1)
+print("b0 = " & nB0)

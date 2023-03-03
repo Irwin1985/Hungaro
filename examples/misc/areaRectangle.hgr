@@ -4,9 +4,9 @@
  Date: 2023-02-22
 """
 
-declare 
-    lnWidth = val(readln("Enter the width of the rectangle: ")),
-    lnHeight = val(readln("Enter the height of the rectangle: ")),
-    lnArea = lnWidth * lnHeight
+let
+    nWidth = val(readln("Enter the width of the rectangle: ")),
+    nHeight = val(readln("Enter the height of the rectangle: ")),
+    nArea = nWidth * nHeight
 
-print("The area of the rectangle is: " & lnArea)
+print("The area of the rectangle is: " & nArea)

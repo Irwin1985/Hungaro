@@ -18,12 +18,12 @@
     Date: 2023-03-01
 """
 
-declare lcService
+def cService
     -fGetName()
     -pExecute()    
 end
 
-declare lcService1 as lcService
+def cService1 as cService
     pExecute
         println("Executing Service1")
     end
@@ -33,7 +33,7 @@ declare lcService1 as lcService
     end
 end
 
-declare lcService2 as lcService
+def cService2 as cService
     pExecute
         println("Executing Service2")
     end
@@ -43,80 +43,80 @@ declare lcService2 as lcService
     end
 end
 
-declare lcInitialContext
+def cInitialContext
     fLookup(psJndiName)
         if psJndiName == "SERVICE1"
             println("Looking up and creating a new Service1 object")
-            return new lcService1()
+            return new cService1()
         end
         if psJndiName == "SERVICE2"
             println("Looking up and creating a new Service2 object")
-            return new lcService2()
+            return new cService2()
         end
         return null
     end
 end
 
-declare lcCache
+def cCache
     aServices = []
 
     fGetService(psServiceName)
-        for each lvService in aServices
-            if lvService.fGetName() == psServiceName
+        for each vService in poThis.aServices
+            if vService.fGetName() == psServiceName
                 println("Returning cached  " & psServiceName & " object")
-                return lvService
+                return vService
             end
         end
         return null
     end
 
     pAddService(poNewService)
-        declare lbExists = false
+        let bExists = false
         
-        for each lvService in aServices
-            if lvService.fGetName() == poNewService.fGetName()
-                lbExists = true
+        for each vService in poThis.aServices
+            if vService.fGetName() == poNewService.fGetName()
+                bExists = true
             end
         end
-        if not lbExists            
-            aServices.push(poNewService)
+        if not bExists            
+            poThis.aServices.push(poNewService)
         end
     end
 end
 
-declare lcServiceLocator
-    oCache = new lcCache()
+def cServiceLocator
+    oCache = new cCache()
     
     fGetService(psJndiName)
-        declare loService = oCache.fGetService(psJndiName)
-        if loService != null
-            return loService
+        let oService = poThis.oCache.fGetService(psJndiName)
+        if oService != null
+            return oService
         end
 
-        declare loInitialContext = new lcInitialContext()
-        declare loService1 = loInitialContext.fLookup(psJndiName)
-        oCache.pAddService(loService1)
-        return loService1
+        let oInitialContext = new cInitialContext()
+        let oService1 = oInitialContext.fLookup(psJndiName)
+        poThis.oCache.pAddService(oService1)
+        return oService1
     end
 end
 
-declare lpMain
-    declare loServiceLocator = new lcServiceLocator()
+def pMain
+    let oServiceLocator = new cServiceLocator()
 
-    declare loService = loServiceLocator.fGetService("SERVICE1")
-    loService.pExecute()
+    let oService = oServiceLocator.fGetService("SERVICE1")
+    oService.pExecute()
 
-    loService = loServiceLocator.fGetService("SERVICE2")
-    loService.pExecute()
+    oService = oServiceLocator.fGetService("SERVICE2")
+    oService.pExecute()
 
-    loService = loServiceLocator.fGetService("SERVICE1")
-    loService.pExecute()
+    oService = oServiceLocator.fGetService("SERVICE1")
+    oService.pExecute()
 
-    loService = loServiceLocator.fGetService("SERVICE2")
-    loService.pExecute()
+    oService = oServiceLocator.fGetService("SERVICE2")
+    oService.pExecute()
 end
 
-lpMain()
+pMain()
 
 # Output
 # Looking up and creating a new Service1 object

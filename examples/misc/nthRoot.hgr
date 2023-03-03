@@ -5,15 +5,15 @@
  Date: 2023-02-25
 """
 
-declare lfNthRoot(pnA, pnPrecision, pnNthRoot)
-    declare lnXP = sqrt(pnA)
-    while abs(pnA - lnXP ^ pnNthRoot) > pnPrecision
-        declare lnX = (1 / pnNthRoot) * (((pnNthRoot - 1) * lnXP) + pnA / (lnXP ^ (pnNthRoot - 1)))
-        lnXP = lnX
+def fNthRoot(pnA, pnPrecision, pnNthRoot)
+    let nXP = sqrt(pnA)
+    while abs(pnA - nXP ^ pnNthRoot) > pnPrecision
+        let nX = (1 / pnNthRoot) * (((pnNthRoot - 1) * nXP) + pnA / (nXP ^ (pnNthRoot - 1)))
+        nXP = nX
     end
-    return lnXP
+    return nXP
 end
 
-declare lnN = val(readln("Enter the root power (eg: 1, 2, 3, 4...): "))
-declare lnX = 25
-println("Nth root of " & lnX & " is ", lfNthRoot(lnX, 0.000001, lnN))
+let nN = val(readln("Enter the root power (eg: 1, 2, 3, 4...): "))
+let nX = 25
+println("Nth root of " & nX & " is ", fNthRoot(nX, 0.000001, nN))

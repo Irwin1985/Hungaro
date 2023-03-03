@@ -5,34 +5,34 @@
  Date: 2023-02-23
 """
 
-declare lpInsertionSort(paArray)
+def pInsertionSort(paArray)
     # Traverse through 1 to paArray.len()
-    for lnI = 1 to paArray.len()-1
-        declare lnKey = paArray[lnI]
+    for nI = 1 to paArray.len()-1
+        let nKey = paArray[nI]
 
-        declare lnJ = lnI - 1
-        while lnJ >= 0 and paArray[lnJ] > lnKey
-            paArray[lnJ + 1] = paArray[lnJ]
-            lnJ -= 1
-            if lnJ < 0
+        let nJ = nI - 1
+        while nJ >= 0 and paArray[nJ] > nKey
+            paArray[nJ + 1] = paArray[nJ]
+            nJ -= 1
+            if nJ < 0
                 exit
             end
         end
-        paArray[lnJ + 1] = lnKey
+        paArray[nJ + 1] = nKey
     end
 end
 
 # Driver code to test above
-declare laArray = [12, 11, 13, 5, 6]
-lpInsertionSort(laArray)
-println("Sorted array is:" & laArray)
-assert(laArray == [5, 6, 11, 12, 13], "Insertion Sort failed")
+let aArray = [12, 11, 13, 5, 6]
+pInsertionSort(aArray)
+println("Sorted array is:" & aArray)
+assert(aArray == [5, 6, 11, 12, 13], "Insertion Sort failed")
 
 # Bigger example
-declare laArray = [] * int(rand(1, 50)) = 0
-for lnI = 0 to laArray.len()-1
-    laArray[lnI] = int(rand(1, 100))
+let aArray = [] * int(rand(1, 50)) = 0
+for nI = 0 to aArray.len()-1
+    aArray[nI] = int(rand(1, 100))
 end
 
-lpInsertionSort(laArray)
-println("Sorted array is:" & laArray)
+pInsertionSort(aArray)
+println("Sorted array is:" & aArray)

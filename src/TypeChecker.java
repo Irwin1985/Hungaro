@@ -270,7 +270,7 @@ public class TypeChecker implements Expr.Visitor<Type>, Stmt.Visitor<Void> {
     private Type getVariableType(Token name) {        
         char linkedType = 0;
         
-        if (name.category == Category.CLASS_PROPERTY) {
+        if (name.category == Category.LOCAL_VARIABLE) {
             linkedType = name.lexeme.substring(0, 1).charAt(0);    
         } else {
             linkedType = name.lexeme.substring(1, 2).charAt(0);

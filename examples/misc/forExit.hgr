@@ -4,12 +4,12 @@
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
  Date: 2023-02-23
 """
-declare lnExternalI = 0
-for lnI = 1 to 10
-    if lnI == 5
-        lnExternalI = lnI
+let nExternalI = 0
+for nI = 1 to 10
+    if nI == 5
+        nExternalI = nI
         exit
     end
 end
 
-assert(lnExternalI == 5, "lnExternalI should be 5")
+assert(nExternalI == 5, "nExternalI should be 5")

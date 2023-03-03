@@ -15,33 +15,33 @@
     Date: 2023-03-01
 """
 
-declare lcStudent
+def cStudent
     sName = ""
     nRollNo = 0
 
     pInit(psName, pnRollNo)
-        sName = psName
-        nRollNo = pnRollNo
+        poThis.sName = psName
+        poThis.nRollNo = pnRollNo
     end
 
     fGetName
-        return sName
+        return poThis.sName
     end
 
     pSetName(psName)
-        sName = psName
+        poThis.sName = psName
     end
 
     fGetRollNo
-        return nRollNo
+        return poThis.nRollNo
     end
 
     pSetRollNo(pnRollNo)
-        nRollNo = pnRollNo
+        poThis.nRollNo = pnRollNo
     end
 end
 
-declare lcStudentDao
+def cStudentDao
     aStudents = []    
 
     -fGetAllStudents()
@@ -50,48 +50,48 @@ declare lcStudentDao
     -pDeleteStudent(poStudent)
 end
 
-declare lcStudentDaoImpl
+def cStudentDaoImpl
     # List is working as a database
-    aStudents = [new lcStudent("Robert", 0), new lcStudent("John", 1)]
+    aStudents = [new cStudent("Robert", 0), new cStudent("John", 1)]
 
     fGetAllStudents
-        return aStudents.clone() # we dont want to return the reference of the original list
+        return poThis.aStudents.clone() # we dont want to return the reference of the original list
     end
 
     fGetStudent(pnRollNo)
-        return aStudents[pnRollNo]
+        return poThis.aStudents[pnRollNo]
     end
 
     pUpdateStudent(poStudent)
-        aStudents[poStudent.fGetRollNo()].pSetName(poStudent.fGetName())
+        poThis.aStudents[poStudent.fGetRollNo()].pSetName(poStudent.fGetName())
         println("Student: Roll No " & poStudent.fGetRollNo() & ", updated in the database")
     end
 
     pDeleteStudent(poStudent)
-        aStudents.remove(poStudent.fGetRollNo())
+        poThis.aStudents.remove(poStudent.fGetRollNo())
         println("Student: Roll No " & poStudent.fGetRollNo() & ", deleted from database")
     end
 end
 
-declare lpMain
-    declare loStudentDao = new lcStudentDaoImpl()
+def pMain
+    let oStudentDao = new cStudentDaoImpl()
 
     # Print all students
-    for each lvStudent in loStudentDao.fGetAllStudents()
-        println("Student: [RollNo : " & lvStudent.fGetRollNo() & ", Name : " & lvStudent.fGetName() & "]")
+    for each vStudent in oStudentDao.fGetAllStudents()
+        println("Student: [RollNo : " & vStudent.fGetRollNo() & ", Name : " & vStudent.fGetName() & "]")
     end
 
     # Update student
-    declare loStudent = loStudentDao.fGetAllStudents().get(0)
-    loStudent.pSetName("Michael")
-    loStudentDao.pUpdateStudent(loStudent)
+    let oStudent = oStudentDao.fGetAllStudents().get(0)
+    oStudent.pSetName("Michael")
+    oStudentDao.pUpdateStudent(oStudent)
 
     # Get the student
-    loStudentDao.fGetStudent(0)
-    println("Student: [RollNo : " & loStudent.fGetRollNo() & ", Name : " & loStudent.fGetName() & "]")
+    oStudentDao.fGetStudent(0)
+    println("Student: [RollNo : " & oStudent.fGetRollNo() & ", Name : " & oStudent.fGetName() & "]")
 end
 
-lpMain()
+pMain()
 
 # Output
 # Student: [RollNo : 0, Name : Robert]

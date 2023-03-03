@@ -6,93 +6,93 @@
 """
 
 # Adapter allows fitting square pegs into round holes.
-declare lcSquarePegAdapter
+def cSquarePegAdapter
     oPeg = null
 
     pInit(poPeg)
-        oPeg = poPeg
+        poThis.oPeg = poPeg
     end
 
     fGetRadius
-        declare lnResult = 0.0
+        let nResult = 0.0
         # Calculate a minimun circle radius, which can fit this peg.
-        lnResult = (sqrt(pow((oPeg.fGetWidth() / 2), 2) * 2))
-        return lnResult
+        nResult = (sqrt(pow((poThis.oPeg.fGetWidth() / 2), 2) * 2))
+        return nResult
     end
 end
 
 # RoundHoles are compatible with RoundPegs.
-declare lcRoundHole
+def cRoundHole
     nRadius = 0.0
     pInit(pnRadius)
-        nRadius = pnRadius
+        poThis.nRadius = pnRadius
     end
 
     fGetRadius
-        return nRadius
+        return poThis.nRadius
     end
 
     fFits(poPeg)
-        declare lbResult = false
-        lbResult = (fGetRadius() >= poPeg.fGetRadius())
-        return lbResult
+        let bResult = false
+        bResult = (fGetRadius() >= poPeg.fGetRadius())
+        return bResult
     end
 end
 
 # RoundPegs are compatible with RoundHoles.
-declare lcRoundPeg
+def cRoundPeg
     nRadius = 0.0
     
     pInit(pnRadius)
-        nRadius = pnRadius
+        poThis.nRadius = pnRadius
     end
 
     fGetRadius
-        return nRadius
+        return poThis.nRadius
     end
 end
 
 # SquarePegs are not compatible with RoundHoles (they were implemented by
 # previous development team). But we have to integrate them into our program.
-declare lcSquarePeg
+def cSquarePeg
     nWidth = 0.0
 
     pInit(pnWidth)
-        nWidth = pnWidth
+        poThis.nWidth = pnWidth
     end
 
     fGetWidth
-        return nWidth
+        return poThis.nWidth
     end
 
     fGetSquare
-        declare lnResult = 0.0
-        lnResult = pow(nWidth, 2)
-        return lnResult
+        let nResult = 0.0
+        nResult = pow(poThis.nWidth, 2)
+        return nResult
     end
 end
 
 # Client code can work with any subclass of RoundPeg.
-declare lpMain
+def pMain
     # Round fits round, no surprise.
-    declare loHole = new lcRoundHole(5)
-    declare loRoundPeg = new lcRoundPeg(5)
-    if loHole.fFits(loRoundPeg)
+    let oHole = new cRoundHole(5)
+    let oRoundPeg = new cRoundPeg(5)
+    if oHole.fFits(oRoundPeg)
         println("Round peg r5 fits round hole r5.")
     end
 
-    declare loSmallSqPeg = new lcSquarePeg(2)
-    declare loLargeSqPeg = new lcSquarePeg(20)
+    let oSmallSqPeg = new cSquarePeg(2)
+    let oLargeSqPeg = new cSquarePeg(20)
 
     # Adapter solves the problem.
-    declare loSmallSqPegAdapter = new lcSquarePegAdapter(loSmallSqPeg)
-    declare loLargeSqPegAdapter = new lcSquarePegAdapter(loLargeSqPeg)
-    if loHole.fFits(loSmallSqPegAdapter)
+    let oSmallSqPegAdapter = new cSquarePegAdapter(oSmallSqPeg)
+    let oLargeSqPegAdapter = new cSquarePegAdapter(oLargeSqPeg)
+    if oHole.fFits(oSmallSqPegAdapter)
         println("Square peg w2 fits round hole r5.")
     end
-    if not loHole.fFits(loLargeSqPegAdapter)
+    if not oHole.fFits(oLargeSqPegAdapter)
         println("Square peg w20 does not fit into round hole r5.")
     end
 end
 
-lpMain()
+pMain()

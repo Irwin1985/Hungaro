@@ -22,58 +22,58 @@
     Date: 2023-02-28
 """
 
-declare lcDrawAPI
+def cDrawAPI
     -pDrawCircle(pnRadius, pnX, pnY)    
 end
 
-declare lcRedCircle as lcDrawAPI
+def cRedCircle as cDrawAPI
     pDrawCircle(pnRadius, pnX, pnY)
         println("Drawing Circle[ color: red, radius: " & pnRadius & ", x: " & pnX & ", " & pnY & "]")
     end
 end
 
-declare lcGreenCircle as lcDrawAPI
+def cGreenCircle as cDrawAPI
     pDrawCircle(pnRadius, pnX, pnY)
         println("Drawing Circle[ color: green, radius: " & pnRadius & ", x: " & pnX & ", " & pnY & "]")
     end
 end
 
-declare lcShape
+def cShape
     oDrawAPI = null
 
     pInit(poDrawAPI)
-        oDrawAPI = poDrawAPI
+        poThis.oDrawAPI = poDrawAPI
     end
 
     -pDraw()    
 end
 
-declare lcCircle as lcShape
+def cCircle as cShape
     nX = 0
     nY = 0
     nRadius = 0
 
     pInit(pnX, pnY, pnRadius, poDrawAPI)
         super(poDrawAPI)
-        nX = pnX
-        nY = pnY
-        nRadius = pnRadius
+        poThis.nX = pnX
+        poThis.nY = pnY
+        poThis.nRadius = pnRadius
     end
 
     pDraw
-        oDrawAPI.pDrawCircle(nRadius, nX, nY)
+        poThis.oDrawAPI.pDrawCircle(poThis.nRadius, poThis.nX, poThis.nY)
     end
 end
 
-declare lpMain
-    declare loRedCircle = new lcCircle(100, 100, 10, new lcRedCircle())
-    declare loGreenCircle = new lcCircle(100, 100, 10, new lcGreenCircle())
+def pMain
+    let oRedCircle = new cCircle(100, 100, 10, new cRedCircle())
+    let oGreenCircle = new cCircle(100, 100, 10, new cGreenCircle())
 
-    loRedCircle.pDraw()
-    loGreenCircle.pDraw()
+    oRedCircle.pDraw()
+    oGreenCircle.pDraw()
 end
 
-lpMain()
+pMain()
 
 # Output
 # Drawing Circle[ color: red, radius: 10, x: 100, 100]

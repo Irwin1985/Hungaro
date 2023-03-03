@@ -5,64 +5,66 @@
  Date: 2023-02-25
 """
 
-declare lcTree
+def cTree
+    oLeft = null
+    oRight = null
+    nItem = 0
+
     pInit(pnItem, pnDepth)
-        nItem = pnItem
-        nDepth = pnDepth
+        poThis.nItem = pnItem
+        poThis.nDepth = pnDepth
+
         if pnDepth > 0
-            declare lnItem2 = pnItem + pnItem
+            let nItem2 = pnItem + pnItem
             pnDepth -= 1
-            oLeft = new lcTree(lnItem2-1, pnDepth)
-            oRight = new lcTree(lnItem2, pnDepth)
-        else
-            oLeft = null
-            oRight = null
+            poThis.oLeft = new cTree(nItem2-1, pnDepth)
+            poThis.oRight = new cTree(nItem2, pnDepth)
         end
     end
 
     fCheck
-        if oLeft == null
-            return nItem        
+        if poThis.oLeft == null
+            return poThis.nItem        
         end
-        return nItem + oLeft.fCheck() - oRight.fCheck()
+        return poThis.nItem + poThis.oLeft.fCheck() - poThis.oRight.fCheck()
     end
 end
 
-declare lnMinDepth = 4
-declare lnMaxDepth = 14
-declare lnStretchDepth = lnMaxDepth + 1
+let nMinDepth = 4
+let nMaxDepth = 14
+let nStretchDepth = nMaxDepth + 1
 
-declare lnStart = tick()
+let nStart = tick()
 
-println("stretch tree of depth " & lnStretchDepth & "\t check: " & new lcTree(0, lnStretchDepth).fCheck())
+println("stretch tree of depth " & nStretchDepth & "\t check: " & new cTree(0, nStretchDepth).fCheck())
 
-declare loLongLivedTree = new lcTree(0, lnMaxDepth)
+let oLongLivedTree = new cTree(0, nMaxDepth)
 
-# iterations = 2 ^ lnMaxDepth
-declare lnIterations = 1
-declare lnD = 0
+# iterations = 2 ^ nMaxDepth
+let nIterations = 1
+let nD = 0
 
-while lnD < lnMaxDepth
-    lnIterations *= 2
-    lnD += 1
+while nD < nMaxDepth
+    nIterations *= 2
+    nD += 1
 end
 
-declare lnDepth = lnMinDepth
+let nDepth = nMinDepth
 
-while lnDepth < lnStretchDepth
-    declare lnCheck = 0
-    declare lnI = 1
-    while lnI <= lnIterations
-        lnCheck += new lcTree(lnI, lnDepth).fCheck() + new lcTree(-lnI, lnDepth).fCheck()
-        lnI += 1
+while nDepth < nStretchDepth
+    let nCheck = 0
+    let nI = 1
+    while nI <= nIterations
+        nCheck += new cTree(nI, nDepth).fCheck() + new cTree(-nI, nDepth).fCheck()
+        nI += 1
     end
 
-    println("num trees: " & lnIterations * 2 & "\t depth: " & lnDepth & "\t check: " & lnCheck)
+    println("num trees: " & nIterations * 2 & "\t depth: " & nDepth & "\t check: " & nCheck)
 
-    lnIterations = int(lnIterations / 4)
-    lnDepth += 2
+    nIterations = int(nIterations / 4)
+    nDepth += 2
 end
 
-println("long lived tree of depth " & lnMaxDepth & "\t check: " & loLongLivedTree.fCheck())
+println("long lived tree of depth " & nMaxDepth & "\t check: " & oLongLivedTree.fCheck())
 
-println("elapsed: " & tack(lnStart))
+println("elapsed: " & tack(nStart))

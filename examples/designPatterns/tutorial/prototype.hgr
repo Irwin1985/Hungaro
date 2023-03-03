@@ -21,40 +21,40 @@
     Date: 2023-02-28
 """
 
-declare lcShape
+def cShape
     sID = ""
     sType = ""
 
     -pDraw()
 
     fGetType
-        return sType
+        return poThis.sType
     end
 
     fGetID
-        return sID
+        return poThis.sID
     end
 
     pSetID(psID)
-        sID = psID
+        poThis.sID = psID
     end
 
     fClone
-        declare loClone = null
+        let oClone = null
         try
-            loClone = new lcShape()
-            loClone.sID = sID
-            loClone.sType = sType            
+            oClone = new cShape()
+            oClone.sID = poThis.sID
+            oClone.sType = poThis.sType            
         catch
-            println("CATCH ERROR: " & loEx.message)
+            println("CATCH ERROR: " & oEx.message)
         end
-        return loClone
+        return oClone
     end
 end
 
-declare lcRectangle as lcShape
+def cRectangle as cShape
     pInit
-        sType = "Rectangle"
+        poThis.sType = "Rectangle"
     end
 
     pDraw
@@ -62,9 +62,9 @@ declare lcRectangle as lcShape
     end
 end
 
-declare lcSquare as lcShape
+def cSquare as cShape
     pInit
-        sType = "Square"
+        poThis.sType = "Square"
     end
 
     pDraw
@@ -72,9 +72,9 @@ declare lcSquare as lcShape
     end
 end
 
-declare lcCircle as lcShape
+def cCircle as cShape
     pInit
-        sType = "Circle"
+        poThis.sType = "Circle"
     end
 
     pDraw
@@ -82,44 +82,44 @@ declare lcCircle as lcShape
     end
 end
 
-declare lcShapeCache
+def cShapeCache
     mShapeMap = {}
     
     fGetShape(psShapeId)
-        declare loCachedShape = mShapeMap[psShapeId]
-        return loCachedShape.fClone()
+        let oCachedShape = poThis.mShapeMap[psShapeId]
+        return oCachedShape.fClone()
     end
 
     pLoadCache
-        declare loCircle = new lcCircle()
-        loCircle.pSetID("1")
-        mShapeMap[loCircle.fGetID()] = loCircle
+        let oCircle = new cCircle()
+        oCircle.pSetID("1")
+        poThis.mShapeMap[oCircle.fGetID()] = oCircle
 
-        declare loSquare = new lcSquare()
-        loSquare.pSetID("2")
-        mShapeMap[loSquare.fGetID()] = loSquare
+        let oSquare = new cSquare()
+        oSquare.pSetID("2")
+        poThis.mShapeMap[oSquare.fGetID()] = oSquare
 
-        declare loRectangle = new lcRectangle()
-        loRectangle.pSetID("3")
-        mShapeMap[loRectangle.fGetID()] = loRectangle
+        let oRectangle = new cRectangle()
+        oRectangle.pSetID("3")
+        poThis.mShapeMap[oRectangle.fGetID()] = oRectangle
     end
 end
 
-declare lpMain
-    declare loShapeCache = new lcShapeCache()
-    loShapeCache.pLoadCache()
+def pMain
+    let oShapeCache = new cShapeCache()
+    oShapeCache.pLoadCache()
 
-    declare loClonedShape1 = loShapeCache.fGetShape("1")
-    println("Shape : " & loClonedShape1.fGetType())
+    let oClonedShape1 = oShapeCache.fGetShape("1")
+    println("Shape : " & oClonedShape1.fGetType())
 
-    declare loClonedShape2 = loShapeCache.fGetShape("2")
-    println("Shape : " & loClonedShape2.fGetType())
+    let oClonedShape2 = oShapeCache.fGetShape("2")
+    println("Shape : " & oClonedShape2.fGetType())
 
-    declare loClonedShape3 = loShapeCache.fGetShape("3")
-    println("Shape : " & loClonedShape3.fGetType())
+    let oClonedShape3 = oShapeCache.fGetShape("3")
+    println("Shape : " & oClonedShape3.fGetType())
 end
 
-lpMain()
+pMain()
 
 # Output
 # Shape : Circle

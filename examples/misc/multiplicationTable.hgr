@@ -5,9 +5,9 @@
  Date: 2023-02-25
 """
 
-for lnT = 1 to 10
-    println("Multiplication table of " & lnT)
-    for lnJ = 1 to 10
-        println("" & lnT & " x " & lnJ & " = " & lnT * lnJ)
+for nT = 1 to 10
+    println("Multiplication table of " & nT)
+    for nJ = 1 to 10
+        println("" & nT & " x " & nJ & " = " & nT * nJ)
     end
 end

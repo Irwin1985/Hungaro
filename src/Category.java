@@ -1,4 +1,5 @@
 public enum Category {
+    // Literals
     LITERAL,
     IGNORABLE,
     KEYWORD,
@@ -19,22 +20,33 @@ public enum Category {
     MUL,
     DIV,
     MOD, 
-    POW,   
-    GLOBAL_CONSTANT,
-    LOCAL_CONSTANT,
-    GLOBAL_VARIABLE,
+    POW, 
+
+    // Variables
     LOCAL_VARIABLE,      
+    GLOBAL_VARIABLE,
+    
+    // Functions
     LOCAL_FUNCTION,
     GLOBAL_FUNCTION,
+
+    // Procedures
     LOCAL_PROCEDURE,
     GLOBAL_PROCEDURE,
+
+    // Classes
     LOCAL_CLASS,
     GLOBAL_CLASS,
+
+    // Modules
     LOCAL_MODULE,
     GLOBAL_MODULE,
+
+    // Constants
+    GLOBAL_CONSTANT,
+    LOCAL_CONSTANT,
+
+    // Parameters
     PARAMETER,
-    CLASS_PROPERTY,
-    CLASS_FUNCTION,
-    CLASS_PROCEDURE,
     VARIADIC,
 }

@@ -17,7 +17,7 @@
     Date: 2023-02-28
 """
 
-declare lcAbstractLogger
+def cAbstractLogger
     nInfo = 1
     nDebug = 2
     nError = 3
@@ -27,25 +27,25 @@ declare lcAbstractLogger
     oNextLogger = null
 
     pSetNextLogger(poNextLogger)
-        oNextLogger = poNextLogger
+        poThis.oNextLogger = poNextLogger
     end
 
     pLogMessage(pnLevel, psMessage)        
-        if nLevel <= pnLevel
+        if poThis.nLevel <= pnLevel
             pWrite(psMessage)
         end
-        if oNextLogger != null            
-            oNextLogger.pLogMessage(pnLevel, psMessage)
+        if poThis.oNextLogger != null            
+            poThis.oNextLogger.pLogMessage(pnLevel, psMessage)
         end
     end
 
     -pWrite(psMessage)
 end
 
-declare lcConsoleLogger as lcAbstractLogger    
+def cConsoleLogger as cAbstractLogger    
 
     pInit(pnLevel)
-        nLevel = pnLevel
+        poThis.nLevel = pnLevel
     end
 
     pWrite(psMessage)
@@ -53,10 +53,10 @@ declare lcConsoleLogger as lcAbstractLogger
     end
 end
 
-declare lcErrorLogger as lcAbstractLogger
+def cErrorLogger as cAbstractLogger
 
     pInit(pnLevel)
-        nLevel = pnLevel
+        poThis.nLevel = pnLevel
     end
 
     pWrite(psMessage)
@@ -64,10 +64,10 @@ declare lcErrorLogger as lcAbstractLogger
     end
 end
 
-declare lcFileLogger as lcAbstractLogger
+def cFileLogger as cAbstractLogger
 
     pInit(pnLevel)
-        nLevel = pnLevel
+        poThis.nLevel = pnLevel
     end
 
     pWrite(psMessage)
@@ -75,28 +75,28 @@ declare lcFileLogger as lcAbstractLogger
     end
 end
 
-declare lpMain
-    declare loAbstractLogger = new lcAbstractLogger()
+def pMain
+    let oAbstractLogger = new cAbstractLogger()
 
-    declare lfGetChainOfLoggers
-        declare loErrorLogger = new lcErrorLogger(loAbstractLogger.nError)
-        declare loFileLogger = new lcFileLogger(loAbstractLogger.nDebug)
-        declare loConsoleLogger = new lcConsoleLogger(loAbstractLogger.nInfo)
+    def fGetChainOfLoggers
+        let oErrorLogger = new cErrorLogger(oAbstractLogger.nError)
+        let oFileLogger = new cFileLogger(oAbstractLogger.nDebug)
+        let oConsoleLogger = new cConsoleLogger(oAbstractLogger.nInfo)
 
-        loErrorLogger.pSetNextLogger(loFileLogger)
-        loFileLogger.pSetNextLogger(loConsoleLogger)
+        oErrorLogger.pSetNextLogger(oFileLogger)
+        oFileLogger.pSetNextLogger(oConsoleLogger)
 
-        return loErrorLogger
+        return oErrorLogger
     end
 
-    declare loLoggerChain = lfGetChainOfLoggers()        
+    let oLoggerChain = fGetChainOfLoggers()        
 
-    loLoggerChain.pLogMessage(loAbstractLogger.nInfo, "This is an information.")
-    loLoggerChain.pLogMessage(loAbstractLogger.nDebug, "This is an debug level information.")
-    loLoggerChain.pLogMessage(loAbstractLogger.nError, "This is an error information.")
+    oLoggerChain.pLogMessage(oAbstractLogger.nInfo, "This is an information.")
+    oLoggerChain.pLogMessage(oAbstractLogger.nDebug, "This is an debug level information.")
+    oLoggerChain.pLogMessage(oAbstractLogger.nError, "This is an error information.")
 end
 
-lpMain()
+pMain()
 
 # Output:
 # Standard Console::Logger: This is an information.

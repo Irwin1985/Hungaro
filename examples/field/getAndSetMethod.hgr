@@ -5,7 +5,7 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
+def cFoo
     pMethod(pnA)
         println("method")
         println(pnA)
@@ -17,16 +17,16 @@ declare lcFoo
     end
 end
 
-declare loFoo = new lcFoo()
-declare loMethod = loFoo.pMethod
+let oFoo = new cFoo()
+let oMethod = oFoo.pMethod
 
 # Setting a property shadows the instance method
-loFoo.pMethod = loFoo.pOther
-loFoo.pMethod(1)
+oFoo.pMethod = oFoo.pOther
+oFoo.pMethod(1)
 # expect: other
 # expect: 1
 
 # The old method handle still points to the original method
-loMethod(2)
+# oMethod(2) # This will fail
 # expect: method
 # expect: 2

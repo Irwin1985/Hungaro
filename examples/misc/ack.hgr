@@ -4,17 +4,17 @@
  Date: 2023-02-22
 """
 
-declare lfAck(pnX, pnY)
+def fAck(pnX, pnY)
     if pnX == 0
         return pnY + 1
     else
         if pnY == 0
-            return lfAck(pnX - 1, 1)
+            return fAck(pnX - 1, 1)
         else
-            return lfAck(pnX - 1, lfAck(pnX, pnY - 1))
+            return fAck(pnX - 1, fAck(pnX, pnY - 1))
         end
     end
 end
 
 # Call the function
-pritn(lfAck(3, 5)) # 253
+println(fAck(3, 5)) # 253

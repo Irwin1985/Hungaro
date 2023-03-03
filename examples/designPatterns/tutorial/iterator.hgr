@@ -18,54 +18,54 @@
     Date: 2023-02-28
 """
 
-declare lcIterator
+def cIterator
     -fHasNext()
     -fNext()
 end
 
-declare lcContainer
+def cContainer
     -fGetIterator()
 end
 
-declare lcNameIterator as lcIterator
+def cNameIterator as cIterator
     nIndex = 0
     aNames = []
     
     pInit(paNames)
-        aNames = paNames
+        poThis.aNames = paNames
     end
 
     fHasNext
-        return nIndex < aNames.len()
+        return poThis.nIndex < poThis.aNames.len()
     end
 
     fNext
         if fHasNext()
-            nIndex += 1
-            return aNames[nIndex - 1]
+            poThis.nIndex += 1
+            return poThis.aNames[poThis.nIndex - 1]
         end
         return null
     end
 end
 
-declare lcNameRepository as lcContainer
+def cNameRepository as cContainer
     aNames = ["Robert", "John", "Julie", "Lora"]
     
     fGetIterator
-        return new lcNameIterator(aNames)
+        return new cNameIterator(poThis.aNames)
     end
 end
 
-declare lpMain
-    declare loNamesRepository = new lcNameRepository()
+def pMain
+    let oNamesRepository = new cNameRepository()
 
-    declare loIter = loNamesRepository.fGetIterator()
-    while loIter.fHasNext()
-        println("Name: " & loIter.fNext())
+    let oIter = oNamesRepository.fGetIterator()
+    while oIter.fHasNext()
+        println("Name: " & oIter.fNext())
     end
 end
 
-lpMain()
+pMain()
 
 # Output
 # Name: Robert

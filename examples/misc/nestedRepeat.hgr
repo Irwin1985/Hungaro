@@ -5,13 +5,13 @@
  Date: 2023-02-25
 """
 
-declare lnC = 1
+let nC = 1
 
 repeat
-    declare lnCount = 1
+    let nCount = 1
     repeat
-        println(space(lnC*4) & lnCount)
-        lnCount += 1
-    until lnCount == 6
-    lnC += 1
-until lnC == 5
+        println(space(nC*4) & nCount)
+        nCount += 1
+    until nCount == 6
+    nC += 1
+until nC == 5

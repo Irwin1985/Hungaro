@@ -6,12 +6,12 @@
 """
 
 
-declare lpRecursion(pnNumber)
+def pRecursion(pnNumber)
     pnNumber -= 1
     println(pnNumber)
     if pnNumber > 0
-        lpRecursion(pnNumber)
+        pRecursion(pnNumber)
     end
 end
 
-lpRecursion(10) # 9 8 7 6 5 4 3 2 1 0
+pRecursion(10) # 9 8 7 6 5 4 3 2 1 0

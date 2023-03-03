@@ -6,9 +6,9 @@
 """
 
 
-declare lnA = 6
+let nA = 6
 
 repeat
-    println(lnA)
-    lnA -= 1
-until lnA < 1
+    println(nA)
+    nA -= 1
+until nA < 1

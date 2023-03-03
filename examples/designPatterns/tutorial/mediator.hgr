@@ -16,43 +16,43 @@
     Date: 2023-02-28
 """
 
-declare lcChatRoom
+def cChatRoom
     pShowMessage(poUser, psMessage)
         println("date: " & date() & " [" & poUser.fGetName() & "]: " & psMessage)
     end
 end
 
-declare loChatRoom = new lcChatRoom()
+let goChatRoom = new cChatRoom()
 
-declare lcUser
+def cUser
     sName = ""
 
     pInit(psName)
-        sName = psName
+        poThis.sName = psName
     end
 
     fGetName
-        return sName
+        return poThis.sName
     end
 
     pSetName(psName)
-        sName = psName
+        poThis.sName = psName
     end
 
     pSendMessage(psMessage)
-        loChatRoom.pShowMessage(poThis, psMessage)
+        goChatRoom.pShowMessage(poThis, psMessage)
     end
 end
 
-declare lpMain
-    declare loRobert = new lcUser("Robert")
-    declare loJohn = new lcUser("John")
+def pMain
+    let oRobert = new cUser("Robert")
+    let oJohn = new cUser("John")
 
-    loRobert.pSendMessage("Hi! John!")
-    loJohn.pSendMessage("Hello! Robert!")
+    oRobert.pSendMessage("Hi! John!")
+    oJohn.pSendMessage("Hello! Robert!")
 end
 
-lpMain()
+pMain()
 
 # Output
 # 2023-02-28 [Robert]: Hi! John!

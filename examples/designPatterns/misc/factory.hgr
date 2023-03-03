@@ -6,39 +6,19 @@
 """
 
 #-----------------------------------------#
-# Creator class
-#-----------------------------------------#
-declare lcCafe
-    oProduct = null
-    -pMakeCoffee()
-end
-
-declare lcMyCafe as lcCafe
-    pMakeCoffee(psType)
-        oProduct = fGetCoffee(psType)
-        oProduct.pPrepare()
-        oProduct.pServe()
-    end
-
-    fGetCoffee(psType)
-        return iif(psType == "brewed", new lcBrewedCoffee(), new lcSpecialtyCoffee(psType))
-    end
-end
-
-#-----------------------------------------#
 # Product class
 #-----------------------------------------#
-declare lcCoffee
+def cCoffee
     sName = ""
 
     -pPrepare()
 
     pServe
-        println("Here\'s your cup of " & sName & ". Enjoy!")
+        println("Here\'s your cup of " & poThis.sName & ". Enjoy!")
     end
 end
 
-declare lcBrewedCoffee as lcCoffee
+def cBrewedCoffee as cCoffee
     sName = "Brewed Coffee"
     pPrepare
         println("choose coffee")
@@ -48,7 +28,7 @@ declare lcBrewedCoffee as lcCoffee
     end
 end
 
-declare lcSpecialtyCoffee as lcCoffee
+def cSpecialtyCoffee as cCoffee
     sName = "Specialty Coffee"
     pPrepare
         println("choose coffee")
@@ -62,10 +42,30 @@ declare lcSpecialtyCoffee as lcCoffee
 end
 
 #-----------------------------------------#
+# Creator class
+#-----------------------------------------#
+def cCafe
+    oProduct = null
+    -pMakeCoffee()
+end
+
+def cMyCafe as cCafe
+    pMakeCoffee(psType)
+        poThis.oProduct = fGetCoffee(psType)
+        poThis.oProduct.pPrepare()
+        poThis.oProduct.pServe()
+    end
+
+    fGetCoffee(psType)
+        return iif(psType == "brewed", new cBrewedCoffee(), new cSpecialtyCoffee())
+    end
+end
+
+#-----------------------------------------#
 # Client
 #-----------------------------------------#
-declare loCafe = new lcMyCafe()
-loCafe.pMakeCoffee("brewed")
+let oCafe = new cMyCafe()
+oCafe.pMakeCoffee("brewed")
 
 # Output
 # choose coffee
@@ -74,4 +74,4 @@ loCafe.pMakeCoffee("brewed")
 # brew
 # Here's your cup of Brewed Coffee. Enjoy!
 
-loCafe.pMakeCoffee("mocha")
+oCafe.pMakeCoffee("mocha")

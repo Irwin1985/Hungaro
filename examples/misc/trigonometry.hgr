@@ -5,41 +5,41 @@
  Date: 2023-02-24
 """
 
-declare PI = 3.14159265, E = 2.71828183
+let PI = 3.14159265, E = 2.71828183
 
-declare lfSqrt(pnX)
+def fSqrt(pnX)
     return pnX ^ 0.5
 end
 
 # Get sine of angle in degrees
-declare lfSin(pnAngle)
+def fSin(pnAngle)
     pnAngle = pnAngle * PI / 180
     return pnAngle - pnAngle^3 / 6 + pnAngle^5 / 120 - pnAngle^7 / 5040 + pnAngle^9 / 362880
 end
 
 # Get cosine of angle in degrees
-declare lfCos(pnAngle)
+def fCos(pnAngle)
     pnAngle = pnAngle * PI / 180
     return 1 - pnAngle^2 / 2 + pnAngle^4 / 24 - pnAngle^6 / 720
 end
 
 # Get tangent of angle in degrees
-declare lfTan(pnAngle)
+def fTan(pnAngle)
     pnAngle = pnAngle * PI / 180
     return pnAngle + pnAngle^3 / 3 + 2 * pnAngle^5 / 15 + 17 * pnAngle^7 / 315 + 62 * pnAngle^9 / 2835
 end
 
 # Get arcsine of angle in degrees
-declare lfArcSin(pnAngle)
+def fArcSin(pnAngle)
     return pnAngle * 180 / PI
 end
 
 # Get arccosine of angle in degrees
-declare lfArcCos(pnAngle)
+def fArcCos(pnAngle)
     return (PI / 2 - pnAngle) * 180 / PI
 end
 
 # Get arctangent of angle in degrees
-declare lfArcTan(pnAngle)
+def fArcTan(pnAngle)
     return pnAngle * 180 / PI
 end

@@ -6,13 +6,13 @@
 """
 
 
-declare lnN = val(readln("Enter a number: "))
-declare lnRev = 0
+let nN = val(readln("Enter a number: "))
+let nRev = 0
 
-while lnN != 0
-    declare lnRemainder = lnN % 10
-    lnRev = lnRev * 10 + lnRemainder
-    lnN = int(lnN / 10)
+while nN != 0
+    let nRemainder = nN % 10
+    nRev = nRev * 10 + nRemainder
+    nN = int(nN / 10)
 end
 
-println("The reverse number is: " & lnRev)
+println("The reverse number is: " & nRev)

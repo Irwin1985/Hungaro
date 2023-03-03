@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-
+import java.util.Stack;
 import java.util.HashMap;
 
 @SuppressWarnings("unchecked")
@@ -12,6 +12,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     // this variable will be used to colorize the output of the interpreter
     public static String currentForeColor = Hungaro.ANSI_RESET;
     public static String currentBackColor = Hungaro.ANSI_RESET;
+
+    // interpreter stack
+    // final Stack<Token> classStack = new Stack<Token>();
     
     public Environment environment = globals;
 
@@ -331,14 +334,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             String message = "Invalid class name";
             throw new RuntimeError(expr.name.token, message);
         }
-
-        final String classScope = className.substring(0, 2);
-        if (classScope.equals("gc") && classScope.equals("lc")) {
-            String message = "Class name must start with `gc` or `lc`.";
+        final char firtLetter = className.charAt(0);        
+        if (firtLetter != 'g' && firtLetter != 'c') {
+            String message = "Class name must start with `g` or `c`.";
             throw new RuntimeError(expr.name.token, message);
         }
         
-        if (classScope.equals("gc")) {
+        if (firtLetter == 'g') {
             classEnv = (Environment)globals.lookup(className);
         } else { // it's a local class
             classEnv = (Environment)environment.lookup(className);        
@@ -376,7 +378,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         // next we need to evaluate the arguments
         // and the first argument is the 'this' object
         List<Object> arguments = new ArrayList<Object>();
-        // add the 'this' object
+        // the instance will 
         arguments.add(instance);
         // add the rest of the arguments
         for (Expr argument : expr.arguments) {
@@ -457,7 +459,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         Object value = evaluate(expr.value);
         final boolean isComplexOperator = (expr.operator.type == TokenType.COMPLEX_ASSIGN);
 
-        if (expr.computable) { // eg. a[1] = 2
+        if (expr.computable) { // eg. a[1] = 2, poThis.nAge = 18
             name = "Property";
             final Expr.Prop prop = (Expr.Prop)expr.target;
             final Environment instance = (Environment)evaluate(prop.target);
@@ -499,25 +501,31 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
         }
 
-        // check variable or property value
-        final Token variableToken = ((Expr.Variable)expr.target).name;
+        // variable assignment eg: sName = "John"
+        final Token variableToken = ((Expr.Variable)expr.target).name;        
+        checkVariableType(variableToken, value, name);            
+        if (isComplexOperator) {
+            value = resolveComplexAssignment(variableToken, environment.lookup(variableToken.lexeme), value, expr.operator.category);                
+        }
+        return environment.assign(variableToken, value);
+        
 
         // check if variable is a class property
-        if (variableToken.category == Category.CLASS_PROPERTY) {
-            checkVariableType(variableToken, value, "Property");
-            // define the property in the instance environment
-            Environment instance = (Environment)environment.lookup("poThis");
-            if (isComplexOperator) {
-                value = resolveComplexAssignment(variableToken, instance.lookup(variableToken.lexeme), value, expr.operator.category);
-            }
-            return instance.define(variableToken.lexeme, value);
-        } else {
-            checkVariableType(variableToken, value, name);            
-            if (isComplexOperator) {
-                value = resolveComplexAssignment(variableToken, environment.lookup(variableToken.lexeme), value, expr.operator.category);                
-            }
-            return environment.assign(variableToken, value);
-        }
+        // if (classStack.size() > 0) {
+        //     checkVariableType(variableToken, value, "Property");
+        //     // define the property in the instance environment
+        //     Environment instance = (Environment)environment.lookup("poThis");
+        //     if (isComplexOperator) {
+        //         value = resolveComplexAssignment(variableToken, instance.lookup(variableToken.lexeme), value, expr.operator.category);
+        //     }
+        //     return instance.define(variableToken.lexeme, value);
+        // } else {
+        //     checkVariableType(variableToken, value, name);            
+        //     if (isComplexOperator) {
+        //         value = resolveComplexAssignment(variableToken, environment.lookup(variableToken.lexeme), value, expr.operator.category);                
+        //     }
+        //     return environment.assign(variableToken, value);
+        // }
     }
 
     private Object resolveComplexAssignment(Token variableToken, Object oldVal, Object newVal, Category operator) {        
@@ -606,13 +614,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (token.category == Category.GLOBAL_CONSTANT || token.category == Category.GLOBAL_VARIABLE) {
             return globals.lookup(token);
         }
-        else if (token.category == Category.CLASS_PROPERTY) {
-            Environment instance = (Environment)environment.lookup("poThis");
-            if (instance == null) {
-                return environment.lookup(token);
-            }
-            return instance.lookup(token.lexeme, token);
-        }
+        // else if (classStack.size() > 0) {
+        //     Environment instance = (Environment)environment.lookup("poThis");
+        //     if (instance == null) {
+        //         return environment.lookup(token);
+        //     }
+        //     return instance.lookup(token.lexeme, token);
+        // }
         // local identifier: variable, constant, function, procedure, parameters, etc.
         return environment.lookup(token);        
     }    
@@ -650,14 +658,17 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         classEnvironment.define("properties", stmt.properties);
         
         // evaluate the class body in the new environment
+
+        // classStack.push(stmt.name); // interpreting inside a class
         executeBlock(stmt.body.statements, classEnvironment);
+        // classStack.pop();
 
         // finally define the class in the global or local environment based on the category
         switch (stmt.name.category) {
             case GLOBAL_CLASS: // eg: gcPerson
                 globals.define(stmt.name.lexeme, classEnvironment);
                 break;
-            case LOCAL_CLASS: // eg: lcPerson
+            case LOCAL_CLASS: // eg: cPerson
                 environment.define(stmt.name.lexeme, classEnvironment);
                 break;
             default:
@@ -682,8 +693,6 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 break;
             case LOCAL_FUNCTION:
             case LOCAL_PROCEDURE:
-            case CLASS_FUNCTION:
-            case CLASS_PROCEDURE:
                 environment.define(stmt.name.lexeme, function);
                 break;
             default:
@@ -738,12 +747,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     public void checkVariableType(Token name, Object value, String type) {                        
         char linkedType = 0;
-        
-        // get the type of the variable 
-        // the type for variable starts at the second character and for properties at the first        
-        if (type.equals("Property")) {
-            linkedType = name.lexeme.substring(0, 1).charAt(0);    
-        } else {
+
+        // constants are not checked for type (they are like variants)
+        if (name.category == Category.LOCAL_CONSTANT || name.category == Category.GLOBAL_CONSTANT) {
+            return;
+        }
+        // Local or global variables has their type in the first character
+        if (name.category == Category.LOCAL_VARIABLE) {
+            linkedType = name.lexeme.substring(0, 1).charAt(0);
+        } else { // other variables has their type in the second character            
             linkedType = name.lexeme.substring(1, 2).charAt(0);
         }
 
@@ -1221,8 +1233,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         // create the exception object and define 'message' property.
         Environment exceptionEnv = makeObject(e, objectEnv, "Exception");
         exceptionEnv.define("message", e.getMessage());        
-        // define exceptionEnv under the name 'loEx'
-        catchEnv.define("loEx", exceptionEnv);
+        // define exceptionEnv under the name 'oEx'
+        catchEnv.define("oEx", exceptionEnv);
         // execute the catch block
         executeBlock(statements, catchEnv);
     }

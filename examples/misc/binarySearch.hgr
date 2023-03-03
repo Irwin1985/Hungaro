@@ -4,19 +4,19 @@
  Date: 2023-02-22
 """
 
-declare lfBinarySearch(paArray, pnValue)
-    declare lnLow = 0, lnHigh = paArray.len() - 1, lnMid
-    while 0 <= lnHigh
-        lnMid = int(lnLow + lnHigh / 2)
-        if paArray[lnMid] == pnValue
-            return lnMid
+def fBinarySearch(paArray, pnValue)
+    let nLow = 0, nHigh = paArray.len() - 1, nMid
+    while 0 <= nHigh
+        nMid = int(nLow + nHigh / 2)
+        if paArray[nMid] == pnValue
+            return nMid
         end
-        if paArray[lnMid] < pnValue
-            lnLow = lnMid + 1
+        if paArray[nMid] < pnValue
+            nLow = nMid + 1
         else
-            lnHigh = lnMid - 1
+            nHigh = nMid - 1
         end
     end
 end
 
-println(lfBinarySearch([3, 5, 2, 8], 8)) # index 3
+println(fBinarySearch([3, 5, 2, 8], 8)) # index 3

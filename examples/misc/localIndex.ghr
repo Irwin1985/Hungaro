@@ -5,11 +5,11 @@
  Date: 2023-02-24
 """
 
-declare lpTest(pnIndex)
-    declare laArray = [1, 2, 3]
-    declare lnY = laArray[0]
-    println(lnY)
-    laArray[0] = 77
-    println(laArray[0]) # 77
+def pTest(pnIndex)
+    let aArray = [1, 2, 3]
+    let nY = aArray[0]
+    println(nY)
+    aArray[0] = 77
+    println(aArray[0]) # 77
 end
-lpTest(2)
+pTest(2)

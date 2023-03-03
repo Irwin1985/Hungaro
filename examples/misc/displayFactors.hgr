@@ -5,12 +5,12 @@
  Date: 2023-02-23
 """
 
-declare lnNum = val(readln("Enter a positive number: "))
-println("Factors of " & lnNum & " are: ")
+let nNum = val(readln("Enter a positive number: "))
+println("Factors of " & nNum & " are: ")
 
-for lnI = 1 to lnNum
-    if lnNum % lnI == 0
-        print(lnI)
+for nI = 1 to nNum
+    if nNum % nI == 0
+        print(nI)
         print(" ")
     end
 end

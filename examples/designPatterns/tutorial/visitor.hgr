@@ -16,64 +16,64 @@
     Date: 2023-02-28
 """
 
-declare lcComputerPart
+def cComputerPart
     -pAccept(poComputerPartVisitor)
 end
 
-declare lcKeyboard as lcComputerPart
+def cKeyboard as cComputerPart
     pAccept(poComputerPartVisitor)
         poComputerPartVisitor.pVisit(poThis)
     end
 end
 
-declare lcMonitor as lcComputerPart
+def cMonitor as cComputerPart
     pAccept(poComputerPartVisitor)
         poComputerPartVisitor.pVisit(poThis)
     end
 end
 
-declare lcMouse as lcComputerPart
+def cMouse as cComputerPart
     pAccept(poComputerPartVisitor)
         poComputerPartVisitor.pVisit(poThis)
     end
 end
 
-declare lcComputer as lcComputerPart
-    aParts = [new lcMouse(), new lcKeyboard(), new lcMonitor()]
+def cComputer as cComputerPart
+    aParts = [new cMouse(), new cKeyboard(), new cMonitor()]
 
     
     pAccept(poComputerPartVisitor)
-        for each lvPart in aParts
-            lvPart.pAccept(poComputerPartVisitor)
+        for each vPart in poThis.aParts
+            vPart.pAccept(poComputerPartVisitor)
         end
         poComputerPartVisitor.pVisit(poThis)
     end
 end
 
-declare lcComputerPartVisitor
+def cComputerPartVisitor
     -pVisit(poComputerPart)    
 end
 
-declare lcComputerPartDisplayVisitor as lcComputerPartVisitor
+def cComputerPartDisplayVisitor as cComputerPartVisitor
     pVisit(poComputerPart)
-        if poComputerPart.instanceOf("lcMouse")
+        if poComputerPart.instanceOf("cMouse")
             println("Displaying Mouse.")
         end
-        if poComputerPart.instanceOf("lcKeyboard")
+        if poComputerPart.instanceOf("cKeyboard")
             println("Displaying Keyboard.")
         end
-        if poComputerPart.instanceOf("lcMonitor")
+        if poComputerPart.instanceOf("cMonitor")
             println("Displaying Monitor.")
         end
-        if poComputerPart.instanceOf("lcComputer")
+        if poComputerPart.instanceOf("cComputer")
             println("Displaying Computer.")
         end
     end
 end
 
-declare lpMain
-    declare loComputer = new lcComputer()
-    loComputer.pAccept(new lcComputerPartDisplayVisitor())
+def pMain
+    let oComputer = new cComputer()
+    oComputer.pAccept(new cComputerPartDisplayVisitor())
 end
 
-lpMain()
+pMain()

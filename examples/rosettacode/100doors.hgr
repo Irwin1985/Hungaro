@@ -13,22 +13,22 @@
     Date: 2023-03-02
 """
 
-declare lpMain
-    declare laDoors = [] * 101 = false
-    declare lnJ = 0
+def pMain
+    let aDoors = [] * 101 = false
+    let nJ = 0
 
-    for lnI = 1 to laDoors.len()
-        while lnJ < laDoors.len()
-            laDoors[lnJ] = !laDoors[lnJ]
-            lnJ += lnI
+    for nI = 1 to aDoors.len()
+        while nJ < aDoors.len()
+            aDoors[nJ] = !aDoors[nJ]
+            nJ += nI
         end    
     end
 
-    for lnI = 1 to laDoors.len()
-        if laDoors[lnI]
-            println(format("Door %s is open.", lnI))
+    for nI = 1 to aDoors.len()
+        if aDoors[nI]
+            println(format("Door %s is open.", nI))
         end
     end
 end
 
-lpMain()
+pMain()

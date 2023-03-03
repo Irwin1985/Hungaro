@@ -5,19 +5,19 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
+def cFoo
     pSayName(psName)
         println(sName)
         println(psName)
     end
 end
 
-declare loFoo1 = new lcFoo()
-loFoo1.sName = "foo1"
+let oFoo1 = new cFoo()
+oFoo1.sName = "foo1"
 
-declare loFoo2 = new lcFoo()
-loFoo2.sName = "foo2"
+let oFoo2 = new cFoo()
+oFoo2.sName = "foo2"
 
-loFoo2.oFn = loFoo1.pSayName # By assigning the method reference to loFoo2, the current poThis is loFoo2
-loFoo2.oFn("1") # now loFoo2 owns the method reference (poThis) in oFn
-loFoo1.pSayName("2")
+oFoo2.oFn = oFoo1.pSayName # By assigning the method reference to oFoo2, the current poThis is oFoo2
+oFoo2.oFn("1") # now oFoo2 owns the method reference (poThis) in oFn
+oFoo1.pSayName("2")

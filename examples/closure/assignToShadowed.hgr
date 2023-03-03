@@ -6,17 +6,17 @@
 """
 
 
-declare lsA = "global"
+let sA = "global"
 
-declare lpTest
-    declare lpAssign
-        lsA = "assigned"
+def pMain
+    def pAssign
+        sA = "assigned"
     end
 
-    declare lsA = "inner"
-    lpAssign()
-    println(lsA) # inner    
+    let sA = "inner"
+    pAssign()
+    println(sA) # inner    
 end
 
-lpTest()
-println(lsA)
+pMain()
+println(sA)

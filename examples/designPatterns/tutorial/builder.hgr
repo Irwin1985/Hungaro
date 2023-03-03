@@ -18,45 +18,45 @@
     Date: 2023-02-28
 """
 
-declare lcItem
+def cItem
     -fName()
     -fPacking()    
     -fPrice()    
 end
 
-declare lcPacking
+def cPacking
     -fPack()    
 end
 
-declare lcWrapper as lcPacking
+def cWrapper as cPacking
     fPack
         return "Wrapper"
     end
 end
 
-declare lcBottle as lcPacking
+def cBottle as cPacking
     fPack
         return "Bottle"
     end
 end
 
-declare lcBurger as lcItem
+def cBurger as cItem
     fPacking
-        return new lcWrapper()
+        return new cWrapper()
     end
 
     -fPrice()
 end
 
-declare lcColdDrink as lcItem
+def cColdDrink as cItem
     fPacking
-        return new lcBottle()
+        return new cBottle()
     end
 
     -fPrice()
 end
 
-declare lcVegBurger as lcBurger
+def cVegBurger as cBurger
     fName
         return "Veg Burger"
     end
@@ -66,7 +66,7 @@ declare lcVegBurger as lcBurger
     end
 end
 
-declare lcChickenBurger as lcBurger
+def cChickenBurger as cBurger
     fName
         return "Chicken Burger"
     end
@@ -76,7 +76,7 @@ declare lcChickenBurger as lcBurger
     end
 end
 
-declare lcCoke as lcColdDrink
+def cCoke as cColdDrink
     fName
         return "Coke"
     end
@@ -86,7 +86,7 @@ declare lcCoke as lcColdDrink
     end
 end
 
-declare lcPepsi as lcColdDrink
+def cPepsi as cColdDrink
     fName
         return "Pepsi"
     end
@@ -96,61 +96,61 @@ declare lcPepsi as lcColdDrink
     end
 end
 
-declare lcMeal
+def cMeal
     aItems = []
 
     pAddItem(poItem)
-        aItems.push(poItem)
+        poThis.aItems.push(poItem)
     end
 
     fGetCost
-        declare lnCost = 0.0
-        for each lvItem in aItems
-            lnCost += lvItem.fPrice()
+        let nCost = 0.0
+        for each vItem in poThis.aItems
+            nCost += vItem.fPrice()
         end
-        return lnCost
+        return nCost
     end
 
     pShowItems
-        for each lvItem in aItems
-            print("Item: " & lvItem.fName())
-            print(", Packing: " & lvItem.fPacking().fPack())
-            print(", Price: " & lvItem.fPrice())
+        for each vItem in poThis.aItems
+            print("Item: " & vItem.fName())
+            print(", Packing: " & vItem.fPacking().fPack())
+            print(", Price: " & vItem.fPrice())
         end
     end
 end
 
-declare lcMealBuilder
+def cMealBuilder
     fPrepareVegMeal
-        declare loMeal = new lcMeal()
-        loMeal.pAddItem(new lcVegBurger())
-        loMeal.pAddItem(new lcCoke())
-        return loMeal
+        let oMeal = new cMeal()
+        oMeal.pAddItem(new cVegBurger())
+        oMeal.pAddItem(new cCoke())
+        return oMeal
     end
 
     fPrepareNonVegMeal
-        declare loMeal = new lcMeal()
-        loMeal.pAddItem(new lcChickenBurger())
-        loMeal.pAddItem(new lcPepsi())
-        return loMeal
+        let oMeal = new cMeal()
+        oMeal.pAddItem(new cChickenBurger())
+        oMeal.pAddItem(new cPepsi())
+        return oMeal
     end
 end
 
-declare lpMain
-    declare loMealBuilder = new lcMealBuilder()
+def pMain
+    let oMealBuilder = new cMealBuilder()
 
-    declare loVegMeal = loMealBuilder.fPrepareVegMeal()
+    let oVegMeal = oMealBuilder.fPrepareVegMeal()
     println("Veg Meal")
-    loVegMeal.pShowItems()
-    println("Total Cost: " & loVegMeal.fGetCost())
+    oVegMeal.pShowItems()
+    println("Total Cost: " & oVegMeal.fGetCost())
 
-    declare loNonVegMeal = loMealBuilder.fPrepareNonVegMeal()
+    let oNonVegMeal = oMealBuilder.fPrepareNonVegMeal()
     println("\n\nNon-Veg Meal")
-    loNonVegMeal.pShowItems()
-    println("Total Cost: " & loNonVegMeal.fGetCost())
+    oNonVegMeal.pShowItems()
+    println("Total Cost: " & oNonVegMeal.fGetCost())
 end
 
-lpMain()
+pMain()
 
 # Output
 # Veg Meal

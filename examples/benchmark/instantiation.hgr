@@ -5,23 +5,21 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
-    pInit
-        # None
-    end
+def cFoo
+    -pInit()
 end
 
-declare lnStart = tick()
-declare lnI = 0
+let nStart = tick()
+let nI = 0
 
-while lnI < 500000
-    new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | 
-    new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | 
-    new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | 
-    new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | 
-    new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | 
-    new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() | new lcFoo() |
-    lnI += 1
+while nI < 500000
+    new cFoo() | new cFoo() | new cFoo() | new cFoo() | new cFoo() | 
+    new cFoo() | new cFoo() | new cFoo() | new cFoo() | new cFoo() | 
+    new cFoo() | new cFoo() | new cFoo() | new cFoo() | new cFoo() | 
+    new cFoo() | new cFoo() | new cFoo() | new cFoo() | new cFoo() | 
+    new cFoo() | new cFoo() | new cFoo() | new cFoo() | new cFoo() | 
+    new cFoo() | new cFoo() | new cFoo() | new cFoo() | new cFoo() |
+    nI += 1
 end
 
-print("Elapsed time: " & tack(lnStart) & " ms")
+print("Elapsed time: " & tack(nStart) & " ms")

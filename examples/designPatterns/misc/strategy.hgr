@@ -8,15 +8,15 @@
 #-------------------------------------------#
 # Context class
 #-------------------------------------------#
-declare lcFinancialCalculator
+def cFinancialCalculator
     nBalance = 0.00
     nRate = 0.00
     nPeriod = 0
     sType = ""
 
     fGetInterestAmount
-        declare loStrategy = new object("lc" & sType)
-        return loStrategy.fCalculateInterest(nBalance, nRate, nPeriod)
+        let oStrategy = new object("c" & poThis.sType)
+        return oStrategy.fCalculateInterest(poThis.nBalance, poThis.nRate, poThis.nPeriod)
     end
 end
 
@@ -25,71 +25,71 @@ end
 #-------------------------------------------#
 
 # Interface class
-declare lcCalculateInterest
+def cCalculateInterest
     -fCalculateInterest()
 end
 
 # Implementation classes (Concrete Strategies)
-declare lcSimple as lcCalculateInterest
+def cSimple as cCalculateInterest
     fCalculateInterest(pnBalance, pnRate, pnPeriod)
-        declare lnInterest = pnBalance * ((pnRate / 100) / 365) * pnPeriod
-        return lnInterest
+        let nInterest = pnBalance * ((pnRate / 100) / 365) * pnPeriod
+        return nInterest
     end
 end
 
-declare lcQuarterly as lcCalculateInterest
+def cQuarterly as cCalculateInterest
     fCalculateInterest(pnBalance, pnRate, pnPeriod)
-        declare lnInterest = 0.0
-        for lnI = 1 to pnPeriod
-            lnInterest += (pnBalance + lnInterest) * ((pnRate / 100) / 4)
+        let nInterest = 0.0
+        for nI = 1 to pnPeriod
+            nInterest += (pnBalance + nInterest) * ((pnRate / 100) / 4)
         end
-        return lnInterest
+        return nInterest
     end
 end
 
-declare lcMonthly as lcCalculateInterest
+def cMonthly as cCalculateInterest
     fCalculateInterest(pnBalance, pnRate, pnPeriod)
-        declare lnInterest = 0.0
-        for lnI = 1 to pnPeriod
-            lnInterest += (pnBalance + lnInterest) * ((pnRate / 100) / 12)
+        let nInterest = 0.0
+        for nI = 1 to pnPeriod
+            nInterest += (pnBalance + nInterest) * ((pnRate / 100) / 12)
         end
-        return lnInterest
+        return nInterest
     end
 end
 
-declare lcDaily as lcCalculateInterest
+def cDaily as cCalculateInterest
     fCalculateInterest(pnBalance, pnRate, pnPeriod)
-        declare lnInterest = 0.0
-        for lnI = 1 to pnPeriod
-            lnInterest += (pnBalance + lnInterest) * ((pnRate / 100) / 365)
+        let nInterest = 0.0
+        for nI = 1 to pnPeriod
+            nInterest += (pnBalance + nInterest) * ((pnRate / 100) / 365)
         end
-        return lnInterest
+        return nInterest
     end
 end
 
 #-------------------------------------------#
 # Client code
 #-------------------------------------------#
-declare loCalculator = new object("lcFinancialCalculator")
-loCalculator.nBalance = 1000.00
-loCalculator.nRate = 5.00
-loCalculator.nPeriod = 365
+let oCalculator = new object("cFinancialCalculator")
+oCalculator.nBalance = 1000.00
+oCalculator.nRate = 5.00
+oCalculator.nPeriod = 365
 
 # Simple interest
-loCalculator.sType = "Simple"
-println(loCalculator.fGetInterestAmount())
+oCalculator.sType = "Simple"
+println(oCalculator.fGetInterestAmount())
 
 # Quarterly interest
-loCalculator.sType = "Quarterly"
-println(loCalculator.fGetInterestAmount())
+oCalculator.sType = "Quarterly"
+println(oCalculator.fGetInterestAmount())
 
 # Monthly interest
-loCalculator.sType = "Monthly"
-println(loCalculator.fGetInterestAmount())
+oCalculator.sType = "Monthly"
+println(oCalculator.fGetInterestAmount())
 
 # Daily interest
-loCalculator.sType = "Daily"
-println(loCalculator.fGetInterestAmount())
+oCalculator.sType = "Daily"
+println(oCalculator.fGetInterestAmount())
 
 #-------------------------------------------#
 # End

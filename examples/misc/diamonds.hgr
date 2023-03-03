@@ -5,14 +5,14 @@
  Date: 2023-02-23
 """
 
-declare lnLines = 17
+let nLines = 17
 
-for lnI = 1 to lnLines/2+1
-    for lnJ = 1 to (lnLines+1)/2-lnI+1
+for nI = 1 to nLines/2+1
+    for nJ = 1 to (nLines+1)/2-nI+1
         print(" ")
     end
 
-    for lnJ = 1 to lnI*2-1
+    for nJ = 1 to nI*2-1
         print("*")
     end
     println(" ")

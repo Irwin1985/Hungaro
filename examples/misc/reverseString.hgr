@@ -5,13 +5,13 @@
  Date: 2023-02-24
 """
 
-declare lsString = "ABCDEFG",
-        lsReverse = "",
-        lnLen = lsString.len()
+let sString = "ABCDEFG",
+        sReverse = "",
+        nLen = sString.len()
 
-for lnI = lnLen-1 to 0 step -1
-    lsReverse += lsString.charAt(lnI)
+for nI = nLen-1 to 0 step -1
+    sReverse += sString.charAt(nI)
 end
 
-println("Original String: " & lsString)
-println("Reverse String: " & lsReverse)
+println("Original String: " & sString)
+println("Reverse String: " & sReverse)

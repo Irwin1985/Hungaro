@@ -25,16 +25,16 @@
     Date: 2023-02-28
 """
 
-declare lcMediaPlayer
+def cMediaPlayer
     -pPlay(psAudioType, psFileName)
 end
 
-declare lcAdvancedMediaPlayer
+def cAdvancedMediaPlayer
     -pPlayVlc(psFileName)    
     -pPlayMp4(psFileName)    
 end
 
-declare lcVlcPlayer
+def cVlcPlayer
     pPlayVlc(psFileName)
         println("Playing vlc file. Name: " & psFileName)
     end
@@ -42,22 +42,22 @@ declare lcVlcPlayer
     -pPlayMp4(psFileName)
 end
 
-declare lcMp4Player
+def cMp4Player
     -pPlayVlc(psFileName)
     pPlayMp4(psFileName)
         println("Playing mp4 file. Name: " & psFileName)
     end
 end
 
-declare lcMediaAdapter
+def cMediaAdapter
     oAdvancedMusicPlayer = null
 
     pInit(psAudioType)
         if psAudioType == "vlc"
-            oAdvancedMusicPlayer = new lcVlcPlayer()
+            poThis.oAdvancedMusicPlayer = new cVlcPlayer()
         else
             if psAudioType == "mp4"
-                oAdvancedMusicPlayer = new lcMp4Player()
+                poThis.oAdvancedMusicPlayer = new cMp4Player()
             end
         end
     end
@@ -65,10 +65,10 @@ declare lcMediaAdapter
 
     pPlay(psAudioType, psFileName)
         if psAudioType == "vlc"            
-            oAdvancedMusicPlayer.pPlayVlc(psFileName)
+            poThis.oAdvancedMusicPlayer.pPlayVlc(psFileName)
         else
             if psAudioType == "mp4"
-                oAdvancedMusicPlayer.pPlayMp4(psFileName)
+                poThis.oAdvancedMusicPlayer.pPlayMp4(psFileName)
             else
                 println("Invalid media. " & psAudioType & " format not supported")
             end
@@ -76,7 +76,7 @@ declare lcMediaAdapter
     end
 end
 
-declare lcAudioPlayer
+def cAudioPlayer
     oMediaAdapter = null
 
     pPlay(psAudioType, psFileName)
@@ -86,8 +86,8 @@ declare lcAudioPlayer
         else
             if psAudioType == "vlc" or psAudioType == "mp4"
                 # mediaAdapter is providing support to play other file formats
-                oMediaAdapter = new lcMediaAdapter(psAudioType)
-                oMediaAdapter.pPlay(psAudioType, psFileName)
+                poThis.oMediaAdapter = new cMediaAdapter(psAudioType)
+                poThis.oMediaAdapter.pPlay(psAudioType, psFileName)
             else
                 println("Invalid media. " & psAudioType & " format not supported")
             end
@@ -95,15 +95,15 @@ declare lcAudioPlayer
     end
 end
 
-declare lpMain
-    declare loAudioPlayer = new lcAudioPlayer()
-    loAudioPlayer.pPlay("mp3", "beyond the horizon.mp3")
-    loAudioPlayer.pPlay("mp4", "alone.mp4")
-    loAudioPlayer.pPlay("vlc", "far far away.vlc")
-    loAudioPlayer.pPlay("avi", "mind me.avi")    
+def pMain
+    let oAudioPlayer = new cAudioPlayer()
+    oAudioPlayer.pPlay("mp3", "beyond the horizon.mp3")
+    oAudioPlayer.pPlay("mp4", "alone.mp4")
+    oAudioPlayer.pPlay("vlc", "far far away.vlc")
+    oAudioPlayer.pPlay("avi", "mind me.avi")    
 end
 
-lpMain()
+pMain()
 
 # Output
 # Playing mp3 file. Name: beyond the horizon.mp3

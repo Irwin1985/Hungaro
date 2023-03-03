@@ -5,12 +5,12 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
+def cFoo
     pBar(psArg)
         println(psArg)
     end
 end
 
-declare loBar = new lcFoo().pBar
+let oBar = new cFoo().pBar
 println("Got method")
-loBar("Hello World") # Prints "Hello World"
+oBar("Hello World") # Prints "Hello World"

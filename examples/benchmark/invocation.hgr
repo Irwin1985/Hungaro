@@ -5,7 +5,7 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
+def cFoo
     -pMethod0()
     -pMethod1()
     -pMethod2()
@@ -38,18 +38,18 @@ declare lcFoo
     -pMethod29()
 end
 
-declare loFoo = new lcFoo()
-declare lnStart = tick()
-declare lnI = 0
+let oFoo = new cFoo()
+let nStart = tick()
+let nI = 0
 
-while lnI < 500000
-    loFoo.pMethod0()  | loFoo.pMethod1()  | loFoo.pMethod2()  | loFoo.pMethod3()  | loFoo.pMethod4()  |
-    loFoo.pMethod5()  | loFoo.pMethod6()  | loFoo.pMethod7()  | loFoo.pMethod8()  | loFoo.pMethod9()  |
-    loFoo.pMethod10() | loFoo.pMethod11() | loFoo.pMethod12() | loFoo.pMethod13() | loFoo.pMethod14() |
-    loFoo.pMethod15() | loFoo.pMethod16() | loFoo.pMethod17() | loFoo.pMethod18() | loFoo.pMethod19() |
-    loFoo.pMethod20() | loFoo.pMethod21() | loFoo.pMethod22() | loFoo.pMethod23() | loFoo.pMethod24() |
-    loFoo.pMethod25() | loFoo.pMethod26() | loFoo.pMethod27() | loFoo.pMethod28() | loFoo.pMethod29() |
-    lnI += 1
+while nI < 500000
+    oFoo.pMethod0()  | oFoo.pMethod1()  | oFoo.pMethod2()  | oFoo.pMethod3()  | oFoo.pMethod4()  |
+    oFoo.pMethod5()  | oFoo.pMethod6()  | oFoo.pMethod7()  | oFoo.pMethod8()  | oFoo.pMethod9()  |
+    oFoo.pMethod10() | oFoo.pMethod11() | oFoo.pMethod12() | oFoo.pMethod13() | oFoo.pMethod14() |
+    oFoo.pMethod15() | oFoo.pMethod16() | oFoo.pMethod17() | oFoo.pMethod18() | oFoo.pMethod19() |
+    oFoo.pMethod20() | oFoo.pMethod21() | oFoo.pMethod22() | oFoo.pMethod23() | oFoo.pMethod24() |
+    oFoo.pMethod25() | oFoo.pMethod26() | oFoo.pMethod27() | oFoo.pMethod28() | oFoo.pMethod29() |
+    nI += 1
 end
 
-println("Elapsed time: " & tack(lnStart) & " ms")
+println("Elapsed time: " & tack(nStart) & " ms")

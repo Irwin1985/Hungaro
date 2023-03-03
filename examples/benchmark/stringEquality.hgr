@@ -5,209 +5,208 @@
  Date: 2023-02-26
 """
 
-declare lsA1 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
-        lsA2 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
-        lsA3 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa3",
-        lsA4 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa4",
-        lsA5 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa5",
-        lsA6 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6",
-        lsA7 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7",
-        lsA8 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa8"
+let sA1 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
+    sA2 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
+    sA3 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa3",
+    sA4 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa4",
+    sA5 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa5",
+    sA6 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6",
+    sA7 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7",
+    sA8 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa8"
 
-declare lnI = 0, lnLoopStart = tick()
+let nI = 0, nLoopStart = tick()
 
-while lnI < 100000
-    lnI += 1
+while nI < 100000
+    nI += 1
 
-    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
-    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
-    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
-    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
-    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
-    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
-    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
-    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+    sA1 | sA1 | sA1 | sA2 | sA1 | sA3 | sA1 | sA4 | sA1 | sA5 | sA1 | sA6 | sA1 | sA7 | sA1 | sA8 |
+    sA2 | sA1 | sA2 | sA2 | sA2 | sA3 | sA2 | sA4 | sA2 | sA5 | sA2 | sA6 | sA2 | sA7 | sA2 | sA8 |
+    sA3 | sA1 | sA3 | sA2 | sA3 | sA3 | sA3 | sA4 | sA3 | sA5 | sA3 | sA6 | sA3 | sA7 | sA3 | sA8 |
+    sA4 | sA1 | sA4 | sA2 | sA4 | sA3 | sA4 | sA4 | sA4 | sA5 | sA4 | sA6 | sA4 | sA7 | sA4 | sA8 |
+    sA5 | sA1 | sA5 | sA2 | sA5 | sA3 | sA5 | sA4 | sA5 | sA5 | sA5 | sA6 | sA5 | sA7 | sA5 | sA8 |
+    sA6 | sA1 | sA6 | sA2 | sA6 | sA3 | sA6 | sA4 | sA6 | sA5 | sA6 | sA6 | sA6 | sA7 | sA6 | sA8 |
+    sA7 | sA1 | sA7 | sA2 | sA7 | sA3 | sA7 | sA4 | sA7 | sA5 | sA7 | sA6 | sA7 | sA7 | sA7 | sA8 |
+    sA8 | sA1 | sA8 | sA2 | sA8 | sA3 | sA8 | sA4 | sA8 | sA5 | sA8 | sA6 | sA8 | sA7 | sA8 | sA8 |
 
-    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
-    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
-    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
-    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
-    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
-    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
-    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
-    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+    sA1 | sA1 | sA1 | sA2 | sA1 | sA3 | sA1 | sA4 | sA1 | sA5 | sA1 | sA6 | sA1 | sA7 | sA1 | sA8 |
+    sA2 | sA1 | sA2 | sA2 | sA2 | sA3 | sA2 | sA4 | sA2 | sA5 | sA2 | sA6 | sA2 | sA7 | sA2 | sA8 |
+    sA3 | sA1 | sA3 | sA2 | sA3 | sA3 | sA3 | sA4 | sA3 | sA5 | sA3 | sA6 | sA3 | sA7 | sA3 | sA8 |
+    sA4 | sA1 | sA4 | sA2 | sA4 | sA3 | sA4 | sA4 | sA4 | sA5 | sA4 | sA6 | sA4 | sA7 | sA4 | sA8 |
+    sA5 | sA1 | sA5 | sA2 | sA5 | sA3 | sA5 | sA4 | sA5 | sA5 | sA5 | sA6 | sA5 | sA7 | sA5 | sA8 |
+    sA6 | sA1 | sA6 | sA2 | sA6 | sA3 | sA6 | sA4 | sA6 | sA5 | sA6 | sA6 | sA6 | sA7 | sA6 | sA8 |
+    sA7 | sA1 | sA7 | sA2 | sA7 | sA3 | sA7 | sA4 | sA7 | sA5 | sA7 | sA6 | sA7 | sA7 | sA7 | sA8 |
+    sA8 | sA1 | sA8 | sA2 | sA8 | sA3 | sA8 | sA4 | sA8 | sA5 | sA8 | sA6 | sA8 | sA7 | sA8 | sA8 |
 
-    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
-    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
-    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
-    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
-    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
-    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
-    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
-    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+    sA1 | sA1 | sA1 | sA2 | sA1 | sA3 | sA1 | sA4 | sA1 | sA5 | sA1 | sA6 | sA1 | sA7 | sA1 | sA8 |
+    sA2 | sA1 | sA2 | sA2 | sA2 | sA3 | sA2 | sA4 | sA2 | sA5 | sA2 | sA6 | sA2 | sA7 | sA2 | sA8 |
+    sA3 | sA1 | sA3 | sA2 | sA3 | sA3 | sA3 | sA4 | sA3 | sA5 | sA3 | sA6 | sA3 | sA7 | sA3 | sA8 |
+    sA4 | sA1 | sA4 | sA2 | sA4 | sA3 | sA4 | sA4 | sA4 | sA5 | sA4 | sA6 | sA4 | sA7 | sA4 | sA8 |
+    sA5 | sA1 | sA5 | sA2 | sA5 | sA3 | sA5 | sA4 | sA5 | sA5 | sA5 | sA6 | sA5 | sA7 | sA5 | sA8 |
+    sA6 | sA1 | sA6 | sA2 | sA6 | sA3 | sA6 | sA4 | sA6 | sA5 | sA6 | sA6 | sA6 | sA7 | sA6 | sA8 |
+    sA7 | sA1 | sA7 | sA2 | sA7 | sA3 | sA7 | sA4 | sA7 | sA5 | sA7 | sA6 | sA7 | sA7 | sA7 | sA8 |
+    sA8 | sA1 | sA8 | sA2 | sA8 | sA3 | sA8 | sA4 | sA8 | sA5 | sA8 | sA6 | sA8 | sA7 | sA8 | sA8 |
 
-    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
-    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
-    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
-    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
-    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
-    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
-    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
-    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+    sA1 | sA1 | sA1 | sA2 | sA1 | sA3 | sA1 | sA4 | sA1 | sA5 | sA1 | sA6 | sA1 | sA7 | sA1 | sA8 |
+    sA2 | sA1 | sA2 | sA2 | sA2 | sA3 | sA2 | sA4 | sA2 | sA5 | sA2 | sA6 | sA2 | sA7 | sA2 | sA8 |
+    sA3 | sA1 | sA3 | sA2 | sA3 | sA3 | sA3 | sA4 | sA3 | sA5 | sA3 | sA6 | sA3 | sA7 | sA3 | sA8 |
+    sA4 | sA1 | sA4 | sA2 | sA4 | sA3 | sA4 | sA4 | sA4 | sA5 | sA4 | sA6 | sA4 | sA7 | sA4 | sA8 |
+    sA5 | sA1 | sA5 | sA2 | sA5 | sA3 | sA5 | sA4 | sA5 | sA5 | sA5 | sA6 | sA5 | sA7 | sA5 | sA8 |
+    sA6 | sA1 | sA6 | sA2 | sA6 | sA3 | sA6 | sA4 | sA6 | sA5 | sA6 | sA6 | sA6 | sA7 | sA6 | sA8 |
+    sA7 | sA1 | sA7 | sA2 | sA7 | sA3 | sA7 | sA4 | sA7 | sA5 | sA7 | sA6 | sA7 | sA7 | sA7 | sA8 |
+    sA8 | sA1 | sA8 | sA2 | sA8 | sA3 | sA8 | sA4 | sA8 | sA5 | sA8 | sA6 | sA8 | sA7 | sA8 | sA8 |
 
-    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
-    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
-    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
-    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
-    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
-    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
-    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
-    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+    sA1 | sA1 | sA1 | sA2 | sA1 | sA3 | sA1 | sA4 | sA1 | sA5 | sA1 | sA6 | sA1 | sA7 | sA1 | sA8 |
+    sA2 | sA1 | sA2 | sA2 | sA2 | sA3 | sA2 | sA4 | sA2 | sA5 | sA2 | sA6 | sA2 | sA7 | sA2 | sA8 |
+    sA3 | sA1 | sA3 | sA2 | sA3 | sA3 | sA3 | sA4 | sA3 | sA5 | sA3 | sA6 | sA3 | sA7 | sA3 | sA8 |
+    sA4 | sA1 | sA4 | sA2 | sA4 | sA3 | sA4 | sA4 | sA4 | sA5 | sA4 | sA6 | sA4 | sA7 | sA4 | sA8 |
+    sA5 | sA1 | sA5 | sA2 | sA5 | sA3 | sA5 | sA4 | sA5 | sA5 | sA5 | sA6 | sA5 | sA7 | sA5 | sA8 |
+    sA6 | sA1 | sA6 | sA2 | sA6 | sA3 | sA6 | sA4 | sA6 | sA5 | sA6 | sA6 | sA6 | sA7 | sA6 | sA8 |
+    sA7 | sA1 | sA7 | sA2 | sA7 | sA3 | sA7 | sA4 | sA7 | sA5 | sA7 | sA6 | sA7 | sA7 | sA7 | sA8 |
+    sA8 | sA1 | sA8 | sA2 | sA8 | sA3 | sA8 | sA4 | sA8 | sA5 | sA8 | sA6 | sA8 | sA7 | sA8 | sA8 |
 
-    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
-    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
-    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
-    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
-    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
-    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
-    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
-    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+    sA1 | sA1 | sA1 | sA2 | sA1 | sA3 | sA1 | sA4 | sA1 | sA5 | sA1 | sA6 | sA1 | sA7 | sA1 | sA8 |
+    sA2 | sA1 | sA2 | sA2 | sA2 | sA3 | sA2 | sA4 | sA2 | sA5 | sA2 | sA6 | sA2 | sA7 | sA2 | sA8 |
+    sA3 | sA1 | sA3 | sA2 | sA3 | sA3 | sA3 | sA4 | sA3 | sA5 | sA3 | sA6 | sA3 | sA7 | sA3 | sA8 |
+    sA4 | sA1 | sA4 | sA2 | sA4 | sA3 | sA4 | sA4 | sA4 | sA5 | sA4 | sA6 | sA4 | sA7 | sA4 | sA8 |
+    sA5 | sA1 | sA5 | sA2 | sA5 | sA3 | sA5 | sA4 | sA5 | sA5 | sA5 | sA6 | sA5 | sA7 | sA5 | sA8 |
+    sA6 | sA1 | sA6 | sA2 | sA6 | sA3 | sA6 | sA4 | sA6 | sA5 | sA6 | sA6 | sA6 | sA7 | sA6 | sA8 |
+    sA7 | sA1 | sA7 | sA2 | sA7 | sA3 | sA7 | sA4 | sA7 | sA5 | sA7 | sA6 | sA7 | sA7 | sA7 | sA8 |
+    sA8 | sA1 | sA8 | sA2 | sA8 | sA3 | sA8 | sA4 | sA8 | sA5 | sA8 | sA6 | sA8 | sA7 | sA8 | sA8 |
 
-    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
-    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
-    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
-    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
-    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
-    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
-    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
-    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+    sA1 | sA1 | sA1 | sA2 | sA1 | sA3 | sA1 | sA4 | sA1 | sA5 | sA1 | sA6 | sA1 | sA7 | sA1 | sA8 |
+    sA2 | sA1 | sA2 | sA2 | sA2 | sA3 | sA2 | sA4 | sA2 | sA5 | sA2 | sA6 | sA2 | sA7 | sA2 | sA8 |
+    sA3 | sA1 | sA3 | sA2 | sA3 | sA3 | sA3 | sA4 | sA3 | sA5 | sA3 | sA6 | sA3 | sA7 | sA3 | sA8 |
+    sA4 | sA1 | sA4 | sA2 | sA4 | sA3 | sA4 | sA4 | sA4 | sA5 | sA4 | sA6 | sA4 | sA7 | sA4 | sA8 |
+    sA5 | sA1 | sA5 | sA2 | sA5 | sA3 | sA5 | sA4 | sA5 | sA5 | sA5 | sA6 | sA5 | sA7 | sA5 | sA8 |
+    sA6 | sA1 | sA6 | sA2 | sA6 | sA3 | sA6 | sA4 | sA6 | sA5 | sA6 | sA6 | sA6 | sA7 | sA6 | sA8 |
+    sA7 | sA1 | sA7 | sA2 | sA7 | sA3 | sA7 | sA4 | sA7 | sA5 | sA7 | sA6 | sA7 | sA7 | sA7 | sA8 |
+    sA8 | sA1 | sA8 | sA2 | sA8 | sA3 | sA8 | sA4 | sA8 | sA5 | sA8 | sA6 | sA8 | sA7 | sA8 | sA8 |
 
-    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
-    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
-    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
-    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
-    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
-    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
-    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
-    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+    sA1 | sA1 | sA1 | sA2 | sA1 | sA3 | sA1 | sA4 | sA1 | sA5 | sA1 | sA6 | sA1 | sA7 | sA1 | sA8 |
+    sA2 | sA1 | sA2 | sA2 | sA2 | sA3 | sA2 | sA4 | sA2 | sA5 | sA2 | sA6 | sA2 | sA7 | sA2 | sA8 |
+    sA3 | sA1 | sA3 | sA2 | sA3 | sA3 | sA3 | sA4 | sA3 | sA5 | sA3 | sA6 | sA3 | sA7 | sA3 | sA8 |
+    sA4 | sA1 | sA4 | sA2 | sA4 | sA3 | sA4 | sA4 | sA4 | sA5 | sA4 | sA6 | sA4 | sA7 | sA4 | sA8 |
+    sA5 | sA1 | sA5 | sA2 | sA5 | sA3 | sA5 | sA4 | sA5 | sA5 | sA5 | sA6 | sA5 | sA7 | sA5 | sA8 |
+    sA6 | sA1 | sA6 | sA2 | sA6 | sA3 | sA6 | sA4 | sA6 | sA5 | sA6 | sA6 | sA6 | sA7 | sA6 | sA8 |
+    sA7 | sA1 | sA7 | sA2 | sA7 | sA3 | sA7 | sA4 | sA7 | sA5 | sA7 | sA6 | sA7 | sA7 | sA7 | sA8 |
+    sA8 | sA1 | sA8 | sA2 | sA8 | sA3 | sA8 | sA4 | sA8 | sA5 | sA8 | sA6 | sA8 | sA7 | sA8 | sA8 |
 
-    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
-    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
-    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
-    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
-    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
-    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
-    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
-    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+    sA1 | sA1 | sA1 | sA2 | sA1 | sA3 | sA1 | sA4 | sA1 | sA5 | sA1 | sA6 | sA1 | sA7 | sA1 | sA8 |
+    sA2 | sA1 | sA2 | sA2 | sA2 | sA3 | sA2 | sA4 | sA2 | sA5 | sA2 | sA6 | sA2 | sA7 | sA2 | sA8 |
+    sA3 | sA1 | sA3 | sA2 | sA3 | sA3 | sA3 | sA4 | sA3 | sA5 | sA3 | sA6 | sA3 | sA7 | sA3 | sA8 |
+    sA4 | sA1 | sA4 | sA2 | sA4 | sA3 | sA4 | sA4 | sA4 | sA5 | sA4 | sA6 | sA4 | sA7 | sA4 | sA8 |
+    sA5 | sA1 | sA5 | sA2 | sA5 | sA3 | sA5 | sA4 | sA5 | sA5 | sA5 | sA6 | sA5 | sA7 | sA5 | sA8 |
+    sA6 | sA1 | sA6 | sA2 | sA6 | sA3 | sA6 | sA4 | sA6 | sA5 | sA6 | sA6 | sA6 | sA7 | sA6 | sA8 |
+    sA7 | sA1 | sA7 | sA2 | sA7 | sA3 | sA7 | sA4 | sA7 | sA5 | sA7 | sA6 | sA7 | sA7 | sA7 | sA8 |
+    sA8 | sA1 | sA8 | sA2 | sA8 | sA3 | sA8 | sA4 | sA8 | sA5 | sA8 | sA6 | sA8 | sA7 | sA8 | sA8 |
 
-    lsA1 | lsA1 | lsA1 | lsA2 | lsA1 | lsA3 | lsA1 | lsA4 | lsA1 | lsA5 | lsA1 | lsA6 | lsA1 | lsA7 | lsA1 | lsA8 |
-    lsA2 | lsA1 | lsA2 | lsA2 | lsA2 | lsA3 | lsA2 | lsA4 | lsA2 | lsA5 | lsA2 | lsA6 | lsA2 | lsA7 | lsA2 | lsA8 |
-    lsA3 | lsA1 | lsA3 | lsA2 | lsA3 | lsA3 | lsA3 | lsA4 | lsA3 | lsA5 | lsA3 | lsA6 | lsA3 | lsA7 | lsA3 | lsA8 |
-    lsA4 | lsA1 | lsA4 | lsA2 | lsA4 | lsA3 | lsA4 | lsA4 | lsA4 | lsA5 | lsA4 | lsA6 | lsA4 | lsA7 | lsA4 | lsA8 |
-    lsA5 | lsA1 | lsA5 | lsA2 | lsA5 | lsA3 | lsA5 | lsA4 | lsA5 | lsA5 | lsA5 | lsA6 | lsA5 | lsA7 | lsA5 | lsA8 |
-    lsA6 | lsA1 | lsA6 | lsA2 | lsA6 | lsA3 | lsA6 | lsA4 | lsA6 | lsA5 | lsA6 | lsA6 | lsA6 | lsA7 | lsA6 | lsA8 |
-    lsA7 | lsA1 | lsA7 | lsA2 | lsA7 | lsA3 | lsA7 | lsA4 | lsA7 | lsA5 | lsA7 | lsA6 | lsA7 | lsA7 | lsA7 | lsA8 |
-    lsA8 | lsA1 | lsA8 | lsA2 | lsA8 | lsA3 | lsA8 | lsA4 | lsA8 | lsA5 | lsA8 | lsA6 | lsA8 | lsA7 | lsA8 | lsA8 |
+    sA1 | sA1 | sA1 | sA2 | sA1 | sA3 | sA1 | sA4 | sA1 | sA5 | sA1 | sA6 | sA1 | sA7 | sA1 | sA8 |
+    sA2 | sA1 | sA2 | sA2 | sA2 | sA3 | sA2 | sA4 | sA2 | sA5 | sA2 | sA6 | sA2 | sA7 | sA2 | sA8 |
+    sA3 | sA1 | sA3 | sA2 | sA3 | sA3 | sA3 | sA4 | sA3 | sA5 | sA3 | sA6 | sA3 | sA7 | sA3 | sA8 |
+    sA4 | sA1 | sA4 | sA2 | sA4 | sA3 | sA4 | sA4 | sA4 | sA5 | sA4 | sA6 | sA4 | sA7 | sA4 | sA8 |
+    sA5 | sA1 | sA5 | sA2 | sA5 | sA3 | sA5 | sA4 | sA5 | sA5 | sA5 | sA6 | sA5 | sA7 | sA5 | sA8 |
+    sA6 | sA1 | sA6 | sA2 | sA6 | sA3 | sA6 | sA4 | sA6 | sA5 | sA6 | sA6 | sA6 | sA7 | sA6 | sA8 |
+    sA7 | sA1 | sA7 | sA2 | sA7 | sA3 | sA7 | sA4 | sA7 | sA5 | sA7 | sA6 | sA7 | sA7 | sA7 | sA8 |
+    sA8 | sA1 | sA8 | sA2 | sA8 | sA3 | sA8 | sA4 | sA8 | sA5 | sA8 | sA6 | sA8 | sA7 | sA8 | sA8 |
 end
 
-declare lnLoopTime = tack(lnLoopStart)
+let nLoopTime = tack(nLoopStart)
+let nStart = tick()
+nI = 0
 
-declare lnStart = tick()
-lnI = 0
+while nI < 100000
+    nI += 1
+    sA1 == sA1 | sA1 == sA2 | sA1 == sA3 | sA1 == sA4 | sA1 == sA5 | sA1 == sA6 | sA1 == sA7 | sA1 == sA8 |
+    sA2 == sA1 | sA2 == sA2 | sA2 == sA3 | sA2 == sA4 | sA2 == sA5 | sA2 == sA6 | sA2 == sA7 | sA2 == sA8 |
+    sA3 == sA1 | sA3 == sA2 | sA3 == sA3 | sA3 == sA4 | sA3 == sA5 | sA3 == sA6 | sA3 == sA7 | sA3 == sA8 |
+    sA4 == sA1 | sA4 == sA2 | sA4 == sA3 | sA4 == sA4 | sA4 == sA5 | sA4 == sA6 | sA4 == sA7 | sA4 == sA8 |
+    sA5 == sA1 | sA5 == sA2 | sA5 == sA3 | sA5 == sA4 | sA5 == sA5 | sA5 == sA6 | sA5 == sA7 | sA5 == sA8 |
+    sA6 == sA1 | sA6 == sA2 | sA6 == sA3 | sA6 == sA4 | sA6 == sA5 | sA6 == sA6 | sA6 == sA7 | sA6 == sA8 |
+    sA7 == sA1 | sA7 == sA2 | sA7 == sA3 | sA7 == sA4 | sA7 == sA5 | sA7 == sA6 | sA7 == sA7 | sA7 == sA8 |
+    sA8 == sA1 | sA8 == sA2 | sA8 == sA3 | sA8 == sA4 | sA8 == sA5 | sA8 == sA6 | sA8 == sA7 | sA8 == sA8 |
 
-while lnI < 100000
-    lnI += 1
-    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
-    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
-    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
-    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
-    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
-    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
-    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
-    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+    sA1 == sA1 | sA1 == sA2 | sA1 == sA3 | sA1 == sA4 | sA1 == sA5 | sA1 == sA6 | sA1 == sA7 | sA1 == sA8 |
+    sA2 == sA1 | sA2 == sA2 | sA2 == sA3 | sA2 == sA4 | sA2 == sA5 | sA2 == sA6 | sA2 == sA7 | sA2 == sA8 |
+    sA3 == sA1 | sA3 == sA2 | sA3 == sA3 | sA3 == sA4 | sA3 == sA5 | sA3 == sA6 | sA3 == sA7 | sA3 == sA8 |
+    sA4 == sA1 | sA4 == sA2 | sA4 == sA3 | sA4 == sA4 | sA4 == sA5 | sA4 == sA6 | sA4 == sA7 | sA4 == sA8 |
+    sA5 == sA1 | sA5 == sA2 | sA5 == sA3 | sA5 == sA4 | sA5 == sA5 | sA5 == sA6 | sA5 == sA7 | sA5 == sA8 |
+    sA6 == sA1 | sA6 == sA2 | sA6 == sA3 | sA6 == sA4 | sA6 == sA5 | sA6 == sA6 | sA6 == sA7 | sA6 == sA8 |
+    sA7 == sA1 | sA7 == sA2 | sA7 == sA3 | sA7 == sA4 | sA7 == sA5 | sA7 == sA6 | sA7 == sA7 | sA7 == sA8 |
+    sA8 == sA1 | sA8 == sA2 | sA8 == sA3 | sA8 == sA4 | sA8 == sA5 | sA8 == sA6 | sA8 == sA7 | sA8 == sA8 |
 
-    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
-    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
-    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
-    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
-    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
-    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
-    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
-    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+    sA1 == sA1 | sA1 == sA2 | sA1 == sA3 | sA1 == sA4 | sA1 == sA5 | sA1 == sA6 | sA1 == sA7 | sA1 == sA8 |
+    sA2 == sA1 | sA2 == sA2 | sA2 == sA3 | sA2 == sA4 | sA2 == sA5 | sA2 == sA6 | sA2 == sA7 | sA2 == sA8 |
+    sA3 == sA1 | sA3 == sA2 | sA3 == sA3 | sA3 == sA4 | sA3 == sA5 | sA3 == sA6 | sA3 == sA7 | sA3 == sA8 |
+    sA4 == sA1 | sA4 == sA2 | sA4 == sA3 | sA4 == sA4 | sA4 == sA5 | sA4 == sA6 | sA4 == sA7 | sA4 == sA8 |
+    sA5 == sA1 | sA5 == sA2 | sA5 == sA3 | sA5 == sA4 | sA5 == sA5 | sA5 == sA6 | sA5 == sA7 | sA5 == sA8 |
+    sA6 == sA1 | sA6 == sA2 | sA6 == sA3 | sA6 == sA4 | sA6 == sA5 | sA6 == sA6 | sA6 == sA7 | sA6 == sA8 |
+    sA7 == sA1 | sA7 == sA2 | sA7 == sA3 | sA7 == sA4 | sA7 == sA5 | sA7 == sA6 | sA7 == sA7 | sA7 == sA8 |
+    sA8 == sA1 | sA8 == sA2 | sA8 == sA3 | sA8 == sA4 | sA8 == sA5 | sA8 == sA6 | sA8 == sA7 | sA8 == sA8 |
 
-    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
-    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
-    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
-    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
-    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
-    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
-    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
-    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+    sA1 == sA1 | sA1 == sA2 | sA1 == sA3 | sA1 == sA4 | sA1 == sA5 | sA1 == sA6 | sA1 == sA7 | sA1 == sA8 |
+    sA2 == sA1 | sA2 == sA2 | sA2 == sA3 | sA2 == sA4 | sA2 == sA5 | sA2 == sA6 | sA2 == sA7 | sA2 == sA8 |
+    sA3 == sA1 | sA3 == sA2 | sA3 == sA3 | sA3 == sA4 | sA3 == sA5 | sA3 == sA6 | sA3 == sA7 | sA3 == sA8 |
+    sA4 == sA1 | sA4 == sA2 | sA4 == sA3 | sA4 == sA4 | sA4 == sA5 | sA4 == sA6 | sA4 == sA7 | sA4 == sA8 |
+    sA5 == sA1 | sA5 == sA2 | sA5 == sA3 | sA5 == sA4 | sA5 == sA5 | sA5 == sA6 | sA5 == sA7 | sA5 == sA8 |
+    sA6 == sA1 | sA6 == sA2 | sA6 == sA3 | sA6 == sA4 | sA6 == sA5 | sA6 == sA6 | sA6 == sA7 | sA6 == sA8 |
+    sA7 == sA1 | sA7 == sA2 | sA7 == sA3 | sA7 == sA4 | sA7 == sA5 | sA7 == sA6 | sA7 == sA7 | sA7 == sA8 |
+    sA8 == sA1 | sA8 == sA2 | sA8 == sA3 | sA8 == sA4 | sA8 == sA5 | sA8 == sA6 | sA8 == sA7 | sA8 == sA8 |
 
-    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
-    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
-    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
-    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
-    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
-    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
-    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
-    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+    sA1 == sA1 | sA1 == sA2 | sA1 == sA3 | sA1 == sA4 | sA1 == sA5 | sA1 == sA6 | sA1 == sA7 | sA1 == sA8 |
+    sA2 == sA1 | sA2 == sA2 | sA2 == sA3 | sA2 == sA4 | sA2 == sA5 | sA2 == sA6 | sA2 == sA7 | sA2 == sA8 |
+    sA3 == sA1 | sA3 == sA2 | sA3 == sA3 | sA3 == sA4 | sA3 == sA5 | sA3 == sA6 | sA3 == sA7 | sA3 == sA8 |
+    sA4 == sA1 | sA4 == sA2 | sA4 == sA3 | sA4 == sA4 | sA4 == sA5 | sA4 == sA6 | sA4 == sA7 | sA4 == sA8 |
+    sA5 == sA1 | sA5 == sA2 | sA5 == sA3 | sA5 == sA4 | sA5 == sA5 | sA5 == sA6 | sA5 == sA7 | sA5 == sA8 |
+    sA6 == sA1 | sA6 == sA2 | sA6 == sA3 | sA6 == sA4 | sA6 == sA5 | sA6 == sA6 | sA6 == sA7 | sA6 == sA8 |
+    sA7 == sA1 | sA7 == sA2 | sA7 == sA3 | sA7 == sA4 | sA7 == sA5 | sA7 == sA6 | sA7 == sA7 | sA7 == sA8 |
+    sA8 == sA1 | sA8 == sA2 | sA8 == sA3 | sA8 == sA4 | sA8 == sA5 | sA8 == sA6 | sA8 == sA7 | sA8 == sA8 |
 
-    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
-    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
-    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
-    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
-    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
-    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
-    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
-    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+    sA1 == sA1 | sA1 == sA2 | sA1 == sA3 | sA1 == sA4 | sA1 == sA5 | sA1 == sA6 | sA1 == sA7 | sA1 == sA8 |
+    sA2 == sA1 | sA2 == sA2 | sA2 == sA3 | sA2 == sA4 | sA2 == sA5 | sA2 == sA6 | sA2 == sA7 | sA2 == sA8 |
+    sA3 == sA1 | sA3 == sA2 | sA3 == sA3 | sA3 == sA4 | sA3 == sA5 | sA3 == sA6 | sA3 == sA7 | sA3 == sA8 |
+    sA4 == sA1 | sA4 == sA2 | sA4 == sA3 | sA4 == sA4 | sA4 == sA5 | sA4 == sA6 | sA4 == sA7 | sA4 == sA8 |
+    sA5 == sA1 | sA5 == sA2 | sA5 == sA3 | sA5 == sA4 | sA5 == sA5 | sA5 == sA6 | sA5 == sA7 | sA5 == sA8 |
+    sA6 == sA1 | sA6 == sA2 | sA6 == sA3 | sA6 == sA4 | sA6 == sA5 | sA6 == sA6 | sA6 == sA7 | sA6 == sA8 |
+    sA7 == sA1 | sA7 == sA2 | sA7 == sA3 | sA7 == sA4 | sA7 == sA5 | sA7 == sA6 | sA7 == sA7 | sA7 == sA8 |
+    sA8 == sA1 | sA8 == sA2 | sA8 == sA3 | sA8 == sA4 | sA8 == sA5 | sA8 == sA6 | sA8 == sA7 | sA8 == sA8 |
 
-    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
-    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
-    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
-    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
-    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
-    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
-    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
-    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+    sA1 == sA1 | sA1 == sA2 | sA1 == sA3 | sA1 == sA4 | sA1 == sA5 | sA1 == sA6 | sA1 == sA7 | sA1 == sA8 |
+    sA2 == sA1 | sA2 == sA2 | sA2 == sA3 | sA2 == sA4 | sA2 == sA5 | sA2 == sA6 | sA2 == sA7 | sA2 == sA8 |
+    sA3 == sA1 | sA3 == sA2 | sA3 == sA3 | sA3 == sA4 | sA3 == sA5 | sA3 == sA6 | sA3 == sA7 | sA3 == sA8 |
+    sA4 == sA1 | sA4 == sA2 | sA4 == sA3 | sA4 == sA4 | sA4 == sA5 | sA4 == sA6 | sA4 == sA7 | sA4 == sA8 |
+    sA5 == sA1 | sA5 == sA2 | sA5 == sA3 | sA5 == sA4 | sA5 == sA5 | sA5 == sA6 | sA5 == sA7 | sA5 == sA8 |
+    sA6 == sA1 | sA6 == sA2 | sA6 == sA3 | sA6 == sA4 | sA6 == sA5 | sA6 == sA6 | sA6 == sA7 | sA6 == sA8 |
+    sA7 == sA1 | sA7 == sA2 | sA7 == sA3 | sA7 == sA4 | sA7 == sA5 | sA7 == sA6 | sA7 == sA7 | sA7 == sA8 |
+    sA8 == sA1 | sA8 == sA2 | sA8 == sA3 | sA8 == sA4 | sA8 == sA5 | sA8 == sA6 | sA8 == sA7 | sA8 == sA8 |
 
-    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
-    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
-    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
-    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
-    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
-    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
-    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
-    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+    sA1 == sA1 | sA1 == sA2 | sA1 == sA3 | sA1 == sA4 | sA1 == sA5 | sA1 == sA6 | sA1 == sA7 | sA1 == sA8 |
+    sA2 == sA1 | sA2 == sA2 | sA2 == sA3 | sA2 == sA4 | sA2 == sA5 | sA2 == sA6 | sA2 == sA7 | sA2 == sA8 |
+    sA3 == sA1 | sA3 == sA2 | sA3 == sA3 | sA3 == sA4 | sA3 == sA5 | sA3 == sA6 | sA3 == sA7 | sA3 == sA8 |
+    sA4 == sA1 | sA4 == sA2 | sA4 == sA3 | sA4 == sA4 | sA4 == sA5 | sA4 == sA6 | sA4 == sA7 | sA4 == sA8 |
+    sA5 == sA1 | sA5 == sA2 | sA5 == sA3 | sA5 == sA4 | sA5 == sA5 | sA5 == sA6 | sA5 == sA7 | sA5 == sA8 |
+    sA6 == sA1 | sA6 == sA2 | sA6 == sA3 | sA6 == sA4 | sA6 == sA5 | sA6 == sA6 | sA6 == sA7 | sA6 == sA8 |
+    sA7 == sA1 | sA7 == sA2 | sA7 == sA3 | sA7 == sA4 | sA7 == sA5 | sA7 == sA6 | sA7 == sA7 | sA7 == sA8 |
+    sA8 == sA1 | sA8 == sA2 | sA8 == sA3 | sA8 == sA4 | sA8 == sA5 | sA8 == sA6 | sA8 == sA7 | sA8 == sA8 |
 
-    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
-    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
-    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
-    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
-    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
-    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
-    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
-    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
+    sA1 == sA1 | sA1 == sA2 | sA1 == sA3 | sA1 == sA4 | sA1 == sA5 | sA1 == sA6 | sA1 == sA7 | sA1 == sA8 |
+    sA2 == sA1 | sA2 == sA2 | sA2 == sA3 | sA2 == sA4 | sA2 == sA5 | sA2 == sA6 | sA2 == sA7 | sA2 == sA8 |
+    sA3 == sA1 | sA3 == sA2 | sA3 == sA3 | sA3 == sA4 | sA3 == sA5 | sA3 == sA6 | sA3 == sA7 | sA3 == sA8 |
+    sA4 == sA1 | sA4 == sA2 | sA4 == sA3 | sA4 == sA4 | sA4 == sA5 | sA4 == sA6 | sA4 == sA7 | sA4 == sA8 |
+    sA5 == sA1 | sA5 == sA2 | sA5 == sA3 | sA5 == sA4 | sA5 == sA5 | sA5 == sA6 | sA5 == sA7 | sA5 == sA8 |
+    sA6 == sA1 | sA6 == sA2 | sA6 == sA3 | sA6 == sA4 | sA6 == sA5 | sA6 == sA6 | sA6 == sA7 | sA6 == sA8 |
+    sA7 == sA1 | sA7 == sA2 | sA7 == sA3 | sA7 == sA4 | sA7 == sA5 | sA7 == sA6 | sA7 == sA7 | sA7 == sA8 |
+    sA8 == sA1 | sA8 == sA2 | sA8 == sA3 | sA8 == sA4 | sA8 == sA5 | sA8 == sA6 | sA8 == sA7 | sA8 == sA8 |
 
-    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
-    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
-    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
-    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
-    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
-    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
-    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
-    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |
-
-    lsA1 == lsA1 | lsA1 == lsA2 | lsA1 == lsA3 | lsA1 == lsA4 | lsA1 == lsA5 | lsA1 == lsA6 | lsA1 == lsA7 | lsA1 == lsA8 |
-    lsA2 == lsA1 | lsA2 == lsA2 | lsA2 == lsA3 | lsA2 == lsA4 | lsA2 == lsA5 | lsA2 == lsA6 | lsA2 == lsA7 | lsA2 == lsA8 |
-    lsA3 == lsA1 | lsA3 == lsA2 | lsA3 == lsA3 | lsA3 == lsA4 | lsA3 == lsA5 | lsA3 == lsA6 | lsA3 == lsA7 | lsA3 == lsA8 |
-    lsA4 == lsA1 | lsA4 == lsA2 | lsA4 == lsA3 | lsA4 == lsA4 | lsA4 == lsA5 | lsA4 == lsA6 | lsA4 == lsA7 | lsA4 == lsA8 |
-    lsA5 == lsA1 | lsA5 == lsA2 | lsA5 == lsA3 | lsA5 == lsA4 | lsA5 == lsA5 | lsA5 == lsA6 | lsA5 == lsA7 | lsA5 == lsA8 |
-    lsA6 == lsA1 | lsA6 == lsA2 | lsA6 == lsA3 | lsA6 == lsA4 | lsA6 == lsA5 | lsA6 == lsA6 | lsA6 == lsA7 | lsA6 == lsA8 |
-    lsA7 == lsA1 | lsA7 == lsA2 | lsA7 == lsA3 | lsA7 == lsA4 | lsA7 == lsA5 | lsA7 == lsA6 | lsA7 == lsA7 | lsA7 == lsA8 |
-    lsA8 == lsA1 | lsA8 == lsA2 | lsA8 == lsA3 | lsA8 == lsA4 | lsA8 == lsA5 | lsA8 == lsA6 | lsA8 == lsA7 | lsA8 == lsA8 |    
+    sA1 == sA1 | sA1 == sA2 | sA1 == sA3 | sA1 == sA4 | sA1 == sA5 | sA1 == sA6 | sA1 == sA7 | sA1 == sA8 |
+    sA2 == sA1 | sA2 == sA2 | sA2 == sA3 | sA2 == sA4 | sA2 == sA5 | sA2 == sA6 | sA2 == sA7 | sA2 == sA8 |
+    sA3 == sA1 | sA3 == sA2 | sA3 == sA3 | sA3 == sA4 | sA3 == sA5 | sA3 == sA6 | sA3 == sA7 | sA3 == sA8 |
+    sA4 == sA1 | sA4 == sA2 | sA4 == sA3 | sA4 == sA4 | sA4 == sA5 | sA4 == sA6 | sA4 == sA7 | sA4 == sA8 |
+    sA5 == sA1 | sA5 == sA2 | sA5 == sA3 | sA5 == sA4 | sA5 == sA5 | sA5 == sA6 | sA5 == sA7 | sA5 == sA8 |
+    sA6 == sA1 | sA6 == sA2 | sA6 == sA3 | sA6 == sA4 | sA6 == sA5 | sA6 == sA6 | sA6 == sA7 | sA6 == sA8 |
+    sA7 == sA1 | sA7 == sA2 | sA7 == sA3 | sA7 == sA4 | sA7 == sA5 | sA7 == sA6 | sA7 == sA7 | sA7 == sA8 |
+    sA8 == sA1 | sA8 == sA2 | sA8 == sA3 | sA8 == sA4 | sA8 == sA5 | sA8 == sA6 | sA8 == sA7 | sA8 == sA8 |    
 end
 
-declare lnElapsed = tack(lnStart)
+let nElapsed = tack(nStart)
 
-println("Loop " & lnLoopTime & " elapsed " & lnElapsed & " equal " & (lnElapsed == lnLoopTime))
+println("Loop " & nLoopTime & " elapsed " & nElapsed & " equal " & (nElapsed == nLoopTime))

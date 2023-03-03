@@ -5,5 +5,5 @@
  Date: 2023-02-25
 """
 
-declare lsA = "a", lsB = "b"
-lsA + lsB = "value" # Invalid assignment target
+let sA = "a", sB = "b"
+sA + sB = "value" # Invalid assignment target

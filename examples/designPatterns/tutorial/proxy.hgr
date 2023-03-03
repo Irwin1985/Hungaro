@@ -14,55 +14,55 @@
     Date: 2023-02-28
 """
 
-declare lcImage
+def cImage
     -pDisplay()
 end
 
-declare lcRealImage as lcImage
+def cRealImage as cImage
     sFileName = ""
 
     pInit(psFileName)
-        sFileName = psFileName
+        poThis.sFileName = psFileName
         pLoadFromDisk()        
     end
 
     pDisplay
-        println("Displaying " & sFileName)
+        println("Displaying " & poThis.sFileName)
     end
 
     pLoadFromDisk
-        println("Loading " & sFileName)
+        println("Loading " & poThis.sFileName)
     end
 end
 
-declare lcProxyImage as lcImage
+def cProxyImage as cImage
     oRealImage = null
     sFileName = ""
 
     pInit(psFileName)
-        sFileName = psFileName
+        poThis.sFileName = psFileName
     end
 
     pDisplay
-        if oRealImage == null
-            oRealImage = new lcRealImage(sFileName)
+        if poThis.oRealImage == null
+            poThis.oRealImage = new cRealImage(poThis.sFileName)
         end
-        oRealImage.pDisplay()
+        poThis.oRealImage.pDisplay()
     end
 end
 
-declare lpMain
-    declare loImage = new lcProxyImage("test_10mb.jpg")
+def pMain
+    let oImage = new cProxyImage("test_10mb.jpg")
 
     # Image will be loaded from disk
-    loImage.pDisplay()
+    oImage.pDisplay()
     println("")
 
     # Image will not be loaded from disk
-    loImage.pDisplay()
+    oImage.pDisplay()
 end
 
-lpMain()
+pMain()
 
 # Output:
 # Loading test_10mb.jpg

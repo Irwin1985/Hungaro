@@ -6,10 +6,10 @@
 """
 
 
-declare lcFoo
+def cFoo
     fReturnSelf
-        return lcFoo
+        return cFoo
     end
 end
 
-println(new lcFoo().fReturnSelf()) # prints Class lcFoo
+println(new cFoo().fReturnSelf()) # prints Class lcFoo

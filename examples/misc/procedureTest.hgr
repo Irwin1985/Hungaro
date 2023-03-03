@@ -5,13 +5,13 @@
  Date: 2023-02-23
 """
 
-declare lpFoo1
+def pFoo1
     println("1.5")
 end
 
-declare lpFoo2
+def pFoo2
     println("5.6")
 end
 
-lpFoo1() # 1.5
-lpFoo2() # 5.6
+pFoo1() # 1.5
+pFoo2() # 5.6

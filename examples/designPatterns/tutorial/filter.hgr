@@ -16,149 +16,149 @@
     Date: 2023-02-28
 """
 
-declare lcPerson
+def cPerson
     sName = ""
     sGender = ""
     sMaritalStatus = ""
 
     pInit(psName, psGender, psMaritalStatus)
-        sName = psName
-        sGender = psGender
-        sMaritalStatus = psMaritalStatus
+        poThis.sName = psName
+        poThis.sGender = psGender
+        poThis.sMaritalStatus = psMaritalStatus
     end
 
     fGetName
-        return sName
+        return poThis.sName
     end
 
     fGetGender
-        return sGender
+        return poThis.sGender
     end
 
     fGetMaritalStatus
-        return sMaritalStatus
+        return poThis.sMaritalStatus
     end
 end
 
-declare lcCriteria
+def cCriteria
     fMeetCriteria(paPersons)
         return paPersons
     end
 end
 
-declare lcCriteriaMale as lcCriteria
+def cCriteriaMale as cCriteria
     fMeetCriteria(paPersons)
-        declare laMalePersons = []
-        for each lvPerson in paPersons
-            if lvPerson.fGetGender() == "MALE"
-                laMalePersons.push(lvPerson)
+        let aMalePersons = []
+        for each vPerson in paPersons
+            if vPerson.fGetGender() == "MALE"
+                aMalePersons.push(vPerson)
             end
         end
 
-        return laMalePersons
+        return aMalePersons
     end
 end
 
-declare lcCriteriaFemale as lcCriteria
+def cCriteriaFemale as cCriteria
     fMeetCriteria(paPersons)
-        declare laFemalePersons = []
-        for each lvPerson in paPersons
-            if lvPerson.fGetGender() == "FEMALE"
-                laFemalePersons.push(lvPerson)
+        let aFemalePersons = []
+        for each vPerson in paPersons
+            if vPerson.fGetGender() == "FEMALE"
+                aFemalePersons.push(vPerson)
             end
         end
 
-        return laFemalePersons
+        return aFemalePersons
     end
 end
 
-declare lcCriteriaSingle as lcCriteria
+def cCriteriaSingle as cCriteria
     fMeetCriteria(paPersons)
-        declare laSinglePersons = []
-        for each lvPerson in paPersons
-            if lvPerson.fGetMaritalStatus() == "SINGLE"
-                laSinglePersons.push(lvPerson)
+        let aSinglePersons = []
+        for each vPerson in paPersons
+            if vPerson.fGetMaritalStatus() == "SINGLE"
+                aSinglePersons.push(vPerson)
             end
         end
 
-        return laSinglePersons
+        return aSinglePersons
     end
 end
 
-declare lcAndCriteria as lcCriteria
+def cAndCriteria as cCriteria
     oCriteria = null
     oOtherCriteria = null
     
     pInit(poCriteria, poOtherCriteria)
-        oCriteria = poCriteria
-        oOtherCriteria = poOtherCriteria
+        poThis.oCriteria = poCriteria
+        poThis.oOtherCriteria = poOtherCriteria
     end
 
     fMeetCriteria(paPersons)
-        declare laFirstCriteriaPersons = oCriteria.fMeetCriteria(paPersons)
-        return oOtherCriteria.fMeetCriteria(laFirstCriteriaPersons)
+        let aFirstCriteriaPersons = poThis.oCriteria.fMeetCriteria(paPersons)
+        return poThis.oOtherCriteria.fMeetCriteria(aFirstCriteriaPersons)
     end
 end
 
-declare lcOrCriteria as lcCriteria
+def cOrCriteria as cCriteria
     oCriteria = null
     oOtherCriteria = null
     
     pInit(poCriteria, poOtherCriteria)
-        oCriteria = poCriteria
-        oOtherCriteria = poOtherCriteria
+        poThis.oCriteria = poCriteria
+        poThis.oOtherCriteria = poOtherCriteria
     end
 
     fMeetCriteria(paPersons)
-        declare laFirstCriteriaItems = oCriteria.fMeetCriteria(paPersons)
-        declare laOtherCriteriaItems = oOtherCriteria.fMeetCriteria(paPersons)
+        let aFirstCriteriaItems = poThis.oCriteria.fMeetCriteria(paPersons)
+        let aOtherCriteriaItems = poThis.oOtherCriteria.fMeetCriteria(paPersons)
 
-        for each lvPerson in laOtherCriteriaItems
-            if !laFirstCriteriaItems.contains(lvPerson)
-                laFirstCriteriaItems.push(lvPerson)
+        for each vPerson in aOtherCriteriaItems
+            if !aFirstCriteriaItems.contains(vPerson)
+                aFirstCriteriaItems.push(vPerson)
             end
         end
 
-        return laFirstCriteriaItems
+        return aFirstCriteriaItems
     end
 end
 
-declare lpPrintPersons(paPersons)
-    for each lvPerson in paPersons
-        println("Person: [Name : " & lvPerson.fGetName() & ", Gender: " & lvPerson.fGetGender() & ", Marital Status: " & lvPerson.fGetMaritalStatus() & "]")
+def pPrintPersons(paPersons)
+    for each vPerson in paPersons
+        println("Person: [Name : " & vPerson.fGetName() & ", Gender: " & vPerson.fGetGender() & ", Marital Status: " & vPerson.fGetMaritalStatus() & "]")
     end
 end
 
-declare lpMain
-    declare laPersons = []
+def pMain
+    let aPersons = []
 
-    laPersons.push(new lcPerson("Robert", "MALE", "SINGLE"))
-    laPersons.push(new lcPerson("John", "MALE", "MARRIED"))
-    laPersons.push(new lcPerson("Laura", "FEMALE", "MARRIED"))
-    laPersons.push(new lcPerson("Diana", "FEMALE", "SINGLE"))
-    laPersons.push(new lcPerson("Mike", "MALE", "SINGLE"))
-    laPersons.push(new lcPerson("Bobby", "MALE", "SINGLE"))
+    aPersons.push(new cPerson("Robert", "MALE", "SINGLE"))
+    aPersons.push(new cPerson("John", "MALE", "MARRIED"))
+    aPersons.push(new cPerson("Laura", "FEMALE", "MARRIED"))
+    aPersons.push(new cPerson("Diana", "FEMALE", "SINGLE"))
+    aPersons.push(new cPerson("Mike", "MALE", "SINGLE"))
+    aPersons.push(new cPerson("Bobby", "MALE", "SINGLE"))
 
-    declare loMale = new lcCriteriaMale()
-    declare loFemale = new lcCriteriaFemale()
-    declare loSingle = new lcCriteriaSingle()
-    declare loSingleMale = new lcAndCriteria(loSingle, loMale)
-    declare loSingleOrFemale = new lcOrCriteria(loSingle, loFemale)
+    let oMale = new cCriteriaMale()
+    let oFemale = new cCriteriaFemale()
+    let oSingle = new cCriteriaSingle()
+    let oSingleMale = new cAndCriteria(oSingle, oMale)
+    let oSingleOrFemale = new cOrCriteria(oSingle, oFemale)
 
     println("Males: ")
-    lpPrintPersons(loMale.fMeetCriteria(laPersons))
+    pPrintPersons(oMale.fMeetCriteria(aPersons))
 
     println("\nFemales: ")
-    lpPrintPersons(loFemale.fMeetCriteria(laPersons))
+    pPrintPersons(oFemale.fMeetCriteria(aPersons))
 
     println("\nSingle Males: ")
-    lpPrintPersons(loSingleMale.fMeetCriteria(laPersons))
+    pPrintPersons(oSingleMale.fMeetCriteria(aPersons))
 
     println("\nSingle Or Females: ")
-    lpPrintPersons(loSingleOrFemale.fMeetCriteria(laPersons))
+    pPrintPersons(oSingleOrFemale.fMeetCriteria(aPersons))
 end
 
-lpMain()
+pMain()
 
 """
 Output

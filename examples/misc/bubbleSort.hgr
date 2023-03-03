@@ -5,31 +5,31 @@
 """
 
 # NOTE: procedures does not return values
-declare lpBubbleSort(paList) # `lp` stands for `local procedure`
-    declare lbSorted = false, lnLength = paList.len()
-    while not lbSorted
-        lbSorted = true
-        lnLength -= 1
-        for lnIndex = 0 to lnLength - 1
-            if paList[lnIndex+1] < paList[lnIndex]
-                declare lnTemp = paList[lnIndex]
-                paList[lnIndex] = paList[lnIndex+1]
-                paList[lnIndex+1] = lnTemp
-                lbSorted = false
+def pBubbleSort(paList) # `p` stands for `local procedure`
+    let bSorted = false, nLength = paList.len()
+    while not bSorted
+        bSorted = true
+        nLength -= 1
+        for nIndex = 0 to nLength - 1
+            if paList[nIndex+1] < paList[nIndex]
+                let nTemp = paList[nIndex]
+                paList[nIndex] = paList[nIndex+1]
+                paList[nIndex+1] = nTemp
+                bSorted = false
             end
         end
     end
 end
 
 # Driver code to test above
-declare laNumbers = [12, 7, 13, 5, 6]
+let aNumbers = [12, 7, 13, 5, 6]
 
-println("Unsorted list: " & laNumbers)
-lpBubbleSort(laNumbers)
-println("Sorted list: " & laNumbers)
+println("Unsorted list: " & aNumbers)
+pBubbleSort(aNumbers)
+println("Sorted list: " & aNumbers)
 
 # Check the output:
-if laNumbers.equals([5, 6, 7, 12, 13])
+if aNumbers.equals([5, 6, 7, 12, 13])
     println("Test passed")
 else
     println("Test failed")

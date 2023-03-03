@@ -5,16 +5,16 @@
  Date: 2023-02-26
 """
 
-declare loF
+let oF
 
-declare lcFoo
+def cFoo
     pMethod(psParam)
-        declare lpF
+        def pF
             println(psParam)
-        end
-        loF = lpF
+        end        
+        oF = pF
     end
 end
 
-new lcFoo().pMethod("Hello World")
-loF() # Hello World
+new cFoo().pMethod("Hello World")
+oF() # error: poThis is null

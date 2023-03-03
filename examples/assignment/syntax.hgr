@@ -5,7 +5,7 @@
  Date: 2023-02-25
 """
 
-declare lsA = "before"
-declare lsC = lsA = "var"
-println(lsA) # var
-println(lsC) # var
+let sA = "before"
+let sC = sA = "var"
+println(sA) # var
+println(sC) # var

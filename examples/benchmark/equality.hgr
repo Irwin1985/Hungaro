@@ -5,25 +5,25 @@
  Date: 2023-02-25
 """
 
-declare lnI = 0
-declare lnLoopStart = tick()
+let nI = 0
+let nLoopStart = tick()
 
 # NOTE: the character | is used to separate the expressions
-while lnI < 10000000
-    lnI = lnI + 1
+while nI < 10000000
+    nI = nI + 1
     1    | 1     | 1     | 2     | 1     | null  | 1     | "str"  | 1    | true | null | null | null
     1    | null  | "str" | null  | true  | true  | true  | true   | 1    | true | false
     true | "str" | true  | null  | "str" | "str" | "str" | "stru" | "str"
     1    | "str" | null  | "str" | true
 end
 
-declare lnLoopTime = tack(lnLoopStart)
+let nLoopTime = tack(nLoopStart)
 
-declare lnStart = tick()
+let nStart = tick()
 
-lnI = 0
-while lnI < 10000000
-  lnI = lnI + 1
+nI = 0
+while nI < 10000000
+  nI = nI + 1
   1 == 1        | 1 == 2        | 1 == null         | 1 == "str"
   1 == true     | null == null  | null == 1         | null == "str"
   null == true  | true == true  | true == 1         | true == false
@@ -31,6 +31,6 @@ while lnI < 10000000
   "str" == 1    | "str" == null | "str" == true
 end
 
-declare lnElapsed = tack(lnStart)
+let nElapsed = tack(nStart)
 
-println("loop: " & lnLoopTime & " elapsed: " & lnElapsed & " equals: " & (lnElapsed - lnLoopTime))
+println("loop: " & nLoopTime & " elapsed: " & nElapsed & " equals: " & (nElapsed - nLoopTime))

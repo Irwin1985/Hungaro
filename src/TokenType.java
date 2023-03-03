@@ -12,7 +12,8 @@ public enum TokenType {
 
     // keywords
     AS,
-    DECLARE,
+    LET,
+    DEF,
     IF,
     ELSE,
     ECHO,
@@ -25,7 +26,6 @@ public enum TokenType {
     CASE,
     OTHERWISE,
     NEW,
-    // PRINT,
     RELEASE,
     DEFER,
     END,

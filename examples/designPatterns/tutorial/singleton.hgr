@@ -18,27 +18,27 @@
     Date: 2023-02-28
 """
 
-declare lcSingleObject
+def cSingleObject
     # Create an object of SingleObject
     oInstance = null
 
     pInit(psClassName, psName, pnAge)
-        oInstance = new object(psClassName, psName, pnAge)
+        poThis.oInstance = new object(psClassName, psName, pnAge)
     end
 
     fGetInstance
-        return oInstance
+        return poThis.oInstance
     end
 end
 
 # demo class
-declare lcPerson
+def cPerson
     sName = ""
     nAge = 0
 
     pInit(psName, pnAge)
-        sName = psName
-        nAge = pnAge
+        poThis.sName = psName
+        poThis.nAge = pnAge
     end
 
     pShowMessage
@@ -47,11 +47,11 @@ declare lcPerson
 end
 
 # main procedure
-declare lpMain  
-    declare loObject = new lcSingleObject("lcPerson", "Irwin", 37).fGetInstance()
+def pMain  
+    let oObject = new cSingleObject("cPerson", "Irwin", 37).fGetInstance()
 
     # show the message
-    loObject.pShowMessage()
+    oObject.pShowMessage()
 end
 
-lpMain()
+pMain()

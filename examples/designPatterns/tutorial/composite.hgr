@@ -17,7 +17,7 @@
 """
 
 # Employee class
-declare lcEmployee
+def cEmployee
     sName = ""
     sDept = ""
     nSalary = 0.0
@@ -25,61 +25,61 @@ declare lcEmployee
 
     # Constructor
     pInit(psName, psDept, pnSalary)
-        sName = psName
-        sDept = psDept
-        nSalary = pnSalary
+        poThis.sName = psName
+        poThis.sDept = psDept
+        poThis.nSalary = pnSalary
     end
 
     pAdd(poEmployee)
-        aSubordinates.push(poEmployee)
+        poThis.aSubordinates.push(poEmployee)
     end
 
     pRemove(poEmployee)
-        aSubordinates.remove(poEmployee)
+        poThis.aSubordinates.remove(poEmployee)
     end
 
     fGetSubordinates
-        return aSubordinates.clone() # Return a copy of the array
+        return poThis.aSubordinates.clone() # Return a copy of the array
     end
 
     fToString
-        return "Employee :[ Name : " & sName & ", dept : " & sDept & ", salary :" & nSalary & " ]"
+        return "Employee :[ Name : " & poThis.sName & ", dept : " & poThis.sDept & ", salary :" & poThis.nSalary & " ]"
     end
 end
 
-declare lpMain
-    declare loCEO = new lcEmployee("John", "CEO", 30000.0)
-    declare loHeadSales = new lcEmployee("Robert", "Head Sales", 20000.0)
-    declare loHeadMarketing = new lcEmployee("Michel", "Head Marketing", 20000.0)
+def pMain
+    let oCEO = new cEmployee("John", "CEO", 30000.0)
+    let oHeadSales = new cEmployee("Robert", "Head Sales", 20000.0)
+    let oHeadMarketing = new cEmployee("Michel", "Head Marketing", 20000.0)
 
-    declare loClerk1 = new lcEmployee("Laura", "Marketing", 10000.0)
-    declare loClerk2 = new lcEmployee("Bob", "Marketing", 10000.0)
+    let oClerk1 = new cEmployee("Laura", "Marketing", 10000.0)
+    let oClerk2 = new cEmployee("Bob", "Marketing", 10000.0)
 
-    declare loSalesExecutive1 = new lcEmployee("Richard", "Sales", 10000.0)
-    declare loSalesExecutive2 = new lcEmployee("Rob", "Sales", 10000.0)
+    let oSalesExecutive1 = new cEmployee("Richard", "Sales", 10000.0)
+    let oSalesExecutive2 = new cEmployee("Rob", "Sales", 10000.0)
 
-    loCEO.pAdd(loHeadSales)
-    loCEO.pAdd(loHeadMarketing)
+    oCEO.pAdd(oHeadSales)
+    oCEO.pAdd(oHeadMarketing)
 
-    loHeadSales.pAdd(loSalesExecutive1)
-    loHeadSales.pAdd(loSalesExecutive2)
+    oHeadSales.pAdd(oSalesExecutive1)
+    oHeadSales.pAdd(oSalesExecutive2)
 
-    loHeadMarketing.pAdd(loClerk1)
-    loHeadMarketing.pAdd(loClerk2)
+    oHeadMarketing.pAdd(oClerk1)
+    oHeadMarketing.pAdd(oClerk2)
 
     # Print all employees of the organization
-    println(loCEO.fToString())
+    println(oCEO.fToString())
 
-    for each lvHeadEmployee in loCEO.fGetSubordinates()
-        println(lvHeadEmployee.fToString())
+    for each vHeadEmployee in oCEO.fGetSubordinates()
+        println(vHeadEmployee.fToString())
 
-        for each lvEmployee in lvHeadEmployee.fGetSubordinates()
-            println(lvEmployee.fToString())
+        for each vEmployee in vHeadEmployee.fGetSubordinates()
+            println(vEmployee.fToString())
         end
     end
 end
 
-lpMain()
+pMain()
 
 # Output
 # Employee :[ Name : John, dept : CEO, salary :30000 ]

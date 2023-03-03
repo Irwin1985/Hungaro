@@ -5,15 +5,15 @@
  Date: 2023-02-26
 """
 
-declare loF;
+let oF = null
 
-declare lpFoo(psParam)
-    declare lpInner
+def pFoo(psParam)
+    def pInner
         println(psParam)
     end
-    loF = lpInner
+    oF = pInner
 end
 
-lpFoo("Hello, world!")
+pFoo("Hello, world!")
 
-loF() # Hello, world!
+oF() # Hello, world!

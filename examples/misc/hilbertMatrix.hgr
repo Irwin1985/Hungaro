@@ -5,14 +5,14 @@
  Date: 2023-02-23
 """
 
-declare lnSize = 5
-declare laRow = [] * lnSize = 0
-declare laMatrix = [] * lnSize = laRow
+let nSize = 5
+let aRow = [] * nSize = 0
+let aMatrix = [] * nSize = aRow
 
-for lnI = 0 to lnSize - 1
-    for lnJ = 0 to lnSize - 1
-        laMatrix[lnI][lnJ] = 1 / ((lnI + 1) + (lnJ + 1) - 1)
+for nI = 0 to nSize - 1
+    for nJ = 0 to nSize - 1
+        aMatrix[nI][nJ] = 1 / ((nI + 1) + (nJ + 1) - 1)
     end    
 end
 
-println(laMatrix)
+println(aMatrix)

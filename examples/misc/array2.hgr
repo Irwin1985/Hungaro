@@ -4,18 +4,18 @@
  Date: 2023-02-22
 """
 
-declare laNotes = []
+let aNotes = []
 
 # populate the array using a loop
-for lnI = 1 to 10
-    laNotes.push(lnI)
+for nI = 1 to 10
+    aNotes.push(nI)
 end
 
 # iterate over the array
-for lnI = 0 to laNotes.len()-1
-    println(laNotes[lnI])
+for nI = 0 to aNotes.len()-1
+    println(aNotes[nI])
 end
 
 # shuffle the array
-laNotes.shuffle()
-println(laNotes)
+aNotes.shuffle()
+println(aNotes)

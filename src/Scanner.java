@@ -79,7 +79,12 @@ public class Scanner {
 
         // Keywords        
         new Spec(Pattern.compile("^\\bas\\b"), TokenType.AS,Category.KEYWORD),
-        new Spec(Pattern.compile("^\\bdeclare\\b"), TokenType.DECLARE,Category.KEYWORD),
+        // new Spec(Pattern.compile("^\\bdeclare\\b"), TokenType.DECLARE,Category.KEYWORD),
+        
+        // declare has been replaced by def and let.
+        new Spec(Pattern.compile("^\\blet\\b"), TokenType.LET,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\bdef\\b"), TokenType.DEF,Category.KEYWORD),
+
         new Spec(Pattern.compile("^\\bif\\b"), TokenType.IF,Category.KEYWORD),
         new Spec(Pattern.compile("^\\belse\\b"), TokenType.ELSE,Category.KEYWORD),
         new Spec(Pattern.compile("^\\becho\\b"), TokenType.ECHO,Category.KEYWORD),
@@ -123,51 +128,42 @@ public class Scanner {
         new Spec(Pattern.compile("^%"), TokenType.FACTOR, Category.GENERIC),
         new Spec(Pattern.compile("^\\^"), TokenType.EXPONENT, Category.POW),
 
-        // Local variables
-        new Spec(Pattern.compile("^l[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_VARIABLE),
-        // Global variables
+        // Local variables eg: sName
+        new Spec(Pattern.compile("^[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_VARIABLE),
+        // Global variables eg: gsName
         new Spec(Pattern.compile("^g[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_VARIABLE),
-
-        // Class properties
-        new Spec(Pattern.compile("^[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_PROPERTY),
-
-        // Variadic Parameters
-        new Spec(Pattern.compile("^...pa([A-Z]([a-z0-9]+)?)+"), TokenType.PARAMETER, Category.VARIADIC),
-        // Simple Parameters
-        new Spec(Pattern.compile("^p[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.PARAMETER, Category.PARAMETER),
-
-        // Class function
-        new Spec(Pattern.compile("^f([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_FUNCTION),
-
-        // Class procedure
-        new Spec(Pattern.compile("^p([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.CLASS_PROCEDURE),
-
-        // Local functions
-        new Spec(Pattern.compile("^lf([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_FUNCTION),
-        // Global functions
+        
+        // Local function eg: fMyClass
+        new Spec(Pattern.compile("^f([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_FUNCTION),
+        // Global functions eg: gfMyClass
         new Spec(Pattern.compile("^gf([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_FUNCTION),
-
-        // Local procedures
-        new Spec(Pattern.compile("^lp([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_PROCEDURE),
-        // Global procedures
+        
+        // Local procedure eg: pMyClass
+        new Spec(Pattern.compile("^p([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_PROCEDURE),
+        // Global procedures eg: gpMyClass
         new Spec(Pattern.compile("^gp([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_PROCEDURE),
 
-        // Local class
-        new Spec(Pattern.compile("^lc([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_CLASS),
-        // Global class
+        // Local class eg: cMyClass
+        new Spec(Pattern.compile("^c([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_CLASS),
+        // Global class eg: gcMyClass
         new Spec(Pattern.compile("^gc([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_CLASS),
 
-        // Local library
-        new Spec(Pattern.compile("^ll([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_MODULE),
-        // Global library
+        // Local library eg: lMyLibrary
+        new Spec(Pattern.compile("^l([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.LOCAL_MODULE),
+        // Global library eg: glMyLibrary
         new Spec(Pattern.compile("^gl([A-Z]([a-z0-9]+)?)+"), TokenType.IDENTIFIER, Category.GLOBAL_MODULE),
 
-        // Local constants
+        // Local constants eg: LOCAL_CONSTANT
         new Spec(Pattern.compile("^[A-Z][A-Z_0-9]*"), TokenType.IDENTIFIER, Category.LOCAL_CONSTANT),
-        // Global constants
+        // Global constants eg: _GLOBAL_CONSTANT
         new Spec(Pattern.compile("^_[A-Z_0-9]*"), TokenType.IDENTIFIER, Category.GLOBAL_CONSTANT),
 
-        // Identifier
+        // Simple Parameters eg: psName
+        new Spec(Pattern.compile("^p[dtvsanbom]([A-Z]([a-z0-9]+)?)+"), TokenType.PARAMETER, Category.PARAMETER),
+        // Variadic Parameters eg: ...paName
+        new Spec(Pattern.compile("^...pa([A-Z]([a-z0-9]+)?)+"), TokenType.PARAMETER, Category.VARIADIC),
+        
+        // Identifier eg: foo, bar, baz
         new Spec(Pattern.compile("^\\w+"), TokenType.IDENTIFIER, Category.IDENTIFIER),
 
         // Symbols and delimiters

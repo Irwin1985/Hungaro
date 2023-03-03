@@ -6,7 +6,7 @@
 """
 
 # Builder interface defines all possible ways to configure a product.
-declare lcBuilder
+def cBuilder
     -pSetCarType(poType)
     -pSetSeats(pnSeats)
     -pSetEngine(poEngine)
@@ -16,19 +16,19 @@ declare lcBuilder
 end
 
 # Car Type constants.
-declare CITY_CAR    = "City Car", 
-        SPORTS_CAR  = "Sports Car", 
-        SUV         = "SUV"
+let CITY_CAR    = "City Car", 
+    SPORTS_CAR  = "Sports Car", 
+    SUV         = "SUV"
 
 # Transmission constants.
-declare SINGLE_SPEED   = "Single Speed", 
-        MANUAL         = "Manual", 
-        AUTOMATIC      = "Automatic", 
-        SEMI_AUTOMATIC = "Semi-Automatic"
+let SINGLE_SPEED   = "Single Speed", 
+    MANUAL         = "Manual", 
+    AUTOMATIC      = "Automatic", 
+    SEMI_AUTOMATIC = "Semi-Automatic"
 
 
 # Concrete builders implement steps defined in the common interface.
-declare lcCarBuilder as lcBuilder
+def cCarBuilder as cBuilder
     sCarType = ""
     nSeats = 0
     oEngine = null
@@ -37,31 +37,31 @@ declare lcCarBuilder as lcBuilder
     oGPSNavigator = null
 
     pSetCarType(psType)
-        sCarType = psType
+        poThis.sCarType = psType
     end
 
     pSetSeats(pnSeats)
-        nSeats = pnSeats
+        poThis.nSeats = pnSeats
     end
 
     pSetEngine(poEngine)
-        oEngine = poEngine
+        poThis.oEngine = poEngine
     end
 
     pSetTransmission(psTransmission)
-        sTransmission = psTransmission
+        poThis.sTransmission = psTransmission
     end
 
     pSetTripComputer(poTripComputer)
-        oTripComputer = poTripComputer
+        poThis.oTripComputer = poTripComputer
     end
 
     pSetGPSNavigator(poGPSNavigator)
-        oGPSNavigator = poGPSNavigator
+        poThis.oGPSNavigator = poGPSNavigator
     end
 
     fGetResult
-        return new lcCar(sCarType, nSeats, oEngine, sTransmission, oTripComputer, oGPSNavigator)
+        return new cCar(poThis.sCarType, poThis.nSeats, poThis.oEngine, poThis.sTransmission, poThis.oTripComputer, poThis.oGPSNavigator)
     end
 end
 
@@ -74,7 +74,7 @@ end
     configured with different features.
 """
 
-declare lcCarManualBuilder as lcBuilder
+def cCarManualBuilder as cBuilder
     sCarType = ""
     nSeats = 0
     oEngine = null
@@ -83,36 +83,36 @@ declare lcCarManualBuilder as lcBuilder
     oGPSNavigator = null
 
     pSetCarType(psType)
-        sCarType = psType
+        poThis.sCarType = psType
     end
 
     pSetSeats(pnSeats)
-        nSeats = pnSeats
+        poThis.nSeats = pnSeats
     end
 
     pSetEngine(poEngine)
-        oEngine = poEngine
+        poThis.oEngine = poEngine
     end
 
     pSetTransmission(psTransmission)
-        sTransmission = psTransmission
+        poThis.sTransmission = psTransmission
     end
 
     pSetTripComputer(poTripComputer)
-        oTripComputer = poTripComputer
+        poThis.oTripComputer = poTripComputer
     end
 
     pSetGPSNavigator(poGPSNavigator)
-        oGPSNavigator = poGPSNavigator
+        poThis.oGPSNavigator = poGPSNavigator
     end
 
     fGetResult
-        return new lcManual(sCarType, nSeats, oEngine, sTransmission, oTripComputer, oGPSNavigator)
+        return new cManual(poThis.sCarType, poThis.nSeats, poThis.oEngine, poThis.sTransmission, poThis.oTripComputer, poThis.oGPSNavigator)
     end
 end
 
 # Car is a product class.
-declare lcCar
+def cCar
     sCarType = ""
     nSeats = 0
     oEngine = null
@@ -122,54 +122,54 @@ declare lcCar
     nFuel = 0
 
     pInit(psCarType, pnSeats, poEngine, psTransmission, poTripComputer, poGPSNavigator)
-        sCarType = psCarType
-        nSeats = pnSeats
-        oEngine = poEngine
-        sTransmission = psTransmission
-        oTripComputer = poTripComputer
-        if oTripComputer != null
-            oTripComputer.pSetCar(poThis)
+        poThis.sCarType = psCarType
+        poThis.nSeats = pnSeats
+        poThis.oEngine = poEngine
+        poThis.sTransmission = psTransmission
+        poThis.oTripComputer = poTripComputer
+        if poThis.oTripComputer != null
+            poThis.oTripComputer.pSetCar(poThis)
         end
-        oGPSNavigator = poGPSNavigator
+        poThis.oGPSNavigator = poGPSNavigator
     end
 
     fGetCarType
-        return sCarType
+        return poThis.sCarType
     end
 
     fGetFuel
-        return nFuel
+        return poThis.nFuel
     end
 
     pSetFuel(pnFuel)
-        nFuel = pnFuel
+        poThis.nFuel = pnFuel
     end
 
     fGetSeats
-        return nSeats
+        return poThis.nSeats
     end
 
     fGetEngine
-        return oEngine
+        return poThis.oEngine
     end
 
     fGetTransmission
-        return sTransmission
+        return poThis.sTransmission
     end
 
     fGetTripComputer
-        return oTripComputer
+        return poThis.oTripComputer
     end
 
     fGetGPSNavigator
-        return oGPSNavigator
+        return poThis.oGPSNavigator
     end
 end
 
 # Car manual is another product. Note that is does not have the same ancestor
 # as a Car. They are not related by inheritance.
 
-declare lcManual
+def cManual
     sCarType = ""
     nSeats = 0
     oEngine = null
@@ -178,103 +178,103 @@ declare lcManual
     oGPSNavigator = null
 
     pInit(psCarType, pnSeats, poEngine, psTransmission, poTripComputer, poGPSNavigator)
-        sCarType = psCarType
-        nSeats = pnSeats
-        oEngine = poEngine
-        sTransmission = psTransmission
-        oTripComputer = poTripComputer
-        oGPSNavigator = poGPSNavigator
+        poThis.sCarType = psCarType
+        poThis.nSeats = pnSeats
+        poThis.oEngine = poEngine
+        poThis.sTransmission = psTransmission
+        poThis.oTripComputer = poTripComputer
+        poThis.oGPSNavigator = poGPSNavigator
     end
 
     fPrint        
-        declare lsInfo = ""
-        lsInfo &= "Type of car: " & sCarType & "\n"
-        lsInfo &= "Count of seats: " & nSeats & "\n"
-        lsInfo &= "Engine: volume - " & oEngine.fGetVolume() & "; mileage - " & oEngine.fGetMileage() & "\n"
-        lsInfo &= "Transmission: " & sTransmission & "\n"
-        if oTripComputer != null
-            lsInfo &= "Trip Computer: Functional" & "\n"
+        let sInfo = ""
+        sInfo &= "Type of car: " & poThis.sCarType & "\n"
+        sInfo &= "Count of seats: " & poThis.nSeats & "\n"
+        sInfo &= "Engine: volume - " & poThis.oEngine.fGetVolume() & "; mileage - " & poThis.oEngine.fGetMileage() & "\n"
+        sInfo &= "Transmission: " & poThis.sTransmission & "\n"
+        if poThis.oTripComputer != null
+            sInfo &= "Trip Computer: Functional" & "\n"
         else
-            lsInfo &= "Trip Computer: N/A" & "\n"
+            sInfo &= "Trip Computer: N/A" & "\n"
         end
-        if oGPSNavigator != null
-            lsInfo &= "GPS Navigator: Functional" & "\n"
+        if poThis.oGPSNavigator != null
+            sInfo &= "GPS Navigator: Functional" & "\n"
         else
-            lsInfo &= "GPS Navigator: N/A" & "\n"
+            sInfo &= "GPS Navigator: N/A" & "\n"
         end
-        return lsInfo
+        return sInfo
     end
 end
 
 # Engine: Just another feature of a car.
-declare lcEngine
+def cEngine
     nVolume = 0
     nMileage = 0
     bStarted = false
 
     pInit(pnVolume, pnMileage)
-        nVolume = pnVolume
-        nMileage = pnMileage
+        poThis.nVolume = pnVolume
+        poThis.nMileage = pnMileage
     end
 
     pOn
-        bStarted = true
+        poThis.bStarted = true
     end
 
     pOff
-        bStarted = false
+        poThis.bStarted = false
     end
 
     fIsStarted
-        return bStarted
+        return poThis.bStarted
     end
 
     pGo(pnMileage)
-        if bStarted
-            nMileage += pnMileage
+        if poThis.bStarted
+            poThis.nMileage += pnMileage
         else
             println("Cannot go(), you must start engine first!")
         end
     end     
 
     fGetVolume
-        return nVolume
+        return poThis.nVolume
     end
 
     fGetMileage
-        return nMileage
+        return poThis.nMileage
     end
 end
 
 # GPSNavigator: just another feature of a car.
-declare lcGPSNavigator
+def cGPSNavigator
     sRoute = "221b, Baker Street, London  to Scotland Yard, 8-10 Broadway, London"
 
     pInit(psManualRoute)
         if psManualRoute.len() > 0
-            sRoute = psManualRoute        
+            poThis.sRoute = psManualRoute        
         end
     end
 
     fGetRoute
-        return sRoute
+        return poThis.sRoute
     end
 end
 
 # TripComputer: another feature of a car.
-declare lcTripComputer
+def cTripComputer
     oCar = null
 
     pSetCar(poCar)
-        oCar = poCar
+        poThis.oCar = poCar
     end
 
     pShowFuelLevel
-        println("Fuel level: " & oCar.fGetFuel())
+        println("Fuel level: " & poThis.oCar.fGetFuel())
     end
 
     pShowStatus
-        if oCar.fGetEngine().fIsStarted()
+        if poThis.oCar.fGetEngine().fIsStarted()
             println("Car is started")
         else
             println("Car isn\'t started")
@@ -287,61 +287,61 @@ end
     through the common interface. Therefore, it may not know what product is
     being built.
 """
-declare lcDirector
+def cDirector
     pConstructSportsCar(poBuilder)
         poBuilder.pSetCarType(SPORTS_CAR)
         poBuilder.pSetSeats(2)
-        poBuilder.pSetEngine(new lcEngine(3.0, 0))
+        poBuilder.pSetEngine(new cEngine(3.0, 0))
         poBuilder.pSetTransmission(SEMI_AUTOMATIC)
-        poBuilder.pSetTripComputer(new lcTripComputer())
-        poBuilder.pSetGPSNavigator(new lcGPSNavigator(""))
+        poBuilder.pSetTripComputer(new cTripComputer())
+        poBuilder.pSetGPSNavigator(new cGPSNavigator(""))
     end
 
     pConstructCityCar(poBuilder)
         poBuilder.pSetCarType(CITY_CAR)
         poBuilder.pSetSeats(2)
-        poBuilder.pSetEngine(new lcEngine(1.2, 0))
+        poBuilder.pSetEngine(new cEngine(1.2, 0))
         poBuilder.pSetTransmission(AUTOMATIC)
-        poBuilder.pSetTripComputer(new lcTripComputer())
-        poBuilder.pSetGPSNavigator(new lcGPSNavigator(""))
+        poBuilder.pSetTripComputer(new cTripComputer())
+        poBuilder.pSetGPSNavigator(new cGPSNavigator(""))
     end
 
     pConstructSUV(poBuilder)
         poBuilder.pSetCarType(SUV)
         poBuilder.pSetSeats(4)
-        poBuilder.pSetEngine(new lcEngine(2.5, 0))
+        poBuilder.pSetEngine(new cEngine(2.5, 0))
         poBuilder.pSetTransmission(MANUAL)
-        poBuilder.pSetTripComputer(new lcTripComputer())
-        poBuilder.pSetGPSNavigator(new lcGPSNavigator(""))
+        poBuilder.pSetTripComputer(new cTripComputer())
+        poBuilder.pSetGPSNavigator(new cGPSNavigator(""))
     end
 end
 
 # Demo procedure. Everything comes together here.
-declare lpDemo
-    declare loDirector = new lcDirector()
+def pDemo
+    let oDirector = new cDirector()
     """
         Director gets the concrete builder object from the client
         (application code). That's because application knows better which
         builder to use to get a specific product.
     """
-    declare loBuilder = new lcCarBuilder()
-    loDirector.pConstructSportsCar(loBuilder)
+    let oBuilder = new cCarBuilder()
+    oDirector.pConstructSportsCar(oBuilder)
 
     """
         The final product is often retrieved from a builder object, since
         Director is not aware and not dependent on concrete builders and
         products.
     """
-    declare loCar = loBuilder.fGetResult()
-    println("Car built:\n" & loCar.fGetCarType())
+    let oCar = oBuilder.fGetResult()
+    println("Car built:\n" & oCar.fGetCarType())
 
-    declare loManualBuilder = new lcCarManualBuilder()
+    let oManualBuilder = new cCarManualBuilder()
 
     # Director may know several building recipes.
-    loDirector.pConstructSportsCar(loManualBuilder)
-    declare loCarManual = loManualBuilder.fGetResult()    
+    oDirector.pConstructSportsCar(oManualBuilder)
+    let oCarManual = oManualBuilder.fGetResult()    
     
-    println("Car manual built:\n" & loCarManual.fPrint())    
+    println("Car manual built:\n" & oCarManual.fPrint())    
 end
 
-lpDemo()
+pDemo()

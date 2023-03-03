@@ -6,14 +6,14 @@
 """
 
 
-declare lfRepeatString(pnTimes, psString)
-    declare lsResult = ""
+def fRepeatString(pnTimes, psString)
+    let sResult = ""
     
-    for lnI = 1 to pnTimes
-        lsResult += psString
+    for nI = 1 to pnTimes
+        sResult += psString
     end
 
-    return lsResult
+    return sResult
 end
 
-assert(lfRepeatString(3, "a") == "aaa")
+assert(fRepeatString(3, "a") == "aaa")

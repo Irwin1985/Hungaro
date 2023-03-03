@@ -5,33 +5,33 @@
  Date: 2023-02-26
 """
 
-declare lcTree
+def cTree
     pInit(pnDepth)
-        nDepth = pnDepth
-        if nDepth > 0
-            oA = new lcTree(nDepth - 1)
-            oB = new lcTree(nDepth - 1)
-            oC = new lcTree(nDepth - 1)
-            oD = new lcTree(nDepth - 1)
-            oE = new lcTree(nDepth - 1)
+        poThis.nDepth = pnDepth
+        if poThis.nDepth > 0
+            poThis.oA = new cTree(poThis.nDepth - 1)
+            poThis.oB = new cTree(poThis.nDepth - 1)
+            poThis.oC = new cTree(poThis.nDepth - 1)
+            poThis.oD = new cTree(poThis.nDepth - 1)
+            poThis.oE = new cTree(poThis.nDepth - 1)
         end
     end
 
     fWalk
-        if nDepth == 0
+        if poThis.nDepth == 0
             return 0
         end
-        return nDepth + oA.fWalk() + oB.fWalk() + oC.fWalk() + oD.fWalk() + oE.fWalk()
+        return poThis.nDepth + poThis.oA.fWalk() + poThis.oB.fWalk() + poThis.oC.fWalk() + poThis.oD.fWalk() + poThis.oE.fWalk()
     end
 end
 
-declare loTree = new lcTree(8)
-declare lnStart = tick()
+let oTree = new cTree(8)
+let nStart = tick()
 
-for lnI = 0 to 100
-    if loTree.fWalk() != 122068
+for nI = 0 to 100
+    if oTree.fWalk() != 122068
         println("Error")
     end
 end
 
-println("Time: " & tack(lnStart) & " ms")
+println("Time: " & tack(nStart) & " ms")

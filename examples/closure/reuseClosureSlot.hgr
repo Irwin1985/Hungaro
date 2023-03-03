@@ -5,24 +5,24 @@
  Date: 2023-02-26
 """
 
-declare lpBlockA
-    declare loF
+def pBlockA
+    let oF
 
-    declare lpBlockB
-        declare lsA = "a"
-        declare lpF
-            println(lsA)
+    def pBlockB
+        let sA = "a"
+        def pF
+            println(sA)
         end
-        loF = lpF
+        oF = pF
     end
 
-    declare lpBlockC
-        declare lsB = "b"
-        loF()
+    def pBlockC
+        let sB = "b"
+        oF()
     end
 
-    lpBlockB()
-    lpBlockC()    
+    pBlockB()
+    pBlockC()    
 end
 
-lpBlockA()
+pBlockA()

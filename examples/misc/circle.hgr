@@ -5,20 +5,20 @@
 """
 
 
-declare lpSpace(pnEnd)
-    for lnStart = 1 to pnEnd
+def pSpace(pnEnd)
+    for nStart = 1 to pnEnd
         print(space(1))
     end
 end
 
 # local constants are all in uppercase (global ones starts with `_`)
-declare PI = 3.14159265
-declare lnRadius = 10
+let PI = 3.14159265
+let nRadius = 10
 
-for lnI = 1 to lnRadius
-    declare lnWidth = lnRadius * sin(180 / lnRadius * lnI * PI / 180)
-    print(space(lnRadius - lnWidth))
-    for lnJ = 1 to lnWidth * 2
+for nI = 1 to nRadius
+    let nWidth = nRadius * sin(180 / nRadius * nI * PI / 180)
+    print(space(nRadius - nWidth))
+    for nJ = 1 to nWidth * 2
         print("*")
     end
     println("")

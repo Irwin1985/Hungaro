@@ -5,10 +5,10 @@
  Date: 2023-02-26
 """
 
-declare lcFoo
+def cFoo
 end
 
-declare loFoo = new lcFoo()
-loFoo.sBar = "not fn"
+let oFoo = new cFoo()
+oFoo.sBar = "not fn"
 
-loFoo.sBar()
+oFoo.sBar()

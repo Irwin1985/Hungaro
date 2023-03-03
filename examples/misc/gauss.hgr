@@ -6,117 +6,117 @@
  Date: 2023-02-23
 """
 
-declare lpSwapRow(paA, paB, pnRow1, pnRow2, pnCol)
+def pSwapRow(paA, paB, pnRow1, pnRow2, pnCol)
     if pnRow1 != pnRow2
-        declare laTemp = []
-        for lnI = 0 to pnCol - 1
-            declare laP1 = paA[pnRow1][lnI]
-            declare laP2 = paA[pnRow2][lnI]
-            laTemp = laP1
-            laP1 = laP2
-            laP2 = laTemp
+        let aTemp = []
+        for nI = 0 to pnCol - 1
+            let aP1 = paA[pnRow1][nI]
+            let aP2 = paA[pnRow2][nI]
+            laTemp = aP1
+            aP1 = aP2
+            aP2 = aTemp
         end
 
-        for lnJ = pnRow1 to pnCol-1
-            declare laTemp = pnA[pnRow1][lnJ]
-            pnA[pnRow1][lnJ] = pnA[pnRow2][lnJ]
-            pnA[pnRow2][lnJ] = laTemp
+        for nJ = pnRow1 to pnCol-1
+            let aTemp = pnA[pnRow1][nJ]
+            pnA[pnRow1][nJ] = pnA[pnRow2][nJ]
+            pnA[pnRow2][nJ] = aTemp
         end
 
-        laTemp = paB[pnRow1]
+        aTemp = paB[pnRow1]
         paB[pnRow1] = paB[pnRow2]
-        paB[pnRow2] = laTemp
+        paB[pnRow2] = aTemp
     end
 end
 
 # procedure gauss eliminate
-declare lpGaussEliminate(paA, paB, paX, pnN)
-    for lnK = 0 to pnN-1
-        declare lnMax = abs(paA[lnK][lnK])
-        declare lnMaxRow = lnK
+def pGaussEliminate(paA, paB, paX, pnN)
+    for nK = 0 to pnN-1
+        let nMax = abs(paA[nK][nK])
+        let nMaxRow = nK
 
-        for lnRow = lnK+1 to pnN-1
-            declare lnTemp = abs(paA[lnRow][lnK])
-            if lnTemp > lnMax
-                lnMaxRow = lnRow
-                lnMax = lnTemp
+        for nRow = nK+1 to pnN-1
+            let nTemp = abs(paA[nRow][nK])
+            if nTemp > nMax
+                nMaxRow = nRow
+                nMax = nTemp
             end
         end
 
-        lpSwapRow(paA, paB, lnK, lnMaxRow, pnN)
+        lpSwapRow(paA, paB, nK, nMaxRow, pnN)
 
-        for lnRow = lnK+1 to pnN-1
-            declare lnTemp = paA[lnRow][lnK] / paA[lnK][lnK]
-            for lnCol = lnK+1 to pnN-1
-                paA[lnRow][lnCol] = paA[lnRow][lnCol] - lnTemp * paA[lnK][lnCol]
+        for nRow = nK+1 to pnN-1
+            let nTemp = paA[nRow][nK] / paA[nK][nK]
+            for nCol = nK+1 to pnN-1
+                paA[nRow][nCol] = paA[nRow][nCol] - nTemp * paA[nK][nCol]
             end
-            paA[lnRow][lnK] = 0
-            paB[lnRow] = paB[lnRow] - lnTemp * paB[lnK]
+            paA[nRow][nK] = 0
+            paB[nRow] = paB[nRow] - nTemp * paB[nK]
         end
     end
 
     println("Back substitution")
-    for lnRow = pnN-1 to 0 step -1
-        declare lnTemp = paB[lnRow]
-        for lnJ = pnN-1 to lnRow step -1
-            lnTemp = lnTemp - paA[lnRow][lnJ] * paX[lnJ]        
+    for nRow = pnN-1 to 0 step -1
+        let nTemp = paB[nRow]
+        for nJ = pnN-1 to nRow step -1
+            nTemp = nTemp - paA[nRow][nJ] * paX[nJ]        
         end
-        paX[lnRow] = lnTemp / paA[lnRow][lnRow]
+        paX[nRow] = nTemp / paA[nRow][nRow]
     end
 end
 
 # Solve A x = b
-declare lpGauss(paA, paB, paX)
-    declare lnRowX = 0 # Keep count of the row interchanges
-    declare lnN = paA.len()-1 # Ignore first row
+def pGauss(paA, paB, paX)
+    let nRowX = 0 # Keep count of the row interchanges
+    let nN = paA.len()-1 # Ignore first row
 
-    for lnK = 1 to lnN-1
-        declare lnMax = abs(paA[lnK][lnK])
-        declare lnMaxRow = lnK
+    for nK = 1 to nN-1
+        let nMax = abs(paA[nK][nK])
+        let nMaxRow = nK
         # Find the row with the largest pivot
-        for lnI = lnK+1 to lnN
-            declare lnXfac = abs(paA[lnI][lnK])
-            if lnXfac > lnMax
-                lnMax = lnXfac
-                lnMaxRow = lnI
+        for nI = nK+1 to nN
+            let nXfac = abs(paA[nI][nK])
+            if nXfac > nMax
+                nMax = nXfac
+                nMaxRow = nI
             end
         end
 
-        if lnMaxRow != lnK
+        if nMaxRow != nK
             # row interchanges
-            lnRowX += 1
-            declare lnTemp1 = paB[lnK]
-            paB[lnK] = paB[lnMaxRow]
-            paB[lnMaxRow] = lnTemp1
-            for lnJ = lnK to lnN
-                declare lnTemp = paA[lnK][lnJ]
-                paA[lnK][lnJ] = paA[lnMaxRow][lnJ]
-                paA[lnMaxRow][lnJ] = lnTemp
+            nRowX += 1
+            let nTemp1 = paB[nK]
+            paB[nK] = paB[nMaxRow]
+            paB[nMaxRow] = nTemp1
+            for nJ = nK to nN
+                let nTemp = paA[nK][nJ]
+                paA[nK][nJ] = paA[nMaxRow][nJ]
+                paA[nMaxRow][nJ] = nTemp
             end
         end
 
-        for lnI = lnK+1 to lnN
-            declare lnXfac = paA[lnI][lnK] / paA[lnK][lnK]            
-            for lnJ = lnK+1 to lnN
-                paA[lnI][lnJ] = paA[lnI][lnJ] - lnXfac * paA[lnK][lnJ]
+        for nI = nK+1 to nN
+            let nXfac = paA[nI][nK] / paA[nK][nK]            
+            for nJ = nK+1 to nN
+                paA[nI][nJ] = paA[nI][nJ] - nXfac * paA[nK][nJ]
             end
-            paB[lnI] = paB[lnI] - lnXfac * paB[lnK]    
+            paB[nI] = paB[nI] - nXfac * paB[nK]    
         end
     end
 
     # Back substitution
-    for lnJ = 1 to lnN
-        declare lnK = lnN - lnJ + 1
-        paX[lnK] = paB[lnK]
-        for lnI = lnK+1 to lnN
-            paX[lnK] = paX[lnK] - paA[lnK][lnI] * paX[lnI]
+    for nJ = 1 to nN
+        let nK = nN - nJ + 1
+        paX[nK] = paB[nK]
+        for nI = nK+1 to nN
+            paX[nK] = paX[nK] - paA[nK][nI] * paX[nI]
         end
-        paX[lnK] = paX[lnK] / paA[lnK][lnK]
+        paX[nK] = paX[nK] / paA[nK][nK]
     end
 end
 
 # Create the 'A' matrix
-declare laA = [
+let aA = [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
@@ -125,46 +125,46 @@ declare laA = [
 ]
 
 # Create the 'b' matrix
-declare laB = [0, 0, 0, 0]
-declare laX = [0, 0, 0, 0]
+let aB = [0, 0, 0, 0]
+let aX = [0, 0, 0, 0]
 
 # Fill the 'A' matrix
-laA[0][0] = 2
-laA[0][1] = 1
-laA[0][2] = 0
-laA[0][3] = 0
+aA[0][0] = 2
+aA[0][1] = 1
+aA[0][2] = 0
+aA[0][3] = 0
 
-laA[1][0] = 1
-laA[1][1] = 1
-laA[1][2] = 1
-laA[1][3] = 0
+aA[1][0] = 1
+aA[1][1] = 1
+aA[1][2] = 1
+aA[1][3] = 0
 
-laA[2][0] = 0
-laA[2][1] = 1
-laA[2][2] = 2
-laA[2][3] = 1
+aA[2][0] = 0
+aA[2][1] = 1
+aA[2][2] = 2
+aA[2][3] = 1
 
-laA[3][0] = 0
-laA[3][1] = 0
-laA[3][2] = 1
-laA[3][3] = 2
+aA[3][0] = 0
+aA[3][1] = 0
+aA[3][2] = 1
+aA[3][3] = 2
 
-println("A = ", laA)
+println("A = ", aA)
 
 # Fill the 'b' matrix
-laB[0] = 2
-laB[1] = 1
-laB[2] = 4
-laB[3] = 8
+aB[0] = 2
+aB[1] = 1
+aB[2] = 4
+aB[3] = 8
 
-lpGauss(laA, laB, laX)
+pGauss(aA, aB, aX)
 
-println(laX[0], ", ", laX[1], ", ", laX[2], ", ", laX[3])
+println(aX[0], ", ", aX[1], ", ", aX[2], ", ", aX[3])
 
 println("Second method")
 
 # Create the 'A' matrix
-laA = [
+aA = [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
@@ -172,40 +172,40 @@ laA = [
 ]
 
 # Create the 'b' matrix
-laB = [0, 0, 0, 0]
-laX = [0, 0, 0, 0]
+aB = [0, 0, 0, 0]
+aX = [0, 0, 0, 0]
 
 # Fill the 'A' matrix
-laA[0][0] = 2
-laA[0][1] = 1
-laA[0][2] = 0
-laA[0][3] = 0
+aA[0][0] = 2
+aA[0][1] = 1
+aA[0][2] = 0
+aA[0][3] = 0
 
-laA[1][0] = 1
-laA[1][1] = 1
-laA[1][2] = 1
-laA[1][3] = 0
+aA[1][0] = 1
+aA[1][1] = 1
+aA[1][2] = 1
+aA[1][3] = 0
 
-laA[2][0] = 0
-laA[2][1] = 1
-laA[2][2] = 2
-laA[2][3] = 1
+aA[2][0] = 0
+aA[2][1] = 1
+aA[2][2] = 2
+aA[2][3] = 1
 
-laA[3][0] = 0
-laA[3][1] = 0
-laA[3][2] = 1
-laA[3][3] = 2
+aA[3][0] = 0
+aA[3][1] = 0
+aA[3][2] = 1
+aA[3][3] = 2
 
-println("A = ", laA)
+println("A = ", aA)
 
 # Fill the 'b' matrix
-laB[0] = 2
-laB[1] = 1
-laB[2] = 4
-laB[3] = 8
+aB[0] = 2
+aB[1] = 1
+aB[2] = 4
+aB[3] = 8
 
-lpGaussEliminate(laA, laB, laX)
+pGaussEliminate(aA, aB, aX)
 
 println("Output results: ")
 
-println(laX[0], ", ", laX[1], ", ", laX[2], ", ", laX[3])
+println(aX[0], ", ", aX[1], ", ", aX[2], ", ", aX[3])

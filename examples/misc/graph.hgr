@@ -5,18 +5,18 @@
  Date: 2023-02-23
 """
 
-declare laData = [], lnDeg = 0, PI = 3.14159265
+let aData = [], nDeg = 0, PI = 3.14159265
 
-while lnDeg < 360
-    declare lnX = 1 + sin(lnDeg*PI/180)
-    laData.push(int(lnX*20))
-    lnDeg += 10
+while nDeg < 360
+    let nX = 1 + sin(nDeg*PI/180)
+    aData.push(int(nX*20))
+    nDeg += 10
 end
 
-declare lnN = int(360/10)
+let nN = int(360/10)
 
-for lnI = 0 to lnN-1
-    for lnJ = 0 to laData[lnI]-1
+for nI = 0 to nN-1
+    for nJ = 0 to aData[nI]-1
         print(" ")
     end
     println("*")

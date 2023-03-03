@@ -20,73 +20,73 @@
     Date: 2023-03-01
 """
 
-declare lcStudentVO
+def cStudentVO
     sName = ""
     nRollNo = 0
     
     pInit(psName, pnRollNo)
-        sName = psName
-        nRollNo = pnRollNo
+        poThis.sName = psName
+        poThis.nRollNo = pnRollNo
     end
 
     fGetName
-        return sName
+        return poThis.sName
     end
 
     pSetName(psName)
-        sName = psName
+        poThis.sName = psName
     end
 
     fGetRollNo
-        return nRollNo
+        return poThis.nRollNo
     end
 
     pSetRollNo(pnRollNo)
-        nRollNo = pnRollNo
+        poThis.nRollNo = pnRollNo
     end
 end
 
-declare lcStudentBO
+def cStudentBO
     aStudents = []
 
     pInit
-        aStudents.push(new lcStudentVO("Robert", 0))
-        aStudents.push(new lcStudentVO("John", 1))
+        poThis.aStudents.push(new cStudentVO("Robert", 0))
+        poThis.aStudents.push(new cStudentVO("John", 1))
     end
 
     pDeleteStudent(poStudent)
-        aStudents.remove(poStudent)
+        poThis.aStudents.remove(poStudent)
         println("Student: Roll No " & poStudent.fGetRollNo() & ", deleted from database")
     end
 
     fGetAllStudents
-        return aStudents.clone() # we dont want to return the original array
+        return poThis.aStudents.clone() # we dont want to return the original array
     end
 
     pUpdateStudent(poStudent)
-        aStudents[poStudent.fGetRollNo()].pSetName(poStudent.fGetName())
+        poThis.aStudents[poStudent.fGetRollNo()].pSetName(poStudent.fGetName())
         println("Student: Roll No " & poStudent.fGetRollNo() & ", updated in the database")
     end
 end
 
-declare lpMain
-    declare loStudentBusinessObject = new lcStudentBO()
+def pMain
+    let oStudentBusinessObject = new cStudentBO()
 
-    for each lvStudent in loStudentBusinessObject.fGetAllStudents()
-        println("Student: [RollNo : " & lvStudent.fGetRollNo() & ", Name : " & lvStudent.fGetName() & "]")
+    for each vStudent in oStudentBusinessObject.fGetAllStudents()
+        println("Student: [RollNo : " & vStudent.fGetRollNo() & ", Name : " & vStudent.fGetName() & "]")
     end
 
     # update student
-    declare loStudent = loStudentBusinessObject.fGetAllStudents()[0]
-    loStudent.pSetName("Michael")
-    loStudentBusinessObject.pUpdateStudent(loStudent)
+    let oStudent = oStudentBusinessObject.fGetAllStudents()[0]
+    oStudent.pSetName("Michael")
+    oStudentBusinessObject.pUpdateStudent(oStudent)
 
     # get the student
-    loStudent = loStudentBusinessObject.fGetAllStudents()[0]
-    println("Student: [RollNo : " & loStudent.fGetRollNo() & ", Name : " & loStudent.fGetName() & "]")
+    oStudent = oStudentBusinessObject.fGetAllStudents()[0]
+    println("Student: [RollNo : " & oStudent.fGetRollNo() & ", Name : " & oStudent.fGetName() & "]")
 end
 
-lpMain()
+pMain()
 
 # Output
 # Student: [RollNo : 0, Name : Robert]

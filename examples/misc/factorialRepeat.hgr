@@ -5,11 +5,11 @@
  Date: 2023-02-23
 """
 
-declare lnCounter = 4, lnFactorial = 1
+let nCounter = 4, nFactorial = 1
 
 repeat
-    lnFactorial *= lnCounter
-    lnCounter -= 1
-until lnCounter == 0
+    nFactorial *= nCounter
+    nCounter -= 1
+until nCounter == 0
 
-println(lnFactorial) # 24
+println(nFactorial) # 24

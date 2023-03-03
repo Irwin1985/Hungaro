@@ -16,79 +16,79 @@
     Date: 2023-03-01
 """
 
-declare lcDependentObject1
+def cDependentObject1
     sData = ""
 
     pSetData(psData)
-        sData = psData
+        poThis.sData = psData
     end
 
     fGetData
-        return sData
+        return poThis.sData
     end
 end
 
-declare lcDependentObject2
+def cDependentObject2
     sData = ""
 
     pSetData(psData)
-        sData = psData
+        poThis.sData = psData
     end
 
     fGetData
-        return sData
+        return poThis.sData
     end
 end
 
-declare lcCoarseGrainedObject
-    oDependentObject1 = new lcDependentObject1()
-    oDependentObject2 = new lcDependentObject2()
+def cCoarseGrainedObject
+    oDependentObject1 = new cDependentObject1()
+    oDependentObject2 = new cDependentObject2()
 
     pSetData(psData1, psData2)
-        oDependentObject1.pSetData(psData1)
-        oDependentObject2.pSetData(psData2)
+        poThis.oDependentObject1.pSetData(psData1)
+        poThis.oDependentObject2.pSetData(psData2)
     end
 
     fGetData
-        return [oDependentObject1.fGetData(), oDependentObject2.fGetData()]
+        return [poThis.oDependentObject1.fGetData(), poThis.oDependentObject2.fGetData()]
     end
 end
 
-declare lcCompositeEntity
-    oCoarseGrainedObject = new lcCoarseGrainedObject()
+def cCompositeEntity
+    oCoarseGrainedObject = new cCoarseGrainedObject()
 
     pSetData(psData1, psData2)
-        oCoarseGrainedObject.pSetData(psData1, psData2)
+        poThis.oCoarseGrainedObject.pSetData(psData1, psData2)
     end
 
     fGetData
-        return oCoarseGrainedObject.fGetData()
+        return poThis.oCoarseGrainedObject.fGetData()
     end
 end
 
-declare lcClient
-    oCompositeEntity = new lcCompositeEntity()
+def cClient
+    oCompositeEntity = new cCompositeEntity()
 
     pPrintData()
-        for lnI = 0 to oCompositeEntity.fGetData().len() - 1
-            println("Data: " & oCompositeEntity.fGetData()[lnI])
+        for nI = 0 to poThis.oCompositeEntity.fGetData().len() - 1
+            println("Data: " & poThis.oCompositeEntity.fGetData()[nI])
         end
     end
 
     pSetData(psData1, psData2)
-        oCompositeEntity.pSetData(psData1, psData2)
+        poThis.oCompositeEntity.pSetData(psData1, psData2)
     end
 end
 
-declare lpMain
-    declare loClient = new lcClient()
-    loClient.pSetData("Test", "Data")
-    loClient.pPrintData()
-    loClient.pSetData("Second Test", "Data1")
-    loClient.pPrintData()
+def pMain
+    let oClient = new cClient()
+    oClient.pSetData("Test", "Data")
+    oClient.pPrintData()
+    oClient.pSetData("Second Test", "Data1")
+    oClient.pPrintData()
 end
 
-lpMain()
+pMain()
 
 # Output
 # Data: Test

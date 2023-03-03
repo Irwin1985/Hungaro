@@ -5,7 +5,7 @@
  Date: 2023-02-24
 """
 
-declare lmPrices = {
+let mPrices = {
     "A": 1.0,
     "B": 2.0,
     "C": 3.0,
@@ -37,37 +37,37 @@ declare lmPrices = {
 # Map methods
 
 # get()
-assert(lmPrices.get("A") == 1.0, "get() method failed")
+assert(mPrices.get("A") == 1.0, "get() method failed")
 
 # set()
-lmPrices.set("A", 2.0)
-assert(lmPrices.get("A") == 2.0, "set() method failed")
+mPrices.set("A", 2.0)
+assert(mPrices.get("A") == 2.0, "set() method failed")
 
 # len()
-assert(lmPrices.len() == 26, "len() method failed")
+assert(mPrices.len() == 26, "len() method failed")
 
 # keys()
-assert(lmPrices.keys() == ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], "keys() method failed")
+assert(mPrices.keys() == ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], "keys() method failed")
 
 # values()
-assert(lmPrices.values() == [2.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0], "values() method failed")
+assert(mPrices.values() == [2.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0], "values() method failed")
 
 # contains()
-assert(lmPrices.contains("A") == true, "contains() method failed")
+assert(mPrices.contains("A") == true, "contains() method failed")
 
 # remove()
-lmPrices.remove("A")
-assert(lmPrices.contains("A") == false, "remove() method failed")
+mPrices.remove("A")
+assert(mPrices.contains("A") == false, "remove() method failed")
 
 # clear()
-lmPrices.clear()
-assert(lmPrices.len() == 0, "clear() method failed")
+mPrices.clear()
+assert(mPrices.len() == 0, "clear() method failed")
 
 # isEmpty()
-assert(lmPrices.isEmpty() == true, "isEmpty() method failed")
+assert(mPrices.isEmpty() == true, "isEmpty() method failed")
 
 # clone()
-declare lmFruitUnitPrices = {
+let mFruitUnitPrices = {
     "Apple": 1.0,
     "Banana": 2.0,
     "Orange": 3.0,
@@ -75,24 +75,24 @@ declare lmFruitUnitPrices = {
     "Strawberry": 5.0
 }
 
-declare lmCloned = lmFruitUnitPrices.clone()
+let mCloned = mFruitUnitPrices.clone()
 
-assert(lmCloned.get("Apple") == 1.0, "clone() method failed")
+assert(mCloned.get("Apple") == 1.0, "clone() method failed")
 
 # Iterate over keys
 println("============Map keys============")
-for each lvKey in lmFruitUnitPrices.keys()
-    println(lvKey)
+for each vKey in mFruitUnitPrices.keys()
+    println(vKey)
 end
 
 # Iterate over values
 println("============Map values============")
-for each lvValue in lmFruitUnitPrices.values()
-    println(lvValue)
+for each vValue in mFruitUnitPrices.values()
+    println(vValue)
 end
 
 # Iterate over keys and values
 println("============Map keys and values============")
-for each lvEntry in lmFruitUnitPrices
-    println(lvEntry.key & " = " & lvEntry.value)
+for each vEntry in mFruitUnitPrices
+    println(vEntry.key & " = " & vEntry.value)
 end

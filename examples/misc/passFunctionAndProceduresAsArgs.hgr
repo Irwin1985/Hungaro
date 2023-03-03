@@ -6,20 +6,20 @@
 """
 
 # a user defined function
-declare lfSqr(pnX)
+def fSqr(pnX)
     return pnX * pnX
 end
 
-declare lfCube(pnX)
+def fCube(pnX)
     return pnX * pnX * pnX
 end
 
-declare lfRunTest(poFunc, pnX)
+def fRunTest(poFunc, pnX)
     return poFunc(pnX)
 end
 
-declare lnResult = lfRunTest(lfSqr, 5) # 25
-println(lnResult)
+let nResult = fRunTest(fSqr, 5) # 25
+println(nResult)
 
-lnResult = lfRunTest(lfCube, 5)
-println(lnResult) # 125
+nResult = fRunTest(fCube, 5)
+println(nResult) # 125

@@ -16,7 +16,7 @@
     Date: 2023-02-28
 """
 
-declare lcGame
+def cGame
     -pInitialize()
     -pStartPlay()
     -pEndPlay()
@@ -27,7 +27,7 @@ declare lcGame
     end
 end
 
-declare lcCricket as lcGame
+def cCricket as cGame
     pInitialize
         println("Cricket Game Initialized! Start playing.")
     end
@@ -41,7 +41,7 @@ declare lcCricket as lcGame
     end
 end
 
-declare lcFootball as lcGame
+def cFootball as cGame
     pInitialize
         println("Football Game Initialized! Start playing.")
     end
@@ -55,15 +55,15 @@ declare lcFootball as lcGame
     end
 end
 
-declare lpMain
-    declare loGame = new lcCricket()
-    loGame.pPlay()
+def pMain
+    let oGame = new cCricket()
+    oGame.pPlay()
     println()
-    loGame = new lcFootball()
-    loGame.pPlay()
+    oGame = new cFootball()
+    oGame.pPlay()
 end
 
-lpMain()
+pMain()
 
 # Output
 # Cricket Game Initialized! Start playing.
