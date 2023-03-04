@@ -14,6 +14,7 @@ public class Hungaro {
     static boolean hadError = false;
     static boolean hadRuntimeError = false;
     static boolean debugMode = false; // debug mode
+    static String hungaroVersion = "0.0.1"; // Hungaro version
 
     // foreground colors
     public static final String ANSI_RESET = "\u001B[0m";
@@ -130,7 +131,7 @@ public class Hungaro {
     }
 
     private static void printPrompt() {
-        System.out.println("Hungaro v0.1.0");
+        System.out.println("Hungaro v" + hungaroVersion);
         System.out.println("Date: " + new java.util.Date());
         printHelp();
     }
@@ -139,6 +140,7 @@ public class Hungaro {
         System.out.println("Type 'help' for help.");
         System.out.println("Type 'exit' to exit.");        
         System.out.println("Type 'run <file>' to run a file.");
+        System.out.println("Type 'cls' to clear the screen.");
     }
 
     public static void run(String source) {

@@ -34,6 +34,31 @@ Hungarian is an interpreted programming language whose syntax is based on Hungar
 - [x] Native builtins
 - [x] Class builtins
 
+
+## Prerequisites
+
+1. Java 8 or higher.
+
+## Installation
+1. Download the latest version of the interpreter from the [releases](https://github.com/Irwin1985/Hungaro/releases) page.
+
+2. Place `Hungaro.jar` in a folder of your choice.
+
+3. Open a terminal and navigate to the folder where you placed `Hungaro.jar`.
+
+4. Run the following command: `java -jar Hungaro.jar`
+
+## Usage
+
+1. Open a terminal and navigate to the folder where you placed `Hungaro.jar`.
+2. Run the following command: `java -jar Hungaro.jar`
+3. The interpreter will start and you will be able to write your code.
+4. To execute your code, press `Enter`.
+5. To exit the interpreter, type `exit`.
+6. To clear the screen, type `cls`.
+7. To see the list of available commands, type `help`.
+
+
 ## Variable and Constant declarations
 
 Both variables and constants are declared with the reserved word let. The rules for naming variables and constants are as follows:
