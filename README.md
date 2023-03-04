@@ -4,6 +4,42 @@ A hungarian notation based programming language.
 
 Hungarian is an interpreted programming language whose syntax is based on Hungarian notation with the aim of improving the readability of the source code and avoiding ambiguities in the declaration of variables and constants.
 
+The language is inspired by the following languages:
+
+* [Python](https://www.python.org/)
+* [Ruby](https://www.ruby-lang.org/en/)
+* [Java](https://www.java.com/)
+
+## Table of Contents
+
+- [Hungarian Notation](#hungarian-notation)
+- [Roadmap](#roadmap)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Syntax](#syntax)
+- [Variable and Constant declarations](#variable-and-constant-declarations)
+- [Declarations](#declarations)
+- [Functions](#functions)
+- [Procedures](#procedures)
+- [Classes](#classes)
+- [Methods and Properties of Classes](#methods-and-properties-of-classes)
+- [Examples](#examples)
+- [License](#license)
+
+
+## Hungarian Notation
+
+Hungarian notation is a naming convention for variables and constants in which the name of the variable or constant is prefixed with a letter or letters that indicate the type of data stored in the variable or constant. For example:
+
+```ruby
+sName = "John"
+nAge = 25
+bState = true
+```
+
+In the above example, the variable `sName` stores a string, the variable `nAge` stores a number, and the variable `bState` stores a boolean value.
+
 ## Roadmap
 
 - [x] Expressions
@@ -63,13 +99,13 @@ Hungarian is an interpreted programming language whose syntax is based on Hungar
 
 Both variables and constants are declared with the reserved word let. The rules for naming variables and constants are as follows:
 
-### Variables
+## Variables
 
 1. If the variable is global, then its first character must be `g`, and its second character must represent the data type it stores. For example: ```gsName, gnAge, gbState, etc.```
 
 2. If the variable is local, then its first character must represent the data type it stores. For example: ```sName, nAge, bState, etc.```
 
-### Constants
+## Constants
 
 1. All constants must be in uppercase, and the use of underscores to separate words is allowed.
 
@@ -81,25 +117,25 @@ Both variables and constants are declared with the reserved word let. The rules 
 
 1. All declarations are made with the reserved word `def`. Let's see the syntax rules for declarations depending on their type:
 
-### Functions
+## Functions
 
 1. If the function is global, then its first character must be `g` followed by `f`, which stands for _function_, and then the function name. For example: ```gfSum, gfSub, gfMul, etc.```
 
 2. If the function is local, then its first character must be `f`, which stands for _function_, and then the function name. For example: ```fSum, fSub, fMul, etc.```
 
-### Procedures
+## Procedures
 
 1. If the procedure is global, then its first character must be `g` followed by `p`, which stands for _procedure_, and then the procedure name. For example: ```gpShow, gpHide, gpDelete, etc.```
 
 2. If the procedure is local, then its first character must be `p`, which stands for _procedure_, and then the procedure name. For example: ```pShow, pHide, pDelete, etc.```
 
-### Classes
+## Classes
 
 1. If the class is global, then its first character must be `g` followed by `c`, which stands for _class_, and then the class name. For example: ```gcPerson, gcCar, gcHouse, etc.```
 
 2. If the class is local, then its first character must be `c`, which stands for _class_, and then the class name. For example: ```cPerson, cCar, cHouse, etc.```
 
-### Methods and Properties of Classes
+## Methods and Properties of Classes
 
 1. If the method is abstract _(has no body)_, then a `-` must be placed before the method name, followed by the method name and a pair of parentheses. For example: ```-getName(), -setName(), -getAge(), -setAge(), etc.```
 
@@ -109,15 +145,15 @@ Both variables and constants are declared with the reserved word let. The rules 
 
 4. The declaration of the methods also does not allow the use of `def` to define them, this in order to speed up the reading of the source code.
 
-### Parameters of functions, procedures and methods
+## Parameters of functions, procedures and methods
 
 1. The parameters of functions, procedures and methods must begin with the letter `p` followed by the type of data it stores. ex: ```psName, pnAge, pbState, etc.```
 
-### Modules:
+## Modules:
 
 1. Modules follow the same rules as *classes*, only that instead of `c` we use `l` which refers to `library`. ex: ```lPerson, lCar, lHouse, etc.```
 
-### Letters defining data types
+## Letters defining data types
 
 | Letter |  Type    |
 | ------ | -------- |
@@ -132,34 +168,34 @@ Both variables and constants are declared with the reserved word let. The rules 
 |   m    | Map      |
 
 
-### Allowed rules
+## Allowed rules
 
 1. It is only allowed to associate the null value to variables of type `variant` and `object`.
 2. If a variable is created without initializing then its value will depend on the letter that defines it. Eg: if the variable is of type `string` then its value will be an empty string '', etc.
 
-### Sum of strings:
+## Sum of strings:
 
 1. String addition is done with the `&` operator. Ex: ```"Hello " & "world"``` -> ```"Hello world"```. The only rule is that **the first operand must be a string** and the rest of the operands can be of any type.
 
-### Logical operators:
+## Logical operators:
 
 1. The logical operators are the same as in other programming languages. Ex: ```or, and, not```
 
-### Relational operators:
+## Relational operators:
 
 1. The relational operators are the same as in other programming languages. Ex: ```<, >, <=, >=, ==, !=```.
 
-### Arithmetic operators:
+## Arithmetic operators:
 
 1. The arithmetic operators are the same as in other programming languages. Ex: ```+, -, *, /, %, ^```.
 
-### Assignment operators:
+## Assignment operators:
 
 1. Assignment operators are the same as in other programming languages. Ex: ```=, +=, -=, *=, /=```.
 
 ## Syntax
 
-### Expressions
+## Expressions
 
 ```Ruby
 # Strings
