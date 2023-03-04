@@ -2613,12 +2613,13 @@ public final class Builtins {
                     }                    
                     final String connectionString = engine.getConnectionString(server, port, database);
                     try {
+                        Class.forName(engine.getDriverClass());
                         Connection connection = DriverManager.getConnection(connectionString, user, password);
                         Environment connectionEnv = interpreter.makeObject(connection, interpreter.connectionEnv, "Connection");                        
                         // add the driver name to the connection environment
                         connectionEnv.define("driver", driver);
                         return connectionEnv;
-                    } catch (SQLException e) {
+                    } catch (SQLException | ClassNotFoundException e) {
                         throw new RuntimeError(null, "Could not connect to the database: " + e.getMessage());
                     }
                 }                

@@ -13,7 +13,7 @@ public class Hungaro {
     private static final Interpreter interpreter = new Interpreter();
     static boolean hadError = false;
     static boolean hadRuntimeError = false;
-    static boolean debugMode = true;
+    static boolean debugMode = false; // debug mode
 
     // foreground colors
     public static final String ANSI_RESET = "\u001B[0m";
@@ -98,19 +98,52 @@ public class Hungaro {
     public static void runPrompt() throws IOException {
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
-
+        printPrompt();
         for (;;) {
-            System.out.print(">>> ");
+            System.out.print(">>> ");            
             String line = reader.readLine();
             if (line == null) break;
+            
+            // Start REPL commands
+            if (line.equals("exit")) break;
+            if (line.equals("help")) {
+                printHelp();
+                continue;
+            }
+            if (line.startsWith("run ")) {
+                final String file = line.substring(4).trim();
+                runFile(file);
+                continue;
+            }            
+            if (line.equals("cls")) {
+                System.out.print("\033[H\033[2J");  
+                System.out.flush();
+                printPrompt();
+                continue;
+            }
+            // End REPL commands
+
+            // run line if not a command
             run(line);
             hadError = false; // ignore errors in REPL mode.
         }
     }
 
+    private static void printPrompt() {
+        System.out.println("Hungaro v0.1.0");
+        System.out.println("Date: " + new java.util.Date());
+        printHelp();
+    }
+
+    private static void printHelp() {
+        System.out.println("Type 'help' for help.");
+        System.out.println("Type 'exit' to exit.");        
+        System.out.println("Type 'run <file>' to run a file.");
+    }
+
     public static void run(String source) {
         List<Token> tokens = null;        
-        // try {
+        try {
             final Scanner scanner = new Scanner(source);
             tokens = scanner.scanTokens();
             final boolean printTokens = false;
@@ -123,20 +156,20 @@ public class Hungaro {
                 System.out.println("=============================");
             }
             // end debug
-        // } catch (Exception e) {
-        //     System.err.println(e.getMessage());
-        // }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
         if (hadError) return;
 
         // continue parsing
         Parser parser = new Parser(tokens);        
         List<Stmt> statements = parser.parse();            
         if (hadError) return;
-        // try {
+        try {
             interpreter.interpret(statements);        
-        // } catch(Exception e) {
-        //     System.err.println(e.getMessage());
-        // }
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     static void error(int line, int col, String message) {

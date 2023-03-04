@@ -5,10 +5,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // DEBUG
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+// import java.io.IOException;
+// import java.nio.charset.Charset;
+// import java.nio.file.Files;
+// import java.nio.file.Paths;
 // DEBUG
 
 public class Scanner {
@@ -318,15 +318,15 @@ public class Scanner {
         return null;
     }
 
-    public static void main(String[] args) throws IOException {
-        byte[] bytes = Files.readAllBytes(Paths.get("F:\\Desarrollo\\GitHub\\Hungaro\\sample.hgr"));
-        String source = new String(bytes, Charset.defaultCharset());
+    // public static void main(String[] args) throws IOException {
+    //     byte[] bytes = Files.readAllBytes(Paths.get("F:\\Desarrollo\\GitHub\\Hungaro\\sample.hgr"));
+    //     String source = new String(bytes, Charset.defaultCharset());
 
-        Scanner sc = new Scanner(source);
-        List<Token> tokens = sc.scanTokens();
+    //     Scanner sc = new Scanner(source);
+    //     List<Token> tokens = sc.scanTokens();
 
-        for (Token tok : tokens) {
-            System.out.println(tok);
-        }
-    }
+    //     for (Token tok : tokens) {
+    //         System.out.println(tok);
+    //     }
+    // }
 }

@@ -1,6 +1,7 @@
 
 public abstract class EngineManager {
     public abstract String getConnectionString(String server, Object port, String database);
+    public abstract String getDriverClass();
     public abstract String getTables(String database);
     public abstract String getColumns(String database, String tableName);
     public abstract String getPrimaryKey(String database, String tableName);
@@ -16,6 +17,11 @@ public abstract class EngineManager {
             }
             
             return String.format("jdbc:mysql://%s:%s/%s?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", server, port, database);
+        }
+
+        @Override
+        public String getDriverClass() {
+            return "com.mysql.cj.jdbc.Driver";
         }
 
         @Override
@@ -63,6 +69,11 @@ public abstract class EngineManager {
             }
             url += ";integratedSecurity=false;encrypt=true;trustServerCertificate=true;loginTimeout=30;";
             return url;
+        }
+
+        @Override
+        public String getDriverClass() {
+            return "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         }
 
         @Override
