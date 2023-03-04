@@ -1,0 +1,22 @@
+"""
+    MySql test connection
+    Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-03-04
+"""
+
+let mMysqlConfig = {
+    'driver': 'mysql',
+    'server': 'localhost',
+    'user': 'your-user',
+    'database': 'your-database',
+    'password': 'your-password',    
+}
+
+let oCon = connect(mMysqlConfig)
+
+if oCon != null
+    println('Connected Ok!')    
+    disconnect(oCon)    
+else
+    println('Connection failed')
+end

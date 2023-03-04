@@ -62,6 +62,14 @@ public class Hungaro {
         put("white", ANSI_WHITE_BACKGROUND);
     }};
 
+    // a map with all database engines supported (key: engine name, value: class name)
+    // eg: mysql -> new EngineManager.MySql(), etc.
+    public static final Map<String, EngineManager> dbEngines = new HashMap<String, EngineManager>() {{
+        put("mysql", new EngineManager.MySql());        
+        put("mssql", new EngineManager.MsSql());
+    }};
+    
+
     public static void main(String[] args) throws IOException {
         // debug
         if (debugMode) {

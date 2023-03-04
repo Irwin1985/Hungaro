@@ -1,0 +1,49 @@
+let nStart = tick()
+
+let mMysqlConfig = {
+    'driver': 'mysql',
+    'server': `localhost`,
+    'user': 'your_user',
+    'database': 'your_database',
+    'password': 'your_password',
+}
+
+let sDatabase = 'your_database'
+let sTable = 'your_table'
+
+# Connect to database
+let oCon = connect(mMysqlConfig)
+
+if oCon != null
+    println('Connection success')
+    # Get table columns
+    println('::::::::::::::::::Table Columns::::::::::::::::::')
+    let aColumns = oCon.fGetColumns(sDatabase, sTable)
+    for each vColumn in aColumns
+        println(vColumn)
+    end
+    
+    # Get tables
+    println('::::::::::::::::::Table List::::::::::::::::::')
+    let aTables = oCon.fGetTables(sDatabase)
+    for each vTable in aTables
+        println(vTable)
+    end
+
+    # Get primary key
+    println('::::::::::::::::::Primary keys::::::::::::::::::')
+    let aPrimaryKey = oCon.fGetPrimaryKey(sDatabase, sTable)
+    for each vKey in aPrimaryKey
+        println(vKey)
+    end
+
+    # Table exists
+    println('::::::::::::::::::Table exists::::::::::::::::::')
+    println(oCon.fTableExists(sDatabase, sTable))
+
+    disconnect(oCon)
+else
+    println('Connection failed')
+end
+
+println("Elapsed time: " & (tack(nStart)) & " ms")

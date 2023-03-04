@@ -29,6 +29,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment wrapperEnv = new Environment(objectEnv, "Wrapper");
     final Environment classEnv = new Environment(objectEnv, "Class");
 
+    // connection environment
+    final Environment connectionEnv = new Environment(objectEnv, "Connection");
+
     // final Stack<Boolean> variableStack = new Stack<Boolean>();
 
     public Interpreter() {        
