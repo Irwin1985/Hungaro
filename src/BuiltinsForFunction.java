@@ -14,7 +14,7 @@ public final class BuiltinsForFunction {
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
-                    RuntimeFunction function = (RuntimeFunction)env.lookup("value");
+                    Runtime.Function function = (Runtime.Function)env.lookup("value");
                     // arity is the number of parameters, not including the "poThis" parameter
                     return function.arity();
                 }

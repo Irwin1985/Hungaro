@@ -142,7 +142,7 @@ public final class BuiltinsForArray {
                         // all elements must be strings
                         for (int i = 0; i < array.size(); i++) {
                             if (!(array.get(i) instanceof String)) {
-                                throw new RuntimeError(null, "Array elements must be of the same type");
+                                throw new Runtime.Error(null, "Array elements must be of the same type");
                             }
                         }
                         // convert the array to an ArrayList of strings
@@ -159,7 +159,7 @@ public final class BuiltinsForArray {
                         // all elements must be numbers
                         for (int i = 0; i < array.size(); i++) {
                             if (!(array.get(i) instanceof Double)) {
-                                throw new RuntimeError(null, "Array elements must be of the same type");
+                                throw new Runtime.Error(null, "Array elements must be of the same type");
                             }
                         }
                         // convert the array to an ArrayList of numbers
@@ -173,7 +173,7 @@ public final class BuiltinsForArray {
                         env.define("value", numberArray);
                     }
                     else {
-                        throw new RuntimeError(null, "Array elements must be of the same type and either numbers or strings");
+                        throw new Runtime.Error(null, "Array elements must be of the same type and either numbers or strings");
                     }
                 }
                 return null;

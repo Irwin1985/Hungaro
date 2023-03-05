@@ -196,7 +196,7 @@ public class Hungaro {
         }
     }
 
-    static void runtimeError(RuntimeError error) {
+    static void runtimeError(Runtime.Error error) {
         if (error.token == null) {
             System.err.println(ANSI_RED + error.getMessage());
             System.err.println(ANSI_RESET+"");
@@ -233,7 +233,7 @@ public class Hungaro {
             case 'o':
                 return "Object";
             default:
-                throw new RuntimeError(token, "Invalid " + type + " type.");
+                throw new Runtime.Error(token, "Invalid " + type + " type.");
         }        
     }
 

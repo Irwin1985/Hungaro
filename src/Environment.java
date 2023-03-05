@@ -53,7 +53,7 @@ public class Environment {
             return parent.resolve(name);
         }        
 
-        throw new RuntimeError(name, variableNotDefinedMessage(name.lexeme));
+        throw new Runtime.Error(name, variableNotDefinedMessage(name.lexeme));
     }
 
     private Environment resolve(String name, Token token) {
@@ -65,7 +65,7 @@ public class Environment {
             return parent.resolve(name, token);
         }
         
-        throw new RuntimeError(token, variableNotDefinedMessage(name));
+        throw new Runtime.Error(token, variableNotDefinedMessage(name));
     }
 
     private String variableNotDefinedMessage(String name) {
@@ -95,7 +95,7 @@ public class Environment {
         try {
             return ((ArrayList<Object>)record.get("value")).get(index);
         } catch (Exception e) {
-            throw new RuntimeError(token, "Invalid index `" + index + "`.");
+            throw new Runtime.Error(token, "Invalid index `" + index + "`.");
         }
     }
 }

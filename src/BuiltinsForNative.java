@@ -778,11 +778,11 @@ public final class BuiltinsForNative {
                     HashMap<Object, Object> map = (HashMap<Object, Object>)env.lookup("value");
                     final String driver = (String)map.get("driver");
                     if (driver == null) {
-                        throw new RuntimeError(null, "The database driver is not specified.");
+                        throw new Runtime.Error(null, "The database driver is not specified.");
                     }
                     final String server = (String)map.get("server");
                     if (server == null) {
-                        throw new RuntimeError(null, "The database server is not specified.");
+                        throw new Runtime.Error(null, "The database server is not specified.");
                     }
                     String database = (String)map.get("database");
                     if (database == null) database = "";
@@ -791,14 +791,14 @@ public final class BuiltinsForNative {
 
                     final String user = (String)map.get("user");
                     if (user == null) {
-                        throw new RuntimeError(null, "The database user is not specified.");
+                        throw new Runtime.Error(null, "The database user is not specified.");
                     }
                     String password = (String)map.get("password");
                     if (password == null) password = "";
                     
                     EngineManager engine = Hungaro.dbEngines.get(driver);
                     if (engine == null) {
-                        throw new RuntimeError(null, "The database driver '" + driver + "' is not supported.");
+                        throw new Runtime.Error(null, "The database driver '" + driver + "' is not supported.");
                     }                    
                     final String connectionString = engine.getConnectionString(server, port, database);
                     try {
@@ -809,7 +809,7 @@ public final class BuiltinsForNative {
                         connectionEnv.define("driver", driver);
                         return connectionEnv;
                     } catch (SQLException | ClassNotFoundException e) {
-                        throw new RuntimeError(null, "Could not connect to the database: " + e.getMessage());
+                        throw new Runtime.Error(null, "Could not connect to the database: " + e.getMessage());
                     }
                 }                
                 return null;
@@ -840,7 +840,7 @@ public final class BuiltinsForNative {
                         Connection connection = (Connection)env.lookup("value");
                         connection.close();
                     } catch (SQLException e) {
-                        throw new RuntimeError(null, "Could not disconnect from the database: " + e.getMessage());
+                        throw new Runtime.Error(null, "Could not disconnect from the database: " + e.getMessage());
                     }
                 }
                 return null;

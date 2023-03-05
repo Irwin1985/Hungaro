@@ -42,7 +42,7 @@ public final class BuiltinsForDatabase {
                         // finally, return the result                        
                         return interpreter.makeObject(result, interpreter.arrayEnv, "Array");
                     } catch (SQLException e) {
-                        throw new RuntimeError(null, "Could not execute query: " + e.getMessage());
+                        throw new Runtime.Error(null, "Could not execute query: " + e.getMessage());
                     } finally {
                         try {
                             if (statement != null) {
@@ -52,7 +52,7 @@ public final class BuiltinsForDatabase {
                                 resultSet.close();
                             }
                         } catch (SQLException e) {
-                            throw new RuntimeError(null, "Could not close statement or result set: " + e.getMessage());
+                            throw new Runtime.Error(null, "Could not close statement or result set: " + e.getMessage());
                         }
                     }
                 }                
@@ -87,14 +87,14 @@ public final class BuiltinsForDatabase {
                         if (result < 0) return 0.0;
                         return result;
                     } catch (SQLException e) {
-                        throw new RuntimeError(null, "Could not execute query: " + e.getMessage());
+                        throw new Runtime.Error(null, "Could not execute query: " + e.getMessage());
                     } finally {
                         try {
                             if (statement != null) {
                                 statement.close();
                             }
                         } catch (SQLException e) {
-                            throw new RuntimeError(null, "Could not close statement: " + e.getMessage());
+                            throw new Runtime.Error(null, "Could not close statement: " + e.getMessage());
                         }
                     }
                 }                
@@ -149,7 +149,7 @@ public final class BuiltinsForDatabase {
                         // finally, return the result                        
                         return interpreter.makeObject(result, interpreter.arrayEnv, "Array");
                     } catch (SQLException e) {
-                        throw new RuntimeError(null, "Could not execute query: " + e.getMessage());
+                        throw new Runtime.Error(null, "Could not execute query: " + e.getMessage());
                     } finally {
                         try {
                             if (statement != null) {
@@ -159,7 +159,7 @@ public final class BuiltinsForDatabase {
                                 resultSet.close();
                             }
                         } catch (SQLException e) {
-                            throw new RuntimeError(null, "Could not close statement or result set: " + e.getMessage());
+                            throw new Runtime.Error(null, "Could not close statement or result set: " + e.getMessage());
                         }
                     }
                 }                
@@ -205,7 +205,7 @@ public final class BuiltinsForDatabase {
                         // finally, return the result                        
                         return interpreter.makeObject(tables, interpreter.arrayEnv, "Array");
                     } catch (SQLException e) {
-                        throw new RuntimeError(null, "Could not execute query: " + e.getMessage());
+                        throw new Runtime.Error(null, "Could not execute query: " + e.getMessage());
                     } finally {
                         try {
                             if (statement != null) {
@@ -215,7 +215,7 @@ public final class BuiltinsForDatabase {
                                 resultSet.close();
                             }
                         } catch (SQLException e) {
-                            throw new RuntimeError(null, "Could not close statement or result set: " + e.getMessage());
+                            throw new Runtime.Error(null, "Could not close statement or result set: " + e.getMessage());
                         }
                     }
                 }                
@@ -264,7 +264,7 @@ public final class BuiltinsForDatabase {
                         // finally, return the result                        
                         return interpreter.makeObject(primaryKeys, interpreter.arrayEnv, "Array");
                     } catch (SQLException e) {
-                        throw new RuntimeError(null, "Could not execute query: " + e.getMessage());
+                        throw new Runtime.Error(null, "Could not execute query: " + e.getMessage());
                     } finally {
                         try {
                             if (statement != null) {
@@ -274,7 +274,7 @@ public final class BuiltinsForDatabase {
                                 resultSet.close();
                             }
                         } catch (SQLException e) {
-                            throw new RuntimeError(null, "Could not close statement or result set: " + e.getMessage());
+                            throw new Runtime.Error(null, "Could not close statement or result set: " + e.getMessage());
                         }
                     }
                 }                
@@ -317,7 +317,7 @@ public final class BuiltinsForDatabase {
                         
                         return resultSet.next();
                     } catch (SQLException e) {
-                        throw new RuntimeError(null, "Could not execute query: " + e.getMessage());
+                        throw new Runtime.Error(null, "Could not execute query: " + e.getMessage());
                     } finally {
                         try {
                             if (statement != null) {
@@ -327,7 +327,7 @@ public final class BuiltinsForDatabase {
                                 resultSet.close();
                             }
                         } catch (SQLException e) {
-                            throw new RuntimeError(null, "Could not close statement or result set: " + e.getMessage());
+                            throw new Runtime.Error(null, "Could not close statement or result set: " + e.getMessage());
                         }
                     }
                 }                

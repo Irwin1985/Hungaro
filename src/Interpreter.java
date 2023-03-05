@@ -51,7 +51,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             for (Stmt statement : statements) {
                 execute(statement);
             }
-        } catch (RuntimeError error) {
+        } catch (Runtime.Error error) {
             Hungaro.runtimeError(error);
         }
     }
@@ -109,12 +109,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 // if (left instanceof String && right instanceof String) {
                 //     return (String)left + (String)right;
                 // }
-                // throw new RuntimeError(expr.operator, "Operands must be two numbers or two strings.");
+                // throw new Runtime.RuntimeError(expr.operator, "Operands must be two numbers or two strings.");
             case DIV:
                 checkNumberOperands(expr.operator, left, right);
                 // check for division by zero
                 if ((Double)right == 0) {
-                    throw new RuntimeError(expr.operator, "Division by zero.");
+                    throw new Runtime.Error(expr.operator, "Division by zero.");
                 }
                 return (Double)left / (Double)right;
             case MUL:
@@ -127,7 +127,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 checkNumberOperands(expr.operator, left, right);
                 return Math.pow((Double)left, (Double)right);
             default:
-                throw new RuntimeError(expr.operator, "Unknown operator.");
+                throw new Runtime.Error(expr.operator, "Unknown operator.");
         }
     }
 
@@ -155,12 +155,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     private void checkNumberOperand(Token operator, Object operand) {
         if (operand instanceof Double) return;
-        throw new RuntimeError(operator, "Operand must be a number.");
+        throw new Runtime.Error(operator, "Operand must be a number.");
     }
 
     private void checkNumberOperands(Token operator, Object left, Object right) {
         if (left instanceof Double && right instanceof Double) return;
-        throw new RuntimeError(operator, "Operands must be numbers.");
+        throw new Runtime.Error(operator, "Operands must be numbers.");
     }
 
     @Override
@@ -168,7 +168,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         Object callee = evaluate(expr.callee);
         List<Object> arguments = new ArrayList<Object>();        
         if (!(callee instanceof CallableObject)) {
-            throw new RuntimeError(expr.paren, "Can only call functions, classes and objects.");
+            throw new Runtime.Error(expr.paren, "Can only call functions, classes and objects.");
         }        
         CallableObject function = (CallableObject)callee;
 
@@ -193,7 +193,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return function.call(this, arguments);
     }
 
-    public Environment createActivationEnvironment(Token token, RuntimeFunction function, List<Object> arguments) {
+    public Environment createActivationEnvironment(Token token, Runtime.Function function, List<Object> arguments) {
         // case 1: validate the function's required parameters
         // case 2: validate the function's optional parameters vs variadic parameters
         final CallableObject.Arity arity = function.arity();        
@@ -208,12 +208,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         // validate the function's required parameters
         if (required > 0 && argSize < required) {
             String message = "Expected " + required + " arguments but got " + argSize + ".";
-            throw new RuntimeError(token, message);
+            throw new Runtime.Error(token, message);
         }
         // validate no required parameters but arguments are provided
         if (required == 0 && argSize > 0) {
             String message = "Expected no arguments but got " + argSize + ".";
-            throw new RuntimeError(token, message);
+            throw new Runtime.Error(token, message);
         }
 
         
@@ -244,12 +244,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (arity.optional > 0) {
             if (arity.variadic) {
                 String message = "Cannot have both optional and variadic parameters.";
-                throw new RuntimeError(token, message);
+                throw new Runtime.Error(token, message);
             }
             // if argSize > required + arity.optional then throw error
             if (argSize > required + arity.optional) {
                 String message = "Expected at most " + (requiredParamsWithoutPoThis + arity.optional) + " arguments but got " + argSize + ".";
-                throw new RuntimeError(token, message);
+                throw new Runtime.Error(token, message);
             }
 
             if (argSize == required + arity.optional) {
@@ -280,7 +280,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             // if argSize < required + 1 then throw error
             if (argSize < required + 1) {
                 String message = "Expected at least " + (requiredParamsWithoutPoThis + 1) + " arguments but got " + argSize + ".";
-                throw new RuntimeError(token, message);
+                throw new Runtime.Error(token, message);
             }
             // create an array with the rest of the arguments
             List<Object> variadicArguments = new ArrayList<Object>();
@@ -296,7 +296,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             // if argSize > required then throw error
             if (argSize > required) {
                 String message = "Expected at most " + requiredParamsWithoutPoThis + " arguments but got " + argSize + ".";
-                throw new RuntimeError(token, message);
+                throw new Runtime.Error(token, message);
             }
         }
 
@@ -319,7 +319,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         final Stmt.Block body = new Stmt.Block(statements);
         final Stmt.Function declaration = new Stmt.Function(mustReturnValue, name, params, body, false, 0);
         
-        return new RuntimeFunction(declaration, environment);
+        return new Runtime.Function(declaration, environment);
     }
 
     @Override
@@ -349,19 +349,19 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         Object result = evaluate(expr.name);
         if (!(result instanceof String)) {
             String message = "Class name must be a string.";
-            throw new RuntimeError(expr.name.token, message);
+            throw new Runtime.Error(expr.name.token, message);
         }
 
         // so we need to get the class environment first
         final String className = (String)result;
         if (className.length() < 2) {
             String message = "Invalid class name";
-            throw new RuntimeError(expr.name.token, message);
+            throw new Runtime.Error(expr.name.token, message);
         }
         final char firtLetter = className.charAt(0);        
         if (firtLetter != 'g' && firtLetter != 'c') {
             String message = "Class name must start with `g` or `c`.";
-            throw new RuntimeError(expr.name.token, message);
+            throw new Runtime.Error(expr.name.token, message);
         }
         
         if (firtLetter == 'g') {
@@ -373,7 +373,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         // check if class exists
         if (classEnv == null) {
             String message = "Undefined class `" + className + "`.";
-            throw new RuntimeError(expr.name.token, message);
+            throw new Runtime.Error(expr.name.token, message);
         }
 
         // now we can create the instance
@@ -417,7 +417,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         } else {
             if (arguments.size() > 1) {
                 String message = "Expected 0 arguments but got " + (arguments.size() - 1) + ".";
-                throw new RuntimeError(expr.name.token, message);
+                throw new Runtime.Error(expr.name.token, message);
             }
         }
 
@@ -431,7 +431,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         Object obj = evaluate(expr.target);
 
         if (obj == null) {
-            throw new RuntimeError(expr.target.token, "Cannot access properties of null.");
+            throw new Runtime.Error(expr.target.token, "Cannot access properties of null.");
         } else if (obj instanceof String) {
             object = (Environment)globals.lookup("_STRING");
         } else if (obj instanceof Double) {
@@ -441,7 +441,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         } else if (obj instanceof Environment) {
             object = (Environment)obj;
         } else {
-            throw new RuntimeError(expr.target.token, "Cannot access properties of non-object.");
+            throw new Runtime.Error(expr.target.token, "Cannot access properties of non-object.");
         }
 
         if (expr.computable) {
@@ -454,7 +454,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                         return null;
                     }
                 } else {
-                    throw new RuntimeError(expr.property.token, "Array index must be a number.");
+                    throw new Runtime.Error(expr.property.token, "Array index must be a number.");
                 }
             }
             else if (object.name.equals("Map")) {
@@ -503,7 +503,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     }
                     return array.set(index, value);
                 } else {
-                    throw new RuntimeError(prop.property.token, "Array index must be a number.");
+                    throw new Runtime.Error(prop.property.token, "Array index must be a number.");
                 }
             }
             else if (instance.name.equals("Map")) {
@@ -521,7 +521,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 return instance.define(property.toString(), value);
             }
             else {
-                throw new RuntimeError(expr.target.token, "Cannot set property of non-object. `" + stringify(instance) + "`");
+                throw new Runtime.Error(expr.target.token, "Cannot set property of non-object. `" + stringify(instance) + "`");
             }
         }
 
@@ -589,7 +589,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
             return newValue;
         } else {
-            throw new RuntimeError(variableToken, "This operator cannot be used with this type.");
+            throw new Runtime.Error(variableToken, "This operator cannot be used with this type.");
         }
     }
 
@@ -603,11 +603,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             superClassEnv = (Environment)environment.lookup(expr.className.lexeme);
         }        
         if (superClassEnv == null) {
-            throw new RuntimeError(expr.keyword, "Cannot find superclass.");
+            throw new Runtime.Error(expr.keyword, "Cannot find superclass.");
         }
         Object method = superClassEnv.lookup(expr.method.name);
         if (method == null) {
-            throw new RuntimeError(expr.method.name, "Cannot find superclass method.");
+            throw new Runtime.Error(expr.method.name, "Cannot find superclass method.");
         }
         return method;
     }
@@ -625,7 +625,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             case BANG:
                 return !isTruthy(right);
             default:
-                throw new RuntimeError(expr.operator, "Unknown operator.");
+                throw new Runtime.Error(expr.operator, "Unknown operator.");
         }
     }
 
@@ -668,7 +668,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 result = environment.lookup(stmt.superclass.name.lexeme, stmt.superclass.name);
             }            
             if (!(result instanceof Environment)) {
-                throw new RuntimeError(stmt.superclass.name, "Superclass must be a class.");
+                throw new Runtime.Error(stmt.superclass.name, "Superclass must be a class.");
             }
             superclass = (Environment)result;
         } else {
@@ -709,7 +709,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitFunctionStmt(Stmt.Function stmt) {        
-        final RuntimeFunction function =  new RuntimeFunction(stmt, environment);
+        final Runtime.Function function =  new Runtime.Function(stmt, environment);
         switch (stmt.name.category) {
             case GLOBAL_FUNCTION:
             case GLOBAL_PROCEDURE:            
@@ -749,7 +749,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Void visitReturnStmt(Stmt.Return stmt) {
         Object returnValue = null;
         if (stmt.value != null) returnValue = evaluate(stmt.value);
-        throw new Return(returnValue);
+        throw new Runtime.Return(returnValue);
     }
 
     @Override
@@ -787,7 +787,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (value == null) {
             // if linkedType is either 'o' or 'v' then we allow null
             if (linkedType == 'o' || linkedType == 'v' || linkedType == 'd') return;
-            throw new RuntimeError(name, type + " type mismatch. Expected " + Hungaro.getTypeOf(name, linkedType) + ".");
+            throw new Runtime.Error(name, type + " type mismatch. Expected " + Hungaro.getTypeOf(name, linkedType) + ".");
         }
         // if linkedType is 'v' then we allow any type
         if (linkedType == 'v') return;
@@ -814,7 +814,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 }
                 break;
             case 'o': // allowed types: Environment, RuntimeFunction
-                if (value instanceof Environment || value instanceof RuntimeFunction) return;
+                if (value instanceof Environment || value instanceof Runtime.Function) return;
                 break;
             case 'd':
                 if (value instanceof Environment) {
@@ -824,7 +824,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             default:
                 break;
         }
-        throw new RuntimeError(name, type + " type mismatch. Expected " + Hungaro.getTypeOf(name, linkedType) + ".");
+        throw new Runtime.Error(name, type + " type mismatch. Expected " + Hungaro.getTypeOf(name, linkedType) + ".");
     }    
 
     @Override
@@ -834,9 +834,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         while (isTruthy(evaluate(stmt.condition))) {
             try {
                 execute(stmt.body);
-            } catch (Exit e) {
+            } catch (Runtime.Exit e) {
                 break;
-            } catch (Loop l) {
+            } catch (Runtime.Loop l) {
                 continue;
             }
         }
@@ -925,15 +925,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             Object size = evaluate(expr.fixedSize);
             // check if the size is a number
             if (!(size instanceof Double)) {
-                throw new RuntimeError(expr.fixedSize.token, "Array size must be a number.");
+                throw new Runtime.Error(expr.fixedSize.token, "Array size must be a number.");
             }
             // check if the size is an integer
             if (((Double)size) % 1 != 0) {
-                throw new RuntimeError(expr.fixedSize.token, "Array size must be an integer.");
+                throw new Runtime.Error(expr.fixedSize.token, "Array size must be an integer.");
             }
             // check if the size is positive
             if (((Double)size) < 0) {
-                throw new RuntimeError(expr.fixedSize.token, "Array size must be positive.");
+                throw new Runtime.Error(expr.fixedSize.token, "Array size must be positive.");
             }
             
             // convert from double to int
@@ -994,7 +994,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         try {
             Object target = evaluate(expr.target);
             if (!(target instanceof Environment)) {
-                throw new RuntimeError(expr.target.token, "Cannot slice a non-array.");
+                throw new Runtime.Error(expr.target.token, "Cannot slice a non-array.");
             }
 
             ArrayList<Object> array = (ArrayList<Object>)((Environment)target).lookup("value");
@@ -1007,10 +1007,10 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
             // check if start and end are numbers
             if (!(start instanceof Double)) {
-                throw new RuntimeError(expr.start.token, "Start index must be a number.");
+                throw new Runtime.Error(expr.start.token, "Start index must be a number.");
             }
             if (!(end instanceof Double)) {
-                throw new RuntimeError(expr.end.token, "End index must be a number.");
+                throw new Runtime.Error(expr.end.token, "End index must be a number.");
             }
 
             int s = ((Double)start).intValue();
@@ -1028,12 +1028,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         
         Object initialValue = evaluate(stmt.start);
         if (!(initialValue instanceof Double)) {
-            throw new RuntimeError(stmt.start.token, "Start index must be a number.");
+            throw new Runtime.Error(stmt.start.token, "Start index must be a number.");
         }
 
         Object finalValue = evaluate(stmt.stop);
         if (!(finalValue instanceof Double)) {
-            throw new RuntimeError(stmt.stop.token, "Stop index must be a number.");
+            throw new Runtime.Error(stmt.stop.token, "Stop index must be a number.");
         }
 
         Object stepValue = 1.0;
@@ -1041,7 +1041,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (stmt.step != null) {
             stepValue = evaluate(stmt.step);
             if (!(stepValue instanceof Double)) {
-                throw new RuntimeError(stmt.step.token, "Step index must be a number.");
+                throw new Runtime.Error(stmt.step.token, "Step index must be a number.");
             }
         }
 
@@ -1079,9 +1079,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 }
                 // execute the block
                 executeBlock(stmt.body.statements, forEnv);
-            } catch(Loop e) {
+            } catch(Runtime.Loop e) {
                 continue;
-            } catch (Exit e) {
+            } catch (Runtime.Exit e) {
                 break;
             }
         }        
@@ -1099,7 +1099,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         // evaluate the target
         Object target = evaluate(stmt.iterable);
         if (!(target instanceof Environment)) {
-            throw new RuntimeError(stmt.iterable.token, "Invalid iterable object.");
+            throw new Runtime.Error(stmt.iterable.token, "Invalid iterable object.");
         }
         // checkVariableType(stmt.variable.name, target, "Variable");
 
@@ -1119,9 +1119,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 // execute the block
                 try {
                     executeBlock(stmt.body.statements, foreachEnv);
-                } catch(Loop e) {
+                } catch(Runtime.Loop e) {
                     continue;
-                } catch (Exit e) {
+                } catch (Runtime.Exit e) {
                     break;
                 }
             }
@@ -1143,14 +1143,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 // execute the block
                 try {
                     executeBlock(stmt.body.statements, foreachEnv);
-                } catch(Loop e) {
+                } catch(Runtime.Loop e) {
                     continue;
-                } catch (Exit e) {
+                } catch (Runtime.Exit e) {
                     break;
                 }
             }
         } else {
-            throw new RuntimeError(stmt.iterable.token, "Invalid iterable object.");
+            throw new Runtime.Error(stmt.iterable.token, "Invalid iterable object.");
         }
         
         return null;
@@ -1158,12 +1158,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitLoopStmt(Stmt.Loop stmt) {
-        throw new Loop();
+        throw new Runtime.Loop();
     }
 
     @Override
     public Void visitExitStmt(Stmt.Exit stmt) {
-        throw new Exit();
+        throw new Runtime.Exit();
     }
 
     @Override
@@ -1171,7 +1171,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         final Object left = evaluate(expr.left);
         // check if left is a string
         if (!(left instanceof String)) {
-            throw new RuntimeError(expr.left.token, "Left operand must be a string.");
+            throw new Runtime.Error(expr.left.token, "Left operand must be a string.");
         }
         final Object right = evaluate(expr.right);        
         // return the concatenation
@@ -1188,9 +1188,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 if (isTruthy(evaluate(stmt.condition))) {
                     break;
                 }
-            } catch(Loop e) {
+            } catch(Runtime.Loop e) {
                 continue;
-            } catch (Exit e) {
+            } catch (Runtime.Exit e) {
                 break;
             }
         }    
@@ -1199,7 +1199,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitDeferStmt(Stmt.Defer stmt) {
-        throw new Defer(stmt.body);
+        throw new Runtime.Defer(stmt.body);
     }
 
     @Override
@@ -1210,7 +1210,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             if (!isTruthy(evaluate(stmt.condition))) {
                 executeBlock(stmt.body.statements, environment);
             }
-        } catch (RuntimeError e) {
+        } catch (Runtime.Error e) {
             executeBlock(stmt.body.statements, environment);
         }
         return null;
@@ -1221,7 +1221,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         try {            
             Environment tryEnv = new Environment(environment, "Try");
             executeBlock(stmt.tryBlock.statements, tryEnv);
-        } catch (RuntimeError e) {            
+        } catch (Runtime.Error e) {            
             if (stmt.finallyBlock != null) {
                 executeFinallyBlock(stmt.finallyBlock.statements);
             }            
@@ -1231,12 +1231,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             } else {
                 throw e; // we need to bubble up the runtime exception
             }
-        } catch (Return e) {
+        } catch (Runtime.Return e) {
             if (stmt.finallyBlock != null) {
                 executeFinallyBlock(stmt.finallyBlock.statements);
             }
             throw e; // we need to bubble up the return exception
-        } catch (Exit e) {
+        } catch (Runtime.Exit e) {
             if (stmt.finallyBlock != null) {
                 executeFinallyBlock(stmt.finallyBlock.statements);
             }

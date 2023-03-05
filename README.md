@@ -9,6 +9,7 @@ The language is inspired by the following languages:
 * [Python](https://www.python.org/)
 * [Ruby](https://www.ruby-lang.org/en/)
 * [Java](https://www.java.com/)
+* [Javascript](https://www.javascript.com/)
 
 ## Table of Contents
 
