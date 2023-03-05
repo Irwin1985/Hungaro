@@ -1,8 +1,3 @@
-"""
- Reduce function: 
- Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
- Date: 2023-03-05
-"""
+let nNumber = 16795371
 
-let sResult = httpget("https://jsonplaceholder.typicode.com/posts/1")
-println(sResult)
+println(nNumber)

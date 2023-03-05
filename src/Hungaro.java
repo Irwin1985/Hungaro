@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Hungaro {
     private static final Interpreter interpreter = new Interpreter();
+    public static final Map<Integer, Object> constants = new HashMap<>();
     static boolean hadError = false;
     static boolean hadRuntimeError = false;
     static boolean debugMode = true; // debug mode

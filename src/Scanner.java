@@ -5,10 +5,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // DEBUG
-// import java.io.IOException;
-// import java.nio.charset.Charset;
-// import java.nio.file.Files;
-// import java.nio.file.Paths;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 // DEBUG
 
 public class Scanner {
@@ -55,15 +55,10 @@ public class Scanner {
         new Spec(Pattern.compile("^\\|"), TokenType.SEMICOLON, Category.GENERIC),
 
         // Numbers
-        new Spec(Pattern.compile("^\\d+(\\.\\d+)?"), TokenType.NUMBER, Category.LITERAL),
+        new Spec(Pattern.compile("^\\d+(\\_\\d+)*(\\.\\d+)?"), TokenType.NUMBER, Category.LITERAL),
 
-        // Double quoted string
-        
-        new Spec(Pattern.compile("^([\"'])((?:\\\\1|(?:(?!\\1)).)*)(\\1)"), TokenType.STRING, Category.LITERAL),
-        // new Spec(Pattern.compile("^\"(?:[^\"\\\\^'\\\\]|\\\\.)*\""), TokenType.STRING, Category.LITERAL),
-
-        // Single quoted string:
-        // new Spec(Pattern.compile("^'(?:[^\"\\\\^'\\\\]|\\\\.)*'"), TokenType.STRING, Category.LITERAL),
+        // Double quoted string        
+        new Spec(Pattern.compile("^([\"'])((?:\\\\1|(?:(?!\\1)).)*)(\\1)"), TokenType.STRING, Category.LITERAL),        
 
         // Backticked string:
         new Spec(Pattern.compile("^`[^`]*`"), TokenType.STRING, Category.LITERAL),
@@ -78,8 +73,7 @@ public class Scanner {
         new Spec(Pattern.compile("^!"), TokenType.LOGICAL_NOT, Category.UNARY),
 
         // Keywords        
-        new Spec(Pattern.compile("^\\bas\\b"), TokenType.AS,Category.KEYWORD),
-        // new Spec(Pattern.compile("^\\bdeclare\\b"), TokenType.DECLARE,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\bas\\b"), TokenType.AS,Category.KEYWORD),        
         
         // declare has been replaced by def and let.
         new Spec(Pattern.compile("^\\blet\\b"), TokenType.LET,Category.KEYWORD),
@@ -98,7 +92,6 @@ public class Scanner {
         new Spec(Pattern.compile("^\\bcase\\b"), TokenType.CASE,Category.KEYWORD),
         new Spec(Pattern.compile("^\\botherwise\\b"), TokenType.OTHERWISE,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bnew\\b"), TokenType.NEW,Category.KEYWORD),
-        // new Spec(Pattern.compile("^\\bprint\\b"), TokenType.PRINT,Category.KEYWORD),
         new Spec(Pattern.compile("^\\brelease\\b"), TokenType.RELEASE,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bdefer\\b"), TokenType.DEFER,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bend\\b"), TokenType.END,Category.KEYWORD),
@@ -255,7 +248,11 @@ public class Scanner {
                     break;
                 case NUMBER:
                     lexeme = lexeme.replaceAll("_", "");
-                    value = Double.parseDouble(lexeme);
+                    try {
+                        value = Double.parseDouble(lexeme);
+                    } catch(NumberFormatException e) {
+                        Hungaro.error(line, col, "", "PARSE NUMBER ERROR: " + e.getMessage());
+                    }
                     break;
                 case TRUE:
                     value = true;
@@ -319,15 +316,15 @@ public class Scanner {
         return null;
     }
 
-    // public static void main(String[] args) throws IOException {
-    //     byte[] bytes = Files.readAllBytes(Paths.get("F:\\Desarrollo\\GitHub\\Hungaro\\sample.hgr"));
-    //     String source = new String(bytes, Charset.defaultCharset());
+    public static void main(String[] args) throws IOException {
+        byte[] bytes = Files.readAllBytes(Paths.get("F:\\Desarrollo\\GitHub\\Hungaro\\sample.hgr"));
+        String source = new String(bytes, Charset.defaultCharset());
 
-    //     Scanner sc = new Scanner(source);
-    //     List<Token> tokens = sc.scanTokens();
+        Scanner sc = new Scanner(source);
+        List<Token> tokens = sc.scanTokens();
 
-    //     for (Token tok : tokens) {
-    //         System.out.println(tok);
-    //     }
-    // }
+        for (Token tok : tokens) {
+            System.out.println(tok);
+        }
+    }
 }
