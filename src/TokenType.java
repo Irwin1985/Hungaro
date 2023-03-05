@@ -32,6 +32,7 @@ public enum TokenType {
     TRY,
     CATCH,
     FINALLY,
+    LAMBDA,
 
     // Iterator keywords
     WHILE,
@@ -66,6 +67,6 @@ public enum TokenType {
     LOGICAL_AND,
     LOGICAL_NOT,
     IGNORE,
-    PARAMETER,    
+    PARAMETER,        
     EOF,    
 }

@@ -154,10 +154,10 @@ public abstract class Expr {
      * Lambda expression: (a, b) => a + b
      */
     public static class Lambda extends Expr {
-        final List<Token> params;
-        final Stmt.Block body;
+        final List<Param> params;
+        final Expr body;
 
-        public Lambda(Token keyword, List<Token> params, Stmt.Block body) {
+        public Lambda(Token keyword, List<Param> params, Expr body) {
             super(keyword);
             this.params = params;
             this.body = body;

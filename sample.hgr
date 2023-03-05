@@ -1,0 +1,32 @@
+"""
+    MySql test connection
+    Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-03-04
+"""
+
+let mMysqlConfig = {
+    'driver': 'mysql',
+    'server': 'localhost',
+    'user': 'root',
+    'database': 'carlic',
+    'password': '1234',    
+}
+
+let oCon = connect(mMysqlConfig)
+
+if oCon != null
+    # query all topics
+    let oRs = oCon.fSelect('SELECT * FROM topics')
+    
+    # print just description which contains 'Parte'
+    let aResult = oRs.filter(lambda (pmRow): pmRow.description.contains('Parte'))
+    
+    # iterate over result
+    for each vRow in aResult
+        println(vRow.description)
+    end
+
+    disconnect(oCon)
+else
+    println('Connection failed')
+end

@@ -943,10 +943,15 @@ public class Parser {
         else if (match(TokenType.SUPER)) {
             return superExpr();
         }
+        else if (match(TokenType.LAMBDA)) {
+            return lambda();
+        }
 
         throw error(peek(), "Expect expression.");
     }
-
+    /*******************************************************************************************
+    * This expression.
+    ********************************************************************************************/
     private Expr thisExpr() {
         if (classStack.isEmpty()) {
             throw error(previous(), "Cannot refer variable instance outside of a class.");
@@ -1087,6 +1092,33 @@ public class Parser {
 
         return new Expr.Super(keyword, className, method);
     }
+
+    /*******************************************************************************************
+    * Lambda expression
+    ********************************************************************************************/
+    private Expr lambda() {
+        final Token keyword = previous();
+        final List<Expr.Param> parameters = new ArrayList<Expr.Param>();
+        match(TokenType.SEMICOLON); // optional semicolon
+        consume(TokenType.LPAREN, "Expect '(' after 'lambda'.");
+        match(TokenType.SEMICOLON); // optional semicolon
+        if (!check(TokenType.RPAREN)) {
+            do {                
+                match(TokenType.SEMICOLON); // optional semicolon
+                if (check(TokenType.RPAREN)) break; // allow trailing comma
+                Token param = consume(TokenType.PARAMETER, "Expect parameter name.");                
+                parameters.add(new Expr.Param(param));
+            } while (match(TokenType.COMMA));
+        }
+        consume(TokenType.RPAREN, "Expect ')' after parameters.");
+
+        consume(TokenType.COLON, "Expect ':' after parameters.");        
+        final Expr body = expression();
+
+        return new Expr.Lambda(keyword, parameters, body);        
+    }
+
+
     /*******************************************************************************************
     * Checks if the current token is of the given type.
     ********************************************************************************************/

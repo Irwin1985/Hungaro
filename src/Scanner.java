@@ -118,6 +118,7 @@ public class Scanner {
         new Spec(Pattern.compile("^\\btry\\b"), TokenType.TRY,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bcatch\\b"), TokenType.CATCH,Category.KEYWORD),
         new Spec(Pattern.compile("^\\bfinally\\b"), TokenType.FINALLY,Category.KEYWORD),
+        new Spec(Pattern.compile("^\\blambda\\b"), TokenType.LAMBDA,Category.KEYWORD),
 
         // Assignment operators
         new Spec(Pattern.compile("^="), TokenType.SIMPLE_ASSIGN, Category.ASSIGNMENT),                

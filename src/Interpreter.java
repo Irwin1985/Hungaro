@@ -297,7 +297,21 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitLambdaExpr(Expr.Lambda expr) {
-        return null;
+        // boolean mustReturnValue, 
+        // Token name, 
+        // List<Expr.Param> params, 
+        // Block body, 
+        // boolean isVariadic, 
+        // int optionalParams
+        final boolean mustReturnValue = true;
+        final Token name = expr.token;
+        final List<Expr.Param> params = expr.params;
+        final List<Stmt> statements = new ArrayList<Stmt>();
+        statements.add(new Stmt.Return(new Token(TokenType.RETURN, "return"), expr.body));
+        final Stmt.Block body = new Stmt.Block(statements);
+        final Stmt.Function declaration = new Stmt.Function(mustReturnValue, name, params, body, false, 0);
+        
+        return new RuntimeFunction(declaration, environment);
     }
 
     @Override

@@ -1,0 +1,39 @@
+"""
+    Article: https://rosettacode.org/wiki/10001th_prime
+
+    Find and show on this page the 10001st prime number.
+           
+    Hungaro code writer: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-03-04
+"""
+
+def fIsPrime(pnN)
+    for nI = 2 to int(pnN^0.5) + 1
+        if pnN % nI == 0
+            return false
+        end
+    end
+    return true
+end
+
+def fPrime(pnN)
+    if pnN == 1
+        return 2
+    end
+    let nI = 1
+    let nJ = 1
+    while nJ < pnN
+        if fIsPrime(nI)
+            nJ += 1
+        end
+        nI += 2
+    end
+    return nI - 2
+end
+
+# main
+def pMain
+    println(fPrime(10001))
+end
+
+pMain()

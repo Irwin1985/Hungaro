@@ -918,6 +918,45 @@ public final class Builtins {
                 return true;
             }
         });
+
+        // filter(): takes a function and apply it to each element of the array filtering down
+        // just those elements that return true
+        interpreter.arrayEnv.define("filter", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(2);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                CallableObject function = (CallableObject)arguments.get(1);
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    ArrayList<Object> filtered = new ArrayList<Object>();
+                    for (Object o : array) {
+                        ArrayList<Object> args = new ArrayList<Object>();
+                        args.add(o);
+                        Object result = function.call(interpreter, args);
+                        if (result instanceof Boolean) {
+                            if ((Boolean)result) {
+                                filtered.add(o);
+                            }
+                        }
+                    }
+                    return interpreter.makeObject(filtered, interpreter.arrayEnv, "Array");
+                }
+                return null;
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+
+
+
     }
 
     /***********************************************************************
@@ -1750,7 +1789,7 @@ public final class Builtins {
             public boolean evaluateArguments() {
                 return true;
             }
-        });        
+        });
     }
 
     /***********************************************************************
