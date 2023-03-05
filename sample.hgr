@@ -1,3 +1,17 @@
-let nNumber = 16795371
+"""
+ Fibbonacci sequence
 
-println(nNumber)
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-02-26
+"""
+
+def fFib(pnSerie)
+    if pnSerie < 2
+        return pnSerie
+    end
+    return fFib(pnSerie - 1) + fFib(pnSerie - 2)
+end
+
+let nStart = tick()
+assert(fFib(35) == 9227465, "Fibbonacci sequence failed")
+println(tack(nStart))

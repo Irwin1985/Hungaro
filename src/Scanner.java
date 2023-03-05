@@ -240,7 +240,7 @@ public class Scanner {
             Object value = "";
             Category category = spec.category;
             Scope scope = Scope.NONE;
-
+            
             switch (spec.type) {
                 case THIS:
                     lexeme = lexeme.substring(1);
