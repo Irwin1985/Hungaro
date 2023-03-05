@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+@SuppressWarnings("unchecked")
 public final class BuiltinsForNative {
     public static void create(Interpreter interpreter) {
         // date() builtin function
