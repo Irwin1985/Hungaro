@@ -35,7 +35,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     // final Stack<Boolean> variableStack = new Stack<Boolean>();
 
     public Interpreter() {        
-        Builtins.defineGlobals(this);        
+        BuiltinsForObject.create(this);
+        BuiltinsForArray.create(this);
+        BuiltinsForMap.create(this);
+        BuiltinsForClass.create(this);
+        BuiltinsForFunction.create(this);
+        BuiltinsForNative.create(this);
+        BuiltinsForString.create(this);
+        BuiltinsForDatabase.create(this);
+        BuiltinsForWrapper.create(this);        
     }
 
     public void interpret(List<Stmt> statements) {
