@@ -1,0 +1,11 @@
+"""
+ Concatenates two arrays
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-03-05
+"""
+
+let
+    aArray1 = [3, 3],
+    aArray2 = [1, 2, 3, 4]
+
+assert(aArray1.concat(aArray2) == [3, 3, 1, 2, 3, 4], "concatenation failed")

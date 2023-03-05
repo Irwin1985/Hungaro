@@ -1,0 +1,10 @@
+"""
+ FindIndex function: takes a function and apply it to each element of the array. If at least one
+ element returns true, then the function returns the index of that element, otherwise it returns -1
+ Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+ Date: 2023-03-05
+"""
+
+let aNumbers = [1, 30, 39, 29, 10, 13]
+
+assert(aNumbers.findIndex(lambda (pnNumber): pnNumber == 13) == 5, "test failed")

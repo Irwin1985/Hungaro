@@ -955,7 +955,184 @@ public final class Builtins {
             }
         });
 
+        // every(): takes a function and apply it to each element of the array. If all the
+        // elements return true, then the function returns true, otherwise it returns false
+        interpreter.arrayEnv.define("every", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(2);
+            }
 
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                CallableObject function = (CallableObject)arguments.get(1);
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    for (Object o : array) {
+                        ArrayList<Object> args = new ArrayList<Object>();
+                        args.add(o);
+                        Object result = function.call(interpreter, args);
+                        if (result instanceof Boolean) {
+                            if (!(Boolean)result) {
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                }
+                return null;
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+
+        // some(): takes a function and apply it to each element of the array. If at least one
+        // element returns true, then the function returns true, otherwise it returns false
+        interpreter.arrayEnv.define("some", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(2);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                CallableObject function = (CallableObject)arguments.get(1);
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    for (Object o : array) {
+                        ArrayList<Object> args = new ArrayList<Object>();
+                        args.add(o);
+                        Object result = function.call(interpreter, args);
+                        if (result instanceof Boolean) {
+                            if ((Boolean)result) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                }
+                return null;
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+
+        // find(): takes a function and apply it to each element of the array. If at least one
+        // element returns true, then the function returns the element, otherwise it returns null
+        interpreter.arrayEnv.define("find", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(2);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                CallableObject function = (CallableObject)arguments.get(1);
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    for (Object o : array) {
+                        ArrayList<Object> args = new ArrayList<Object>();
+                        args.add(o);
+                        Object result = function.call(interpreter, args);
+                        if (result instanceof Boolean) {
+                            if ((Boolean)result) {
+                                return o;
+                            }
+                        }
+                    }
+                    return null;
+                }
+                return null;
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+
+        // findIndex(): takes a function and apply it to each element of the array. If at least one
+        // element returns true, then the function returns the index of the element, otherwise it returns -1
+        interpreter.arrayEnv.define("findIndex", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(2);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                CallableObject function = (CallableObject)arguments.get(1);
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    int index = 0;
+                    for (Object o : array) {
+                        ArrayList<Object> args = new ArrayList<Object>();
+                        args.add(o);
+                        Object result = function.call(interpreter, args);
+                        if (result instanceof Boolean) {
+                            if ((Boolean)result) {
+                                return (double)index;
+                            }
+                        }
+                        index++;
+                    }
+                    return (double)-1;
+                }
+                return null;
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+
+        // reduce(): takes a function and apply it to each element of the array. The function
+        // must take two arguments, the first one is the accumulator and the second one is the
+        // current element. The function returns the accumulator. The initial value of the
+        // accumulator is the first element of the array.
+        interpreter.arrayEnv.define("reduce", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(2);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                CallableObject function = (CallableObject)arguments.get(1);
+                if (arguments.get(0) instanceof Environment) {
+                    Environment env = (Environment)arguments.get(0);
+                    ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
+                    if (array.size() == 0) {
+                        return null;
+                    }
+                    Object accumulator = array.get(0);
+                    for (int i = 1; i < array.size(); i++) {
+                        ArrayList<Object> args = new ArrayList<Object>();
+                        args.add(accumulator);
+                        args.add(array.get(i));
+                        accumulator = function.call(interpreter, args);
+                    }
+                    return accumulator;
+                }
+                return null;
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
 
     }
 
