@@ -56,16 +56,16 @@ end
 
 def cComputerPartDisplayVisitor as cComputerPartVisitor
     pVisit(poComputerPart)
-        if poComputerPart.instanceOf("cMouse")
+        if poComputerPart.fInstanceOf("cMouse")
             pPrintLn("Displaying Mouse.")
         end
-        if poComputerPart.instanceOf("cKeyboard")
+        if poComputerPart.fInstanceOf("cKeyboard")
             pPrintLn("Displaying Keyboard.")
         end
-        if poComputerPart.instanceOf("cMonitor")
+        if poComputerPart.fInstanceOf("cMonitor")
             pPrintLn("Displaying Monitor.")
         end
-        if poComputerPart.instanceOf("cComputer")
+        if poComputerPart.fInstanceOf("cComputer")
             pPrintLn("Displaying Computer.")
         end
     end

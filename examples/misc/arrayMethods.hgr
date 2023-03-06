@@ -11,7 +11,7 @@ pAssert(aArray.fLen() == 10, "Array length is not 10")
 
 aArray.pPush([-1, -2])
 
-pAssert(aArray.toString() == "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, [-1, -2]]", "Array is not equal")
+pAssert(aArray.fToString() == "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, [-1, -2]]", "Array is not equal")
 
 # Math functions
 
@@ -26,10 +26,10 @@ let aArray1 = [1, 2, 3, 4, 5, 6]
 let aArray2 = [7, 8, 9, 10, 11, 12]
 
 # fConcat()
-pAssert(aArray1.fConcat(aArray2).toString() == "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]", "Concat is not equal")
+pAssert(aArray1.fConcat(aArray2).fToString() == "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]", "Concat is not equal")
 
-# toString()
-pAssert(aArray1.toString() == "[1, 2, 3, 4, 5, 6]", "Array is not equal")
+# fToString()
+pAssert(aArray1.fToString() == "[1, 2, 3, 4, 5, 6]", "Array is not equal")
 
 # fIndexOf()
 pAssert(aArray1.fIndexOf(3) == 2, "Index of 3 is not 2")
@@ -45,11 +45,11 @@ pAssert(aArray1.fIsEmpty() == false, "Array is empty")
 
 # pSort(): this method alter the array
 aArray1.pSort()
-pAssert(aArray1.toString() == "[1, 2, 3, 4, 5, 6]", "Array is not equal")
+pAssert(aArray1.fToString() == "[1, 2, 3, 4, 5, 6]", "Array is not equal")
 
 # revers(): this method alter the array
 aArray1.pReverse()
-pAssert(aArray1.toString() == "[6, 5, 4, 3, 2, 1]", "Array is not equal")
+pAssert(aArray1.fToString() == "[6, 5, 4, 3, 2, 1]", "Array is not equal")
 
 # fFirst()
 pAssert(aArray1.fFirst() == 6, "First element is not 6")
@@ -59,28 +59,28 @@ pAssert(aArray1.fLast() == 1, "Last element is not 1")
 
 # fRemove(): removes the first element that matches the value
 aArray1.fRemove(3)
-pAssert(aArray1.toString() == "[6, 5, 4, 2, 1]", "Array is not equal")
+pAssert(aArray1.fToString() == "[6, 5, 4, 2, 1]", "Array is not equal")
 
 # fRemoveAt(): removes the element at the specified index
 aArray1.fRemoveAt(2)
-pAssert(aArray1.toString() == "[6, 5, 2, 1]", "Array is not equal")
+pAssert(aArray1.fToString() == "[6, 5, 2, 1]", "Array is not equal")
 
 # fInsertAt(): inserts the element at the specified index
 aArray1.fInsertAt(2, 4)
-pAssert(aArray1.toString() == "[6, 5, 4, 2, 1]", "Array is not equal")
+pAssert(aArray1.fToString() == "[6, 5, 4, 2, 1]", "Array is not equal")
 
 # fOccurs(): returns the number of times the value occurs in the array
 pAssert(["Robert", "Bob", "Martin", "Robert"].fOccurs("Robert") == 2, "Robert occurs 2 times")
 
 # take(n>0): returns a new array with the specified number of elements
-pAssert(aArray1.take(2).toString() == "[6, 5]", "Array is not equal")
+pAssert(aArray1.take(2).fToString() == "[6, 5]", "Array is not equal")
 
 # take(n<0): returns a new array with the specified number of elements from the end
-pAssert(aArray1.take(-2).toString() == "[2, 1]", "Array is not equal")
+pAssert(aArray1.take(-2).fToString() == "[2, 1]", "Array is not equal")
 
 # pPush()
 aArray1.pPush(7)
-pAssert(aArray1.toString() == "[6, 5, 4, 2, 1, 7]", "Array is not equal")
+pAssert(aArray1.fToString() == "[6, 5, 4, 2, 1, 7]", "Array is not equal")
 
 # fPop()
 pAssert(aArray1.fPop() == 7, "Pop is not 7")
@@ -93,17 +93,17 @@ pAssert(aArray1.fGet(2) == 4, "Element at index 2 is not 4")
 
 # pSet()
 aArray1.pSet(2, 3)
-pAssert(aArray1.toString() == "[6, 5, 3, 2, 1]", "Array is not equal")
+pAssert(aArray1.fToString() == "[6, 5, 3, 2, 1]", "Array is not equal")
 
 # fSlice()
-pAssert(aArray1.fSlice(1, 3).toString() == "[5, 3]", "Slice is not equal")
+pAssert(aArray1.fSlice(1, 3).fToString() == "[5, 3]", "Slice is not equal")
 
 # fJoin()
 pAssert(aArray1.fJoin(",") == "6,5,3,2,1", "Join is not equal")
 
 # pShuffle()
 aArray1.pShuffle()
-pAssert(aArray1.toString() != "[6, 5, 3, 2, 1]", "Array is equal")
+pAssert(aArray1.fToString() != "[6, 5, 3, 2, 1]", "Array is equal")
 
 # fEquals()
 pAssert([1, 2, 3].fEquals([1, 2, 3]) == true, "Arrays are not equal")

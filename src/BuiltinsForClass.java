@@ -2,8 +2,8 @@ import java.util.List;
 
 public final class BuiltinsForClass {
     public static void create(Interpreter interpreter) {
-        // toString() builtin function: show the name of the class
-        interpreter.classEnv.define("toString", new CallableObject() {
+        // fToString() builtin function: show the name of the class
+        interpreter.classEnv.define("fToString", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -23,8 +23,8 @@ public final class BuiltinsForClass {
             }
         });
 
-        // className(): return the name of the class. The name is the last word in the environment name.
-        interpreter.classEnv.define("className", new CallableObject() {
+        // fClassName(): return the name of the class. The name is the last word in the environment name.
+        interpreter.classEnv.define("fClassName", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -45,9 +45,9 @@ public final class BuiltinsForClass {
             }
         });
 
-        // instanceOf(): return true if the object is an instance of the class
+        // fInstanceOf(): return true if the object is an instance of the class
         // we need to lookup in the environment to find the class
-        interpreter.classEnv.define("instanceOf", new CallableObject() {
+        interpreter.classEnv.define("fInstanceOf", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
