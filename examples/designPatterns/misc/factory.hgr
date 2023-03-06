@@ -14,30 +14,30 @@ def cCoffee
     -pPrepare()
 
     pServe
-        println("Here\'s your cup of " & @sName & ". Enjoy!")
+        pPrintLn("Here\'s your cup of " & @sName & ". Enjoy!")
     end
 end
 
 def cBrewedCoffee as cCoffee
     sName = "Brewed Coffee"
     pPrepare
-        println("choose coffee")
-        println("put in brew machine")
-        println("add water")
-        println("brew")
+        pPrintLn("choose coffee")
+        pPrintLn("put in brew machine")
+        pPrintLn("add water")
+        pPrintLn("brew")
     end
 end
 
 def cSpecialtyCoffee as cCoffee
     sName = "Specialty Coffee"
     pPrepare
-        println("choose coffee")
-        println("put in espresso machine")
-        println("pull expresso shot")
-        println("choose milk")
-        println("steam milk")
-        println("add cocoa")
-        println("mix milk and coffee")
+        pPrintLn("choose coffee")
+        pPrintLn("put in espresso machine")
+        pPrintLn("pull expresso shot")
+        pPrintLn("choose milk")
+        pPrintLn("steam milk")
+        pPrintLn("add cocoa")
+        pPrintLn("mix milk and coffee")
     end
 end
 

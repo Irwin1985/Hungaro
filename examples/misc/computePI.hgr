@@ -18,5 +18,5 @@ for nI = 1 to 20
         nAns = nAns - 4.0/(nJ*(nJ+1)*(nJ+2))
     end
     nJ += 2
-    println(nI, space(2), nAns)
+    pPrintLn(nI, fSpace(2), nAns)
 end

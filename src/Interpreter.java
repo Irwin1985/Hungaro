@@ -740,7 +740,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Void visitPrintStmt(Stmt.Print stmt) {
         String consoleColor = "\u001B[31m;]";
         for (Expr expression : stmt.expressions) {
-            System.out.print(consoleColor + stringify(evaluate(expression)));
+            System.out.fPrint(consoleColor + stringify(evaluate(expression)));
         }
         return null;
     }

@@ -12,11 +12,11 @@ let mMysqlConfig = {
     'password': 'your-password',    
 }
 
-let oCon = connect(mMysqlConfig)
+let oCon = fConnect(mMysqlConfig)
 
 if oCon != null
-    println('Connected Ok!')    
-    disconnect(oCon)    
+    pPrintLn('Connected Ok!')    
+    fDisconnect(oCon)    
 else
-    println('Connection failed')
+    pPrintLn('Connection failed')
 end

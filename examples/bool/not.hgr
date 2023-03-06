@@ -5,9 +5,9 @@
  Date: 2023-02-26
 """
 
-println(!true)  # false
-println(not true)  # false
-println(!false)  # true
-println(not false)  # true
-println(!!true) # true
-println(not not true) # true
+pPrintLn(!true)  # false
+pPrintLn(not true)  # false
+pPrintLn(!false)  # true
+pPrintLn(not false)  # true
+pPrintLn(!!true) # true
+pPrintLn(not not true) # true

@@ -79,8 +79,8 @@ def pMain
     let oIsMale = fGetMaleExpression()
     let oIsMarriedWoman = fGetMarriedWomanExpression()
 
-    println("John is male? " & oIsMale.fInterpret("John"))
-    println("Julie is a married women? " & oIsMarriedWoman.fInterpret("Married Julie"))
+    pPrintLn("John is male? " & oIsMale.fInterpret("John"))
+    pPrintLn("Julie is a married women? " & oIsMarriedWoman.fInterpret("Married Julie"))
 end
 
 pMain()

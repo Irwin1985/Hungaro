@@ -25,7 +25,7 @@ end
 
 def cService1 as cService
     pExecute
-        println("Executing Service1")
+        pPrintLn("Executing Service1")
     end
 
     fGetName
@@ -35,7 +35,7 @@ end
 
 def cService2 as cService
     pExecute
-        println("Executing Service2")
+        pPrintLn("Executing Service2")
     end
 
     fGetName
@@ -46,11 +46,11 @@ end
 def cInitialContext
     fLookup(psJndiName)
         if psJndiName == "SERVICE1"
-            println("Looking up and creating a new Service1 object")
+            pPrintLn("Looking up and creating a new Service1 object")
             return new cService1()
         end
         if psJndiName == "SERVICE2"
-            println("Looking up and creating a new Service2 object")
+            pPrintLn("Looking up and creating a new Service2 object")
             return new cService2()
         end
         return null
@@ -63,7 +63,7 @@ def cCache
     fGetService(psServiceName)
         for each vService in @aServices
             if vService.fGetName() == psServiceName
-                println("Returning cached  " & psServiceName & " object")
+                pPrintLn("Returning cached  " & psServiceName & " object")
                 return vService
             end
         end

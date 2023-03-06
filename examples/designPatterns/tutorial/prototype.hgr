@@ -46,7 +46,7 @@ def cShape
             oClone.sID = @sID
             oClone.sType = @sType            
         catch
-            println("CATCH ERROR: " & oEx.message)
+            pPrintLn("CATCH ERROR: " & oEx.message)
         end
         return oClone
     end
@@ -58,7 +58,7 @@ def cRectangle as cShape
     end
 
     pDraw
-        println("Inside Rectangle::draw() method.")
+        pPrintLn("Inside Rectangle::draw() method.")
     end
 end
 
@@ -68,7 +68,7 @@ def cSquare as cShape
     end
 
     pDraw
-        println("Inside Square::draw() method.")
+        pPrintLn("Inside Square::draw() method.")
     end
 end
 
@@ -78,7 +78,7 @@ def cCircle as cShape
     end
 
     pDraw
-        println("Inside Circle::draw() method.")
+        pPrintLn("Inside Circle::draw() method.")
     end
 end
 
@@ -110,13 +110,13 @@ def pMain
     oShapeCache.pLoadCache()
 
     let oClonedShape1 = oShapeCache.fGetShape("1")
-    println("Shape : " & oClonedShape1.fGetType())
+    pPrintLn("Shape : " & oClonedShape1.fGetType())
 
     let oClonedShape2 = oShapeCache.fGetShape("2")
-    println("Shape : " & oClonedShape2.fGetType())
+    pPrintLn("Shape : " & oClonedShape2.fGetType())
 
     let oClonedShape3 = oShapeCache.fGetShape("3")
-    println("Shape : " & oClonedShape3.fGetType())
+    pPrintLn("Shape : " & oClonedShape3.fGetType())
 end
 
 pMain()

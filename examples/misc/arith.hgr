@@ -19,4 +19,4 @@ let sSay1 = "Say", sSay2 = " ", sSay3 = "Hello"
 
 let sSay4 = sSay1 & sSay2 & sSay3
 
-print(sSay4) # Say Hello
+fPrint(sSay4) # Say Hello

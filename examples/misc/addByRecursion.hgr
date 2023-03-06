@@ -12,5 +12,5 @@ def fAddNumbers(pnNumber)
     end
 end
 
-let nNumber = val(readln("Enter a number: "))
-println("Sum of numbers from 1 to " & nNumber & " is " & fAddNumbers(nNumber))
+let nNumber = fVal(fReadLn("Enter a number: "))
+pPrintLn("Sum of numbers from 1 to " & nNumber & " is " & fAddNumbers(nNumber))

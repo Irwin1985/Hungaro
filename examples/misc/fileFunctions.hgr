@@ -4,9 +4,9 @@
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
  Date: 2023-02-24
 """
-let sFileName = curdir() & "\file.txt"
+let sFileName = fCurDir() & "\file.txt"
 
-if !file(sFileName)
+if !fFile(sFileName)
     let sContent = `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     Mauris auctor, nisl eget ultricies tincidunt, nisl nisl
@@ -46,12 +46,12 @@ if !file(sFileName)
     Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
     1985-04-12T23:20:50.52Z
     `    
-    strtofile(sContent, sFileName)
+    fStrToFile(sContent, sFileName)
     
-    let sAns = readln("File created, do you want to see the content? (y/n)")
+    let sAns = fReadLn("File created, do you want to see the content? (y/n)")
     if sAns == "y"
-        println("File content: " & filetostr(sFileName))
+        pPrintLn("File content: " & fFileToStr(sFileName))
     end
 else
-    println("File content: " & filetostr(sFileName))
+    pPrintLn("File content: " & fFileToStr(sFileName))
 end

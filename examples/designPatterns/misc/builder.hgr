@@ -233,7 +233,7 @@ def cEngine
         if @bStarted
             @nMileage += pnMileage
         else
-            println("Cannot go(), you must start engine first!")
+            pPrintLn("Cannot go(), you must start engine first!")
         end
     end     
 
@@ -270,14 +270,14 @@ def cTripComputer
     end
 
     pShowFuelLevel
-        println("Fuel level: " & @oCar.fGetFuel())
+        pPrintLn("Fuel level: " & @oCar.fGetFuel())
     end
 
     pShowStatus
         if @oCar.fGetEngine().fIsStarted()
-            println("Car is started")
+            pPrintLn("Car is started")
         else
-            println("Car isn\'t started")
+            pPrintLn("Car isn\'t started")
         end
     end
 end
@@ -333,7 +333,7 @@ def pDemo
         products.
     """
     let oCar = oBuilder.fGetResult()
-    println("Car built:\n" & oCar.fGetCarType())
+    pPrintLn("Car built:\n" & oCar.fGetCarType())
 
     let oManualBuilder = new cCarManualBuilder()
 
@@ -341,7 +341,7 @@ def pDemo
     oDirector.pConstructSportsCar(oManualBuilder)
     let oCarManual = oManualBuilder.fGetResult()    
     
-    println("Car manual built:\n" & oCarManual.fPrint())    
+    pPrintLn("Car manual built:\n" & oCarManual.fPrint())    
 end
 
 pDemo()

@@ -6,14 +6,14 @@
 """
 
 def fNthRoot(pnA, pnPrecision, pnNthRoot)
-    let nXP = sqrt(pnA)
-    while abs(pnA - nXP ^ pnNthRoot) > pnPrecision
+    let nXP = fSqrt(pnA)
+    while fAbs(pnA - nXP ^ pnNthRoot) > pnPrecision
         let nX = (1 / pnNthRoot) * (((pnNthRoot - 1) * nXP) + pnA / (nXP ^ (pnNthRoot - 1)))
         nXP = nX
     end
     return nXP
 end
 
-let nN = val(readln("Enter the root power (eg: 1, 2, 3, 4...): "))
+let nN = fVal(fReadLn("Enter the root power (eg: 1, 2, 3, 4...): "))
 let nX = 25
-println("Nth root of " & nX & " is ", fNthRoot(nX, 0.000001, nN))
+pPrintLn("Nth root of " & nX & " is ", fNthRoot(nX, 0.000001, nN))

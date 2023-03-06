@@ -6,7 +6,7 @@
 """
 
 let nI = 0
-let nLoopStart = tick()
+let nLoopStart = fTick()
 
 # NOTE: the character | is used to separate the expressions
 while nI < 10000000
@@ -17,9 +17,9 @@ while nI < 10000000
     1    | "str" | null  | "str" | true
 end
 
-let nLoopTime = tack(nLoopStart)
+let nLoopTime = fTack(nLoopStart)
 
-let nStart = tick()
+let nStart = fTick()
 
 nI = 0
 while nI < 10000000
@@ -31,6 +31,6 @@ while nI < 10000000
   "str" == 1    | "str" == null | "str" == true
 end
 
-let nElapsed = tack(nStart)
+let nElapsed = fTack(nStart)
 
-println("loop: " & nLoopTime & " elapsed: " & nElapsed & " equals: " & (nElapsed - nLoopTime))
+pPrintLn("loop: " & nLoopTime & " elapsed: " & nElapsed & " equals: " & (nElapsed - nLoopTime))

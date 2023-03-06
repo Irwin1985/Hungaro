@@ -68,11 +68,11 @@ def pMain
     let oCustomer3 = oCustomerFactory.fGetCustomer("Julie")
     let oCustomer4 = oCustomerFactory.fGetCustomer("Laura")
 
-    println("Customers")
-    println(oCustomer1.fGetName())
-    println(oCustomer2.fGetName())
-    println(oCustomer3.fGetName())
-    println(oCustomer4.fGetName())
+    pPrintLn("Customers")
+    pPrintLn(oCustomer1.fGetName())
+    pPrintLn(oCustomer2.fGetName())
+    pPrintLn(oCustomer3.fGetName())
+    pPrintLn(oCustomer4.fGetName())
 end
 
 pMain()

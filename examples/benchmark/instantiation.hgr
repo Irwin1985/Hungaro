@@ -9,7 +9,7 @@ def cFoo
     -pInit()
 end
 
-let nStart = tick()
+let nStart = fTick()
 let nI = 0
 
 while nI < 500000
@@ -22,4 +22,4 @@ while nI < 500000
     nI += 1
 end
 
-print("Elapsed time: " & tack(nStart) & " ms")
+fPrint("Elapsed time: " & fTack(nStart) & " ms")

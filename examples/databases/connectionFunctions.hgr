@@ -1,4 +1,4 @@
-let nStart = tick()
+let nStart = fTick()
 
 let mMysqlConfig = {
     'driver': 'mysql',
@@ -12,38 +12,38 @@ let sDatabase = 'your_database'
 let sTable = 'your_table'
 
 # Connect to database
-let oCon = connect(mMysqlConfig)
+let oCon = fConnect(mMysqlConfig)
 
 if oCon != null
-    println('Connection success')
+    pPrintLn('Connection success')
     # Get table columns
-    println('::::::::::::::::::Table Columns::::::::::::::::::')
+    pPrintLn('::::::::::::::::::Table Columns::::::::::::::::::')
     let aColumns = oCon.fGetColumns(sDatabase, sTable)
     for each vColumn in aColumns
-        println(vColumn)
+        pPrintLn(vColumn)
     end
     
     # Get tables
-    println('::::::::::::::::::Table List::::::::::::::::::')
+    pPrintLn('::::::::::::::::::Table List::::::::::::::::::')
     let aTables = oCon.fGetTables(sDatabase)
     for each vTable in aTables
-        println(vTable)
+        pPrintLn(vTable)
     end
 
     # Get primary key
-    println('::::::::::::::::::Primary keys::::::::::::::::::')
+    pPrintLn('::::::::::::::::::Primary keys::::::::::::::::::')
     let aPrimaryKey = oCon.fGetPrimaryKey(sDatabase, sTable)
     for each vKey in aPrimaryKey
-        println(vKey)
+        pPrintLn(vKey)
     end
 
     # Table exists
-    println('::::::::::::::::::Table exists::::::::::::::::::')
-    println(oCon.fTableExists(sDatabase, sTable))
+    pPrintLn('::::::::::::::::::Table exists::::::::::::::::::')
+    pPrintLn(oCon.fTableExists(sDatabase, sTable))
 
-    disconnect(oCon)
+    fDisconnect(oCon)
 else
-    println('Connection failed')
+    pPrintLn('Connection failed')
 end
 
-println("Elapsed time: " & (tack(nStart)) & " ms")
+pPrintLn("Elapsed time: " & (fTack(nStart)) & " ms")

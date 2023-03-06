@@ -26,7 +26,7 @@ def pMain
 
     for nI = 1 to aDoors.len()
         if aDoors[nI]
-            println(format("Door %s is open.", nI))
+            pPrintLn(fFormat("Door %s is open.", nI))
         end
     end
 end

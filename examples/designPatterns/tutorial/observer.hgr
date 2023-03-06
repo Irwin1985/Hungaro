@@ -52,7 +52,7 @@ def cBinaryObserver as cObserver
     end
 
     pUpdate
-        println("Binary String: " & @oSubject.fGetState())
+        pPrintLn("Binary String: " & @oSubject.fGetState())
     end
 end
 
@@ -63,7 +63,7 @@ def cOctalObserver as cObserver
     end
 
     pUpdate
-        println("Octal String: " & @oSubject.fGetState())
+        pPrintLn("Octal String: " & @oSubject.fGetState())
     end
 end
 
@@ -74,7 +74,7 @@ def cHexaObserver as cObserver
     end
 
     pUpdate
-        println("Hex String: " & @oSubject.fGetState())
+        pPrintLn("Hex String: " & @oSubject.fGetState())
     end
 end
 
@@ -85,9 +85,9 @@ def pMain
     new cOctalObserver(oSubject)
     new cBinaryObserver(oSubject)
 
-    println("First state change: 15")
+    pPrintLn("First state change: 15")
     oSubject.pSetState(15)
-    println("Second state change: 10")
+    pPrintLn("Second state change: 10")
     oSubject.pSetState(10)
 end
 

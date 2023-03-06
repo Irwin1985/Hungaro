@@ -29,4 +29,4 @@ let aFruits = [
 
 # filter fruits that contains "ap"
 let aFiltered = aFruits.filter(lambda (psFruit): psFruit.contains("ap"))
-assert(aFiltered == ["apple", "grape", "papaya"], "Filter failed")
+pAssert(aFiltered == ["apple", "grape", "papaya"], "Filter failed")

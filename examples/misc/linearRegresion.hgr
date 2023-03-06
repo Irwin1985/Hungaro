@@ -10,7 +10,7 @@ def fMean(paX)
     for nI = 0 to paX.len() - 1
         nSum += paX[nI]
     end
-    return int(nSum / paX.len())
+    return fInt(nSum / paX.len())
 end
 
 let aX = [] * 10 = 0
@@ -43,5 +43,5 @@ let nB1 = nNum / nDen
 let nB0 = nMeanY - (nB1 * nMeanX)
 
 # print coefficients
-print("b1 = " & nB1)
-print("b0 = " & nB0)
+fPrint("b1 = " & nB1)
+fPrint("b0 = " & nB0)

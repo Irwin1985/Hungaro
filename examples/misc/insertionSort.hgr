@@ -25,14 +25,14 @@ end
 # Driver code to test above
 let aArray = [12, 11, 13, 5, 6]
 pInsertionSort(aArray)
-println("Sorted array is:" & aArray)
-assert(aArray == [5, 6, 11, 12, 13], "Insertion Sort failed")
+pPrintLn("Sorted array is:" & aArray)
+pAssert(aArray == [5, 6, 11, 12, 13], "Insertion Sort failed")
 
 # Bigger example
-let aArray = [] * int(rand(1, 50)) = 0
+let aArray = [] * fInt(fRand(1, 50)) = 0
 for nI = 0 to aArray.len()-1
-    aArray[nI] = int(rand(1, 100))
+    aArray[nI] = fInt(fRand(1, 100))
 end
 
 pInsertionSort(aArray)
-println("Sorted array is:" & aArray)
+pPrintLn("Sorted array is:" & aArray)

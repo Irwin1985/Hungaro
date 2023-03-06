@@ -77,19 +77,19 @@ oCalculator.nPeriod = 365
 
 # Simple interest
 oCalculator.sType = "Simple"
-println(oCalculator.fGetInterestAmount())
+pPrintLn(oCalculator.fGetInterestAmount())
 
 # Quarterly interest
 oCalculator.sType = "Quarterly"
-println(oCalculator.fGetInterestAmount())
+pPrintLn(oCalculator.fGetInterestAmount())
 
 # Monthly interest
 oCalculator.sType = "Monthly"
-println(oCalculator.fGetInterestAmount())
+pPrintLn(oCalculator.fGetInterestAmount())
 
 # Daily interest
 oCalculator.sType = "Daily"
-println(oCalculator.fGetInterestAmount())
+pPrintLn(oCalculator.fGetInterestAmount())
 
 #-------------------------------------------#
 # End

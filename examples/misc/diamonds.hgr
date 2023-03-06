@@ -9,11 +9,11 @@ let nLines = 17
 
 for nI = 1 to nLines/2+1
     for nJ = 1 to (nLines+1)/2-nI+1
-        print(" ")
+        fPrint(" ")
     end
 
     for nJ = 1 to nI*2-1
-        print("*")
+        fPrint("*")
     end
-    println(" ")
+    pPrintLn(" ")
 end

@@ -9,6 +9,6 @@
 let nA = 6
 
 repeat
-    println(nA)
+    pPrintLn(nA)
     nA -= 1
 until nA < 1

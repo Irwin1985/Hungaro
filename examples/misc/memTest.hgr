@@ -5,7 +5,7 @@
  Date: 2023-02-25
 """
 
-println("First Loop")
+pPrintLn("First Loop")
 let nJ = 0
 while nJ < 4000
     let sStr = ""
@@ -15,7 +15,7 @@ while nJ < 4000
     nJ += 1
 end
 
-println("Second Loop")
+pPrintLn("Second Loop")
 nJ = 0
 
 while nJ < 4000
@@ -26,7 +26,7 @@ while nJ < 4000
     nJ += 1
 end
 
-println("Third Loop")
+pPrintLn("Third Loop")
 nJ = 0
 while nJ < 4000
     let sStr = ""
@@ -36,7 +36,7 @@ while nJ < 4000
     nJ += 1
 end
 
-println("Fourth Loop")
+pPrintLn("Fourth Loop")
 nJ = 0
 while nJ < 4000
     let sStr = ""

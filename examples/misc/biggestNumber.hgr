@@ -4,18 +4,18 @@
  Date: 2023-02-22
 """
 
-let nNumber = val(readln("Enter the number of elements you wish to find the greatest element of: "))
+let nNumber = fVal(fReadLn("Enter the number of elements you wish to find the greatest element of: "))
 
-println("Enter " & nNumber & " numbers: ")
+pPrintLn("Enter " & nNumber & " numbers: ")
 
-let nMax = val(readln(""))
+let nMax = fVal(fReadLn(""))
 
 for nIndex = 2 to nNumber
-    println("Element " & nIndex & ": ")
-    let nNumber = val(readln(""))
+    pPrintLn("Element " & nIndex & ": ")
+    let nNumber = fVal(fReadLn(""))
     if nNumber > nMax
         nMax = nNumber # update the maximum
     end
 end
 
-println("The maximum number is: " & nMax)
+pPrintLn("The maximum number is: " & nMax)

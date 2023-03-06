@@ -7,11 +7,11 @@
 
 def cFoo
     pInit
-        println("init")
+        pPrintLn("init")
         exit
-        println("nope")
+        pPrintLn("nope")
     end
 end
 
 let oFoo = new cFoo() # init
-println(oFoo) # Instance of lcFoo
+pPrintLn(oFoo) # Instance of lcFoo

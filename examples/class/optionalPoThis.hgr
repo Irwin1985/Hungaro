@@ -13,7 +13,7 @@ def cAnimal
     end
 
     pWhatIs
-        println(@sName & " is a " & @sType)
+        pPrintLn(@sName & " is a " & @sType)
     end
 end
 

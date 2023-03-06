@@ -9,12 +9,12 @@ def pBlockA
     let sFoo = "closure"
     def pF
         def pInnerF
-            println(sFoo) # closure
+            pPrintLn(sFoo) # closure
             let sFoo = "shadow"
-            println(sFoo) # shadow
+            pPrintLn(sFoo) # shadow
         end
         pInnerF()
-        println(sFoo) # closure
+        pPrintLn(sFoo) # closure
     end
     pF()
 end

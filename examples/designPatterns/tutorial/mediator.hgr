@@ -18,7 +18,7 @@
 
 def cChatRoom
     pShowMessage(poUser, psMessage)
-        println("date: " & date() & " [" & poUser.fGetName() & "]: " & psMessage)
+        pPrintLn("date: " & fDate() & " [" & poUser.fGetName() & "]: " & psMessage)
     end
 end
 

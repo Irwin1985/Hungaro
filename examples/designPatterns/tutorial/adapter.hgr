@@ -36,7 +36,7 @@ end
 
 def cVlcPlayer
     pPlayVlc(psFileName)
-        println("Playing vlc file. Name: " & psFileName)
+        pPrintLn("Playing vlc file. Name: " & psFileName)
     end
 
     -pPlayMp4(psFileName)
@@ -45,7 +45,7 @@ end
 def cMp4Player
     -pPlayVlc(psFileName)
     pPlayMp4(psFileName)
-        println("Playing mp4 file. Name: " & psFileName)
+        pPrintLn("Playing mp4 file. Name: " & psFileName)
     end
 end
 
@@ -70,7 +70,7 @@ def cMediaAdapter
             if psAudioType == "mp4"
                 @oAdvancedMusicPlayer.pPlayMp4(psFileName)
             else
-                println("Invalid media. " & psAudioType & " format not supported")
+                pPrintLn("Invalid media. " & psAudioType & " format not supported")
             end
         end
     end
@@ -82,14 +82,14 @@ def cAudioPlayer
     pPlay(psAudioType, psFileName)
         # inbuilt support to play mp3 music files
         if psAudioType == "mp3"
-            println("Playing mp3 file. Name: " & psFileName)
+            pPrintLn("Playing mp3 file. Name: " & psFileName)
         else
             if psAudioType == "vlc" or psAudioType == "mp4"
                 # mediaAdapter is providing support to play other file formats
                 @oMediaAdapter = new cMediaAdapter(psAudioType)
                 @oMediaAdapter.pPlay(psAudioType, psFileName)
             else
-                println("Invalid media. " & psAudioType & " format not supported")
+                pPrintLn("Invalid media. " & psAudioType & " format not supported")
             end
         end
     end

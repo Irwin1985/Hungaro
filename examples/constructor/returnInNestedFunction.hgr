@@ -10,7 +10,7 @@ def cFoo
         def fInit
             return "bar"
         end        
-        println(fInit())
+        pPrintLn(fInit())
     end
 end
 

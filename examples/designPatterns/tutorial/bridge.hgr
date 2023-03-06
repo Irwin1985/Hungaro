@@ -28,13 +28,13 @@ end
 
 def cRedCircle as cDrawAPI
     pDrawCircle(pnRadius, pnX, pnY)
-        println("Drawing Circle[ color: red, radius: " & pnRadius & ", x: " & pnX & ", " & pnY & "]")
+        pPrintLn("Drawing Circle[ color: red, radius: " & pnRadius & ", x: " & pnX & ", " & pnY & "]")
     end
 end
 
 def cGreenCircle as cDrawAPI
     pDrawCircle(pnRadius, pnX, pnY)
-        println("Drawing Circle[ color: green, radius: " & pnRadius & ", x: " & pnX & ", " & pnY & "]")
+        pPrintLn("Drawing Circle[ color: green, radius: " & pnRadius & ", x: " & pnX & ", " & pnY & "]")
     end
 end
 

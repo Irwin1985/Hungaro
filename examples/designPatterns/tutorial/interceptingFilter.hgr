@@ -24,19 +24,19 @@ end
 
 def cAuthenticationFilter as cFilter
     pExecute(psRequest)
-        println("Authenticating request: " & psRequest)
+        pPrintLn("Authenticating request: " & psRequest)
     end
 end
 
 def cDebugFilter as cFilter
     pExecute(psRequest)
-        println("request log: " & psRequest)
+        pPrintLn("request log: " & psRequest)
     end
 end
 
 def cTarget
     pExecute(psRequest)
-        println("Executing request: " & psRequest)
+        pPrintLn("Executing request: " & psRequest)
     end
 end
 

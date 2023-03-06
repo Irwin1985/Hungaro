@@ -7,4 +7,4 @@
 
 let aNumbers = [1, 30, 39, 29, 10, 13]
 
-assert(aNumbers.find(lambda (pnNumber): pnNumber == 13) == 13, "test failed")
+pAssert(aNumbers.find(lambda (pnNumber): pnNumber == 13) == 13, "test failed")

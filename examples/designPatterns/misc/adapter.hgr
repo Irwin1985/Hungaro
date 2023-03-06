@@ -16,7 +16,7 @@ def cSquarePegAdapter
     fGetRadius
         let nResult = 0.0
         # Calculate a minimun circle radius, which can fit this peg.
-        nResult = (sqrt(pow((@oPeg.fGetWidth() / 2), 2) * 2))
+        nResult = (fSqrt(fPow((@oPeg.fGetWidth() / 2), 2) * 2))
         return nResult
     end
 end
@@ -67,7 +67,7 @@ def cSquarePeg
 
     fGetSquare
         let nResult = 0.0
-        nResult = pow(@nWidth, 2)
+        nResult = fPow(@nWidth, 2)
         return nResult
     end
 end
@@ -78,7 +78,7 @@ def pMain
     let oHole = new cRoundHole(5)
     let oRoundPeg = new cRoundPeg(5)
     if oHole.fFits(oRoundPeg)
-        println("Round peg r5 fits round hole r5.")
+        pPrintLn("Round peg r5 fits round hole r5.")
     end
 
     let oSmallSqPeg = new cSquarePeg(2)
@@ -88,10 +88,10 @@ def pMain
     let oSmallSqPegAdapter = new cSquarePegAdapter(oSmallSqPeg)
     let oLargeSqPegAdapter = new cSquarePegAdapter(oLargeSqPeg)
     if oHole.fFits(oSmallSqPegAdapter)
-        println("Square peg w2 fits round hole r5.")
+        pPrintLn("Square peg w2 fits round hole r5.")
     end
     if not oHole.fFits(oLargeSqPegAdapter)
-        println("Square peg w20 does not fit into round hole r5.")
+        pPrintLn("Square peg w20 does not fit into round hole r5.")
     end
 end
 

@@ -61,7 +61,7 @@ def pMain
 
     let oIter = oNamesRepository.fGetIterator()
     while oIter.fHasNext()
-        println("Name: " & oIter.fNext())
+        pPrintLn("Name: " & oIter.fNext())
     end
 end
 

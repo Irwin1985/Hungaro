@@ -12,4 +12,4 @@ def cFoo
     end
 end
 
-println(new cFoo().fReturnSelf()) # prints Class lcFoo
+pPrintLn(new cFoo().fReturnSelf()) # prints Class lcFoo

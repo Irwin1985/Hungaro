@@ -60,12 +60,12 @@ def cRadio as cDevice
     end    
 
     pPrintStatus
-        println("------------------------------------")
-        println("| I\'m radio.")
-        println("| I\'m " & iif(@bOn, "enabled", "disabled"))
-        println("| Current volume is " & @nVolume & "%")
-        println("| Current channel is " & @nChannel)
-        println("------------------------------------\n")
+        pPrintLn("------------------------------------")
+        pPrintLn("| I\'m radio.")
+        pPrintLn("| I\'m " & iif(@bOn, "enabled", "disabled"))
+        pPrintLn("| Current volume is " & @nVolume & "%")
+        pPrintLn("| Current channel is " & @nChannel)
+        pPrintLn("------------------------------------\n")
     end
 end
 
@@ -112,12 +112,12 @@ def cTV as cDevice
     end    
 
     pPrintStatus
-        println("------------------------------------")
-        println("| I\'m TV set.")
-        println("| I\'m " & iif(@bOn, "enabled", "disabled"))
-        println("| Current volume is " & @nVolume & "%")
-        println("| Current channel is " & @nChannel)
-        println("------------------------------------\n")
+        pPrintLn("------------------------------------")
+        pPrintLn("| I\'m TV set.")
+        pPrintLn("| I\'m " & iif(@bOn, "enabled", "disabled"))
+        pPrintLn("| Current volume is " & @nVolume & "%")
+        pPrintLn("| Current channel is " & @nChannel)
+        pPrintLn("------------------------------------\n")
     end
 end
 
@@ -139,7 +139,7 @@ def cBasicRemote as cRemote
     end
 
     pPower
-        println("Remote: power toggle")
+        pPrintLn("Remote: power toggle")
         if @oDevice.fIsEnabled()
             @oDevice.pDisable()
         else
@@ -148,22 +148,22 @@ def cBasicRemote as cRemote
     end
     
     pVolumeDown
-        println("Remote: volume down")
+        pPrintLn("Remote: volume down")
         @oDevice.pSetVolume(@oDevice.fGetVolume() - 10)
     end
     
     pVolumeUp
-        println("Remote: volume up")
+        pPrintLn("Remote: volume up")
         @oDevice.pSetVolume(@oDevice.fGetVolume() + 10)
     end
     
     pChannelDown
-        println("Remote: channel down")
+        pPrintLn("Remote: channel down")
         @oDevice.pSetChannel(@oDevice.fGetChannel() - 1)
     end
 
     pChannelUp
-        println("Remote: channel up")
+        pPrintLn("Remote: channel up")
         @oDevice.pSetChannel(@oDevice.fGetChannel() + 1)
     end
 end
@@ -175,19 +175,19 @@ def cAdvancedRemote as cBasicRemote
     end
 
     pMute
-        println("Remote: mute")
+        pPrintLn("Remote: mute")
         @oDevice.pSetVolume(0)
     end
 end
 
 # Main
 def pTestDevice(poDevice)
-    println("Tests with basic remote.")
+    pPrintLn("Tests with basic remote.")
     let oBasicRemote = new cBasicRemote(poDevice)
     oBasicRemote.pPower()
     poDevice.pPrintStatus()
 
-    println("Tests with advanced remote.")
+    pPrintLn("Tests with advanced remote.")
     let oAdvancedRemote = new cAdvancedRemote(poDevice)
     oAdvancedRemote.pPower()
     oAdvancedRemote.pMute()

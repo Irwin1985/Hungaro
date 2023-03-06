@@ -7,8 +7,8 @@
 
 def cFoo
     pSayName(psName)
-        println(sName)
-        println(psName)
+        pPrintLn(sName)
+        pPrintLn(psName)
     end
 end
 

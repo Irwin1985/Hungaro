@@ -8,7 +8,7 @@
 
 def pRecursion(pnNumber)
     pnNumber -= 1
-    println(pnNumber)
+    pPrintLn(pnNumber)
     if pnNumber > 0
         pRecursion(pnNumber)
     end

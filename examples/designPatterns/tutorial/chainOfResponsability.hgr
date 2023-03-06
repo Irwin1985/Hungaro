@@ -49,7 +49,7 @@ def cConsoleLogger as cAbstractLogger
     end
 
     pWrite(psMessage)
-        println("Standard Console::Logger: " & psMessage)
+        pPrintLn("Standard Console::Logger: " & psMessage)
     end
 end
 
@@ -60,7 +60,7 @@ def cErrorLogger as cAbstractLogger
     end
 
     pWrite(psMessage)
-        println("Error Console::Logger: " & psMessage)
+        pPrintLn("Error Console::Logger: " & psMessage)
     end
 end
 
@@ -71,7 +71,7 @@ def cFileLogger as cAbstractLogger
     end
 
     pWrite(psMessage)
-        println("File::Logger: " & psMessage)
+        pPrintLn("File::Logger: " & psMessage)
     end
 end
 

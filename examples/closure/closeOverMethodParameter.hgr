@@ -10,7 +10,7 @@ let oF
 def cFoo
     pMethod(psParam)
         def pF
-            println(psParam)
+            pPrintLn(psParam)
         end        
         oF = pF
     end

@@ -7,7 +7,7 @@
 def fBinarySearch(paArray, pnValue)
     let nLow = 0, nHigh = paArray.len() - 1, nMid
     while 0 <= nHigh
-        nMid = int(nLow + nHigh / 2)
+        nMid = fInt(nLow + nHigh / 2)
         if paArray[nMid] == pnValue
             return nMid
         end
@@ -19,4 +19,4 @@ def fBinarySearch(paArray, pnValue)
     end
 end
 
-println(fBinarySearch([3, 5, 2, 8], 8)) # index 3
+pPrintLn(fBinarySearch([3, 5, 2, 8], 8)) # index 3

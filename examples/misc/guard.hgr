@@ -14,12 +14,12 @@ end
 
 def pTest(pmData)
     guard fValidateData(pmData) else
-        println("Missing data")
+        pPrintLn("Missing data")
         exit
     end
-    println(pmData.name)
-    println(pmData.age)
-    println(pmData.address)
+    pPrintLn(pmData.name)
+    pPrintLn(pmData.age)
+    pPrintLn(pmData.address)
 end
 
 pTest({name: "Irwin", age: 37})

@@ -14,9 +14,9 @@ def pF1
         def pF3
             let sC = "c"
             def pF4
-                println(sA)
-                println(sB)
-                println(sC)
+                pPrintLn(sA)
+                pPrintLn(sB)
+                pPrintLn(sC)
             end
             oF = pF4
         end

@@ -23,7 +23,7 @@ end
 
 def cStartState as cState
     pDoAction(poContext)
-        println("Player is in start state")
+        pPrintLn("Player is in start state")
         poContext.pSetState(poThis)
     end
 
@@ -34,7 +34,7 @@ end
 
 def cStopState as cState
     pDoAction(poContext)
-        println("Player is in stop state")
+        pPrintLn("Player is in stop state")
         poContext.pSetState(poThis)
     end
 
@@ -61,12 +61,12 @@ def pMain
     let oStartState = new cStartState()
     oStartState.pDoAction(oContext)
 
-    println(oContext.fGetState().fToString())
+    pPrintLn(oContext.fGetState().fToString())
 
     let oStopState = new cStopState()
     oStopState.pDoAction(oContext)
 
-    println(oContext.fGetState().fToString())
+    pPrintLn(oContext.fGetState().fToString())
 end
 
 pMain()

@@ -72,12 +72,12 @@ def pMain
     oCareTaker.pAdd(oOriginator.fSaveStateToMemento())
 
     oOriginator.pSetState("State #4")
-    println("Current State: " & oOriginator.fGetState())
+    pPrintLn("Current State: " & oOriginator.fGetState())
 
     oOriginator.pGetStateFromMemento(oCareTaker.fGet(0))
-    println("First saved State: " & oOriginator.fGetState())
+    pPrintLn("First saved State: " & oOriginator.fGetState())
     oOriginator.pGetStateFromMemento(oCareTaker.fGet(1))
-    println("Second saved State: " & oOriginator.fGetState())
+    pPrintLn("Second saved State: " & oOriginator.fGetState())
 end
 
 pMain()

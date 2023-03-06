@@ -7,19 +7,19 @@
 
 def cFoo
     pInFoo
-        println("in foo")
+        pPrintLn("in foo")
     end
 end
 
 def cBar as cFoo
     pInBar
-        println("in bar")
+        pPrintLn("in bar")
     end
 end
 
 def cBaz as cBar
     pInBaz
-        println("in baz")
+        pPrintLn("in baz")
     end
 end
 

@@ -11,7 +11,7 @@ def pFoo
     gnW = 6.7
     gnY = 5.6
     gnX = 2.1
-    print("Inside pFoo: gnX = ", gnX, ", gnY = ", gnY, ", gnW = ", gnW, "\n")
+    fPrint("Inside pFoo: gnX = ", gnX, ", gnY = ", gnY, ", gnW = ", gnW, "\n")
 end
 
 pFoo()
@@ -25,5 +25,5 @@ def pTestGlobal
 end
 
 pTestGlobal()
-println("After pTestGlobal: gnX = ", gnX)
-assert(gnX == 4.5, "gnX should be 4.5")
+pPrintLn("After pTestGlobal: gnX = ", gnX)
+pAssert(gnX == 4.5, "gnX should be 4.5")

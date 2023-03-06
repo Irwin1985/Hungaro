@@ -12,6 +12,6 @@ def fFib(pnSerie)
     return fFib(pnSerie - 1) + fFib(pnSerie - 2)
 end
 
-let nStart = tick()
-assert(fFib(35) == 9227465, "Fibbonacci sequence failed")
-println(tack(nStart))
+let nStart = fTick()
+pAssert(fFib(35) == 9227465, "Fibbonacci sequence failed")
+pPrintLn(fTack(nStart))

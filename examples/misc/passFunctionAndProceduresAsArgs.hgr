@@ -19,7 +19,7 @@ def fRunTest(poFunc, pnX)
 end
 
 let nResult = fRunTest(fSqr, 5) # 25
-println(nResult)
+pPrintLn(nResult)
 
 nResult = fRunTest(fCube, 5)
-println(nResult) # 125
+pPrintLn(nResult) # 125

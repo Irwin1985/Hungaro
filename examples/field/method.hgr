@@ -7,10 +7,10 @@
 
 def cFoo
     pBar(psArg)
-        println(psArg)
+        pPrintLn(psArg)
     end
 end
 
 let oBar = new cFoo().pBar
-println("Got method")
+pPrintLn("Got method")
 oBar("Hello World") # Prints "Hello World"

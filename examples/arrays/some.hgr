@@ -7,4 +7,4 @@
 
 let aNumbers = [1, 30, 39, 29, 10, 13]
 
-assert(aNumbers.every(lambda (pnNumber): pnNumber > 40) == false, "test failed")
+pAssert(aNumbers.every(lambda (pnNumber): pnNumber > 40) == false, "test failed")

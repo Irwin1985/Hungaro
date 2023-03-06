@@ -5,8 +5,8 @@
 """
 
 let
-    nWidth = val(readln("Enter the width of the rectangle: ")),
-    nHeight = val(readln("Enter the height of the rectangle: ")),
+    nWidth = fVal(fReadLn("Enter the width of the rectangle: ")),
+    nHeight = fVal(fReadLn("Enter the height of the rectangle: ")),
     nArea = nWidth * nHeight
 
-print("The area of the rectangle is: " & nArea)
+fPrint("The area of the rectangle is: " & nArea)

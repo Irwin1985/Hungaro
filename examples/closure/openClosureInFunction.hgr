@@ -8,7 +8,7 @@
 def pTest
     let sLocal = "local"
     def pF
-        println(sLocal)
+        pPrintLn(sLocal)
     end
     pF()
 end

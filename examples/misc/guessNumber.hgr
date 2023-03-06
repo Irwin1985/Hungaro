@@ -7,18 +7,18 @@
 
 let nNumber = 9, nGuess = 0
 
-println("Guess a number between 1 and 10")
+pPrintLn("Guess a number between 1 and 10")
 
 for nI = 1 to 10
-    nGuess = val(readln("Guess: "))
+    nGuess = fVal(fReadLn("Guess: "))
     if nGuess == nNumber
-        println("You guessed it!")
+        pPrintLn("You guessed it!")
         exit
     else
         if nGuess < nNumber
-            println("Too low")
+            pPrintLn("Too low")
         else
-            println("Too high")
+            pPrintLn("Too high")
         end
     end
 end

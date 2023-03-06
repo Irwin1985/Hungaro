@@ -8,5 +8,5 @@
 # Add the first 100 terms of a simple series
 for nI = 1 to 100
     let nValue = (1 + 1 / nI) ^ nI
-    println(nI, " ", nValue)
+    pPrintLn(nI, " ", nValue)
 end

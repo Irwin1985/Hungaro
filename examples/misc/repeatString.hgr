@@ -16,4 +16,4 @@ def fRepeatString(pnTimes, psString)
     return sResult
 end
 
-assert(fRepeatString(3, "a") == "aaa")
+pAssert(fRepeatString(3, "a") == "aaa")

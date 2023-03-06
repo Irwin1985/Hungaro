@@ -43,9 +43,9 @@ end
 
 def cStudentView
     pPrintStudentDetails(psStudentName, psStudentRollNo)
-        println("Student: ")
-        println("Name: " & psStudentName)
-        println("Roll No: " & psStudentRollNo)
+        pPrintLn("Student: ")
+        pPrintLn("Name: " & psStudentName)
+        pPrintLn("Roll No: " & psStudentRollNo)
     end
 end
 

@@ -125,7 +125,7 @@ end
 
 def pPrintPersons(paPersons)
     for each vPerson in paPersons
-        println("Person: [Name : " & vPerson.fGetName() & ", Gender: " & vPerson.fGetGender() & ", Marital Status: " & vPerson.fGetMaritalStatus() & "]")
+        pPrintLn("Person: [Name : " & vPerson.fGetName() & ", Gender: " & vPerson.fGetGender() & ", Marital Status: " & vPerson.fGetMaritalStatus() & "]")
     end
 end
 
@@ -145,16 +145,16 @@ def pMain
     let oSingleMale = new cAndCriteria(oSingle, oMale)
     let oSingleOrFemale = new cOrCriteria(oSingle, oFemale)
 
-    println("Males: ")
+    pPrintLn("Males: ")
     pPrintPersons(oMale.fMeetCriteria(aPersons))
 
-    println("\nFemales: ")
+    pPrintLn("\nFemales: ")
     pPrintPersons(oFemale.fMeetCriteria(aPersons))
 
-    println("\nSingle Males: ")
+    pPrintLn("\nSingle Males: ")
     pPrintPersons(oSingleMale.fMeetCriteria(aPersons))
 
-    println("\nSingle Or Females: ")
+    pPrintLn("\nSingle Or Females: ")
     pPrintPersons(oSingleOrFemale.fMeetCriteria(aPersons))
 end
 

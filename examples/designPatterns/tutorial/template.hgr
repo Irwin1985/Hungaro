@@ -29,36 +29,36 @@ end
 
 def cCricket as cGame
     pInitialize
-        println("Cricket Game Initialized! Start playing.")
+        pPrintLn("Cricket Game Initialized! Start playing.")
     end
 
     pStartPlay
-        println("Cricket Game Started. Enjoy the game!")
+        pPrintLn("Cricket Game Started. Enjoy the game!")
     end
 
     pEndPlay
-        println("Cricket Game Finished!")
+        pPrintLn("Cricket Game Finished!")
     end
 end
 
 def cFootball as cGame
     pInitialize
-        println("Football Game Initialized! Start playing.")
+        pPrintLn("Football Game Initialized! Start playing.")
     end
 
     pStartPlay
-        println("Football Game Started. Enjoy the game!")
+        pPrintLn("Football Game Started. Enjoy the game!")
     end
 
     pEndPlay
-        println("Football Game Finished!")
+        pPrintLn("Football Game Finished!")
     end
 end
 
 def pMain
     let oGame = new cCricket()
     oGame.pPlay()
-    println()
+    pPrintLn()
     oGame = new cFootball()
     oGame.pPlay()
 end

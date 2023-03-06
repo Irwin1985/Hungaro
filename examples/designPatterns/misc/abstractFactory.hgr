@@ -35,7 +35,7 @@ end
 #-----------------------------------------------------#
 def cMacOSButton as cButton
     pPaint()
-        println("You have created MacOSButton.")
+        pPrintLn("You have created MacOSButton.")
     end
 end
 
@@ -44,7 +44,7 @@ end
 #-----------------------------------------------------#
 def cWindowsButton as cButton
     pPaint()
-        println("You have created WindowsButton.")
+        pPrintLn("You have created WindowsButton.")
     end
 end
 
@@ -60,7 +60,7 @@ end
 #-----------------------------------------------------#
 def cMacOSCheckbox as cCheckbox
     pPaint()
-        println("You have created MacOSCheckbox.")
+        pPrintLn("You have created MacOSCheckbox.")
     end
 end
 
@@ -69,7 +69,7 @@ end
 #-----------------------------------------------------#
 def cWindowsCheckbox as cCheckbox
     pPaint()
-        println("You have created WindowsCheckbox.")
+        pPrintLn("You have created WindowsCheckbox.")
     end
 end
 
@@ -112,7 +112,7 @@ end
 #-----------------------------------------------------#
 def fConfigureApplication
     let oApplication = null, oFactory = null    
-    let sName = readln("Enter the name of OS you are using (MacOS or Windows): ")
+    let sName = fReadLn("Enter the name of OS you are using (MacOS or Windows): ")
 
     if sName == "MacOS"
         oFactory = new cMacOSFactory()

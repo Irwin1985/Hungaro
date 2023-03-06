@@ -15,4 +15,4 @@ for nI = 0 to nSize - 1
     end    
 end
 
-println(aMatrix)
+pPrintLn(aMatrix)

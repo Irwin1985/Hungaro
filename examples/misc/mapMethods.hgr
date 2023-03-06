@@ -37,34 +37,34 @@ let mPrices = {
 # Map methods
 
 # get()
-assert(mPrices.get("A") == 1.0, "get() method failed")
+pAssert(mPrices.get("A") == 1.0, "get() method failed")
 
 # set()
 mPrices.set("A", 2.0)
-assert(mPrices.get("A") == 2.0, "set() method failed")
+pAssert(mPrices.get("A") == 2.0, "set() method failed")
 
 # len()
-assert(mPrices.len() == 26, "len() method failed")
+pAssert(mPrices.len() == 26, "len() method failed")
 
 # keys()
-assert(mPrices.keys() == ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], "keys() method failed")
+pAssert(mPrices.keys() == ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], "keys() method failed")
 
 # values()
-assert(mPrices.values() == [2.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0], "values() method failed")
+pAssert(mPrices.values() == [2.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0], "values() method failed")
 
 # contains()
-assert(mPrices.contains("A") == true, "contains() method failed")
+pAssert(mPrices.contains("A") == true, "contains() method failed")
 
 # remove()
 mPrices.remove("A")
-assert(mPrices.contains("A") == false, "remove() method failed")
+pAssert(mPrices.contains("A") == false, "remove() method failed")
 
 # clear()
 mPrices.clear()
-assert(mPrices.len() == 0, "clear() method failed")
+pAssert(mPrices.len() == 0, "clear() method failed")
 
 # isEmpty()
-assert(mPrices.isEmpty() == true, "isEmpty() method failed")
+pAssert(mPrices.isEmpty() == true, "isEmpty() method failed")
 
 # clone()
 let mFruitUnitPrices = {
@@ -77,22 +77,22 @@ let mFruitUnitPrices = {
 
 let mCloned = mFruitUnitPrices.clone()
 
-assert(mCloned.get("Apple") == 1.0, "clone() method failed")
+pAssert(mCloned.get("Apple") == 1.0, "clone() method failed")
 
 # Iterate over keys
-println("============Map keys============")
+pPrintLn("============Map keys============")
 for each vKey in mFruitUnitPrices.keys()
-    println(vKey)
+    pPrintLn(vKey)
 end
 
 # Iterate over values
-println("============Map values============")
+pPrintLn("============Map values============")
 for each vValue in mFruitUnitPrices.values()
-    println(vValue)
+    pPrintLn(vValue)
 end
 
 # Iterate over keys and values
-println("============Map keys and values============")
+pPrintLn("============Map keys and values============")
 for each vEntry in mFruitUnitPrices
-    println(vEntry.key & " = " & vEntry.value)
+    pPrintLn(vEntry.key & " = " & vEntry.value)
 end

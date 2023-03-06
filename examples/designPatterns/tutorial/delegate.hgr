@@ -21,13 +21,13 @@ end
 
 def cEJBService as cBusinessService
     pDoProcessing
-        println("Processing task by invoking EJB Service")
+        pPrintLn("Processing task by invoking EJB Service")
     end
 end
 
 def cJMSService as cBusinessService
     pDoProcessing
-        println("Processing task by invoking JMS Service")
+        pPrintLn("Processing task by invoking JMS Service")
     end
 end
 

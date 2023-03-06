@@ -4,51 +4,51 @@
  Date: 2023-02-22
 """
 
-setConsoleForeColor("yellow")
-println("yellow")
+pSetConsoleForeColor("yellow")
+pPrintLn("yellow")
 
-setConsoleForeColor("red")
-println("red")
+pSetConsoleForeColor("red")
+pPrintLn("red")
 
-setConsoleForeColor("green")
-println("green")
+pSetConsoleForeColor("green")
+pPrintLn("green")
 
-setConsoleForeColor("blue")
-println("blue")
+pSetConsoleForeColor("blue")
+pPrintLn("blue")
 
-setConsoleForeColor("purple")
-println("purple")
+pSetConsoleForeColor("purple")
+pPrintLn("purple")
 
-setConsoleForeColor("cyan")
-println("cyan")
+pSetConsoleForeColor("cyan")
+pPrintLn("cyan")
 
-setConsoleForeColor("white")
-println("white")
+pSetConsoleForeColor("white")
+pPrintLn("white")
 
 # Reset the color
-println(":::Background colors:::")
-setConsoleForeColor("white")
-setConsoleBackColor("yellow")
-println("yellow")
+pPrintLn(":::Background colors:::")
+pSetConsoleForeColor("white")
+pSetConsoleBackColor("yellow")
+pPrintLn("yellow")
 
-setConsoleBackColor("red")
-println("red")
+pSetConsoleBackColor("red")
+pPrintLn("red")
 
-setConsoleBackColor("green")
-println("green")
+pSetConsoleBackColor("green")
+pPrintLn("green")
 
-setConsoleBackColor("blue")
-println("blue")
+pSetConsoleBackColor("blue")
+pPrintLn("blue")
 
-setConsoleBackColor("purple")
-println("purple")
+pSetConsoleBackColor("purple")
+pPrintLn("purple")
 
-setConsoleBackColor("cyan")
-println("cyan")
+pSetConsoleBackColor("cyan")
+pPrintLn("cyan")
 
-setConsoleBackColor("white")
-println("white")
+pSetConsoleBackColor("white")
+pPrintLn("white")
 
 
-setConsoleBackColor("black")
-println("reset")
+pSetConsoleBackColor("black")
+pPrintLn("reset")

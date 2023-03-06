@@ -5,4 +5,4 @@
  Date: 2023-02-25
 """
 
-println(nUnknownVariable) # Undefined variable `nUnknownVariable`.
+pPrintLn(nUnknownVariable) # Undefined variable `nUnknownVariable`.

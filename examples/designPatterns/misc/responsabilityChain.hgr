@@ -41,10 +41,10 @@ end
 def cRoleCheckMiddleware as cMiddleware
     fCheck(psEmail, psPassword)
         if psEmail == "admin@example.com"
-            println("Hello, admin!")
+            pPrintLn("Hello, admin!")
             return true
         end
-        println("Hello, user!")
+        pPrintLn("Hello, user!")
         return fCheckNext(psEmail, psPassword)        
     end
 end
@@ -59,7 +59,7 @@ def cThrottlingMiddleware as cMiddleware
 
     pInit(pnRequestPerMinute)
         @nRequestPerMinute = pnRequestPerMinute
-        @nCurrentTime = seconds()
+        @nCurrentTime = fSeconds()
     end
 
     """
@@ -71,13 +71,13 @@ def cThrottlingMiddleware as cMiddleware
         checks by running its check after all other checks.
     """
     fCheck(psEmail, psPassword)
-        if seconds() > @nCurrentTime + 60000
+        if fSeconds() > @nCurrentTime + 60000
             @nRequest = 0
-            @nCurrentTime = seconds()
+            @nCurrentTime = fSeconds()
         end
         @nRequest += 1
         if @nRequest > @nRequestPerMinute
-            println("Request limit exceeded!")
+            pPrintLn("Request limit exceeded!")
             return false
         end
         return fCheckNext(psEmail, psPassword)
@@ -95,11 +95,11 @@ def cUserExistsMiddleware as cMiddleware
 
     fCheck(psEmail, psPassword)
         if not @oServer.fHasEmail(psEmail)
-            println("This email is not registered!")
+            pPrintLn("This email is not registered!")
             return false
         end
         if not @oServer.fIsValidPassword(psEmail, psPassword)
-            println("Wrong password!")
+            pPrintLn("Wrong password!")
             return false
         end
         return fCheckNext(psEmail, psPassword)
@@ -123,7 +123,7 @@ def cServer
     # request to the chain.
     fLogin(psEmail, psPassword)
         if @oMiddleware.fCheck(psEmail, psPassword)
-            println("Authorization have been successful!")
+            pPrintLn("Authorization have been successful!")
             # Do something useful here for authorized users.
             return true
         end
@@ -173,8 +173,8 @@ def pMain
     let bSuccess = false
 
     repeat
-        let sEmail = readln("Enter email: ")
-        let sPassword = readln("Input password: ")
+        let sEmail = fReadLn("Enter email: ")
+        let sPassword = fReadLn("Input password: ")
         bSuccess = oServer.fLogin(sEmail, sPassword)
     until not bSuccess
 end

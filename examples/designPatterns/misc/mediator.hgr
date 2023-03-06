@@ -40,7 +40,7 @@ def cOptionGroup as cMediator
         for each vKey in @mColleagues.keys()
             sMsg &= @mColleagues[vKey].sName & " " & iif(@mColleagues[vKey].bSelected, "is", "is not") & " selected.\n"
         end
-        println(sMsg)
+        pPrintLn(sMsg)
     end
 
     pSetState(pbState)

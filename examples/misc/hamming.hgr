@@ -23,7 +23,7 @@ def fHamming(pnLimit)
         nK = 0    
 
     for nN = 1 to pnLimit
-        aH[nN] = min(nX2, min(nX3, nX5))
+        aH[nN] = fMin(nX2, fMin(nX3, nX5))
         if nX2 == aH[nN]
             nI += 1
             nX2 = 2 * aH[nI]
@@ -41,5 +41,5 @@ def fHamming(pnLimit)
 end
 
 for nI = 1 to 20
-    println(fHamming(nI))
+    pPrintLn(fHamming(nI))
 end

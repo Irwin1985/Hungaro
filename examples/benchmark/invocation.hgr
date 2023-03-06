@@ -39,7 +39,7 @@ def cFoo
 end
 
 let oFoo = new cFoo()
-let nStart = tick()
+let nStart = fTick()
 let nI = 0
 
 while nI < 500000
@@ -52,4 +52,4 @@ while nI < 500000
     nI += 1
 end
 
-println("Elapsed time: " & tack(nStart) & " ms")
+pPrintLn("Elapsed time: " & fTack(nStart) & " ms")

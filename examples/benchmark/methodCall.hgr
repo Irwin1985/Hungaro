@@ -38,7 +38,7 @@ def cNthToggle as cToggle
     end
 end
 
-let nStart = tick()
+let nStart = fTick()
 let nN = 100000
 let bVal = true
 let oToggle = new cToggle(bVal)
@@ -56,7 +56,7 @@ for nI = 1 to nN
     bVal = oToggle.fActivate().fValue()
 end
 
-println(oToggle.fValue())
+pPrintLn(oToggle.fValue())
 
 bVal = true
 let oNToggle = new cNthToggle(bVal, 3)
@@ -74,6 +74,6 @@ for nI = 1 to nN
     bVal = oNToggle.fActivate().fValue()
 end
 
-println(oNToggle.fValue())
+pPrintLn(oNToggle.fValue())
 
-println(tack(nStart))
+pPrintLn(fTack(nStart))

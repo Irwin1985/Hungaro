@@ -20,5 +20,5 @@ for nI = 0 to 80
     aX[0] = aX[0] + nHstep * aDf[0]
     aX[1] = aX[1] + nHstep * aDf[1]
     nT = nT + nHstep
-    println(nT, aX[0], aX[1])
+    pPrintLn(nT, aX[0], aX[1])
 end

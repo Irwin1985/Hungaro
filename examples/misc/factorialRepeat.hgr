@@ -12,4 +12,4 @@ repeat
     nCounter -= 1
 until nCounter == 0
 
-println(nFactorial) # 24
+pPrintLn(nFactorial) # 24

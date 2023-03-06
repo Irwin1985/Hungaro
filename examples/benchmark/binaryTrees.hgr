@@ -34,9 +34,9 @@ let nMinDepth = 4
 let nMaxDepth = 14
 let nStretchDepth = nMaxDepth + 1
 
-let nStart = tick()
+let nStart = fTick()
 
-println("stretch tree of depth " & nStretchDepth & "\t check: " & new cTree(0, nStretchDepth).fCheck())
+pPrintLn("stretch tree of depth " & nStretchDepth & "\t check: " & new cTree(0, nStretchDepth).fCheck())
 
 let oLongLivedTree = new cTree(0, nMaxDepth)
 
@@ -59,12 +59,12 @@ while nDepth < nStretchDepth
         nI += 1
     end
 
-    println("num trees: " & nIterations * 2 & "\t depth: " & nDepth & "\t check: " & nCheck)
+    pPrintLn("num trees: " & nIterations * 2 & "\t depth: " & nDepth & "\t check: " & nCheck)
 
-    nIterations = int(nIterations / 4)
+    nIterations = fInt(nIterations / 4)
     nDepth += 2
 end
 
-println("long lived tree of depth " & nMaxDepth & "\t check: " & oLongLivedTree.fCheck())
+pPrintLn("long lived tree of depth " & nMaxDepth & "\t check: " & oLongLivedTree.fCheck())
 
-println("elapsed: " & tack(nStart))
+pPrintLn("elapsed: " & fTack(nStart))

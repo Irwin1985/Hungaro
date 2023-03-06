@@ -7,7 +7,7 @@
 
 def cFoo
     pInit(psArg)
-        println("cFoo.pInit(\'" & psArg & "\')")
+        pPrintLn("cFoo.pInit(\'" & psArg & "\')")
         @sField = "init"
     end
 end
@@ -16,7 +16,7 @@ let oFoo = new cFoo("one") # prints "cFoo.pInit('one')"
 oFoo.sField = "field"
 
 let oFoo2 = oFoo.pInit("two") # prints "lcFoo.pInit('two')"
-println(oFoo2)
+pPrintLn(oFoo2)
 
 # make sure pInit() doesn't create a fresh instance
-println(oFoo.sField) # prints "init"
+pPrintLn(oFoo.sField) # prints "init"

@@ -4,18 +4,18 @@
  Date: 2023-02-22
 """
 
-let nRows = val(readln("Please Enter the total Number of Rows: "))
-let nColumns = val(readln("Please Enter the total Number of Columns: "))
+let nRows = fVal(fReadLn("Please Enter the total Number of Rows: "))
+let nColumns = fVal(fReadLn("Please Enter the total Number of Columns: "))
 
-println("Print Number Pattern - 1 and 0 in alternative Columns")
+pPrintLn("Print Number Pattern - 1 and 0 in alternative Columns")
 
 for nI = 1 to nRows
     for nJ = 1 to nColumns
         if nJ % 2 == 0
-            print("0 ")
+            fPrint("0 ")
         else
-            print("1 ")
+            fPrint("1 ")
         end
     end
-    println("")
+    pPrintLn("")
 end

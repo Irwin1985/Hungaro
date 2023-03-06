@@ -42,7 +42,7 @@ end
 
 let oZoo = new cZoo()
 let nSum = 0
-let nStart = tick()
+let nStart = fTick()
 
 while nSum < 10000000
     nSum += oZoo.fAnt()    + ;
@@ -53,5 +53,5 @@ while nSum < 10000000
             oZoo.fMouse()
 end
 
-println("Sum: " & nSum)
-println("Time: " & tick(nStart) & "ms")
+pPrintLn("Sum: " & nSum)
+pPrintLn("Time: " & fTick(nStart) & "ms")

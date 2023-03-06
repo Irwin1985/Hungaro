@@ -64,12 +64,12 @@ def cStudentDaoImpl
 
     pUpdateStudent(poStudent)
         @aStudents[poStudent.fGetRollNo()].pSetName(poStudent.fGetName())
-        println("Student: Roll No " & poStudent.fGetRollNo() & ", updated in the database")
+        pPrintLn("Student: Roll No " & poStudent.fGetRollNo() & ", updated in the database")
     end
 
     pDeleteStudent(poStudent)
         @aStudents.remove(poStudent.fGetRollNo())
-        println("Student: Roll No " & poStudent.fGetRollNo() & ", deleted from database")
+        pPrintLn("Student: Roll No " & poStudent.fGetRollNo() & ", deleted from database")
     end
 end
 
@@ -78,7 +78,7 @@ def pMain
 
     # Print all students
     for each vStudent in oStudentDao.fGetAllStudents()
-        println("Student: [RollNo : " & vStudent.fGetRollNo() & ", Name : " & vStudent.fGetName() & "]")
+        pPrintLn("Student: [RollNo : " & vStudent.fGetRollNo() & ", Name : " & vStudent.fGetName() & "]")
     end
 
     # Update student
@@ -88,7 +88,7 @@ def pMain
 
     # Get the student
     oStudentDao.fGetStudent(0)
-    println("Student: [RollNo : " & oStudent.fGetRollNo() & ", Name : " & oStudent.fGetName() & "]")
+    pPrintLn("Student: [RollNo : " & oStudent.fGetRollNo() & ", Name : " & oStudent.fGetName() & "]")
 end
 
 pMain()

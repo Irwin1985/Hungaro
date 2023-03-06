@@ -113,9 +113,9 @@ def cMeal
 
     pShowItems
         for each vItem in @aItems
-            print("Item: " & vItem.fName())
-            print(", Packing: " & vItem.fPacking().fPack())
-            print(", Price: " & vItem.fPrice())
+            fPrint("Item: " & vItem.fName())
+            fPrint(", Packing: " & vItem.fPacking().fPack())
+            fPrint(", Price: " & vItem.fPrice())
         end
     end
 end
@@ -140,14 +140,14 @@ def pMain
     let oMealBuilder = new cMealBuilder()
 
     let oVegMeal = oMealBuilder.fPrepareVegMeal()
-    println("Veg Meal")
+    pPrintLn("Veg Meal")
     oVegMeal.pShowItems()
-    println("Total Cost: " & oVegMeal.fGetCost())
+    pPrintLn("Total Cost: " & oVegMeal.fGetCost())
 
     let oNonVegMeal = oMealBuilder.fPrepareNonVegMeal()
-    println("\n\nNon-Veg Meal")
+    pPrintLn("\n\nNon-Veg Meal")
     oNonVegMeal.pShowItems()
-    println("Total Cost: " & oNonVegMeal.fGetCost())
+    pPrintLn("Total Cost: " & oNonVegMeal.fGetCost())
 end
 
 pMain()

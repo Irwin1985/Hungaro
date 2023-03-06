@@ -7,7 +7,7 @@
 
 def pSpace(pnEnd)
     for nStart = 1 to pnEnd
-        print(space(1))
+        fPrint(fSpace(1))
     end
 end
 
@@ -16,10 +16,10 @@ let PI = 3.14159265
 let nRadius = 10
 
 for nI = 1 to nRadius
-    let nWidth = nRadius * sin(180 / nRadius * nI * PI / 180)
-    print(space(nRadius - nWidth))
+    let nWidth = nRadius * fSin(180 / nRadius * nI * PI / 180)
+    fPrint(fSpace(nRadius - nWidth))
     for nJ = 1 to nWidth * 2
-        print("*")
+        fPrint("*")
     end
-    println("")
+    pPrintLn("")
 end

@@ -13,20 +13,20 @@ end
 # version 2
 def fIsPalindrome2
     let nReversedN = 0
-    let nN = val(readln("Enter a number: "))
-    println("Number entered: " & nN)
+    let nN = fVal(fReadLn("Enter a number: "))
+    pPrintLn("Number entered: " & nN)
     let nOriginalN = nN
 
     # reversed integer is stored in nReversedN
     while nN != 0
         let nRemainder = nN % 10
         nReversedN = nReversedN * 10 + nRemainder
-        nN = int(nN / 10)
+        nN = fInt(nN / 10)
     end
 
     # palindrome if nOrignalN and nReversedN are equal
-    println("Reversed number: " & nReversedN)
-    println("Original number: " & nOriginalN)
+    pPrintLn("Reversed number: " & nReversedN)
+    pPrintLn("Original number: " & nOriginalN)
     if nOriginalN == nReversedN
         return true
     else
@@ -35,9 +35,9 @@ def fIsPalindrome2
 end
 
 # Drive test code
-assert(fIsPalindrome("abba"), "abba is a palindrome")
+pAssert(fIsPalindrome("abba"), "abba is a palindrome")
 if fIsPalindrome2()
-    print("Palindrome")
+    fPrint("Palindrome")
 else
-    print("Not a palindrome")
+    fPrint("Not a palindrome")
 end

@@ -56,7 +56,7 @@ def cStudentBO
 
     pDeleteStudent(poStudent)
         @aStudents.remove(poStudent)
-        println("Student: Roll No " & poStudent.fGetRollNo() & ", deleted from database")
+        pPrintLn("Student: Roll No " & poStudent.fGetRollNo() & ", deleted from database")
     end
 
     fGetAllStudents
@@ -65,7 +65,7 @@ def cStudentBO
 
     pUpdateStudent(poStudent)
         @aStudents[poStudent.fGetRollNo()].pSetName(poStudent.fGetName())
-        println("Student: Roll No " & poStudent.fGetRollNo() & ", updated in the database")
+        pPrintLn("Student: Roll No " & poStudent.fGetRollNo() & ", updated in the database")
     end
 end
 
@@ -73,7 +73,7 @@ def pMain
     let oStudentBusinessObject = new cStudentBO()
 
     for each vStudent in oStudentBusinessObject.fGetAllStudents()
-        println("Student: [RollNo : " & vStudent.fGetRollNo() & ", Name : " & vStudent.fGetName() & "]")
+        pPrintLn("Student: [RollNo : " & vStudent.fGetRollNo() & ", Name : " & vStudent.fGetName() & "]")
     end
 
     # update student
@@ -83,7 +83,7 @@ def pMain
 
     # get the student
     oStudent = oStudentBusinessObject.fGetAllStudents()[0]
-    println("Student: [RollNo : " & oStudent.fGetRollNo() & ", Name : " & oStudent.fGetName() & "]")
+    pPrintLn("Student: [RollNo : " & oStudent.fGetRollNo() & ", Name : " & oStudent.fGetName() & "]")
 end
 
 pMain()

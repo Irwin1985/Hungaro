@@ -10,8 +10,8 @@ end
 
 let oFoo = new cFoo()
 
-println(oFoo.sBar = "bar value")
-println(oFoo.sBaz = "baz value")
+pPrintLn(oFoo.sBar = "bar value")
+pPrintLn(oFoo.sBaz = "baz value")
 
-println(oFoo.sBar)
-println(oFoo.sBaz)
+pPrintLn(oFoo.sBar)
+pPrintLn(oFoo.sBaz)

@@ -13,5 +13,5 @@ for nI = nLen-1 to 0 step -1
     sReverse += sString.charAt(nI)
 end
 
-println("Original String: " & sString)
-println("Reverse String: " & sReverse)
+pPrintLn("Original String: " & sString)
+pPrintLn("Reverse String: " & sReverse)

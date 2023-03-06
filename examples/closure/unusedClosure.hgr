@@ -9,11 +9,11 @@ def pBlockA
     let sA = "a"
     if false
         def pFoo
-            println(sA)
+            pPrintLn(sA)
         end
     end
 end
 
 pBlockA()
 
-println("ok")
+pPrintLn("ok")

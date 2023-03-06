@@ -9,7 +9,7 @@ let sA = "external A"
 
 for nI = 1 to 3
     let sA = "internal A"
-    println(sA)
+    pPrintLn(sA)
 end
 
-println(sA) # external A
+pPrintLn(sA) # external A

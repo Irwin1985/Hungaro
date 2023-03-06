@@ -18,8 +18,8 @@ import javax.swing.JOptionPane;
 @SuppressWarnings("unchecked")
 public final class BuiltinsForNative {
     public static void create(Interpreter interpreter) {
-        // date() builtin function
-        interpreter.globals.define("date", new CallableObject() {
+        // fDate() builtin function
+        interpreter.globals.define("fDate", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity();
@@ -36,8 +36,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // readln builtin function: read a line from the console
-        interpreter.globals.define("readln", new CallableObject() {
+        // fReadLn builtin function: read a line from the console
+        interpreter.globals.define("fReadLn", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -56,8 +56,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // val() builtin function: convert a string to a number
-        interpreter.globals.define("val", new CallableObject() {
+        // fVal() builtin function: convert a string to a number
+        interpreter.globals.define("fVal", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -82,8 +82,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // type() builtin function: return the type of an object eg: 
-        interpreter.globals.define("type", new CallableObject() {
+        // fType() builtin function: return the type of an object eg: 
+        interpreter.globals.define("fType", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -110,8 +110,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // print builtin function: print a string to the console
-        interpreter.globals.define("print", new CallableObject() {
+        // pPrint builtin function: print a string to the console
+        interpreter.globals.define("pPrint", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(true);
@@ -135,8 +135,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // println builtin function: print a string to the console with a newline
-        interpreter.globals.define("println", new CallableObject() {
+        // pPrintLn builtin function: print a string to the console with a newline
+        interpreter.globals.define("pPrintLn", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(true);
@@ -159,8 +159,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // int() builtin function: trim the decimal part of a number
-        interpreter.globals.define("int", new CallableObject() {
+        // fInt() builtin function: trim the decimal part of a number
+        interpreter.globals.define("fInt", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -183,8 +183,8 @@ public final class BuiltinsForNative {
             }
         });   
         
-        // space() builtin function: return a string of spaces
-        interpreter.globals.define("space", new CallableObject() {
+        // fSpace() builtin function: return a string of spaces
+        interpreter.globals.define("fSpace", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -203,8 +203,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // chr() builtin function: return the string representation of a number (ASCII code)
-        interpreter.globals.define("chr", new CallableObject() {
+        // fChr() builtin function: return the string representation of a number (ASCII code)
+        interpreter.globals.define("fChr", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -230,8 +230,8 @@ public final class BuiltinsForNative {
         });
         
 
-        // sin() builtin function: return the sine of a number
-        interpreter.globals.define("sin", new CallableObject() {
+        // fSin() builtin function: return the sine of a number
+        interpreter.globals.define("fSin", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -249,8 +249,8 @@ public final class BuiltinsForNative {
             }
         });  
         
-        // setConsoleForeColor() builtin function: set the console foreground color
-        interpreter.globals.define("setConsoleForeColor", new CallableObject() {
+        // pSetConsoleForeColor() builtin function: set the console foreground color
+        interpreter.globals.define("pSetConsoleForeColor", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -276,8 +276,8 @@ public final class BuiltinsForNative {
             }
         });
         
-        // setConsoleBackColor() builtin function: set the console background color
-        interpreter.globals.define("setConsoleBackColor", new CallableObject() {
+        // pSetConsoleBackColor() builtin function: set the console background color
+        interpreter.globals.define("pSetConsoleBackColor", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -303,9 +303,9 @@ public final class BuiltinsForNative {
             }
         }); 
         
-        // assert() builtin function: assert that a condition is true
+        // pAssert() builtin function: assert that a condition is true
         // otherwise print an error message in red color
-        interpreter.globals.define("assert", new CallableObject() {
+        interpreter.globals.define("pAssert", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -328,8 +328,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // rand(from, to) builtin function: return a random number between from and to
-        interpreter.globals.define("rand", new CallableObject() {
+        // fRand(from, to) builtin function: return a random number between from and to
+        interpreter.globals.define("fRand", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -349,8 +349,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // abs() builtin function: return the absolute value of a number
-        interpreter.globals.define("abs", new CallableObject() {
+        // fAbs() builtin function: return the absolute value of a number
+        interpreter.globals.define("fAbs", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -368,8 +368,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // sqrt() builtin function: return the square root of a number
-        interpreter.globals.define("sqrt", new CallableObject() {
+        // fSqrt() builtin function: return the square root of a number
+        interpreter.globals.define("fSqrt", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -387,8 +387,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // pow() builtin function: return the power of a number
-        interpreter.globals.define("pow", new CallableObject() {
+        // fPow() builtin function: return the power of a number
+        interpreter.globals.define("fPow", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -407,8 +407,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // round() builtin function: return the rounded value of a number
-        interpreter.globals.define("round", new CallableObject() {
+        // fRound() builtin function: return the rounded value of a number
+        interpreter.globals.define("fRound", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -426,8 +426,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // floor() builtin function: return the floor value of a number
-        interpreter.globals.define("floor", new CallableObject() {
+        // fFloor() builtin function: return the floor value of a number
+        interpreter.globals.define("fFloor", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -445,8 +445,8 @@ public final class BuiltinsForNative {
             }
         });
         
-        // ceil() builtin function: return the ceiling value of a number
-        interpreter.globals.define("ceil", new CallableObject() {
+        // fCeil() builtin function: return the ceiling value of a number
+        interpreter.globals.define("fCeil", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -464,8 +464,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // min() builtin function: return the minimum value of two numbers
-        interpreter.globals.define("min", new CallableObject() {
+        // fMin() builtin function: return the minimum value of two numbers
+        interpreter.globals.define("fMin", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -484,8 +484,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // max() builtin function: return the maximum value of two numbers
-        interpreter.globals.define("max", new CallableObject() {
+        // fMax() builtin function: return the maximum value of two numbers
+        interpreter.globals.define("fMax", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -504,8 +504,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // between() builtin function: return true if a number is between two numbers
-        interpreter.globals.define("between", new CallableObject() {
+        // fBetween() builtin function: return true if a number is between two numbers
+        interpreter.globals.define("fBetween", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(4);
@@ -525,8 +525,8 @@ public final class BuiltinsForNative {
             }
         });
         
-        // seconds() builtin function: return the number of seconds since the beginning of the program
-        interpreter.globals.define("seconds", new CallableObject() {
+        // fSeconds() builtin function: return the number of seconds since the beginning of the program
+        interpreter.globals.define("fSeconds", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -543,8 +543,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // tick() builtin function: return the number of ticks since the beginning of the program
-        interpreter.globals.define("tick", new CallableObject() {
+        // fTick() builtin function: return the number of ticks since the beginning of the program
+        interpreter.globals.define("fTick", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -561,8 +561,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // tack() builtin function: takes a tick() value and returns the number of seconds since that tick
-        interpreter.globals.define("tack", new CallableObject() {
+        // fTack() builtin function: takes a tick() value and returns the number of seconds since that tick
+        interpreter.globals.define("fTack", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -580,8 +580,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // sleep() builtin function: sleep for a number of seconds
-        interpreter.globals.define("sleep", new CallableObject() {
+        // fSleep() builtin function: sleep for a number of seconds
+        interpreter.globals.define("fSleep", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -604,8 +604,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // file() builtin function: check if a file exists
-        interpreter.globals.define("file", new CallableObject() {
+        // fFile() builtin function: check if a file exists
+        interpreter.globals.define("fFile", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -623,8 +623,8 @@ public final class BuiltinsForNative {
             }
         });
         
-        // filetostr() builtin function: read a file and return its content as a string
-        interpreter.globals.define("filetostr", new CallableObject() {
+        // fFileToStr() builtin function: read a file and return its content as a string
+        interpreter.globals.define("fFileToStr", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -647,8 +647,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // strtofile() builtin function: write a string to a file
-        interpreter.globals.define("strtofile", new CallableObject() {
+        // fStrToFile() builtin function: write a string to a file
+        interpreter.globals.define("fStrToFile", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -674,8 +674,8 @@ public final class BuiltinsForNative {
             }
         });
         
-        // curdir() builtin function: return the current directory
-        interpreter.globals.define("curdir", new CallableObject() {
+        // fCurDir() builtin function: return the current directory
+        interpreter.globals.define("fCurDir", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -692,10 +692,10 @@ public final class BuiltinsForNative {
             }
         });
 
-        // format() builtin function: use the java String.format() function to format a string
+        // fFormat() builtin function: use the java String.format() function to format a string
         // considering all wildcards as strings eg: %s, %d, %f, %c, %b
         // this function arity must return -1 to indicate that it can take any number of arguments
-        interpreter.globals.define("format", new CallableObject() {
+        interpreter.globals.define("fFormat", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(true);
@@ -721,8 +721,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // httpget() builtin function: perform an HTTP GET request
-        interpreter.globals.define("httpget", new CallableObject() {
+        // fHttpGet() builtin function: perform an HTTP GET request
+        interpreter.globals.define("fHttpGet", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -762,8 +762,8 @@ public final class BuiltinsForNative {
         /*
         * Database functions
         */
-        // connect() builtin function: connect to a database. takes a mapEnv as argument
-        interpreter.globals.define("connect", new CallableObject() {
+        // fConnect() builtin function: connect to a database. takes a mapEnv as argument
+        interpreter.globals.define("fConnect", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -822,8 +822,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // disconnect() builtin function: disconnect from a database
-        interpreter.globals.define("disconnect", new CallableObject() {
+        // fDisconnect() builtin function: disconnect from a database
+        interpreter.globals.define("fDisconnect", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -856,8 +856,8 @@ public final class BuiltinsForNative {
         /*
         * Dialogs
         */
-        // info(message, title) builtin function: show an information dialog
-        interpreter.globals.define("info", new CallableObject() {
+        // pInfo(message, title) builtin function: show an information dialog
+        interpreter.globals.define("pInfo", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -882,8 +882,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // warning(message, title) builtin function: show a warning dialog
-        interpreter.globals.define("warning", new CallableObject() {
+        // pWarning(message, title) builtin function: show a warning dialog
+        interpreter.globals.define("pWarning", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -908,8 +908,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // error(message, title) builtin function: show an error dialog
-        interpreter.globals.define("error", new CallableObject() {
+        // pError(message, title) builtin function: show an error dialog
+        interpreter.globals.define("pError", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -934,8 +934,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // confirm(message, title) builtin function: show a confirmation dialog
-        interpreter.globals.define("confirm", new CallableObject() {
+        // fConfirm(message, title) builtin function: show a confirmation dialog
+        interpreter.globals.define("fConfirm", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -959,8 +959,8 @@ public final class BuiltinsForNative {
             }
         });
 
-        // input(message, title) builtin function: show an input dialog
-        interpreter.globals.define("input", new CallableObject() {
+        // fInput(message, title) builtin function: show an input dialog
+        interpreter.globals.define("fInput", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);

@@ -11,11 +11,11 @@ def fTest
         nC = nA + nB # nC is not defined
         return "try"
     catch
-        println("ERROR MESSAGE: " & oEx.message)
+        pPrintLn("ERROR MESSAGE: " & oEx.message)
     finally
-        println("finally block should be used to close resources")
+        pPrintLn("finally block should be used to close resources")
     end
     return "end"
 end
 
-println(fTest())
+pPrintLn(fTest())

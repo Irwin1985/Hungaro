@@ -8,4 +8,4 @@
 def cFoo
 end
 
-println(cFoo) # `Class lcFoo`
+pPrintLn(cFoo) # `Class lcFoo`

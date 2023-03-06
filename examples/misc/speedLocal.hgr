@@ -5,11 +5,11 @@
  Date: 2023-02-24
 """
 
-let nT1 = tick()
+let nT1 = fTick()
 let sA = "12345"
 
 for nI = 1 to 10000
     let sB = sA, sC = sB, sD = sA & sB & sC
 end
 
-println("Time: " & tack(nT1) & " ms")
+pPrintLn("Time: " & fTack(nT1) & " ms")

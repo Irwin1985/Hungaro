@@ -13,5 +13,5 @@ def fFoo2
     return "5.6"
 end
 
-println(fFoo1()) # 1.5
-println(fFoo2()) # 5.6
+pPrintLn(fFoo1()) # 1.5
+pPrintLn(fFoo2()) # 5.6

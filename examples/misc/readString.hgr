@@ -5,9 +5,9 @@
  Date: 2023-02-24
 """
 
-let sAns = readln("Do you want a drink? (y/n): ")
+let sAns = fReadLn("Do you want a drink? (y/n): ")
 if sAns == "y"
-    print("Here is your drink")
+    fPrint("Here is your drink")
 else
-    print("Ok, no drink for you")
+    fPrint("Ok, no drink for you")
 end

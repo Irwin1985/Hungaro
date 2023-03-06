@@ -12,11 +12,11 @@ let mMssqlConfig = {
     'password': 'your-password',    
 }
 
-let oCon = connect(mMssqlConfig)
+let oCon = fConnect(mMssqlConfig)
 
 if oCon != null
-    println('Connected Ok!')    
-    disconnect(oCon)    
+    pPrintLn('Connected Ok!')    
+    fDisconnect(oCon)    
 else
-    println('Connection failed')
+    pPrintLn('Connection failed')
 end

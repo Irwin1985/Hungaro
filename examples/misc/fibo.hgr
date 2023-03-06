@@ -5,21 +5,21 @@
  Date: 2023-02-23
 """
 
-println("Two different functions to compute Fibbonacci Sequence")
-println("fFibonacci1() is a non-recursive version")
-println("fFibonacci2() is a recursive version")
+pPrintLn("Two different functions to compute Fibbonacci Sequence")
+pPrintLn("fFibonacci1() is a non-recursive version")
+pPrintLn("fFibonacci2() is a recursive version")
 
 # Non-recursive version
 def fFibonacci1(pnX)
     let nA = 0, nB = 1, nC = 0
-    print(nA, " ")
+    fPrint(nA, " ")
     while nB < pnX
         nC = nB
         nB = nA + nB
         nA = nC
-        print(nA, " ")
+        fPrint(nA, " ")
     end
-    println(" ")
+    pPrintLn(" ")
     return nA
 end
 
@@ -34,23 +34,23 @@ end
 # Test
 let nResult = fFibonacci1(10000)
 if nResult == 6765
-    println("fFibonacci1() is correct")
+    pPrintLn("fFibonacci1() is correct")
 else
-    println("fFibonacci1() is incorrect")
+    pPrintLn("fFibonacci1() is incorrect")
 end
 
-println("Recursive routine to compute Fibbonacci Sequence")
-assert(fFibonacci2(0) == 0, "fFibonacci2(0) is incorrect")
-assert(fFibonacci2(1) == 1, "fFibonacci2(1) is incorrect")
-assert(fFibonacci2(2) == 1, "fFibonacci2(2) is incorrect")
-assert(fFibonacci2(3) == 2, "fFibonacci2(3) is incorrect")
-assert(fFibonacci2(4) == 3, "fFibonacci2(4) is incorrect")
-assert(fFibonacci2(5) == 5, "fFibonacci2(5) is incorrect")
-assert(fFibonacci2(6) == 8, "fFibonacci2(6) is incorrect")
-assert(fFibonacci2(7) == 13, "fFibonacci2(7) is incorrect")
-assert(fFibonacci2(8) == 21, "fFibonacci2(8) is incorrect")
-assert(fFibonacci2(9) == 34, "fFibonacci2(9) is incorrect")
-assert(fFibonacci2(10) == 55, "fFibonacci2(10) is incorrect")
-assert(fFibonacci2(11) == 89, "fFibonacci2(11) is incorrect")
+pPrintLn("Recursive routine to compute Fibbonacci Sequence")
+pAssert(fFibonacci2(0) == 0, "fFibonacci2(0) is incorrect")
+pAssert(fFibonacci2(1) == 1, "fFibonacci2(1) is incorrect")
+pAssert(fFibonacci2(2) == 1, "fFibonacci2(2) is incorrect")
+pAssert(fFibonacci2(3) == 2, "fFibonacci2(3) is incorrect")
+pAssert(fFibonacci2(4) == 3, "fFibonacci2(4) is incorrect")
+pAssert(fFibonacci2(5) == 5, "fFibonacci2(5) is incorrect")
+pAssert(fFibonacci2(6) == 8, "fFibonacci2(6) is incorrect")
+pAssert(fFibonacci2(7) == 13, "fFibonacci2(7) is incorrect")
+pAssert(fFibonacci2(8) == 21, "fFibonacci2(8) is incorrect")
+pAssert(fFibonacci2(9) == 34, "fFibonacci2(9) is incorrect")
+pAssert(fFibonacci2(10) == 55, "fFibonacci2(10) is incorrect")
+pAssert(fFibonacci2(11) == 89, "fFibonacci2(11) is incorrect")
 
-println(" ")
+pPrintLn(" ")

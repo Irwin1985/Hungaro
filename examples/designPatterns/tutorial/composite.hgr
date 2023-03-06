@@ -68,13 +68,13 @@ def pMain
     oHeadMarketing.pAdd(oClerk2)
 
     # Print all employees of the organization
-    println(oCEO.fToString())
+    pPrintLn(oCEO.fToString())
 
     for each vHeadEmployee in oCEO.fGetSubordinates()
-        println(vHeadEmployee.fToString())
+        pPrintLn(vHeadEmployee.fToString())
 
         for each vEmployee in vHeadEmployee.fGetSubordinates()
-            println(vEmployee.fToString())
+            pPrintLn(vEmployee.fToString())
         end
     end
 end

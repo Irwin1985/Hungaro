@@ -13,9 +13,9 @@ end
 
 # iterate over the array
 for nI = 0 to aNotes.len()-1
-    println(aNotes[nI])
+    pPrintLn(aNotes[nI])
 end
 
 # shuffle the array
 aNotes.shuffle()
-println(aNotes)
+pPrintLn(aNotes)

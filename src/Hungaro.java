@@ -101,7 +101,7 @@ public class Hungaro {
         BufferedReader reader = new BufferedReader(input);
         printPrompt();
         for (;;) {
-            System.out.print(">>> ");            
+            System.out.fPrint(">>> ");            
             String line = reader.readLine();
             if (line == null) break;
             
@@ -117,7 +117,7 @@ public class Hungaro {
                 continue;
             }            
             if (line.equals("cls")) {
-                System.out.print("\033[H\033[2J");  
+                System.out.fPrint("\033[H\033[2J");  
                 System.out.flush();
                 printPrompt();
                 continue;

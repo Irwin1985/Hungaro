@@ -11,13 +11,13 @@
 
 def cFoo
     pInit(psArg)
-        println("cFoo.pInit(" & psArg & ")")
+        pPrintLn("cFoo.pInit(" & psArg & ")")
         @sField = "init"
     end
 end
 
 def pInit
-    println("Not initializer")
+    pPrintLn("Not initializer")
 end
 
 pInit() # Not initializer

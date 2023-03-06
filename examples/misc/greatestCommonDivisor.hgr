@@ -4,10 +4,10 @@
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
  Date: 2023-02-23
 """
-println("Enter two positive integers")
+pPrintLn("Enter two positive integers")
 
-let nN1 = val(readln("Enter the first integer: "))
-let nN2 = val(readln("Enter the second integer: "))
+let nN1 = fVal(fReadLn("Enter the first integer: "))
+let nN2 = fVal(fReadLn("Enter the second integer: "))
 
 while nN1 != nN2
     if nN1 > nN2
@@ -16,4 +16,4 @@ while nN1 != nN2
         nN2 -= nN1
     end
 end
-println("The greatest common divisor is: ", nN1)
+pPrintLn("The greatest common divisor is: ", nN1)

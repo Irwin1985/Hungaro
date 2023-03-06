@@ -11,16 +11,16 @@ let oF, oG
 def pMain
     let sLocal = "local"
     def pF
-        println(sLocal)
+        pPrintLn(sLocal)
         sLocal = "after lpF"
-        println(sLocal)
+        pPrintLn(sLocal)
     end
     oF = pF
 
     def pG
-        println(sLocal)
+        pPrintLn(sLocal)
         sLocal = "after lpG"
-        println(sLocal)
+        pPrintLn(sLocal)
     end
     oG = pG
 

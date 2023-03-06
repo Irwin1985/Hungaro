@@ -27,7 +27,7 @@ def fPlayRandom(pnN)
         let bFound = false
         for nPrisoner = 0 to 99
             bFound = false
-            for nReveal = 0 to rand(0, 50)
+            for nReveal = 0 to fRand(0, 50)
                 let nCard = aInDrawer[nReveal]
                 if nCard == nPrisoner
                     bFound = true
@@ -49,7 +49,7 @@ end
 def pMain
     let nN = 10000
     let nPardoned = fPlayRandom(nN)
-    print("Pardoned: " & nPardoned & "%")
+    fPrint("Pardoned: " & nPardoned & "%")
 end
 
 pMain()

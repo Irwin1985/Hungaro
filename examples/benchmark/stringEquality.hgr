@@ -14,7 +14,7 @@ let sA1 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
     sA7 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7",
     sA8 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa8"
 
-let nI = 0, nLoopStart = tick()
+let nI = 0, nLoopStart = fTick()
 
 while nI < 100000
     nI += 1
@@ -110,8 +110,8 @@ while nI < 100000
     sA8 | sA1 | sA8 | sA2 | sA8 | sA3 | sA8 | sA4 | sA8 | sA5 | sA8 | sA6 | sA8 | sA7 | sA8 | sA8 |
 end
 
-let nLoopTime = tack(nLoopStart)
-let nStart = tick()
+let nLoopTime = fTack(nLoopStart)
+let nStart = fTick()
 nI = 0
 
 while nI < 100000
@@ -207,6 +207,6 @@ while nI < 100000
     sA8 == sA1 | sA8 == sA2 | sA8 == sA3 | sA8 == sA4 | sA8 == sA5 | sA8 == sA6 | sA8 == sA7 | sA8 == sA8 |    
 end
 
-let nElapsed = tack(nStart)
+let nElapsed = fTack(nStart)
 
-println("Loop " & nLoopTime & " elapsed " & nElapsed & " equal " & (nElapsed == nLoopTime))
+pPrintLn("Loop " & nLoopTime & " elapsed " & nElapsed & " equal " & (nElapsed == nLoopTime))

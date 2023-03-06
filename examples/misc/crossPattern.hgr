@@ -10,10 +10,10 @@ let nRows = 7
 for nI = 1 to nRows * 2    
     for nJ = 1 to nRows * 2
         if (nJ == nRows or nI == nRows)
-            print("*")
+            fPrint("*")
         else
-            print(" ")
+            fPrint(" ")
         end
     end
-    println(" ")
+    pPrintLn(" ")
 end

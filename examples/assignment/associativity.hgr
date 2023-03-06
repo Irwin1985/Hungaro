@@ -10,6 +10,6 @@ let sA = "a", sB = "b", sC = "c"
 # Assignment is right associative
 sA = sB = sC
 
-assert(sA == "c", "sA is not equal to 'c'")
-assert(sB == "c", "sB is not equal to 'c'")
-assert(sC == "c", "sC is not equal to 'c'")
+pAssert(sA == "c", "sA is not equal to 'c'")
+pAssert(sB == "c", "sB is not equal to 'c'")
+pAssert(sC == "c", "sC is not equal to 'c'")

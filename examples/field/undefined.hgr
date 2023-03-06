@@ -10,4 +10,4 @@ end
 
 let oFoo = new cFoo()
 
-println(oFoo.sBar)
+pPrintLn(oFoo.sBar)

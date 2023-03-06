@@ -10,8 +10,8 @@ let oF
 def pTest
     let sA = "a"
     def pF
-        println(sA)
-        println(sA)
+        pPrintLn(sA)
+        pPrintLn(sA)
     end
     oF = pF
 end

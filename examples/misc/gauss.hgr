@@ -32,11 +32,11 @@ end
 # procedure gauss eliminate
 def pGaussEliminate(paA, paB, paX, pnN)
     for nK = 0 to pnN-1
-        let nMax = abs(paA[nK][nK])
+        let nMax = fAbs(paA[nK][nK])
         let nMaxRow = nK
 
         for nRow = nK+1 to pnN-1
-            let nTemp = abs(paA[nRow][nK])
+            let nTemp = fAbs(paA[nRow][nK])
             if nTemp > nMax
                 nMaxRow = nRow
                 nMax = nTemp
@@ -55,7 +55,7 @@ def pGaussEliminate(paA, paB, paX, pnN)
         end
     end
 
-    println("Back substitution")
+    pPrintLn("Back substitution")
     for nRow = pnN-1 to 0 step -1
         let nTemp = paB[nRow]
         for nJ = pnN-1 to nRow step -1
@@ -71,11 +71,11 @@ def pGauss(paA, paB, paX)
     let nN = paA.len()-1 # Ignore first row
 
     for nK = 1 to nN-1
-        let nMax = abs(paA[nK][nK])
+        let nMax = fAbs(paA[nK][nK])
         let nMaxRow = nK
         # Find the row with the largest pivot
         for nI = nK+1 to nN
-            let nXfac = abs(paA[nI][nK])
+            let nXfac = fAbs(paA[nI][nK])
             if nXfac > nMax
                 nMax = nXfac
                 nMaxRow = nI
@@ -149,7 +149,7 @@ aA[3][1] = 0
 aA[3][2] = 1
 aA[3][3] = 2
 
-println("A = ", aA)
+pPrintLn("A = ", aA)
 
 # Fill the 'b' matrix
 aB[0] = 2
@@ -159,9 +159,9 @@ aB[3] = 8
 
 pGauss(aA, aB, aX)
 
-println(aX[0], ", ", aX[1], ", ", aX[2], ", ", aX[3])
+pPrintLn(aX[0], ", ", aX[1], ", ", aX[2], ", ", aX[3])
 
-println("Second method")
+pPrintLn("Second method")
 
 # Create the 'A' matrix
 aA = [
@@ -196,7 +196,7 @@ aA[3][1] = 0
 aA[3][2] = 1
 aA[3][3] = 2
 
-println("A = ", aA)
+pPrintLn("A = ", aA)
 
 # Fill the 'b' matrix
 aB[0] = 2
@@ -206,6 +206,6 @@ aB[3] = 8
 
 pGaussEliminate(aA, aB, aX)
 
-println("Output results: ")
+pPrintLn("Output results: ")
 
-println(aX[0], ", ", aX[1], ", ", aX[2], ", ", aX[3])
+pPrintLn(aX[0], ", ", aX[1], ", ", aX[2], ", ", aX[3])

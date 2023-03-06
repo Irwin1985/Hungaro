@@ -7,13 +7,13 @@
 
 def cFoo
     pMethod(pnA)
-        println("method")
-        println(pnA)
+        pPrintLn("method")
+        pPrintLn(pnA)
     end
 
     pOther(pnA)
-        println("other")
-        println(pnA)
+        pPrintLn("other")
+        pPrintLn(pnA)
     end
 end
 

@@ -25,25 +25,25 @@ end
 
 def cRoundedRectangle as cShape
     pDraw
-        println("Inside RoundedRectangle::draw() method.")
+        pPrintLn("Inside RoundedRectangle::draw() method.")
     end
 end
 
 def cRoundedSquare as cShape
     pDraw
-        println("Inside RoundedSquare::draw() method.")
+        pPrintLn("Inside RoundedSquare::draw() method.")
     end
 end
 
 def cRectangle as cShape
     pDraw
-        println("Inside Rectangle::draw() method.")
+        pPrintLn("Inside Rectangle::draw() method.")
     end
 end
 
 def cSquare as cShape
     pDraw
-        println("Inside Square::draw() method.")
+        pPrintLn("Inside Square::draw() method.")
     end
 end
 

@@ -22,19 +22,19 @@ end
 
 def cRectangle as cShape
     pDraw
-        println("Rectangle::draw()")
+        pPrintLn("Rectangle::draw()")
     end
 end
 
 def cSquare as cShape
     pDraw
-        println("Square::draw()")
+        pPrintLn("Square::draw()")
     end
 end
 
 def cCircle as cShape
     pDraw
-        println("Circle::draw()")
+        pPrintLn("Circle::draw()")
     end
 end
 

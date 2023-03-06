@@ -7,13 +7,13 @@
 
 def cFoo
     pTest
-        println("foo")
+        pPrintLn("foo")
     end
 end
 
 def cBar
     pTest
-        println("bar")
+        pPrintLn("bar")
     end
 end
 

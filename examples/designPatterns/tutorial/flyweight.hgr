@@ -42,7 +42,7 @@ def cCircle as cShape
     end
 
     pDraw
-        println("Circle: Draw() [Color : " & @sColor & ", x : " & @nX & ", y :" & @nY & ", radius :" & @nRadius & "]")
+        pPrintLn("Circle: Draw() [Color : " & @sColor & ", x : " & @nX & ", y :" & @nY & ", radius :" & @nRadius & "]")
     end
 end
 
@@ -54,7 +54,7 @@ def cShapeFactory
         if oCircle == null
             oCircle = new cCircle(psColor)
             @mCircleMap.put(psColor, oCircle)
-            println("Creating circle of color : " & psColor)
+            pPrintLn("Creating circle of color : " & psColor)
         end
         return oCircle
     end
@@ -66,17 +66,17 @@ def pMain
 
     # Internal function
     def fGetRandomColor        
-        return aColors[int(rand(0, 4))]
+        return aColors[fInt(fRand(0, 4))]
     end
 
     # Internal function
     def fGetRandomX
-        return int(rand(1, 100))
+        return fInt(fRand(1, 100))
     end
 
     # Internal function
     def fGetRandomY
-        return int(rand(1, 100))
+        return fInt(fRand(1, 100))
     end
 
     for nI = 0 to 19

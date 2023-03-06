@@ -10,5 +10,5 @@ for nT = 1 to 20
     for nG = 1 to nT
         nAns += nG
     end
-    println(nAns)
+    pPrintLn(nAns)
 end

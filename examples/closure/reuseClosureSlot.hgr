@@ -11,7 +11,7 @@ def pBlockA
     def pBlockB
         let sA = "a"
         def pF
-            println(sA)
+            pPrintLn(sA)
         end
         oF = pF
     end

@@ -26,12 +26,12 @@ def cTree
 end
 
 let oTree = new cTree(8)
-let nStart = tick()
+let nStart = fTick()
 
 for nI = 0 to 100
     if oTree.fWalk() != 122068
-        println("Error")
+        pPrintLn("Error")
     end
 end
 
-println("Time: " & tack(nStart) & " ms")
+pPrintLn("Time: " & fTack(nStart) & " ms")

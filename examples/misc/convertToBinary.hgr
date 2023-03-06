@@ -4,7 +4,7 @@
  Date: 2023-02-22
 """
 
-println("Convert number to binary")
+pPrintLn("Convert number to binary")
 
 let nNumber = 176
 
@@ -14,10 +14,10 @@ let aBinary = []
 while nNumber > 0
     # storing remainder in binary array
     aBinary.push(nNumber % 2)
-    nNumber = int(nNumber / 2)
+    nNumber = fInt(nNumber / 2)
 end
 
 # printing binary array in reverse order
 aBinary.reverse()
 
-print("Binary number: " & aBinary)
+fPrint("Binary number: " & aBinary)

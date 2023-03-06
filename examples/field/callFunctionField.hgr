@@ -11,9 +11,9 @@ end
 
 # the following procedure takes the Function prototype as poThis
 def pBar(pnA, pnB)
-    println("bar")
-    println(pnA)
-    println(pnB)
+    pPrintLn("bar")
+    pPrintLn(pnA)
+    pPrintLn(pnB)
 end
 
 let oFoo = new cFoo()

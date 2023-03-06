@@ -32,11 +32,11 @@ for nYPixel = 0 to 24
             # Stop if the point escape
             let nD = nX0 * nX0 + nY0 * nY0
             if nD > 4
-                sPixel = " .:;+=xX$&".charAt(int(nIter / 8))
+                sPixel = " .:;+=xX$&".charAt(fInt(nIter / 8))
                 exit
             end
         end
-        print(sPixel)
+        fPrint(sPixel)
     end
-    println()
+    pPrintLn()
 end

@@ -11,13 +11,13 @@ for nNum = 0 to nUpper
     # all prime numbers are greater than 1
     if nNum > 1
         for nI = 2 to nNum
-            println("nI = " & nI)
+            pPrintLn("nI = " & nI)
             if nNum % nI == 0
                 exit
             end
         end
-        println(nNum)
+        pPrintLn(nNum)
     else
-        println(nNum)
+        pPrintLn(nNum)
     end
 end

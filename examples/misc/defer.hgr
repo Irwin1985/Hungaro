@@ -7,11 +7,11 @@
 
 def pTest
     defer
-        println("Defered text")
+        pPrintLn("Defered text")
     end
 
     for nI = 1 to 10
-        println("Sample text # " & nI)
+        pPrintLn("Sample text # " & nI)
     end
 end
 

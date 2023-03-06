@@ -9,7 +9,7 @@ let oF = null
 
 def pFoo(psParam)
     def pInner
-        println(psParam)
+        pPrintLn(psParam)
     end
     oF = pInner
 end

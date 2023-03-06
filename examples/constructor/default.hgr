@@ -9,4 +9,4 @@ def cFoo
 end
 
 let oFoo = new cFoo()
-println(oFoo) # 'Instance of cFoo'
+pPrintLn(oFoo) # 'Instance of cFoo'

@@ -12,4 +12,4 @@ for nI = 1 to 10
     end
 end
 
-assert(nExternalI == 5, "nExternalI should be 5")
+pAssert(nExternalI == 5, "nExternalI should be 5")

@@ -7,10 +7,10 @@
 
 let sStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 let sSubStr = "JKL"
-let nStart = tick()
+let nStart = fTick()
 
 for nI = 1 to 100000
     let nX = sStr.find(sSubStr)
 end
 
-println("Time: " & tack(nStart))
+pPrintLn("Time: " & fTack(nStart))

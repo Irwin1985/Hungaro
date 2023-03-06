@@ -5,9 +5,9 @@
  Date: 2023-02-23
 """
 
-println("Enter two positive numbers: ")
-let nN1 = val(readln("First number: "))
-let nN2 = val(readln("Second number: "))
+pPrintLn("Enter two positive numbers: ")
+let nN1 = fVal(fReadLn("First number: "))
+let nN2 = fVal(fReadLn("Second number: "))
 
 # minimun number between nN1 and nN2 is stored in nMin
 let nMin = nN1
@@ -17,7 +17,7 @@ end
 
 while true
     if nMin % nN1 == 0 and nMin % nN2 == 0
-        println("The LCM of " & nN1 & " and " & nN2 & " is " & nMin)
+        pPrintLn("The LCM of " & nN1 & " and " & nN2 & " is " & nMin)
         exit
     end
     nMin += 1

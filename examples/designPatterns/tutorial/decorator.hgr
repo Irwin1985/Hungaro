@@ -26,13 +26,13 @@ end
 
 def cRectangle as cShape
     pDraw
-        println("Shape::Rectangle")
+        pPrintLn("Shape::Rectangle")
     end
 end
 
 def cCircle as cShape
     pDraw
-        println("Shape::Circle")
+        pPrintLn("Shape::Circle")
     end
 end
 
@@ -59,7 +59,7 @@ def cRedShapeDecorator as cShapeDecorator
     end
 
     pSetRedBorder(poDecoratedShape)
-        println("Border Color: Red")
+        pPrintLn("Border Color: Red")
     end
 end
 
@@ -68,13 +68,13 @@ def pMain
     let oRedCircle = new cRedShapeDecorator(new cCircle())
 
     let oRedRectangle = new cRedShapeDecorator(new cRectangle())
-    println("Circle with normal border")
+    pPrintLn("Circle with normal border")
     oCircle.pDraw()
 
-    println("\nCircle of red border")
+    pPrintLn("\nCircle of red border")
     oRedCircle.pDraw()
 
-    println("\nRectangle of red border")
+    pPrintLn("\nRectangle of red border")
     oRedRectangle.pDraw()
 end
 

@@ -6,8 +6,8 @@
 """
 
 for nT = 1 to 10
-    println("Multiplication table of " & nT)
+    pPrintLn("Multiplication table of " & nT)
     for nJ = 1 to 10
-        println("" & nT & " x " & nJ & " = " & nT * nJ)
+        pPrintLn("" & nT & " x " & nJ & " = " & nT * nJ)
     end
 end

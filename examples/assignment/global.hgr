@@ -6,12 +6,12 @@
 """
 
 let gsA = "before"
-println(gsA) # before
+pPrintLn(gsA) # before
 
 gsA = "after"
-println(gsA) # after
+pPrintLn(gsA) # after
 
 # Global variables can be accessed from anywhere in the program
 # and can be modified from anywhere in the program.
-assert((gsA = "arg") == "arg", "is not equal") # arg
-println(gsA) # arg
+pAssert((gsA = "arg") == "arg", "is not equal") # arg
+pPrintLn(gsA) # arg

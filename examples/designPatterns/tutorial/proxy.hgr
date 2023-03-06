@@ -27,11 +27,11 @@ def cRealImage as cImage
     end
 
     pDisplay
-        println("Displaying " & @sFileName)
+        pPrintLn("Displaying " & @sFileName)
     end
 
     pLoadFromDisk
-        println("Loading " & @sFileName)
+        pPrintLn("Loading " & @sFileName)
     end
 end
 
@@ -56,7 +56,7 @@ def pMain
 
     # Image will be loaded from disk
     oImage.pDisplay()
-    println("")
+    pPrintLn("")
 
     # Image will not be loaded from disk
     oImage.pDisplay()

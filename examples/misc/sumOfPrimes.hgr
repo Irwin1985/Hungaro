@@ -7,7 +7,7 @@
 
 def fCheckPrime(pnNumber)
     let bIsPrime = true
-    for nI = 2 to int(pnNumber/2)
+    for nI = 2 to fInt(pnNumber/2)
         if pnNumber % nI == 0
             bIsPrime = false
             exit
@@ -17,16 +17,16 @@ def fCheckPrime(pnNumber)
 end
 
 let bFlag = false
-let nNumber = val(readln("Enter a positive integer: "))
+let nNumber = fVal(fReadLn("Enter a positive integer: "))
 
-for nI = 2 to int(nNumber/2)
+for nI = 2 to fInt(nNumber/2)
     # condition for nI to be a prime number
     if fCheckPrime(nI) and fCheckPrime(nNumber - nI)
-        println(format("%s = %s + %s", nNumber, nI, nNumber - nI))
+        pPrintLn(fFormat("%s = %s + %s", nNumber, nI, nNumber - nI))
         bFlag = true
     end
 end
 
 if not bFlag
-    println(format("%s cannot be expressed as the sum of two prime numbers.", nNumber))
+    pPrintLn(fFormat("%s cannot be expressed as the sum of two prime numbers.", nNumber))
 end

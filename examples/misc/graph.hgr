@@ -8,16 +8,16 @@
 let aData = [], nDeg = 0, PI = 3.14159265
 
 while nDeg < 360
-    let nX = 1 + sin(nDeg*PI/180)
-    aData.push(int(nX*20))
+    let nX = 1 + fSin(nDeg*PI/180)
+    aData.push(fInt(nX*20))
     nDeg += 10
 end
 
-let nN = int(360/10)
+let nN = fInt(360/10)
 
 for nI = 0 to nN-1
     for nJ = 0 to aData[nI]-1
-        print(" ")
+        fPrint(" ")
     end
-    println("*")
+    pPrintLn("*")
 end

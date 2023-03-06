@@ -6,5 +6,5 @@
 """
 
 
-let sColor = readln("Enter the name of your favorite color: ")
-println("Your favorite color is: " & sColor)
+let sColor = fReadLn("Enter the name of your favorite color: ")
+pPrintLn("Your favorite color is: " & sColor)

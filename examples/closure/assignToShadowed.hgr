@@ -15,8 +15,8 @@ def pMain
 
     let sA = "inner"
     pAssign()
-    println(sA) # inner    
+    pPrintLn(sA) # inner    
 end
 
 pMain()
-println(sA)
+pPrintLn(sA)

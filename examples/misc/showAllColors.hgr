@@ -17,8 +17,8 @@ let aColors = [
 ]
 
 for each vColor in aColors
-    setConsoleForeColor(vColor)
-    println("This is a text in " & vColor & " color")
+    pSetConsoleForeColor(vColor)
+    pPrintLn("This is a text in " & vColor & " color")
 end
-setConsoleForeColor("reset")
-println(" ")
+pSetConsoleForeColor("reset")
+pPrintLn(" ")

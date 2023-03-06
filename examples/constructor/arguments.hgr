@@ -13,5 +13,5 @@ def cFoo
 end
 
 let oFoo = new cFoo(1, 2)
-println(oFoo.nA) # 1
-println(oFoo.nB) # 2
+pPrintLn(oFoo.nA) # 1
+pPrintLn(oFoo.nB) # 2

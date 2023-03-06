@@ -71,7 +71,7 @@ def cClient
 
     pPrintData()
         for nI = 0 to @oCompositeEntity.fGetData().len() - 1
-            println("Data: " & @oCompositeEntity.fGetData()[nI])
+            pPrintLn("Data: " & @oCompositeEntity.fGetData()[nI])
         end
     end
 

@@ -8,8 +8,8 @@
 def pTest
     let sA = "a", sB = "b"
     def pG
-        println(sB)
-        println(sA)
+        pPrintLn(sB)
+        pPrintLn(sA)
     end
     pG()
 end

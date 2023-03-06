@@ -24,13 +24,13 @@ end
 # Driver code to test above
 let aNumbers = [12, 7, 13, 5, 6]
 
-println("Unsorted list: " & aNumbers)
+pPrintLn("Unsorted list: " & aNumbers)
 pBubbleSort(aNumbers)
-println("Sorted list: " & aNumbers)
+pPrintLn("Sorted list: " & aNumbers)
 
 # Check the output:
 if aNumbers.equals([5, 6, 7, 12, 13])
-    println("Test passed")
+    pPrintLn("Test passed")
 else
-    println("Test failed")
+    pPrintLn("Test failed")
 end

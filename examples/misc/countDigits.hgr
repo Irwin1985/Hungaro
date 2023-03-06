@@ -4,12 +4,12 @@
  Date: 2023-02-22
 """
 
-let nNumber = val(readln("Enter a number: "))
+let nNumber = fVal(fReadLn("Enter a number: "))
 let nCount = 0
 
 while nNumber != 0
-    nNumber = int(nNumber / 10)
+    nNumber = fInt(nNumber / 10)
     nCount += 1    
 end
 
-print("The number of digits is: " & nCount)
+fPrint("The number of digits is: " & nCount)

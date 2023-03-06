@@ -49,13 +49,13 @@ end
 
 def pMain
     let oContext = new cContext(new cOperationAdd())
-    println("10 + 5 = " & oContext.fExecuteStrategy(10, 5))
+    pPrintLn("10 + 5 = " & oContext.fExecuteStrategy(10, 5))
 
     oContext = new cContext(new cOperationSubstract())
-    println("10 - 5 = " & oContext.fExecuteStrategy(10, 5))
+    pPrintLn("10 - 5 = " & oContext.fExecuteStrategy(10, 5))
 
     oContext = new cContext(new cOperationMultiply())
-    println("10 * 5 = " & oContext.fExecuteStrategy(10, 5))
+    pPrintLn("10 * 5 = " & oContext.fExecuteStrategy(10, 5))
 end
 
 pMain()

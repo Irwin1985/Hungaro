@@ -8,7 +8,7 @@
 """
 
 def fIsPrime(pnN)
-    for nI = 2 to int(pnN^0.5) + 1
+    for nI = 2 to fInt(pnN^0.5) + 1
         if pnN % nI == 0
             return false
         end
@@ -33,7 +33,7 @@ end
 
 # main
 def pMain
-    println(fPrime(10001))
+    pPrintLn(fPrime(10001))
 end
 
 pMain()

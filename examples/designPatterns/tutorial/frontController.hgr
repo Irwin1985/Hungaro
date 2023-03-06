@@ -18,13 +18,13 @@
 
 def cHomeView
     pShow
-        println("Displaying Home Page")
+        pPrintLn("Displaying Home Page")
     end
 end
 
 def cStudentView
     pShow
-        println("Displaying Student Page")
+        pPrintLn("Displaying Student Page")
     end
 end
 
@@ -46,12 +46,12 @@ def cFrontController
     oDispatcher = new cDispatcher()
 
     fIsAuthenticUser
-        println("User is authenticated successfully.")
+        pPrintLn("User is authenticated successfully.")
         return true
     end
 
     pTrackRequest(psRequest)
-        println("Page requested: " & psRequest)
+        pPrintLn("Page requested: " & psRequest)
     end
 
     pDispatchRequest(psRequest)

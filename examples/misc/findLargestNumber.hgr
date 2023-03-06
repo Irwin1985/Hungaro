@@ -8,10 +8,10 @@
 let aNumbers = []
 
 for nI = 0 to 30
-    aNumbers.push(rand(1, 31))
+    aNumbers.push(fRand(1, 31))
 end
 
-println("The array is: " & aNumbers)
+pPrintLn("The array is: " & aNumbers)
 
 # Find the largest number in the array
 let nLargest = aNumbers[0]
@@ -22,4 +22,4 @@ for nI = 0 to aNumbers.len()-1
     end
 end
 
-println("The largest number is: " & nLargest)
+pPrintLn("The largest number is: " & nLargest)
