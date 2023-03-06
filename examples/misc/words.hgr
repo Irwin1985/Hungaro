@@ -20,7 +20,7 @@ pPrintLn("=========Print alphabet backwards=========")
 let sX = "abcdefghijklmnopqrstuvwxyz"
 
 for nI = 25 to 0 step -1
-    fPrint(sX.charAt(nI))
+    fPrint(sX.fCharAt(nI))
 end
 
 pPrintLn(" ")
@@ -30,14 +30,14 @@ for nI = 0 to 25
     for nJ = 0 to nI
         fPrint(" ")
     end
-    pPrintLn(sX.charAt(nI))
+    pPrintLn(sX.fCharAt(nI))
 end
 
 pPrintLn("=========Write a word backwards=========")
 let sX = "Hello", nLength = 5
 
 for nI = nLength-1 to 0 step -1
-    fPrint(sX.charAt(nI))
+    fPrint(sX.fCharAt(nI))
 end
 pPrintLn()
 
@@ -51,8 +51,8 @@ let sWord = "hello"
 
 for nK = 0 to 4
     for nI = 0 to 25
-        if sWord.charAt(nK) == sX.charAt(nI)
-            sSecret = sSecret & sCode.charAt(nI)
+        if sWord.fCharAt(nK) == sX.fCharAt(nI)
+            sSecret = sSecret & sCode.fCharAt(nI)
         end
     end
 end
@@ -63,8 +63,8 @@ let sDecoded = ""
 
 for nK = 0 to 4
     for nI = 0 to 25
-        if sSecret.charAt(nK) == sCode.charAt(nI)
-            sDecoded = sDecoded & sX.charAt(nI)
+        if sSecret.fCharAt(nK) == sCode.fCharAt(nI)
+            sDecoded = sDecoded & sX.fCharAt(nI)
         end
     end
 end

@@ -10,7 +10,7 @@ let sString = "ABCDEFG",
         nLen = sString.fLen()
 
 for nI = nLen-1 to 0 step -1
-    sReverse += sString.charAt(nI)
+    sReverse += sString.fCharAt(nI)
 end
 
 pPrintLn("Original String: " & sString)

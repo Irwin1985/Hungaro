@@ -2,9 +2,9 @@ import java.util.List;
 
 public final class BuiltinsForWrapper {
     public static void create(Interpreter interpreter) {
-        // get() builtin function: get a property from the wrapped object
+        // fGet() builtin function: get a property from the wrapped object
         // the wrapper object is stored in 'value' property of the environment
-        interpreter.wrapperEnv.define("message", new CallableObject() {
+        interpreter.wrapperEnv.define("fMessage", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);

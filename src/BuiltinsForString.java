@@ -2,8 +2,8 @@ import java.util.List;
 
 public final class BuiltinsForString {
     public static void create(Interpreter interpreter) {
-        // string len builtin function
-        interpreter.stringEnv.define("len", new CallableObject() {
+        // string fLen builtin function
+        interpreter.stringEnv.define("fLen", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -20,8 +20,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string slice builtin function
-        interpreter.stringEnv.define("slice", new CallableObject() {
+        // string fSlice builtin function
+        interpreter.stringEnv.define("fSlice", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -42,8 +42,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string find builtin function
-        interpreter.stringEnv.define("find", new CallableObject() {
+        // string fFind builtin function
+        interpreter.stringEnv.define("fFind", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -62,8 +62,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string contains builtin function
-        interpreter.stringEnv.define("contains", new CallableObject() {
+        // string fContains builtin function
+        interpreter.stringEnv.define("fContains", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -82,8 +82,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string replace builtin function
-        interpreter.stringEnv.define("replace", new CallableObject() {
+        // string fReplace builtin function
+        interpreter.stringEnv.define("fReplace", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -103,8 +103,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string split builtin function
-        interpreter.stringEnv.define("split", new CallableObject() {
+        // string fSplit builtin function
+        interpreter.stringEnv.define("fSplit", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -123,8 +123,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string trim builtin function
-        interpreter.stringEnv.define("trim", new CallableObject() {
+        // string fTrim builtin function
+        interpreter.stringEnv.define("fTrim", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -142,8 +142,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string ltrim builtin function
-        interpreter.stringEnv.define("ltrim", new CallableObject() {
+        // string fLtrim builtin function
+        interpreter.stringEnv.define("fLtrim", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -161,8 +161,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string rtrim builtin function
-        interpreter.stringEnv.define("rtrim", new CallableObject() {
+        // string fRtrim builtin function
+        interpreter.stringEnv.define("fRtrim", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -180,8 +180,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string padl builtin function: pad left
-        interpreter.stringEnv.define("padl", new CallableObject() {
+        // string fPadl builtin function: pad left
+        interpreter.stringEnv.define("fPadl", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -201,8 +201,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string padr builtin function: pad right
-        interpreter.stringEnv.define("padr", new CallableObject() {
+        // string fPadr builtin function: pad right
+        interpreter.stringEnv.define("fPadr", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -222,8 +222,8 @@ public final class BuiltinsForString {
             }
         });        
 
-        // string toUpper builtin function
-        interpreter.stringEnv.define("toUpper", new CallableObject() {
+        // string fToUpper builtin function
+        interpreter.stringEnv.define("fToUpper", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -241,8 +241,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string toLower builtin function
-        interpreter.stringEnv.define("toLower", new CallableObject() {
+        // string fToLower builtin function
+        interpreter.stringEnv.define("fToLower", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -260,8 +260,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string toNumber builtin function
-        interpreter.stringEnv.define("toNumber", new CallableObject() {
+        // string fToNumber builtin function
+        interpreter.stringEnv.define("fToNumber", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -283,8 +283,8 @@ public final class BuiltinsForString {
             }
         });        
 
-        // string reverse builtin function
-        interpreter.stringEnv.define("reverse", new CallableObject() {
+        // string fReverse builtin function
+        interpreter.stringEnv.define("fReverse", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -302,8 +302,8 @@ public final class BuiltinsForString {
             }
         });  
         
-        // charAt builtin function
-        interpreter.stringEnv.define("charAt", new CallableObject() {
+        // fCharAt builtin function
+        interpreter.stringEnv.define("fCharAt", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -327,8 +327,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string startsWith builtin function: return true if the string starts with the given substring
-        interpreter.stringEnv.define("startsWith", new CallableObject() {
+        // string fStartsWith builtin function: return true if the string starts with the given substring
+        interpreter.stringEnv.define("fStartsWith", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -347,8 +347,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string endsWith builtin function: return true if the string ends with the given substring
-        interpreter.stringEnv.define("endsWith", new CallableObject() {
+        // string fEndsWith builtin function: return true if the string ends with the given substring
+        interpreter.stringEnv.define("fEndsWith", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -367,8 +367,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string times builtin function: return a string that is the given string repeated n times
-        interpreter.stringEnv.define("times", new CallableObject() {
+        // string fTimes builtin function: return a string that is the given string repeated n times
+        interpreter.stringEnv.define("fTimes", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -391,8 +391,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string indexOf builtin function: return the index of the first occurrence of the given substring
-        interpreter.stringEnv.define("indexOf", new CallableObject() {
+        // string fIndexOf builtin function: return the index of the first occurrence of the given substring
+        interpreter.stringEnv.define("fIndexOf", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -411,8 +411,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string lastIndexOf builtin function: return the index of the last occurrence of the given substring
-        interpreter.stringEnv.define("lastIndexOf", new CallableObject() {
+        // string fLastIndexOf builtin function: return the index of the last occurrence of the given substring
+        interpreter.stringEnv.define("fLastIndexOf", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -431,8 +431,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string occurs builtin function: return the number of occurrences of the given substring
-        interpreter.stringEnv.define("occurs", new CallableObject() {
+        // string fOccurs builtin function: return the number of occurrences of the given substring
+        interpreter.stringEnv.define("fOccurs", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -457,8 +457,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string isAlpha() builtin function: return true if the string contains only alphabetic characters
-        interpreter.stringEnv.define("isAlpha", new CallableObject() {
+        // string fIsAlpha() builtin function: return true if the string contains only alphabetic characters
+        interpreter.stringEnv.define("fIsAlpha", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -476,8 +476,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string isAlphaNum() builtin function: return true if the string contains only alphabetic and numeric characters
-        interpreter.stringEnv.define("isAlphaNum", new CallableObject() {
+        // string fIsAlphaNum() builtin function: return true if the string contains only alphabetic and numeric characters
+        interpreter.stringEnv.define("fIsAlphaNum", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -495,8 +495,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string isNumeric() builtin function: return true if the string contains only numeric characters
-        interpreter.stringEnv.define("isNumeric", new CallableObject() {
+        // string fIsNumeric() builtin function: return true if the string contains only numeric characters
+        interpreter.stringEnv.define("fIsNumeric", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -514,8 +514,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string isSpace() builtin function: return true if the string contains only whitespace characters
-        interpreter.stringEnv.define("isSpace", new CallableObject() {
+        // string fIsSpace() builtin function: return true if the string contains only whitespace characters
+        interpreter.stringEnv.define("fIsSpace", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -533,8 +533,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string isUpper() builtin function: return true if the string contains only uppercase characters
-        interpreter.stringEnv.define("isUpper", new CallableObject() {
+        // string fIsUpper() builtin function: return true if the string contains only uppercase characters
+        interpreter.stringEnv.define("fIsUpper", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -552,8 +552,8 @@ public final class BuiltinsForString {
             }
         });
 
-        // string isLower() builtin function: return true if the string contains only lowercase characters
-        interpreter.stringEnv.define("isLower", new CallableObject() {
+        // string fIsLower() builtin function: return true if the string contains only lowercase characters
+        interpreter.stringEnv.define("fIsLower", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);

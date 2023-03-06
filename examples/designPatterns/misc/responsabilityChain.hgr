@@ -131,7 +131,7 @@ def cServer
     end
 
     pRegister(psEmail, psPassword)
-        @mUsers.put(psEmail, psPassword)
+        @mUsers.pPut(psEmail, psPassword)
     end
 
     fHasEmail(psEmail)

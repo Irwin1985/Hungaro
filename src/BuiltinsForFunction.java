@@ -2,9 +2,9 @@ import java.util.List;
 
 public final class BuiltinsForFunction {
     public static void create(Interpreter interpreter) {
-        // function arity builtin function: extract the internal "value" which is the 
+        // function fArity builtin function: extract the internal "value" which is the 
         // RuntimeFunction object and call its arity() method
-        interpreter.functionEnv.define("arity", new CallableObject() {
+        interpreter.functionEnv.define("fArity", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);

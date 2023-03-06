@@ -14,8 +14,8 @@ public final class BuiltinsForObject {
         // global _OBJECT builtin function
         interpreter.globals.define("_OBJECT", new Environment(interpreter.objectEnv, "Object"));                        
 
-        // object toString builtin function
-        interpreter.objectEnv.define("toString", new CallableObject() {
+        // object fToString builtin function
+        interpreter.objectEnv.define("fToString", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -39,8 +39,8 @@ public final class BuiltinsForObject {
             }
         });
 
-        // object type builtin function: return the name of the Environment
-        interpreter.objectEnv.define("type", new CallableObject() {
+        // object fType builtin function: return the name of the Environment
+        interpreter.objectEnv.define("fType", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);

@@ -53,7 +53,7 @@ def cShapeFactory
         let oCircle = @mCircleMap.fGet(psColor)
         if oCircle == null
             oCircle = new cCircle(psColor)
-            @mCircleMap.put(psColor, oCircle)
+            @mCircleMap.pPut(psColor, oCircle)
             pPrintLn("Creating circle of color : " & psColor)
         end
         return oCircle

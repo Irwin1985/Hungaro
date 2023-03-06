@@ -5,8 +5,8 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public final class BuiltinsForMap {
     public static void create(Interpreter interpreter) {
-        // map put builtin function
-        interpreter.mapEnv.define("put", new CallableObject() {
+        // pPut() builtin function
+        interpreter.mapEnv.define("pPut", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -28,8 +28,8 @@ public final class BuiltinsForMap {
             }
         });
 
-        // map get builtin function
-        interpreter.mapEnv.define("get", new CallableObject() {
+        // map fGet builtin function
+        interpreter.mapEnv.define("fGet", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -51,8 +51,8 @@ public final class BuiltinsForMap {
             }
         });
 
-        // map set builtin function
-        interpreter.mapEnv.define("set", new CallableObject() {
+        // map pSet builtin function
+        interpreter.mapEnv.define("pSet", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -74,8 +74,8 @@ public final class BuiltinsForMap {
             }
         });
 
-        // map len builtin function
-        interpreter.mapEnv.define("len", new CallableObject() {
+        // map fLen builtin function
+        interpreter.mapEnv.define("fLen", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -97,8 +97,8 @@ public final class BuiltinsForMap {
             }
         });
 
-        // map keys builtin function
-        interpreter.mapEnv.define("keys", new CallableObject() {
+        // fKeys builtin function
+        interpreter.mapEnv.define("fKeys", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -120,8 +120,8 @@ public final class BuiltinsForMap {
             }
         });
 
-        // map values builtin function
-        interpreter.mapEnv.define("values", new CallableObject() {
+        // map fValues builtin function
+        interpreter.mapEnv.define("fValues", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -143,8 +143,8 @@ public final class BuiltinsForMap {
             }
         });
 
-        // map contains builtin function
-        interpreter.mapEnv.define("contains", new CallableObject() {
+        // map fContains builtin function
+        interpreter.mapEnv.define("fContains", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -166,8 +166,8 @@ public final class BuiltinsForMap {
             }
         });
 
-        // map remove builtin function
-        interpreter.mapEnv.define("remove", new CallableObject() {
+        // map fRemove builtin function
+        interpreter.mapEnv.define("fRemove", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -189,8 +189,8 @@ public final class BuiltinsForMap {
             }
         });
 
-        // map clear builtin function
-        interpreter.mapEnv.define("clear", new CallableObject() {
+        // map pClear builtin function
+        interpreter.mapEnv.define("pClear", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -212,8 +212,8 @@ public final class BuiltinsForMap {
             }
         });
 
-        // map isEmpty builtin function
-        interpreter.mapEnv.define("isEmpty", new CallableObject() {
+        // map fIsEmpty builtin function
+        interpreter.mapEnv.define("fIsEmpty", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -235,8 +235,8 @@ public final class BuiltinsForMap {
             }
         });
 
-        // map clone builtin function
-        interpreter.mapEnv.define("clone", new CallableObject() {
+        // map fClone builtin function
+        interpreter.mapEnv.define("fClone", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);

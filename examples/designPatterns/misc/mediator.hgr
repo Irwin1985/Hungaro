@@ -21,7 +21,7 @@ def cMediator
     end
 
     fUpdateColleagues(psColleagueName)
-        for each vKey in @mColleagues.keys()
+        for each vKey in @mColleagues.fKeys()
             if @mColleagues[lvKey].sName != psColleagueName
                 @mColleagues[vKey].pSetState(false)
             end
@@ -37,7 +37,7 @@ def cOptionGroup as cMediator
     
     pShowState
         let sMsg = "There are " & @mColleagues.fLen() & " buttons.\n"
-        for each vKey in @mColleagues.keys()
+        for each vKey in @mColleagues.fKeys()
             sMsg &= @mColleagues[vKey].sName & " " & iif(@mColleagues[vKey].bSelected, "is", "is not") & " selected.\n"
         end
         pPrintLn(sMsg)
