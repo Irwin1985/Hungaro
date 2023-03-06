@@ -23,7 +23,7 @@ def fPlayRandom(pnN)
     let aSampler = [] * 100 = 0
 
     for nRound = 0 to pnN
-        aInDrawer.shuffle()
+        aInDrawer.pShuffle()
         let bFound = false
         for nPrisoner = 0 to 99
             bFound = false

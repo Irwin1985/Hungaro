@@ -251,7 +251,7 @@ def cGPSNavigator
     sRoute = "221b, Baker Street, London  to Scotland Yard, 8-10 Broadway, London"
 
     pInit(psManualRoute)
-        if psManualRoute.len() > 0
+        if psManualRoute.fLen() > 0
             @sRoute = psManualRoute        
         end
     end

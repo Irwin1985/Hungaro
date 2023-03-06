@@ -79,7 +79,7 @@ def cCache
             end
         end
         if not bExists            
-            @aServices.push(poNewService)
+            @aServices.pPush(poNewService)
         end
     end
 end

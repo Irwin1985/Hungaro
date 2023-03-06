@@ -13,11 +13,11 @@ let aBinary = []
 
 while nNumber > 0
     # storing remainder in binary array
-    aBinary.push(nNumber % 2)
+    aBinary.pPush(nNumber % 2)
     nNumber = fInt(nNumber / 2)
 end
 
 # printing binary array in reverse order
-aBinary.reverse()
+aBinary.pReverse()
 
 fPrint("Binary number: " & aBinary)

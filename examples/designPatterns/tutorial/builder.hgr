@@ -100,7 +100,7 @@ def cMeal
     aItems = []
 
     pAddItem(poItem)
-        @aItems.push(poItem)
+        @aItems.pPush(poItem)
     end
 
     fGetCost

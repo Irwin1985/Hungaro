@@ -68,7 +68,7 @@ end
 # Solve A x = b
 def pGauss(paA, paB, paX)
     let nRowX = 0 # Keep count of the row interchanges
-    let nN = paA.len()-1 # Ignore first row
+    let nN = paA.fLen()-1 # Ignore first row
 
     for nK = 1 to nN-1
         let nMax = fAbs(paA[nK][nK])

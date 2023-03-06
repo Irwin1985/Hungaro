@@ -9,7 +9,7 @@ def fHamming(pnLimit)
     let aH = []
     # Initialize the array
     for nI=1 to pnLimit
-        aH.push(0)
+        aH.pPush(0)
     end
 
     # Calculate the Hamming Code

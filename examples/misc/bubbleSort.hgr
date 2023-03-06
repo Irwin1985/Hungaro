@@ -6,7 +6,7 @@
 
 # NOTE: procedures does not return values
 def pBubbleSort(paList) # `p` stands for `local procedure`
-    let bSorted = false, nLength = paList.len()
+    let bSorted = false, nLength = paList.fLen()
     while not bSorted
         bSorted = true
         nLength -= 1
@@ -29,7 +29,7 @@ pBubbleSort(aNumbers)
 pPrintLn("Sorted list: " & aNumbers)
 
 # Check the output:
-if aNumbers.equals([5, 6, 7, 12, 13])
+if aNumbers.fEquals([5, 6, 7, 12, 13])
     pPrintLn("Test passed")
 else
     pPrintLn("Test failed")

@@ -17,14 +17,14 @@ def pMain
     let aDoors = [] * 101 = false
     let nJ = 0
 
-    for nI = 1 to aDoors.len()
-        while nJ < aDoors.len()
+    for nI = 1 to aDoors.fLen()
+        while nJ < aDoors.fLen()
             aDoors[nJ] = !aDoors[nJ]
             nJ += nI
         end    
     end
 
-    for nI = 1 to aDoors.len()
+    for nI = 1 to aDoors.fLen()
         if aDoors[nI]
             pPrintLn(fFormat("Door %s is open.", nI))
         end

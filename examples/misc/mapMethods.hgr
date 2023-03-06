@@ -36,15 +36,15 @@ let mPrices = {
 
 # Map methods
 
-# get()
-pAssert(mPrices.get("A") == 1.0, "get() method failed")
+# fGet()
+pAssert(mPrices.fGet("A") == 1.0, "fGet() method failed")
 
-# set()
-mPrices.set("A", 2.0)
-pAssert(mPrices.get("A") == 2.0, "set() method failed")
+# pSet()
+mPrices.pSet("A", 2.0)
+pAssert(mPrices.fGet("A") == 2.0, "pSet() method failed")
 
-# len()
-pAssert(mPrices.len() == 26, "len() method failed")
+# fLen()
+pAssert(mPrices.fLen() == 26, "fLen() method failed")
 
 # keys()
 pAssert(mPrices.keys() == ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], "keys() method failed")
@@ -52,21 +52,21 @@ pAssert(mPrices.keys() == ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"
 # values()
 pAssert(mPrices.values() == [2.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0], "values() method failed")
 
-# contains()
-pAssert(mPrices.contains("A") == true, "contains() method failed")
+# fContains()
+pAssert(mPrices.fContains("A") == true, "fContains() method failed")
 
-# remove()
-mPrices.remove("A")
-pAssert(mPrices.contains("A") == false, "remove() method failed")
+# fRemove()
+mPrices.fRemove("A")
+pAssert(mPrices.fContains("A") == false, "fRemove() method failed")
 
-# clear()
-mPrices.clear()
-pAssert(mPrices.len() == 0, "clear() method failed")
+# pClear()
+mPrices.pClear()
+pAssert(mPrices.fLen() == 0, "pClear() method failed")
 
-# isEmpty()
-pAssert(mPrices.isEmpty() == true, "isEmpty() method failed")
+# fIsEmpty()
+pAssert(mPrices.fIsEmpty() == true, "fIsEmpty() method failed")
 
-# clone()
+# fClone()
 let mFruitUnitPrices = {
     "Apple": 1.0,
     "Banana": 2.0,
@@ -75,9 +75,9 @@ let mFruitUnitPrices = {
     "Strawberry": 5.0
 }
 
-let mCloned = mFruitUnitPrices.clone()
+let mCloned = mFruitUnitPrices.fClone()
 
-pAssert(mCloned.get("Apple") == 1.0, "clone() method failed")
+pAssert(mCloned.fGet("Apple") == 1.0, "fClone() method failed")
 
 # Iterate over keys
 pPrintLn("============Map keys============")

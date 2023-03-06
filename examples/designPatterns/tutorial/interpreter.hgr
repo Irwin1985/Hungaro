@@ -29,7 +29,7 @@ def cTerminalExpression as cExpression
     end
 
     fInterpret(psContext)
-        return psContext.contains(@sData)
+        return psContext.fContains(@sData)
     end
 end
 

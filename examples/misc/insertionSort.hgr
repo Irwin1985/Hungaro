@@ -6,8 +6,8 @@
 """
 
 def pInsertionSort(paArray)
-    # Traverse through 1 to paArray.len()
-    for nI = 1 to paArray.len()-1
+    # Traverse through 1 to paArray.fLen()
+    for nI = 1 to paArray.fLen()-1
         let nKey = paArray[nI]
 
         let nJ = nI - 1
@@ -30,7 +30,7 @@ pAssert(aArray == [5, 6, 11, 12, 13], "Insertion Sort failed")
 
 # Bigger example
 let aArray = [] * fInt(fRand(1, 50)) = 0
-for nI = 0 to aArray.len()-1
+for nI = 0 to aArray.fLen()-1
     aArray[nI] = fInt(fRand(1, 100))
 end
 

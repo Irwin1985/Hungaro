@@ -36,7 +36,7 @@ def cOptionGroup as cMediator
     sName = "OptionGroup"
     
     pShowState
-        let sMsg = "There are " & @mColleagues.len() & " buttons.\n"
+        let sMsg = "There are " & @mColleagues.fLen() & " buttons.\n"
         for each vKey in @mColleagues.keys()
             sMsg &= @mColleagues[vKey].sName & " " & iif(@mColleagues[vKey].bSelected, "is", "is not") & " selected.\n"
         end

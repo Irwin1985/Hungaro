@@ -9,7 +9,7 @@ let aData = [], nDeg = 0, PI = 3.14159265
 
 while nDeg < 360
     let nX = 1 + fSin(nDeg*PI/180)
-    aData.push(fInt(nX*20))
+    aData.pPush(fInt(nX*20))
     nDeg += 10
 end
 

@@ -8,14 +8,14 @@ let aNotes = []
 
 # populate the array using a loop
 for nI = 1 to 10
-    aNotes.push(nI)
+    aNotes.pPush(nI)
 end
 
 # iterate over the array
-for nI = 0 to aNotes.len()-1
+for nI = 0 to aNotes.fLen()-1
     pPrintLn(aNotes[nI])
 end
 
 # shuffle the array
-aNotes.shuffle()
+aNotes.pShuffle()
 pPrintLn(aNotes)

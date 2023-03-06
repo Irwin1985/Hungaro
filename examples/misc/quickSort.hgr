@@ -48,8 +48,8 @@ pAssert(aNumbers == [5, 6, 7, 12, 13], "Quick sort algorithm failed")
 
 # Bigger example
 let aNumbers = [] * fRand(1, 100) = 0
-for nIndex = 0 to aNumbers.len() - 1
+for nIndex = 0 to aNumbers.fLen() - 1
     aNumbers[nIndex] = fRand(1, 100)
 end
-pQuickSort(aNumbers, 0, aNumbers.len() - 1)
+pQuickSort(aNumbers, 0, aNumbers.fLen() - 1)
 pPrintLn("Larger example: " & aNumbers)

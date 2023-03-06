@@ -50,17 +50,17 @@ def cStudentBO
     aStudents = []
 
     pInit
-        @aStudents.push(new cStudentVO("Robert", 0))
-        @aStudents.push(new cStudentVO("John", 1))
+        @aStudents.pPush(new cStudentVO("Robert", 0))
+        @aStudents.pPush(new cStudentVO("John", 1))
     end
 
     pDeleteStudent(poStudent)
-        @aStudents.remove(poStudent)
+        @aStudents.fRemove(poStudent)
         pPrintLn("Student: Roll No " & poStudent.fGetRollNo() & ", deleted from database")
     end
 
     fGetAllStudents
-        return @aStudents.clone() # we dont want to return the original array
+        return @aStudents.fClone() # we dont want to return the original array
     end
 
     pUpdateStudent(poStudent)

@@ -50,7 +50,7 @@ def cShapeFactory
     mCircleMap = {}
 
     fGetCircle(psColor)
-        let oCircle = @mCircleMap.get(psColor)
+        let oCircle = @mCircleMap.fGet(psColor)
         if oCircle == null
             oCircle = new cCircle(psColor)
             @mCircleMap.put(psColor, oCircle)

@@ -8,4 +8,4 @@ let
     aArray1 = [3, 3],
     aArray2 = [1, 2, 3, 4]
 
-pAssert(aArray1.concat(aArray2) == [3, 3, 1, 2, 3, 4], "concatenation failed")
+pAssert(aArray1.fConcat(aArray2) == [3, 3, 1, 2, 3, 4], "concatenation failed")

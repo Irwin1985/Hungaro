@@ -70,7 +70,7 @@ def cClient
     oCompositeEntity = new cCompositeEntity()
 
     pPrintData()
-        for nI = 0 to @oCompositeEntity.fGetData().len() - 1
+        for nI = 0 to @oCompositeEntity.fGetData().fLen() - 1
             pPrintLn("Data: " & @oCompositeEntity.fGetData()[nI])
         end
     end

@@ -7,4 +7,4 @@
 
 let aNumbers = [1, 30, 39, 29, 10, 13]
 
-pAssert(aNumbers.findIndex(lambda (pnNumber): pnNumber == 13) == 5, "test failed")
+pAssert(aNumbers.fFindIndex(lambda (pnNumber): pnNumber == 13) == 5, "test failed")

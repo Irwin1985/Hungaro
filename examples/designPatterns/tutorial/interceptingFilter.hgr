@@ -45,7 +45,7 @@ def cFilterChain
     oTarget = null
 
     pAddFilter(poFilter)
-        @aFilters.push(poFilter)
+        @aFilters.pPush(poFilter)
     end
 
     pExecute(psRequest)

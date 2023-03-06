@@ -6,7 +6,7 @@
 """
 
 def fValidateData(pmData)
-    guard pmData.contains("name") and pmData.contains("age") and pmData.contains("address") else                
+    guard pmData.fContains("name") and pmData.fContains("age") and pmData.fContains("address") else                
         return false
     end
     return true

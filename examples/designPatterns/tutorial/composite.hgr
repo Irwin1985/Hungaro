@@ -31,15 +31,15 @@ def cEmployee
     end
 
     pAdd(poEmployee)
-        @aSubordinates.push(poEmployee)
+        @aSubordinates.pPush(poEmployee)
     end
 
     pRemove(poEmployee)
-        @aSubordinates.remove(poEmployee)
+        @aSubordinates.fRemove(poEmployee)
     end
 
     fGetSubordinates
-        return @aSubordinates.clone() # Return a copy of the array
+        return @aSubordinates.fClone() # Return a copy of the array
     end
 
     fToString

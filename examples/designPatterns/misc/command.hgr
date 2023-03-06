@@ -55,14 +55,14 @@ def cBroker
     aOrderList = []
 
     pTakeOrder(poOrder)
-        @aOrderList.push(poOrder)
+        @aOrderList.pPush(poOrder)
     end
 
     pPlaceOrders
         for each vOrder in @aOrderList
             vOrder.pExecute()
         end
-        @aOrderList.clear()
+        @aOrderList.pClear()
     end
 end
 

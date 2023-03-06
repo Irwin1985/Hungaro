@@ -51,7 +51,7 @@ def cCriteriaMale as cCriteria
         let aMalePersons = []
         for each vPerson in paPersons
             if vPerson.fGetGender() == "MALE"
-                aMalePersons.push(vPerson)
+                aMalePersons.pPush(vPerson)
             end
         end
 
@@ -64,7 +64,7 @@ def cCriteriaFemale as cCriteria
         let aFemalePersons = []
         for each vPerson in paPersons
             if vPerson.fGetGender() == "FEMALE"
-                aFemalePersons.push(vPerson)
+                aFemalePersons.pPush(vPerson)
             end
         end
 
@@ -77,7 +77,7 @@ def cCriteriaSingle as cCriteria
         let aSinglePersons = []
         for each vPerson in paPersons
             if vPerson.fGetMaritalStatus() == "SINGLE"
-                aSinglePersons.push(vPerson)
+                aSinglePersons.pPush(vPerson)
             end
         end
 
@@ -114,8 +114,8 @@ def cOrCriteria as cCriteria
         let aOtherCriteriaItems = @oOtherCriteria.fMeetCriteria(paPersons)
 
         for each vPerson in aOtherCriteriaItems
-            if !aFirstCriteriaItems.contains(vPerson)
-                aFirstCriteriaItems.push(vPerson)
+            if !aFirstCriteriaItems.fContains(vPerson)
+                aFirstCriteriaItems.pPush(vPerson)
             end
         end
 
@@ -132,12 +132,12 @@ end
 def pMain
     let aPersons = []
 
-    aPersons.push(new cPerson("Robert", "MALE", "SINGLE"))
-    aPersons.push(new cPerson("John", "MALE", "MARRIED"))
-    aPersons.push(new cPerson("Laura", "FEMALE", "MARRIED"))
-    aPersons.push(new cPerson("Diana", "FEMALE", "SINGLE"))
-    aPersons.push(new cPerson("Mike", "MALE", "SINGLE"))
-    aPersons.push(new cPerson("Bobby", "MALE", "SINGLE"))
+    aPersons.pPush(new cPerson("Robert", "MALE", "SINGLE"))
+    aPersons.pPush(new cPerson("John", "MALE", "MARRIED"))
+    aPersons.pPush(new cPerson("Laura", "FEMALE", "MARRIED"))
+    aPersons.pPush(new cPerson("Diana", "FEMALE", "SINGLE"))
+    aPersons.pPush(new cPerson("Mike", "MALE", "SINGLE"))
+    aPersons.pPush(new cPerson("Bobby", "MALE", "SINGLE"))
 
     let oMale = new cCriteriaMale()
     let oFemale = new cCriteriaFemale()

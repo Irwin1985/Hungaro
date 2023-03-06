@@ -5,8 +5,8 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public final class BuiltinsForArray {
     public static void create(Interpreter interpreter) {
-        // concat builtin function: an array takes another array and call makeObject() to create a new array
-        interpreter.arrayEnv.define("concat", new CallableObject() {
+        // fConcat builtin function: an array takes another array and call makeObject() to create a new array
+        interpreter.arrayEnv.define("fConcat", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -33,8 +33,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array indexOf builtin function
-        interpreter.arrayEnv.define("indexOf", new CallableObject() {
+        // array fIndexOf builtin function
+        interpreter.arrayEnv.define("fIndexOf", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -56,8 +56,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array lastIndexOf builtin function
-        interpreter.arrayEnv.define("lastIndexOf", new CallableObject() {
+        // array fLastIndexOf builtin function
+        interpreter.arrayEnv.define("fLastIndexOf", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -79,8 +79,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array contains builtin function
-        interpreter.arrayEnv.define("contains", new CallableObject() {
+        // array fContains builtin function
+        interpreter.arrayEnv.define("fContains", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -102,8 +102,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array isEmpty builtin function
-        interpreter.arrayEnv.define("isEmpty", new CallableObject() {
+        // array fIsEmpty builtin function
+        interpreter.arrayEnv.define("fIsEmpty", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -125,8 +125,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array sort builtin function: sort the array in ascending order
-        interpreter.arrayEnv.define("sort", new CallableObject() {
+        // array pSort builtin function: sort the array in ascending order
+        interpreter.arrayEnv.define("pSort", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -185,8 +185,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array reverse builtin function
-        interpreter.arrayEnv.define("reverse", new CallableObject() {
+        // array pReverse builtin function
+        interpreter.arrayEnv.define("pReverse", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -210,8 +210,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array first() builtin function
-        interpreter.arrayEnv.define("first", new CallableObject() {
+        // array fFirst() builtin function
+        interpreter.arrayEnv.define("fFirst", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -237,8 +237,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array last() builtin function
-        interpreter.arrayEnv.define("last", new CallableObject() {
+        // array fLast() builtin function
+        interpreter.arrayEnv.define("fLast", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -264,8 +264,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array remove() removes the first occurrence of the given element
-        interpreter.arrayEnv.define("remove", new CallableObject() {
+        // array fRemove() removes the first occurrence of the given element
+        interpreter.arrayEnv.define("fRemove", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -296,8 +296,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array removeAt() builtin function
-        interpreter.arrayEnv.define("removeAt", new CallableObject() {
+        // array fRemoveAt() builtin function
+        interpreter.arrayEnv.define("fRemoveAt", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -327,8 +327,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array insertAt() builtin function
-        interpreter.arrayEnv.define("insertAt", new CallableObject() {
+        // array fInsertAt() builtin function
+        interpreter.arrayEnv.define("fInsertAt", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -354,8 +354,8 @@ public final class BuiltinsForArray {
             }
         }); 
         
-        // array occurs() builtin function: returns the number of times the given element occurs in the array
-        interpreter.arrayEnv.define("occurs", new CallableObject() {
+        // array fOccurs() builtin function: returns the number of times the given element occurs in the array
+        interpreter.arrayEnv.define("fOccurs", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -383,9 +383,9 @@ public final class BuiltinsForArray {
             }
         });
         
-        // array takes() builtin function: returns a new array containing the first n elements of the given array
+        // array fTakes() builtin function: returns a new array containing the first n elements of the given array
         // if the argument is negative then the last n elements are returned
-        interpreter.arrayEnv.define("take", new CallableObject() {
+        interpreter.arrayEnv.define("fTakes", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -417,8 +417,8 @@ public final class BuiltinsForArray {
             }
         });        
 
-        // array push builtin function: eg. array.push(1)
-        interpreter.arrayEnv.define("push", new CallableObject() {
+        // array pPush builtin function: eg. array.pPush(1)
+        interpreter.arrayEnv.define("pPush", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -440,8 +440,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array pop builtin function
-        interpreter.arrayEnv.define("pop", new CallableObject() {
+        // array fPop builtin function
+        interpreter.arrayEnv.define("fPop", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -463,8 +463,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array len builtin function
-        interpreter.arrayEnv.define("len", new CallableObject() {
+        // array fLen builtin function
+        interpreter.arrayEnv.define("fLen", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -486,8 +486,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array get builtin function
-        interpreter.arrayEnv.define("get", new CallableObject() {
+        // array fGet builtin function
+        interpreter.arrayEnv.define("fGet", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -515,8 +515,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array set builtin function
-        interpreter.arrayEnv.define("set", new CallableObject() {
+        // array pSet builtin function
+        interpreter.arrayEnv.define("pSet", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -544,8 +544,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array slice builtin function
-        interpreter.arrayEnv.define("slice", new CallableObject() {
+        // array fSlice builtin function
+        interpreter.arrayEnv.define("fSlice", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(3);
@@ -575,8 +575,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array join builtin function
-        interpreter.arrayEnv.define("join", new CallableObject() {
+        // array fJoin builtin function
+        interpreter.arrayEnv.define("fJoin", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -607,8 +607,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array shuffle builtin function
-        interpreter.arrayEnv.define("shuffle", new CallableObject() {
+        // array pShuffle builtin function
+        interpreter.arrayEnv.define("pShuffle", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -632,8 +632,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array equals builtin function: the argument must be an array
-        interpreter.arrayEnv.define("equals", new CallableObject() {
+        // array fEquals builtin function: the argument must be an array
+        interpreter.arrayEnv.define("fEquals", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -657,8 +657,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array sum() builtin function: the argument must be an array of numbers
-        interpreter.arrayEnv.define("sum", new CallableObject() {
+        // array fSum() builtin function: the argument must be an array of numbers
+        interpreter.arrayEnv.define("fSum", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -686,8 +686,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array avg() builtin function: the argument must be an array of numbers
-        interpreter.arrayEnv.define("avg", new CallableObject() {
+        // array fAvg() builtin function: the argument must be an array of numbers
+        interpreter.arrayEnv.define("fAvg", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -715,8 +715,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array min() builtin function: the argument must be an array of numbers
-        interpreter.arrayEnv.define("min", new CallableObject() {
+        // array fMin() builtin function: the argument must be an array of numbers
+        interpreter.arrayEnv.define("fMin", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -747,8 +747,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array max() builtin function: the argument must be an array of numbers
-        interpreter.arrayEnv.define("max", new CallableObject() {
+        // array fMax() builtin function: the argument must be an array of numbers
+        interpreter.arrayEnv.define("fMax", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -779,8 +779,8 @@ public final class BuiltinsForArray {
             }
         });  
         
-        // array clone() builtin function: the argument must be an array
-        interpreter.arrayEnv.define("clone", new CallableObject() {
+        // array fClone() builtin function: the argument must be an array
+        interpreter.arrayEnv.define("fClone", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -803,8 +803,8 @@ public final class BuiltinsForArray {
             }
         });
 
-        // array clear() builtin function: the argument must be an array
-        interpreter.arrayEnv.define("clear", new CallableObject() {
+        // array pClear() builtin function: the argument must be an array
+        interpreter.arrayEnv.define("pClear", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(1);
@@ -827,9 +827,9 @@ public final class BuiltinsForArray {
             }
         });
 
-        // filter(): takes a function and apply it to each element of the array filtering down
+        // fFilter(): takes a function and apply it to each element of the array filtering down
         // just those elements that return true
-        interpreter.arrayEnv.define("filter", new CallableObject() {
+        interpreter.arrayEnv.define("fFilter", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -863,9 +863,9 @@ public final class BuiltinsForArray {
             }
         });
 
-        // every(): takes a function and apply it to each element of the array. If all the
+        // fEvery(): takes a function and apply it to each element of the array. If all the
         // elements return true, then the function returns true, otherwise it returns false
-        interpreter.arrayEnv.define("every", new CallableObject() {
+        interpreter.arrayEnv.define("fEvery", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -898,9 +898,9 @@ public final class BuiltinsForArray {
             }
         });
 
-        // some(): takes a function and apply it to each element of the array. If at least one
+        // fSome(): takes a function and apply it to each element of the array. If at least one
         // element returns true, then the function returns true, otherwise it returns false
-        interpreter.arrayEnv.define("some", new CallableObject() {
+        interpreter.arrayEnv.define("fSome", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -933,9 +933,9 @@ public final class BuiltinsForArray {
             }
         });
 
-        // find(): takes a function and apply it to each element of the array. If at least one
+        // fFind(): takes a function and apply it to each element of the array. If at least one
         // element returns true, then the function returns the element, otherwise it returns null
-        interpreter.arrayEnv.define("find", new CallableObject() {
+        interpreter.arrayEnv.define("fFind", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -968,9 +968,9 @@ public final class BuiltinsForArray {
             }
         });
 
-        // findIndex(): takes a function and apply it to each element of the array. If at least one
+        // fFindIndex(): takes a function and apply it to each element of the array. If at least one
         // element returns true, then the function returns the index of the element, otherwise it returns -1
-        interpreter.arrayEnv.define("findIndex", new CallableObject() {
+        interpreter.arrayEnv.define("fFindIndex", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);
@@ -1005,11 +1005,11 @@ public final class BuiltinsForArray {
             }
         });
 
-        // reduce(): takes a function and apply it to each element of the array. The function
+        // fReduce(): takes a function and apply it to each element of the array. The function
         // must take two arguments, the first one is the accumulator and the second one is the
         // current element. The function returns the accumulator. The initial value of the
         // accumulator is the first element of the array.
-        interpreter.arrayEnv.define("reduce", new CallableObject() {
+        interpreter.arrayEnv.define("fReduce", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);

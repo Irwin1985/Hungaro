@@ -5,7 +5,7 @@
 """
 
 def fBinarySearch(paArray, pnValue)
-    let nLow = 0, nHigh = paArray.len() - 1, nMid
+    let nLow = 0, nHigh = paArray.fLen() - 1, nMid
     while 0 <= nHigh
         nMid = fInt(nLow + nHigh / 2)
         if paArray[nMid] == pnValue

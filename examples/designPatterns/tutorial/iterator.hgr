@@ -36,7 +36,7 @@ def cNameIterator as cIterator
     end
 
     fHasNext
-        return @nIndex < @aNames.len()
+        return @nIndex < @aNames.fLen()
     end
 
     fNext

@@ -55,7 +55,7 @@ def cStudentDaoImpl
     aStudents = [new cStudent("Robert", 0), new cStudent("John", 1)]
 
     fGetAllStudents
-        return @aStudents.clone() # we dont want to return the reference of the original list
+        return @aStudents.fClone() # we dont want to return the reference of the original list
     end
 
     fGetStudent(pnRollNo)
@@ -68,7 +68,7 @@ def cStudentDaoImpl
     end
 
     pDeleteStudent(poStudent)
-        @aStudents.remove(poStudent.fGetRollNo())
+        @aStudents.fRemove(poStudent.fGetRollNo())
         pPrintLn("Student: Roll No " & poStudent.fGetRollNo() & ", deleted from database")
     end
 end
@@ -82,7 +82,7 @@ def pMain
     end
 
     # Update student
-    let oStudent = oStudentDao.fGetAllStudents().get(0)
+    let oStudent = oStudentDao.fGetAllStudents().fGet(0)
     oStudent.pSetName("Michael")
     oStudentDao.pUpdateStudent(oStudent)
 

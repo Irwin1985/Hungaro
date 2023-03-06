@@ -7,10 +7,10 @@
 
 def fMean(paX)
     let nSum = 0
-    for nI = 0 to paX.len() - 1
+    for nI = 0 to paX.fLen() - 1
         nSum += paX[nI]
     end
-    return fInt(nSum / paX.len())
+    return fInt(nSum / paX.fLen())
 end
 
 let aX = [] * 10 = 0
@@ -29,7 +29,7 @@ let nMeanX = fMean(aX)
 let nMeanY = fMean(aY)
 
 # total number of values
-let nN = aX.len()
+let nN = aX.fLen()
 
 # using the formua to calcuate nB0 and nB1
 let nNum = 0

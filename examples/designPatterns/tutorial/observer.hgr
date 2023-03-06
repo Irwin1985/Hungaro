@@ -29,7 +29,7 @@ def cSubject
     end
 
     pAttach(poObserver)
-        @aObservers.push(poObserver)
+        @aObservers.pPush(poObserver)
     end
 
     pNotifyAllObservers

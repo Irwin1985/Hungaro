@@ -10,7 +10,7 @@ let sSubStr = "JKL"
 let nStart = fTick()
 
 for nI = 1 to 100000
-    let nX = sStr.find(sSubStr)
+    let nX = sStr.fFind(sSubStr)
 end
 
 pPrintLn("Time: " & fTack(nStart))

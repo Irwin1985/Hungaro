@@ -135,11 +135,11 @@ def cServer
     end
 
     fHasEmail(psEmail)
-        return @mUsers.contains(psEmail)
+        return @mUsers.fContains(psEmail)
     end
 
     fIsValidPassword(psEmail, psPassword)
-        return @mUsers.get(psEmail) == psPassword
+        return @mUsers.fGet(psEmail) == psPassword
     end
 end
 

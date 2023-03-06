@@ -52,7 +52,7 @@ def cCareTaker
     aMementoList = []
 
     pAdd(poState)
-        @aMementoList.push(poState)
+        @aMementoList.pPush(poState)
     end
 
     fGet(pnIndex)

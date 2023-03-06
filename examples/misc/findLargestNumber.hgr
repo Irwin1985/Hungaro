@@ -8,7 +8,7 @@
 let aNumbers = []
 
 for nI = 0 to 30
-    aNumbers.push(fRand(1, 31))
+    aNumbers.pPush(fRand(1, 31))
 end
 
 pPrintLn("The array is: " & aNumbers)
@@ -16,7 +16,7 @@ pPrintLn("The array is: " & aNumbers)
 # Find the largest number in the array
 let nLargest = aNumbers[0]
 
-for nI = 0 to aNumbers.len()-1
+for nI = 0 to aNumbers.fLen()-1
     if aNumbers[nI] > nLargest
         nLargest = aNumbers[nI]
     end
