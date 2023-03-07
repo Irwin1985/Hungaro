@@ -14,7 +14,7 @@ public class Hungaro {
     static boolean hadError = false;
     static boolean hadRuntimeError = false;
     static boolean debugMode = false; // debug mode
-    static String hungaroVersion = "0.0.1"; // Hungaro version
+    static String hungaroVersion = "alpha 0.0.2"; // Hungaro version
 
     // foreground colors
     public static final String ANSI_RESET = "\u001B[0m";
