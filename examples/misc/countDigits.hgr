@@ -12,4 +12,7 @@ while nNumber != 0
     nCount += 1    
 end
 
-fPrint("The number of digits is: " & nCount)
+pPrint("The number of digits is: " & nCount)
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

@@ -20,4 +20,7 @@ end
 # printing binary array in reverse order
 aBinary.pReverse()
 
-fPrint("Binary number: " & aBinary)
+pPrint("Binary number: " & aBinary)
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

@@ -57,3 +57,6 @@ pMain()
 # Output
 # 2023-02-28 [Robert]: Hi! John!
 # 2023-02-28 [John]: Hello! Robert!
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

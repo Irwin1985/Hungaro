@@ -9,4 +9,7 @@ let
     nHeight = fVal(fReadLn("Enter the height of the rectangle: ")),
     nArea = nWidth * nHeight
 
-fPrint("The area of the rectangle is: " & nArea)
+pPrint("The area of the rectangle is: " & nArea)
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

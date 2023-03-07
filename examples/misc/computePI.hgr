@@ -20,3 +20,6 @@ for nI = 1 to 20
     nJ += 2
     pPrintLn(nI, fSpace(2), nAns)
 end
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

@@ -9,3 +9,6 @@ let
     aArray2 = [1, 2, 3, 4]
 
 pAssert(aArray1.fConcat(aArray2) == [3, 3, 1, 2, 3, 4], "concatenation failed")
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

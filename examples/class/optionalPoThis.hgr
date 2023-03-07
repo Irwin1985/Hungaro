@@ -20,3 +20,6 @@ end
 # Create an instance of the class
 let oDog = new cAnimal("Fido", "dog")
 oDog.pWhatIs()  # here is mandatory to use `object.method()` syntax
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

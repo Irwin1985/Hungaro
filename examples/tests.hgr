@@ -1,0 +1,12 @@
+pPrintLn("*********************** Running all examples ***********************")
+let aFiles = fGetFiles("F:\\Desarrollo\\GitHub\\Hungaro\\examples\\assignment", null)
+if aFiles.fLen() > 0
+    let nCount = 0, nTotal = aFiles.fLen()
+    for each vFile in aFiles
+        nCount += 1
+        pPrintLn("Running example: '" & vFile & "' (" & nCount & "/" & nTotal & ")")
+        fExecute(fFileToStr(vFile))
+        pPrintLn("******************************************************************")
+    end
+end
+pPrintLn("*********************** End of examples ***********************")

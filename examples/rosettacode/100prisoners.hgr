@@ -49,7 +49,10 @@ end
 def pMain
     let nN = 10000
     let nPardoned = fPlayRandom(nN)
-    fPrint("Pardoned: " & nPardoned & "%")
+    pPrint("Pardoned: " & nPardoned & "%")
 end
 
 pMain()
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

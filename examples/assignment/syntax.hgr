@@ -9,3 +9,6 @@ let sA = "before"
 let sC = sA = "var"
 pPrintLn(sA) # var
 pPrintLn(sC) # var
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

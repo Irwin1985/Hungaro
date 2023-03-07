@@ -19,3 +19,6 @@ for nIndex = 2 to nNumber
 end
 
 pPrintLn("The maximum number is: " & nMax)
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

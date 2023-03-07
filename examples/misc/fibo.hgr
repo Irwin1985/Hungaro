@@ -12,12 +12,12 @@ pPrintLn("fFibonacci2() is a recursive version")
 # Non-recursive version
 def fFibonacci1(pnX)
     let nA = 0, nB = 1, nC = 0
-    fPrint(nA, " ")
+    pPrint(nA, " ")
     while nB < pnX
         nC = nB
         nB = nA + nB
         nA = nC
-        fPrint(nA, " ")
+        pPrint(nA, " ")
     end
     pPrintLn(" ")
     return nA
@@ -54,3 +54,6 @@ pAssert(fFibonacci2(10) == 55, "fFibonacci2(10) is incorrect")
 pAssert(fFibonacci2(11) == 89, "fFibonacci2(11) is incorrect")
 
 pPrintLn(" ")
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

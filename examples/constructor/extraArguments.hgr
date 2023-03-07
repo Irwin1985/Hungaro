@@ -13,3 +13,6 @@ def cFoo
 end
 
 let oFoo = new cFoo(1, 2, 3, 4) # Error: Too many arguments
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

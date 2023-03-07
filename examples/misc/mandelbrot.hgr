@@ -36,7 +36,11 @@ for nYPixel = 0 to 24
                 exit
             end
         end
-        fPrint(sPixel)
+        pPrint(sPixel)
     end
     pPrintLn()
 end
+
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

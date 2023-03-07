@@ -8,3 +8,6 @@
 let aNumbers = [1, 30, 39, 29, 10, 13]
 
 pAssert(aNumbers.fFindIndex(lambda (pnNumber): pnNumber == 13) == 5, "test failed")
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

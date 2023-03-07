@@ -118,3 +118,7 @@ Circle: Draw() [Color : Green, x : 38, y :93, radius :100
 Circle: Draw() [Color : Red, x : 76, y :82, radius :100
 Circle: Draw() [Color : Blue, x : 95, y :82, radius :100
 """
+
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

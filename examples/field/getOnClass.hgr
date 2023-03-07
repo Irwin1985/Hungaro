@@ -8,4 +8,7 @@
 def cFoo
 end
 
-cFoo.pBar # error
+cFoo.pBar # error undefined method `pBar' for cFoo:Class
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

@@ -12,3 +12,6 @@ let oFoo = new cFoo()
 oFoo.sBar = "not fn"
 
 oFoo.sBar()
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

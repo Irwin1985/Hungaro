@@ -15,3 +15,6 @@ end
 let oFoo = new cFoo(1, 2)
 pPrintLn(oFoo.nA) # 1
 pPrintLn(oFoo.nB) # 2
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

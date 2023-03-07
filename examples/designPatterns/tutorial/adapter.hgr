@@ -110,3 +110,6 @@ pMain()
 # Playing mp4 file. Name: alone.mp4
 # Playing vlc file. Name: far far away.vlc
 # Invalid media. avi format not supported
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

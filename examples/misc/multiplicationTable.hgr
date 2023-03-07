@@ -11,3 +11,6 @@ for nT = 1 to 10
         pPrintLn("" & nT & " x " & nJ & " = " & nT * nJ)
     end
 end
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

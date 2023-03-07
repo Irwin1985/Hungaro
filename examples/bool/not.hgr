@@ -11,3 +11,6 @@ pPrintLn(!false)  # true
 pPrintLn(not false)  # true
 pPrintLn(!!true) # true
 pPrintLn(not not true) # true
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

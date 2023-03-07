@@ -21,3 +21,6 @@ for nNum = 0 to nUpper
         pPrintLn(nNum)
     end
 end
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

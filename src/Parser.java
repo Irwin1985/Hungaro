@@ -660,7 +660,7 @@ public class Parser {
     /*******************************************************************************************
     * Expression Statement
     ********************************************************************************************/
-    private Stmt expressionStmt() {
+    public Stmt expressionStmt() {
         Expr expr = expression();
         consume(TokenType.SEMICOLON, "Expect new line after expression.");
         return new Stmt.Expression(expr);

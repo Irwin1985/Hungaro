@@ -13,3 +13,6 @@ for nI = 1 to 10000
 end
 
 pPrintLn("Time: " & fTack(nT1) & " ms")
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

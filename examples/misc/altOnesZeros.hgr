@@ -12,10 +12,13 @@ pPrintLn("Print Number Pattern - 1 and 0 in alternative Columns")
 for nI = 1 to nRows
     for nJ = 1 to nColumns
         if nJ % 2 == 0
-            fPrint("0 ")
+            pPrint("0 ")
         else
-            fPrint("1 ")
+            pPrint("1 ")
         end
     end
     pPrintLn("")
 end
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

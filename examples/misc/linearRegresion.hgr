@@ -43,5 +43,8 @@ let nB1 = nNum / nDen
 let nB0 = nMeanY - (nB1 * nMeanX)
 
 # print coefficients
-fPrint("b1 = " & nB1)
-fPrint("b0 = " & nB0)
+pPrint("b1 = " & nB1)
+pPrint("b0 = " & nB0)
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

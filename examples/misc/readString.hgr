@@ -7,7 +7,10 @@
 
 let sAns = fReadLn("Do you want a drink? (y/n): ")
 if sAns == "y"
-    fPrint("Here is your drink")
+    pPrint("Here is your drink")
 else
-    fPrint("Ok, no drink for you")
+    pPrint("Ok, no drink for you")
 end
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

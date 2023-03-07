@@ -105,3 +105,6 @@ pMain()
 # Error Console::Logger: This is an error information.
 # File::Logger: This is an error information.
 # Standard Console::Logger: This is an error information.
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

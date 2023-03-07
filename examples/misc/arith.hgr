@@ -19,4 +19,7 @@ let sSay1 = "Say", sSay2 = " ", sSay3 = "Hello"
 
 let sSay4 = sSay1 & sSay2 & sSay3
 
-fPrint(sSay4) # Say Hello
+pPrint(sSay4) # Say Hello
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

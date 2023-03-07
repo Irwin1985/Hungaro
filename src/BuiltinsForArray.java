@@ -383,9 +383,9 @@ public final class BuiltinsForArray {
             }
         });
         
-        // array fTakes() builtin function: returns a new array containing the first n elements of the given array
+        // array fTake() builtin function: returns a new array containing the first n elements of the given array
         // if the argument is negative then the last n elements are returned
-        interpreter.arrayEnv.define("fTakes", new CallableObject() {
+        interpreter.arrayEnv.define("fTake", new CallableObject() {
             @Override
             public Arity arity() {
                 return new Arity(2);

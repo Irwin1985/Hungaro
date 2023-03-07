@@ -13,3 +13,6 @@ sA = sB = sC
 pAssert(sA == "c", "sA is not equal to 'c'")
 pAssert(sB == "c", "sB is not equal to 'c'")
 pAssert(sC == "c", "sC is not equal to 'c'")
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

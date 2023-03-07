@@ -8,3 +8,6 @@
 
 let sColor = fReadLn("Enter the name of your favorite color: ")
 pPrintLn("Your favorite color is: " & sColor)
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

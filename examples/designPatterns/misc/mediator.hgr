@@ -1,5 +1,5 @@
 """
- Mediator Pattern (NOT FINISHED)
+ Mediator Pattern (NOT FINISHED AND WILL FAIL)
 
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
  Date: 2023-02-26
@@ -110,3 +110,6 @@ goMediator.pShowState() # button1 is selected
 # Click button 3
 goButton3.pClick() # button3 is selected
 goMediator.pShowState() # button3 is selected
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

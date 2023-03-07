@@ -53,3 +53,6 @@ for nIndex = 0 to aNumbers.fLen() - 1
 end
 pQuickSort(aNumbers, 0, aNumbers.fLen() - 1)
 pPrintLn("Larger example: " & aNumbers)
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

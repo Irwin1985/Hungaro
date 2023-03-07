@@ -22,4 +22,7 @@ while nI < 500000
     nI += 1
 end
 
-fPrint("Elapsed time: " & fTack(nStart) & " ms")
+pPrint("Elapsed time: " & fTack(nStart) & " ms")
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

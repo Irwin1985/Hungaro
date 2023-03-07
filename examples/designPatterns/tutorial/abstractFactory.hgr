@@ -132,3 +132,7 @@ pMain()
 # Inside Square::draw() method.
 # Inside RoundedRectangle::draw() method.
 # Inside RoundedSquare::draw() method.
+
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

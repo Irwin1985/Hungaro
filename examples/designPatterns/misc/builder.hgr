@@ -186,7 +186,7 @@ def cManual
         @oGPSNavigator = poGPSNavigator
     end
 
-    fPrint        
+    fPrintData
         let sInfo = ""
         sInfo &= "Type of car: " & @sCarType & "\n"
         sInfo &= "Count of seats: " & @nSeats & "\n"
@@ -341,7 +341,10 @@ def pDemo
     oDirector.pConstructSportsCar(oManualBuilder)
     let oCarManual = oManualBuilder.fGetResult()    
     
-    pPrintLn("Car manual built:\n" & oCarManual.fPrint())    
+    pPrintLn("Car manual built:\n" & oCarManual.fPrintData())    
 end
 
 pDemo()
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

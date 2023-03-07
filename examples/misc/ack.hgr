@@ -18,3 +18,6 @@ end
 
 # Call the function
 pPrintLn(fAck(3, 5)) # 253
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

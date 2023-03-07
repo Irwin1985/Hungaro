@@ -14,3 +14,6 @@ end
 
 let nNumber = fVal(fReadLn("Enter a number: "))
 pPrintLn("Sum of numbers from 1 to " & nNumber & " is " & fAddNumbers(nNumber))
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

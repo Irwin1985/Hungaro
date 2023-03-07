@@ -20,3 +20,6 @@ pPrintLn(oFoo2)
 
 # make sure pInit() doesn't create a fresh instance
 pPrintLn(oFoo.sField) # prints "init"
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

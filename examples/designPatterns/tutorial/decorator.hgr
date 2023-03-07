@@ -91,3 +91,6 @@ pMain()
 # Rectangle of red border
 # Shape::Rectangle
 # Border Color: Red
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

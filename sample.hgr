@@ -1,17 +1,12 @@
 """
- Fibbonacci sequence
-
+ FindIndex function: takes a function and apply it to each element of the array. If at least one
+ element returns true, then the function returns the index of that element, otherwise it returns -1
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
- Date: 2023-02-26
+ Date: 2023-03-05
 """
-
-def fFib(pnSerie)
-    if pnSerie < 2
-        return pnSerie
-    end
-    return fFib(pnSerie - 1) + fFib(pnSerie - 2)
+let sFile = fSelectFile("Select a file to open", "All files (*.*)|*.*")
+if fFile(sFile)
+    fExecute(fFileToStr(sFile))
+else
+    pPrintLn("File not found")
 end
-
-let nStart = fTick()
-pAssert(fFib(35) == 9227465, "Fibbonacci sequence failed")
-pPrintLn(fTack(nStart))

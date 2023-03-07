@@ -7,7 +7,7 @@
 
 def pSpace(pnEnd)
     for nStart = 1 to pnEnd
-        fPrint(fSpace(1))
+        pPrint(fSpace(1))
     end
 end
 
@@ -17,9 +17,12 @@ let nRadius = 10
 
 for nI = 1 to nRadius
     let nWidth = nRadius * fSin(180 / nRadius * nI * PI / 180)
-    fPrint(fSpace(nRadius - nWidth))
+    pPrint(fSpace(nRadius - nWidth))
     for nJ = 1 to nWidth * 2
-        fPrint("*")
+        pPrint("*")
     end
     pPrintLn("")
 end
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

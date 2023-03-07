@@ -34,3 +34,6 @@ if aNumbers.fEquals([5, 6, 7, 12, 13])
 else
     pPrintLn("Test failed")
 end
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

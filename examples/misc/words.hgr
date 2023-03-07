@@ -20,7 +20,7 @@ pPrintLn("=========Print alphabet backwards=========")
 let sX = "abcdefghijklmnopqrstuvwxyz"
 
 for nI = 25 to 0 step -1
-    fPrint(sX.fCharAt(nI))
+    pPrint(sX.fCharAt(nI))
 end
 
 pPrintLn(" ")
@@ -28,7 +28,7 @@ pPrintLn(" ")
 pPrintLn("=========Print alphabet in a diagonal line=========")
 for nI = 0 to 25
     for nJ = 0 to nI
-        fPrint(" ")
+        pPrint(" ")
     end
     pPrintLn(sX.fCharAt(nI))
 end
@@ -37,7 +37,7 @@ pPrintLn("=========Write a word backwards=========")
 let sX = "Hello", nLength = 5
 
 for nI = nLength-1 to 0 step -1
-    fPrint(sX.fCharAt(nI))
+    pPrint(sX.fCharAt(nI))
 end
 pPrintLn()
 
@@ -69,3 +69,6 @@ for nK = 0 to 4
     end
 end
 pPrintLn("Decoded: " & sDecoded)
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

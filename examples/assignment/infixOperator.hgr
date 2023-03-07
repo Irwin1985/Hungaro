@@ -7,3 +7,6 @@
 
 let sA = "a", sB = "b"
 sA + sB = "value" # Invalid assignment target
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

@@ -5,9 +5,9 @@
  Date: 2023-02-23
 """
 
-# version 1 using pReverse()
+# version 1 using fReverse()
 def fIsPalindrome(psString)
-    return psString == psString.pReverse()
+    return psString == psString.fReverse()
 end
 
 # version 2
@@ -37,7 +37,11 @@ end
 # Drive test code
 pAssert(fIsPalindrome("abba"), "abba is a palindrome")
 if fIsPalindrome2()
-    fPrint("Palindrome")
+    pPrint("Palindrome")
 else
-    fPrint("Not a palindrome")
+    pPrint("Not a palindrome")
 end
+
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

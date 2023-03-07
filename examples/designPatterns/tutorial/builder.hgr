@@ -113,9 +113,9 @@ def cMeal
 
     pShowItems
         for each vItem in @aItems
-            fPrint("Item: " & vItem.fName())
-            fPrint(", Packing: " & vItem.fPacking().fPack())
-            fPrint(", Price: " & vItem.fPrice())
+            pPrint("Item: " & vItem.fName())
+            pPrint(", Packing: " & vItem.fPacking().fPack())
+            pPrint(", Price: " & vItem.fPrice())
         end
     end
 end
@@ -162,3 +162,7 @@ pMain()
 # Item: Chicken Burger, Packing: Wrapper, Price: 50.5
 # Item: Pepsi, Packing: Bottle, Price: 35
 # Total Cost: 85.5
+
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

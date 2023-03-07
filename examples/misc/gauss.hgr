@@ -1,6 +1,6 @@
 """
  Gaussian Elimination
- NOTE: this example is not tested yet
+ NOTE: this example is not tested yet (* MAY FAIL *)
 
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
  Date: 2023-02-23
@@ -209,3 +209,6 @@ pGaussEliminate(aA, aB, aX)
 pPrintLn("Output results: ")
 
 pPrintLn(aX[0], ", ", aX[1], ", ", aX[2], ", ", aX[3])
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

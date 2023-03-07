@@ -52,3 +52,6 @@ pPrintLn("white")
 
 pSetConsoleBackColor("black")
 pPrintLn("reset")
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

@@ -85,3 +85,7 @@ pMain()
 # Output
 # Processing task by invoking EJB Service
 # Processing task by invoking JMS Service
+
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

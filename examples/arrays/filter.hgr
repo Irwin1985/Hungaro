@@ -30,3 +30,6 @@ let aFruits = [
 # filter fruits that contains "ap"
 let aFiltered = aFruits.fFilter(lambda (psFruit): psFruit.fContains("ap"))
 pAssert(aFiltered == ["apple", "grape", "papaya"], "Filter failed")
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

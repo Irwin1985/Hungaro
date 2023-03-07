@@ -22,3 +22,6 @@ for nI = 0 to 80
     nT = nT + nHstep
     pPrintLn(nT, aX[0], aX[1])
 end
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

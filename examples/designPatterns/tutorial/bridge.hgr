@@ -78,3 +78,7 @@ pMain()
 # Output
 # Drawing Circle[ color: red, radius: 10, x: 100, 100]
 # Drawing Circle[ color: green, radius: 10, x: 100, 100]
+
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

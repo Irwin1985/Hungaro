@@ -9,11 +9,15 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 @SuppressWarnings("unchecked")
 public final class BuiltinsForNative {
@@ -1006,5 +1010,180 @@ public final class BuiltinsForNative {
                 return false;
             }
         });
+
+        // fSelectFile(title, filter) builtin function: show a file selection dialog
+        // the filter is the file extension, eg: "txt"
+        interpreter.globals.define("fSelectFile", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(3);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the title
+                // the third argument is the filter
+                String title = (String)arguments.get(1);
+                String filter = (String)arguments.get(2);
+                JFileChooser chooser = new JFileChooser();
+                chooser.setDialogTitle(title);
+                if (filter != null) {
+                    FileNameExtensionFilter fnef = new FileNameExtensionFilter(filter, filter);
+                    chooser.setFileFilter(fnef);
+                }
+                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    return chooser.getSelectedFile().getAbsolutePath();
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+
+        // fGetFiles(path, filter) builtin function: return a list of files in the given path
+        // the filter is a regular expression that is applied to the file names
+        // if the filter is null, all files are returned
+        // the search is recursive and will find the matched files in all subdirectories
+        // eg: fGetFiles("c:\\temp", ".*\\.txt") the example will return all .txt files in the c:\temp directory
+        // including the files in the subdirectories        
+        interpreter.globals.define("fGetFiles", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(3);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the path
+                // the third argument is the filter
+                String path = (String)arguments.get(1);
+                String filter = (String)arguments.get(2);
+                if (filter == null) {
+                    filter = ".*";
+                }
+                Pattern pattern = Pattern.compile(filter);
+                List<String> files = new ArrayList<String>();
+                getFiles(path, pattern, files);
+                return interpreter.makeObject(files, interpreter.arrayEnv, "Array");
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+
+        // fEval(expression) builtin function: evaluate the given expression using the Hungaro interpreter pipeline
+        // eg: fEval("1 + 2") will return 3
+        // we need to call Hungaro.run() to execute the expression
+        interpreter.globals.define("fEval", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(2);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the expression
+                String expression = (String)arguments.get(1);
+                List<Token> tokens = null;        
+                try {
+                    // tokenize the expression
+                    final Scanner scanner = new Scanner(expression);
+                    tokens = scanner.scanTokens();
+                    if (Hungaro.hadError) return null;
+                    
+                    // parse the expression
+                    Parser parser = new Parser(tokens);
+                    Stmt exprStmt = parser.expressionStmt();
+                    if (Hungaro.hadError) return null;
+
+                    // execute the expression
+                    return interpreter.evaluate(((Stmt.Expression)exprStmt).expression);
+                } catch (Exception e) {
+                    // print in red color
+                    System.out.println("\u001B[31m" + e.getMessage() + "\u001B[0m");
+                } finally {
+                    Hungaro.hadError = false;
+                    Hungaro.hadRuntimeError = false;
+                }
+                return null;
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+        
+        // fExecute(command) builtin function: execute the given command using the Hungaro interpreter pipeline
+        // unlike fEval, fExecute will execute the given command as a whole program.
+        // eg: fExecute("print 1 + 2") will print 3
+        // we need to call Hungaro.run() to execute the command
+        interpreter.globals.define("fExecute", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(2);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // the second argument is the command
+                String command = (String)arguments.get(1);
+                List<Token> tokens = null;        
+                try {
+                    // tokenize the command
+                    final Scanner scanner = new Scanner(command);
+                    tokens = scanner.scanTokens();
+                    if (Hungaro.hadError) return null;
+                    
+                    // parse the command
+                    Parser parser = new Parser(tokens);
+                    List<Stmt> statements = parser.parse();
+                    if (Hungaro.hadError) return null;
+
+                    // execute the command
+                    interpreter.interpret(statements);
+                } catch (Exception e) {
+                    // print in red color
+                    System.out.println("\u001B[31m" + e.getMessage() + "\u001B[0m");
+                } finally {
+                    Hungaro.hadError = false;
+                    Hungaro.hadRuntimeError = false;
+                }
+                return null;
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+    }
+
+    /*
+    * Helper function for fGetFiles
+    */
+    // getFiles is a recursive function that will find all files in the given path that match the given pattern
+    protected static void getFiles(String path, Pattern pattern, List<String> files) {        
+        File[] fileArray = new File(path).listFiles();
+        if (fileArray != null) {
+            for (File file : fileArray) {
+                if (file.isDirectory()) {
+                    // if the file is a directory, call getFiles recursively
+                    getFiles(file.getAbsolutePath(), pattern, files);
+                } else {
+                    // if the file is not a directory, check if it matches the pattern
+                    if (pattern.matcher(file.getName()).matches()) {
+                        // if it matches, add it to the list                        
+                        files.add(file.getAbsolutePath());
+                    }
+                }
+            }
+        }        
     }
 }

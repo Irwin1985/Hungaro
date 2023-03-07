@@ -569,6 +569,6 @@ public final class BuiltinsForString {
             public boolean evaluateArguments() {
                 return true;
             }
-        });                
+        });
     }
 }

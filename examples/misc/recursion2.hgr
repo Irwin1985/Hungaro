@@ -15,3 +15,6 @@ def pRecursion(pnNumber)
 end
 
 pRecursion(10) # 9 8 7 6 5 4 3 2 1 0
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

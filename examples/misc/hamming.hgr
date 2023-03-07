@@ -43,3 +43,6 @@ end
 for nI = 1 to 20
     pPrintLn(fHamming(nI))
 end
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

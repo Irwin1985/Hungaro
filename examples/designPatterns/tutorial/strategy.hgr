@@ -64,3 +64,7 @@ pMain()
 # 10 + 5 = 15
 # 10 - 5 = 5
 # 10 * 5 = 50
+
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

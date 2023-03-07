@@ -76,3 +76,7 @@ pMain()
 # Start State
 # Player is in stop state
 # Stop State
+
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

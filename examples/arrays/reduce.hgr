@@ -7,4 +7,7 @@
 let aNumbers = [1, 3, 5, 7]
 
 let nResult = aNumbers.fReduce(lambda (pnAccumulator, pnValue): pnAccumulator + pnValue)
-fPrint(nResult)
+pPrint(nResult)
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

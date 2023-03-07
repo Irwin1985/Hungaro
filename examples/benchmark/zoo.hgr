@@ -55,3 +55,6 @@ end
 
 pPrintLn("Sum: " & nSum)
 pPrintLn("Time: " & fTick(nStart) & "ms")
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

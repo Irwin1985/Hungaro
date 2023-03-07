@@ -15,3 +15,6 @@ end
 
 pFoo1() # 1.5
 pFoo2() # 5.6
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

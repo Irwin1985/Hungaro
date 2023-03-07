@@ -13,7 +13,7 @@ public class Hungaro {
     private static final Interpreter interpreter = new Interpreter();
     static boolean hadError = false;
     static boolean hadRuntimeError = false;
-    static boolean debugMode = true; // debug mode
+    static boolean debugMode = false; // debug mode
     static String hungaroVersion = "0.0.1"; // Hungaro version
 
     // foreground colors
@@ -113,13 +113,33 @@ public class Hungaro {
             }
             if (line.startsWith("run ")) {
                 final String file = line.substring(4).trim();
-                runFile(file);
+                try {
+                    runFile(file);
+                } catch(Exception ex) {
+                    System.out.println(ANSI_RED + ex.getMessage() + ANSI_RESET);
+                } finally {
+                    hadError = false; // ignore errors in REPL mode.
+                    hadRuntimeError = false; // ignore errors in REPL mode.
+                }
                 continue;
             }            
             if (line.equals("cls")) {
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
                 printPrompt();
+                continue;
+            }
+            if (line.equals("version")) {
+                System.out.println("Hungaro v" + hungaroVersion);
+                continue;
+            }
+            if (line.equals("tests")) {
+                System.out.println("Running tests...");                
+                String testsFile = getMainFolder() + "\\examples\\tests.hgr";
+                if (Files.exists(Paths.get(testsFile)))
+                    runFile(testsFile);
+                else
+                    System.out.println("Tests file not found.");
                 continue;
             }
             // End REPL commands
@@ -141,6 +161,7 @@ public class Hungaro {
         System.out.println("Type 'exit' to exit.");        
         System.out.println("Type 'run <file>' to run a file.");
         System.out.println("Type 'cls' to clear the screen.");
+        System.out.println("Type 'version' to show the version.");
     }
 
     public static void run(String source) {
@@ -246,5 +267,12 @@ public class Hungaro {
         } catch (IOException e) {
             return "";
         }
+    }
+
+    // helper function
+    private static String getMainFolder() {
+        final String currentFolder = System.getProperty("user.dir");                
+        final String parentFolder = Paths.get(currentFolder).getParent().toString();                                
+        return parentFolder;
     }
 }

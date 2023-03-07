@@ -10,7 +10,10 @@ pPrintLn("Factors of " & nNum & " are: ")
 
 for nI = 1 to nNum
     if nNum % nI == 0
-        fPrint(nI)
-        fPrint(" ")
+        pPrint(nI)
+        pPrint(" ")
     end
 end
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

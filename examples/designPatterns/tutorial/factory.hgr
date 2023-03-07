@@ -86,3 +86,7 @@ pMain()
 # Inside Circle::draw() method.
 # Inside Rectangle::draw() method.
 # Inside Square::draw() method.
+
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

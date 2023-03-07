@@ -73,10 +73,10 @@ pAssert(aArray1.fToString() == "[6, 5, 4, 2, 1]", "Array is not equal")
 pAssert(["Robert", "Bob", "Martin", "Robert"].fOccurs("Robert") == 2, "Robert occurs 2 times")
 
 # take(n>0): returns a new array with the specified number of elements
-pAssert(aArray1.take(2).fToString() == "[6, 5]", "Array is not equal")
+pAssert(aArray1.fTake(2).fToString() == "[6, 5]", "Array is not equal")
 
 # take(n<0): returns a new array with the specified number of elements from the end
-pAssert(aArray1.take(-2).fToString() == "[2, 1]", "Array is not equal")
+pAssert(aArray1.fTake(-2).fToString() == "[2, 1]", "Array is not equal")
 
 # pPush()
 aArray1.pPush(7)
@@ -116,3 +116,6 @@ pAssert(aArray3.fEquals(aOriginal) == true, "Arrays are not equal")
 # pClear()
 aArray3.pClear()
 pAssert(aArray3.fLen() == 0, "Array length is not 0")
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

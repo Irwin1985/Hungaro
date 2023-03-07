@@ -17,7 +17,10 @@ let nN = fInt(360/10)
 
 for nI = 0 to nN-1
     for nJ = 0 to aData[nI]-1
-        fPrint(" ")
+        pPrint(" ")
     end
     pPrintLn("*")
 end
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

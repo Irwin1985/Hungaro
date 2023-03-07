@@ -13,4 +13,7 @@ end
 
 let oBar = new cFoo().pBar
 pPrintLn("Got method")
-oBar("Hello World") # Prints "Hello World"
+oBar("Hello World") # Error: poThis is null because there is no instance in the call.
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

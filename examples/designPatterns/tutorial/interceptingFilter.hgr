@@ -105,3 +105,7 @@ pMain()
 # Authenticating request: HOME
 # request log: HOME
 # Executing request: HOME
+
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

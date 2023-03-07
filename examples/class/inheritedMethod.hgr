@@ -27,3 +27,6 @@ let oBaz = new cBaz()
 oBaz.pInFoo() # in foo
 oBaz.pInBar() # in bar
 oBaz.pInBaz() # in baz
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

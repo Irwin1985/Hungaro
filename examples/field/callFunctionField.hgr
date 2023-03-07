@@ -20,3 +20,6 @@ let oFoo = new cFoo()
 oFoo.oBar = pBar # this changes the Function prototype of pBar from Function to instance of cFoo
 
 oFoo.oBar(1, 2) # here pBar is owned by oFoo, so it is called as a method of oFoo
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

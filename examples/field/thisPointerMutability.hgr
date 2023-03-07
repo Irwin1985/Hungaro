@@ -7,7 +7,7 @@
 
 def cFoo
     pSayName(psName)
-        pPrintLn(sName)
+        pPrintLn(@sName)
         pPrintLn(psName)
     end
 end
@@ -21,3 +21,6 @@ oFoo2.sName = "foo2"
 oFoo2.oFn = oFoo1.pSayName # By assigning the method reference to oFoo2, the current poThis is oFoo2
 oFoo2.oFn("1") # now oFoo2 owns the method reference (poThis) in oFn
 oFoo1.pSayName("2")
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

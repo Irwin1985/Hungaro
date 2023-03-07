@@ -9,11 +9,14 @@ let nLines = 17
 
 for nI = 1 to nLines/2+1
     for nJ = 1 to (nLines+1)/2-nI+1
-        fPrint(" ")
+        pPrint(" ")
     end
 
     for nJ = 1 to nI*2-1
-        fPrint("*")
+        pPrint("*")
     end
     pPrintLn(" ")
 end
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")

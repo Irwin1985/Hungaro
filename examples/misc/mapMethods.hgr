@@ -96,3 +96,6 @@ pPrintLn("============Map keys and values============")
 for each vEntry in mFruitUnitPrices
     pPrintLn(vEntry.key & " = " & vEntry.value)
 end
+
+# final assert to automatically check if all tests passed
+pAssert(true, "This test should always pass")
