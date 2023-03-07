@@ -198,8 +198,6 @@ public final class BuiltinsForArray {
                     Environment env = (Environment)arguments.get(0);
                     ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
                     Collections.reverse(array);
-                    // define the new array in the "value" of the array environment
-                    env.define("value", array);
                 }
                 return null;
             }
@@ -620,8 +618,6 @@ public final class BuiltinsForArray {
                     Environment env = (Environment)arguments.get(0);
                     ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
                     Collections.shuffle(array);
-                    // update the array
-                    env.define("value", array);
                 }
                 return null;
             }
@@ -815,8 +811,7 @@ public final class BuiltinsForArray {
                 if (arguments.get(0) instanceof Environment) {
                     Environment env = (Environment)arguments.get(0);
                     ArrayList<Object> array = (ArrayList<Object>)env.lookup("value");
-                    array.clear();
-                    env.define("value", array);
+                    array.clear();                    
                 }
                 return null;
             }

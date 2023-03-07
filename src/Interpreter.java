@@ -28,13 +28,25 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment dateEnv = new Environment(objectEnv, "Date");
     final Environment wrapperEnv = new Environment(objectEnv, "Wrapper");
     final Environment classEnv = new Environment(objectEnv, "Class");
+    final Environment stackEnv = new Environment(objectEnv, "Stack");
+    final Environment queueEnv = new Environment(objectEnv, "Queue");
 
     // connection environment
     final Environment connectionEnv = new Environment(objectEnv, "Connection");
 
     // final Stack<Boolean> variableStack = new Stack<Boolean>();
 
-    public Interpreter() {        
+    public Interpreter() { 
+        globals.define("_VARIANT", "v");
+        globals.define("_DATE", "d");
+        globals.define("_DATETIME", "t");
+        globals.define("_STRING", "s");
+        globals.define("_ARRAY", "a");
+        globals.define("_NUMBER", "n");
+        globals.define("_BOOLEAN", "b");
+        globals.define("_OBJECT", "o");
+        globals.define("_MAP", "m");
+
         BuiltinsForObject.create(this);
         BuiltinsForArray.create(this);
         BuiltinsForMap.create(this);
@@ -43,7 +55,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         BuiltinsForNative.create(this);
         BuiltinsForString.create(this);
         BuiltinsForDatabase.create(this);
-        BuiltinsForWrapper.create(this);        
+        BuiltinsForStack.create(this);
+        BuiltinsForQueue.create(this);
     }
 
     public void interpret(List<Stmt> statements) {
@@ -875,6 +888,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }        
         else if (object instanceof java.util.Date) {
             return ((java.util.Date)object).toString();
+        }
+        else if (object instanceof java.util.Stack) {
+            return ((java.util.Stack<Object>)object).toString();
+        }
+        else if (object instanceof java.util.PriorityQueue) {
+            return ((java.util.PriorityQueue<Object>)object).toString();
         }
         return object.toString();
     }

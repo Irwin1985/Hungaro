@@ -1,0 +1,27 @@
+"""
+    Stack data structure
+    A stack is a data structure that follows the LIFO (Last In First Out) principle.
+    Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-03-07
+"""
+
+let oStack = fStack()
+
+for nI = 1 to 10
+    oStack.pPush("Element " & nI)
+end
+
+# Peek at the top of the stack
+pPrintLn(oStack.fPeek())
+
+# Pops the top element of the stack
+pPrintLn(oStack.fPop())
+
+# print the number of elements in the queue
+pPrintLn(oStack.fLen())
+
+# print the queue
+pPrintLn(oStack)
+
+# clear the queue
+oStack.pClear()

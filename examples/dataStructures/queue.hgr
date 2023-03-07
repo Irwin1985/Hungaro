@@ -1,0 +1,27 @@
+"""
+    Queue data structure
+    A queue is a data structure that follows the FIFO (First In First Out) principle.
+    Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
+    Date: 2023-03-07
+"""
+
+let oQueue = fQueue()
+
+for nI = 1 to 10
+    oQueue.pEnqueue("Element " & nI)
+end
+
+# Peek at the top of the queue
+pPrintLn(oQueue.fPeek())
+
+# Dequeue from queue
+pPrintLn(oQueue.fDequeue())
+
+# print the number of elements in the queue
+pPrintLn(oQueue.fLen())
+
+# print the queue
+pPrintLn(oQueue)
+
+# clear the queue
+oQueue.pClear()

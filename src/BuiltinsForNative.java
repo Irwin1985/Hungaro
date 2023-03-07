@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
 import javax.swing.JFileChooser;
@@ -1163,6 +1165,42 @@ public final class BuiltinsForNative {
                 return true;
             }
         });
+
+        // fStack() builtin function: create a new stack
+        interpreter.globals.define("fStack", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(1);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                return interpreter.makeObject(new Stack<Object>(), interpreter.stackEnv, "Stack");
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+
+        // fQueue() builtin function: create a new queue
+        interpreter.globals.define("fQueue", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(1);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                return interpreter.makeObject(new PriorityQueue<Object>(), interpreter.queueEnv, "Queue");
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });        
     }
 
     /*

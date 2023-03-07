@@ -4,9 +4,9 @@
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
  Date: 2023-03-05
 """
-let sFile = fSelectFile("Select a file to open", "All files (*.*)|*.*")
-if fFile(sFile)
-    fExecute(fFileToStr(sFile))
-else
-    pPrintLn("File not found")
-end
+let oStack = fStack()
+oStack.pPush("Hello")
+oStack.pPush("World")
+oStack.pPush("!")
+
+pPrintLn(oStack)
