@@ -246,7 +246,7 @@ end
 # this procedure shows a message
 
 def pShow(psMessage)
-    println(psMessage)
+    pPrintLn(psMessage)
 end
 
 # A person class
