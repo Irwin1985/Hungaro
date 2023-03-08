@@ -30,6 +30,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment classEnv = new Environment(objectEnv, "Class");
     final Environment stackEnv = new Environment(objectEnv, "Stack");
     final Environment queueEnv = new Environment(objectEnv, "Queue");
+    final Environment regexEnv = new Environment(objectEnv, "RegEx");
+    final Environment matcherEnv = new Environment(objectEnv, "Matcher");
 
     // connection environment
     final Environment connectionEnv = new Environment(objectEnv, "Connection");
@@ -57,6 +59,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         BuiltinsForDatabase.create(this);
         BuiltinsForStack.create(this);
         BuiltinsForQueue.create(this);
+        BuiltinsForRegEx.create(this);
+        BuiltinsForMatcher.create(this);
     }
 
     public void interpret(List<Stmt> statements) {
@@ -457,7 +461,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             throw new Runtime.Error(expr.target.token, "Cannot access properties of non-object.");
         }
 
-        if (expr.computable) {
+        if (expr.computable) { // eg: obj[0]
             Object property = evaluate(expr.property);
             if (object.name.equals("Array")) {
                 if (property instanceof Double) {
@@ -482,6 +486,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 return value;
             }
         }
+        
         return object.lookup(expr.property.token);
     }
 
@@ -532,6 +537,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     value = resolveComplexAssignment(expr.target.token, instance.lookup(property.toString()), value, expr.operator.category);
                 }
                 return instance.define(property.toString(), value);
+            } else if (instance.name.equals("RegEx")) {
+                HashMap<String, Object> map = (HashMap<String, Object>)instance.lookup("value");
+                if (isComplexOperator) {
+                    value = resolveComplexAssignment(expr.target.token, map.get(property.toString()), value, expr.operator.category);
+                }
+                map.put(property.toString(), value);
+                return value;
             }
             else {
                 throw new Runtime.Error(expr.target.token, "Cannot set property of non-object. `" + stringify(instance) + "`");

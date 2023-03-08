@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Stack;
 import java.util.regex.Pattern;
@@ -1184,11 +1185,11 @@ public final class BuiltinsForNative {
             }
         });
 
-        // fQueue() builtin function: create a new queue
+        // fQueue([sPattern]) builtin function: create a new queue. sPatern is an optional regular expression that is used to filter the queue items
         interpreter.globals.define("fQueue", new CallableObject() {
             @Override
             public Arity arity() {
-                return new Arity(1);
+                return new Arity(1, 1);
             }
 
             @Override
@@ -1200,7 +1201,41 @@ public final class BuiltinsForNative {
             public boolean evaluateArguments() {
                 return true;
             }
-        });        
+        });
+
+        // fRegEx() builtin function: create a new regular expression
+        // we return a Map<String, Object> object that contains the following properties:
+        // - pattern: the regular expression pattern
+        // - ignoreCase: true if the regular expression is case insensitive
+        // - global: true if the regular expression is global
+        // we return the Map<String, Object> object
+        interpreter.globals.define("fRegEx", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(1);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // create the Map<String, Object> object
+                Map<String, Object> regexMap = new HashMap<String, Object>();
+                if (arguments.size() == 2) {                    
+                    regexMap.put("sPattern", (String)arguments.get(1));
+                } else {
+                    regexMap.put("sPattern", "");
+                }
+                regexMap.put("bIgnoreCase", false);
+                regexMap.put("bGlobal", false);
+                // return the Map<String, Object> object
+                return interpreter.makeObject(regexMap, interpreter.regexEnv, "RegEx");
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+
     }
 
     /*
