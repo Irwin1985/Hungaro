@@ -1236,6 +1236,29 @@ public final class BuiltinsForNative {
             }
         });
 
+        // fClamp(nValue, nMin, nMax) builtin function: clamp the given value between the given min and max values
+        // we return the clamped value
+        interpreter.globals.define("fClamp", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(4);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                double value = (double)arguments.get(1);
+                double min = (double)arguments.get(2);
+                double max = (double)arguments.get(3);
+                return Math.max(min, Math.min(max, value));
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
+
+        
     }
 
     /*

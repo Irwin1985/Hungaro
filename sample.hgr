@@ -1,31 +1,9 @@
 """
- Regular Expression
- A regular expression is a sequence of characters that define a search pattern.
+ Clamp function 
  
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
  Date: 2023-03-08
 """
 
-# First way
-let oRegEx = fRegEx()    # this will create an empty regular expression
-oRegEx.sPattern = ".s"
-let oMatcher = oRegEx.fExecute("as")
-pPrintLn(oMatcher.fMatches())    # true
-
-# Second way
-let bMatches = fRegEx("as").fExecute("as").fMatches()
-pPrintLn(bMatches)    # true
-
-# Using the fFind() method
-let oRegEx = fRegEx("hungaro")
-let oMatcher = oRegEx.fExecute("This is the hungaro programming language, do you like hungaro?")
-
-let bFound = false
-while oMatcher.fFind()
-    pPrintLn("I found the text " & oMatcher.fGroup() & " starting at index " & oMatcher.fStart() & " and ending at index " & oMatcher.fEnd())
-    bFound = true
-end
-
-if not bFound
-    pPrintLn("No match found")
-end
+pPrintLn("Clamp function")
+pPrintLn(fClamp(1985, 1980, 1990)) # 1985
