@@ -18,8 +18,8 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 @SuppressWarnings("unchecked")
@@ -1257,8 +1257,164 @@ public final class BuiltinsForNative {
                 return true;
             }
         });
-
         
+        // fNewWindow(mDictionary) builtin function: create a new JFrame window and 
+        // set the properties specified in the given dictionary
+        // we return the JFrame object using makeObject()
+        interpreter.globals.define("fNewWindow", new CallableObject() {
+            @Override
+            public Arity arity() {
+                return new Arity(2);
+            }
+
+            @Override
+            public Object call(Interpreter interpreter, List<Object> arguments) {
+                // create the JFrame object
+                JFrame frame = new JFrame();
+                // our JFrame will allow every object to be located in any position
+                // so we need to set the layout to null
+                frame.setLayout(null);                
+
+                // the second argument is the dictionary Environment
+                // so we need to check it and extract the "value" property.
+                // the value property is the dictionary itself
+                Environment dictionaryEnv = (Environment)arguments.get(1);
+                Object dictionaryObj = dictionaryEnv.lookup("value");
+                // get the dictionary
+                Map<String, Object> dictionary = (Map<String, Object>)dictionaryObj;
+                // set the properties using a for-each loop
+                for (Map.Entry<String, Object> entry : dictionary.entrySet()) {
+                    String key = entry.getKey();
+                    Object value = entry.getValue();
+                    // sTitle: the title of the window
+                    if (key.equals("sTitle")) {
+                        frame.setTitle((String)value);
+                        continue;
+                    }
+
+                    // sIcon: the icon of the window
+                    if (key.equals("sIcon")) {
+                        // create the image icon with Toolkit.getDefaultToolkit().getImage()
+                        // and set the icon using frame.setIconImage()
+                        Image image = Toolkit.getDefaultToolkit().getImage((String)value);
+                        frame.setIconImage(image);
+                        continue;
+                    }                    
+
+                    // nHeight: the height of the window
+                    if (key.equals("nHeight")) {
+                        // the value is a double, so we need to cast it to int
+                        frame.setSize(frame.getWidth(), (int)(double)value);
+                        continue;
+                    }
+
+                    // nWidth: the width of the window
+                    if (key.equals("nWidth")) {
+                        // the value is a double, so we need to cast it to int
+                        frame.setSize((int)(double)value, frame.getHeight());
+                        continue;
+                    }
+
+                    // bResizable: true if the window is resizable
+                    if (key.equals("bResizable")) {
+                        frame.setResizable((boolean)value);
+                        continue;
+                    }
+
+                    // bVisible: true if the window is visible
+                    if (key.equals("bVisible")) {
+                        frame.setVisible((boolean)value);
+                        continue;
+                    }
+
+                    // bAlwaysOnTop: true if the window is always on top of other windows
+                    if (key.equals("bAlwaysOnTop")) {
+                        frame.setAlwaysOnTop((boolean)value);
+                        continue;
+                    }
+                    
+                    // sBackColor: the background color of the window                    
+                    if (key.equals("sBackColor")) {
+                        // get the string value
+                        String colorString = (String)value;                        
+                        // we use the default color
+                        Color color = GUI.decodeColor(colorString);
+                        // create the content pane
+                        JPanel contentPane = new JPanel();                        
+                        contentPane.setBackground(color);
+                        frame.setContentPane(contentPane);
+                        continue;
+                    }
+
+                    // nMaxWidth: the maximum width of the window
+                    if (key.equals("nMaxWidth")) {
+                        frame.setMaximumSize(new Dimension((int)(double)value, frame.getHeight()));
+                        continue;
+                    }
+
+                    // nMaxHeight: the maximum height of the window
+                    if (key.equals("nMaxHeight")) {
+                        frame.setMaximumSize(new Dimension(frame.getWidth(), (int)(double)value));
+                        continue;
+                    }
+
+                    // nMinWidth: the minimum width of the window
+                    if (key.equals("nMinWidth")) {
+                        frame.setMinimumSize(new Dimension((int)(double)value, frame.getHeight()));
+                        continue;
+                    }
+
+                    // nMinHeight: the minimum height of the window
+                    if (key.equals("nMinHeight")) {
+                        frame.setMinimumSize(new Dimension(frame.getWidth(), (int)(double)value));
+                        continue;
+                    }
+
+                    // bMovable: true if the window can be moved
+                    if (key.equals("bMovable")) {
+                        frame.getRootPane().putClientProperty("Window.draggable", (boolean)value);
+                        continue;
+                    }
+
+                    // sPicture: the background image of the window.
+                    if (key.equals("sPicture")) {                                               
+                        // we fake this property by creating a JLabel with the image
+                        // and adding it to the content pane but we need to respect the current size of the window
+                        JLabel label = new JLabel(new ImageIcon((String)value));
+                        label.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+                        frame.getContentPane().add(label);
+                        continue;
+                    }
+
+                    // bUndecorated: true if the window has no title bar, borders, etc.
+                    if (key.equals("bUndecorated")) {
+                        frame.setUndecorated((boolean)value);
+                        continue;
+                    }
+
+                    // bCloseOnExit
+                    if (key.equals("bCloseOnExit")) {
+                        frame.setDefaultCloseOperation((boolean)value ? JFrame.EXIT_ON_CLOSE : JFrame.DISPOSE_ON_CLOSE);
+                        continue;
+                    } 
+
+                    // bAutoCenter: true if the window should be centered on the screen
+                    if (key.equals("bAutoCenter")) {
+                        if ((boolean)value) {
+                            frame.setLocationRelativeTo(null);
+                        }
+                    }
+                    
+                }
+                // return the JFrame object using makeObject()
+                return interpreter.makeObject(frame, interpreter.windowEnv, "Window");
+            }
+
+            @Override
+            public boolean evaluateArguments() {
+                return true;
+            }
+        });
     }
 
     /*

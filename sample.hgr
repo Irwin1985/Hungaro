@@ -1,9 +1,35 @@
 """
- Clamp function 
+ GUI support
  
  Author: Irwin Rodríguez <rodriguez.irwin@gmail.com>
- Date: 2023-03-08
+ Date: 2023-03-13
 """
 
-pPrintLn("Clamp function")
-pPrintLn(fClamp(1985, 1980, 1990)) # 1985
+# create a basic window
+let oWindow = fNewWindow({
+    sTitle: "Hello World",
+    sIcon: "F:/Lenguajes/Ring/ring/applications/book/chap1/image/debug.png",    
+    nWidth: 400,
+    nHeight: 300,    
+    bVisible: true,
+    sPicture: "F:/Lenguajes/Ring/ring/applications/pairs/images/p16.png",
+    bCloseOnExit: true,
+    bAutoCenter: true,
+    sWindowType: "modal",
+})
+
+# button click
+def pButtonClick
+    pInfo("Hola mundo mi caption es: " & poThis.sCaption)
+end
+
+# add a button
+let oButton = oWindow.fAddButton({
+    sCaption: "Click Me",
+    nLeft: 10,
+    nTop: 10,
+    nWidth: 100,
+    nHeight: 30,
+    sToolTip: "Click Me",
+    pOnClick: pButtonClick,
+})

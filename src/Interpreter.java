@@ -32,6 +32,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment queueEnv = new Environment(objectEnv, "Queue");
     final Environment regexEnv = new Environment(objectEnv, "RegEx");
     final Environment matcherEnv = new Environment(objectEnv, "Matcher");
+    final Environment windowEnv = new Environment(objectEnv, "Window");
+    final Environment buttonEnv = new Environment(objectEnv, "Button");
 
     // connection environment
     final Environment connectionEnv = new Environment(objectEnv, "Connection");
@@ -61,6 +63,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         BuiltinsForQueue.create(this);
         BuiltinsForRegEx.create(this);
         BuiltinsForMatcher.create(this);
+        BuiltinsForWindow.create(this);
     }
 
     public void interpret(List<Stmt> statements) {

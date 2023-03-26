@@ -13,7 +13,7 @@ public class Hungaro {
     private static final Interpreter interpreter = new Interpreter();
     static boolean hadError = false;
     static boolean hadRuntimeError = false;
-    static boolean debugMode = false; // debug mode
+    static boolean debugMode = true; // debug mode
     static String hungaroVersion = "alpha 0.0.3"; // Hungaro version
 
     // foreground colors

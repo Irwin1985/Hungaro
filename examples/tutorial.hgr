@@ -1,0 +1,266 @@
+# Este es un comentario de una sola línea
+
+"""
+Este es un comentario de varias líneas
+Los comentarios multiples comienzan y terminan con tres comillas dobles
+
+Puedes hacer esto o simplemente usar una sola línea de comentario con #
+"""
+
+# Números: tanto enteros como decimales todo queda bajo el tipo Number.
+
+1985 # Entero
+3.141592653589793 # Decimal
+
+# Operaciones aritméticas básicas
+
+1 + 1 # Suma
+8 - 1 # Resta
+10 * 2 # Multiplicación
+35 / 5 # División
+2 ^ 4 # Potencia
+
+# Cadenas de texto.
+
+"Esto es una cadena de texto" # Cadena de texto
+'Esto es una cadena de texto' # Cadena de texto
+`Esto es una cadena de texto` # Cadena de texto
+
+# Operaciones con cadenas de texto
+"Esto es una " & "cadena de texto" # Concatenación
+
+"""
+    NOTA: el operador & es el operador de concatenación de cadenas de texto y la única regla
+          es que el primer operando debe ser una cadena de texto.
+    Ejemplos: 
+
+    "El resultado es: " & nResultado # Correcto
+"""
+
+# Booleanos
+true # Verdadero
+false # Falso
+
+# Operadores lógicos
+true and false # AND
+true or false # OR
+not true # NOT
+
+# Operadores de comparación
+
+1 == 1 # Igual
+1 != 1 # Diferente
+1 < 1 # Menor que
+1 > 1 # Mayor que
+1 <= 1 # Menor o igual que
+1 >= 1 # Mayor o igual que
+
+
+"""
+    TIPOS DE DATOS Y SUS LETRAS INICIALES
+        Los tipos de datos son:
+    - String: s (sNombre)
+    - Number: n (nEdad)
+    - Boolean: b (bEsMayorDeEdad)
+    - Array: a (aNombres)
+    - Object: o (oPersona)
+    - Function: f (fSumar)
+    - Procedure: p (pMostrarMensaje)
+    - Variant: v (vValor)
+    - Date: d (dFecha)
+    - Time: t (tHora)
+    - DateTime: dt (dtFechaHora)
+"""
+
+""" 
+    VARIABLES Y CONSTANTES
+        Se declaran con la palabra reservada let.
+
+    REGLAS PARA DECLARAR CONSTANTES:
+        1. El nombre de la constante debe estar en mayúsculas.
+        2. Las constantes globales deben comenzar con '_'
+        3. Las constantes locales deben comenzar con una letra mayúscula.
+        4. Solo pueden usar '_' como separador de palabras. ejemplo: _NOMBRE_COMPLETO
+
+    REGLAS PARA DECLARAR VARIABLES:
+        1. Las variables globales deben comenzar con 'g' seguido del tipo de variable.
+        2. Las variables locales deben comenzar con el tipo de variable.
+        3. Los nombres de las variables deben estar en PascalCase (ejemplo: gsNombreCompleto)
+
+"""
+
+# Variables globales
+let gsNombre = "Juan"
+let gsApellido = "Perez"
+
+# Variables locales
+let sNombre = "Juan"
+let sApellido = "Perez"
+
+# Constantes globales
+let _NOMBRE = "Juan"
+let _APELLIDO = "Perez"
+
+# Constantes locales
+let PI = 3.141592653589793
+let NOMBRE = "Juan"
+
+# Inicialización de variables
+
+let sNombre = "Juan"
+let nEdad # Si no se inicializa, el valor por defecto es 0 porque el tipo de dato es Number.
+let oPersona # Si no se inicializa, el valor por defecto es null porque el tipo de dato es Object.
+
+# NOTA: El tipo null solo puede ser asignado a variables de tipo Object o Variant.
+# por lo tanto asignar null a una variable de tipo Number no es posible.
+# let nEdad = null # Esto es un error
+
+# Estructuras de control
+
+pPrintLn("Estructuras de control: If / else")
+
+let nEdad = 18
+if nEdad >= 18
+    pPrintLn("Es mayor de edad")
+else
+    pPrintLn("Es menor de edad")
+end
+
+let nSalario = 1000
+
+if fBetween(nSalario, 1, 500)
+    pPrintLn("Es un salario bajo")
+end
+
+if fBetween(nSalario, 501, 1000)
+    pPrintLn("Es un salario medio")
+end
+
+if fBetween(nSalario, 1001, 2000)
+    pPrintLn("Es un salario alto")
+end
+
+# Ciclos
+pPrintLn("Ciclos: For")
+
+for nContador = 1 to 10
+    pPrintLn(nContador)
+end
+
+pPrintLn("Ciclos: For/Each")
+# El ciclo for/each se usa para recorrer colecciones de datos como arrays y mapas.
+# En los ciclos for/each el nombre del iterador debe comenzar con 'v' porque la
+# colección se asume dinámica y puede contener datos de diferentes tipos.
+
+let aNombres = ["Juan", "Pedro", "Maria", "Jose"]
+for each vNombre in aNombres
+    pPrintLn(vNombre)
+end
+
+pPrintLn("Ciclos: While")
+let nContador = 1
+while nContador <= 10
+    pPrintLn(nContador)
+    nContador = nContador + 1
+end
+
+pPrintLn("Ciclos: Repeat/Until")
+
+let nContador = 1
+repeat
+    pPrintLn(nContador)
+    nContador = nContador + 1
+until nContador > 10
+
+"""
+FUNCIONES
+    Las funciones son bloques de código que reciben parámetros y retornan un valor.
+    Las funciones se declaran con la palabra reservada def.
+    Los parámetros comienzan por 'p' seguido del tipo de dato.
+    Si una función no retorna un valor entonces el intérprete arrojará un error.
+"""
+
+def fSumar(pnNumero1, pnNumero2)
+    return pnNumero1 + pnNumero2
+end
+
+let nResultado = fSumar(1, 2)
+pPrintLn("El resultado es: " & nResultado)
+
+"""
+PROCEDIMIENTOS
+    Los procedimientos son bloques de código que reciben parámetros pero no retornan un valor.
+    Los procedimientos se declaran con la palabra reservada def.
+    Los parámetros comienzan por 'p' seguido del tipo de dato.
+"""
+
+def pMostrarMensaje(psMensaje)
+    pPrintLn(psMensaje)
+end
+
+pMostrarMensaje("Hola mundo desde un procedimiento")
+
+
+# Arrays
+let aFrutas = ["Manzana", "Pera", "Uva", "Sandia", "Melon"]
+
+# Definir un array de longitud fija
+
+let aNombres = [] * 5
+aNombres[0] = "Juan"
+aNombres[1] = "Pedro"
+aNombres[2] = "Maria"
+aNombres[3] = "Jose"
+aNombres[4] = "Luis"
+
+# Definir un array de longitud variable
+let aNombres = []
+aNombres.pPush("Juan")
+aNombres.pPush("Pedro")
+aNombres.pPush("Maria")
+aNombres.pPush("Jose")
+
+pPrintLn(aNombres)
+
+# Definir un array de longitud fija y asignar un valor por defecto
+let aNombres = [] * 5 = "Sin nombre"
+pPrintLn(aNombres)
+
+"""
+MAPAS
+    Los mapas son estructuras de datos que almacenan pares de llave/valor.
+    Las llaves solo pueden ser de tipo String y se puede omitir el uso de comillas.
+    Los mapas en sus llaves tienen la libertad de usar cualquier nombre, esto con
+    el fin de hacer el código compatible con la estructura de datos JSON.
+"""
+
+# Crear un mapa vacío y poblarlo con datos
+let oPersona = {}
+oPersona["nombre"] = "Juan"
+oPersona["apellido"] = "Perez"
+oPersona["edad"] = 18
+pPrintLn(oPersona)
+
+# Crear un mapa con datos
+let oListaDePrecios = {
+    "manzana": 1.5,
+    "pera": 1.2,
+    "uva": 2.5,
+    "sandia": 3.5,
+    "melon": 4.5
+}
+
+# Recorrer las llaves de un mapa (keys)
+for each vKey in oListaDePrecios.fKeys()
+    pPrintLn(vKey)
+end
+
+# Recorrer los valores de un mapa (values)
+for each vValue in oListaDePrecios.fValues()
+    pPrintLn(vValue)
+end
+
+# Recorrer los pares llave/valor de un mapa (entries)
+for each vEntry in oListaDePrecios
+    pPrintLn("Llave: " & vEntry.key & " Valor: " & vEntry.value)
+end
