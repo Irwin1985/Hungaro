@@ -8,11 +8,11 @@
 # create a basic window
 let oWindow = fNewWindow({
     sTitle: "Hello World",
-    sIcon: "F:/Lenguajes/Ring/ring/applications/book/chap1/image/debug.png",    
+    sIcon: "/image/debug.png",    
     nWidth: 400,
     nHeight: 300,    
     bVisible: true,
-    sPicture: "F:/Lenguajes/Ring/ring/applications/pairs/images/p16.png",
+    sPicture: "/images/p16.png",
     bCloseOnExit: true,
     bAutoCenter: true,
     sWindowType: "modal",
